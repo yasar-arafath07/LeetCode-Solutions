@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int addDigits(int num) {
+        
+        //RECURSIVE APPROACH
+        
+        int sum=0;
+        
+        while(num){
+            sum+=(num%10);    //If Did'nt Understand what's Happening here, Visit Below 
+            num = num / 10;  // Commented Code
+        }
+        if(sum<10){
+            return sum;
+        }
+        else{
+            return addDigits(sum);
+        }
+        
+        
+        
+        /*
+        int r, sum=0;
+        
+        while(num){
+            r = num % 10;
+            num = num / 10;
+            sum = sum + r;
+        }
+        if(sum<10){
+            return sum;
+        }
+        else{
+            return addDigits(sum);
+        }    */
+        
+    }
+};
