@@ -2,6 +2,22 @@ class Solution {
 public:
     bool isPowerOfTwo(int n) {
         
+        /****************RECURSIVE APPROACH*************/
+        
+        if(n==0){
+            return false;
+        }
+        else{
+            return ((n==1) || (n%2==0 && isPowerOfTwo(n/2))); 
+        }
+        
+        /**********END of RECURSIVE APPROACH*********/
+        
+        
+        
+        
+        /*******ITERATIVE APPROACH************/
+        /*
         if(n==0){
             return false;
         }
@@ -13,6 +29,8 @@ public:
         }                  // if n%2 is 0, the our new n value is n/2. So we keep updating 
                           // n = n/2 till n%2=0. So in the end if n=1, it'll return true else
                          // it'll return false.
+        */
+        /********END************/
         
     }
 };
