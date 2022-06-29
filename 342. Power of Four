@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool isPowerOfFour(int n) {
+        
+        /**********  RECURSIVE APPROACH  ***********/
+        
+        if(n==0){
+            return false;
+        }
+        else{
+            return ((n==1) || ((n%4==0) && isPowerOfFour(n/4)));
+        }
+        
+        /**********  ITERATIVE APPROACH  ************/
+        /*
+        if(n==0){
+            return false;
+        }
+        else{
+          while(n%4==0){
+              n /= 4;   // i.e n = n/4;
+          }
+            return n==1;
+        }   
+        */
+        
+    }
+};
