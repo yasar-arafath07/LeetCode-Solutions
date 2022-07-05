@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        
+        /********* Using 2 POINTERS Approach ********/
+        int i=0;
+        int j=1;
+        int n = nums.size();
+        
+        while(j<n){
+            if(nums[i]==0 && nums[j] != 0){
+                swap(nums[i], nums[j]);
+                i++;
+                j++;
+            }
+            else if(nums[i]==0 && nums[j]==0){
+                j++;
+            }
+            else{
+                i++;
+                j++;
+            }
+        }
+        
+        /************ 2nd APPROACH **********/
+        /* int n = nums.size(), last=0;
+        for(int cur=0; cur<n; cur++){
+            if(nums[cur] != 0)
+                swap(nums[cur], nums[last++]);
+            
+        }   */
+        
+        
+    }
+};
