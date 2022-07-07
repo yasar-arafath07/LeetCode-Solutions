@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int>ans{-1, -1};
+        
+        /********** Using BINARY SEARCH ************/
+        //So here we have to do 2 Binary Searches-One for 1st Index and Other one for Last Index
+        
+        //Binary Search for 1st Index.
+        int low = 0, high = nums.size()-1;
+        while(low<=high){
+            int mid = low + (high-low)/2;
+            if(nums[mid] == target){
+                ans[0] = mid; //i.e Continue Searching on left side of nums to find 1st Index of the given target;
+                high = mid - 1;
+            }else if(nums[mid] < target){
+                low = mid + 1;  //i.e Search in Right Side of nums. 
+            }else
+                high = mid - 1;  //i.e Search in Left Side of nums.
+        }
+        
+        //Binary Search to find the Last Index.
+        low = 0, high = nums.size()-1;
+        while(low<=high){
+            int mid = low + (high-low)/2;
+            if(nums[mid] == target){
+                ans[1] = mid; //i.e Continue Searching in the Right Side as we want Right Index.
+                low = mid + 1;
+            }else if(nums[mid] < target){
+                low = mid + 1;
+            }else
+                high = mid - 1;
+        }
+        return ans;
+        
+    }
+};
