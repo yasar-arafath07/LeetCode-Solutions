@@ -9,6 +9,32 @@
 
 struct ListNode* removeElements(struct ListNode* head, int val){
     
+    /********** ITERATIVE APPROACH ***********/
+    /*
+    struct ListNode *current = head;
+    struct ListNode *prev = NULL;
+    
+    while(current){
+        if(current->val == val){
+            if(current == head){
+                head = current->next;
+                prev = current;
+                free(current);
+                current = head;
+            }else{
+                prev->next = current->next;
+                free(current);
+                current = prev->next;
+            }
+        }else{
+            prev = current;
+            current = current->next;
+        }
+        
+    }
+    return head;   */
+    
+    
     /*********** RECURSIVE APPROACH ************/
     
     if(head == NULL){
@@ -20,6 +46,6 @@ struct ListNode* removeElements(struct ListNode* head, int val){
     else
         head->next = removeElements(head->next, val);
     
-    return head;
+    return head;   
 
 }
