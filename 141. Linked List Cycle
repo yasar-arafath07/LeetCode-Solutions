@@ -1,0 +1,25 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+bool hasCycle(struct ListNode *head) {
+    struct ListNode *slow=head, *fast=head;
+    
+    while(fast != 0 && fast->next != 0){
+        slow = slow->next;
+        fast = fast->next->next;
+        
+        if(slow == fast)
+            return true;
+    }
+    return false;
+}
+
+// OR write it as while(fast && fast->next)
+// what it means : while (fast && fast->next) ?
+// As long as fast and fast->next != NULL loop will continue running.
+//This is a classic algo for detecting cycles in a linked list. We use two pointers to traverse the list: The first one is moving 'one node' at the time and the second 'two nodes' at a time. If there is a cycle, sooner or later pointers will meet and we return true. If the fast pointer reached the end of the list, that means there is no cycle and we can return false.
+// This Algorithm is Known as Floyd's Cycle Detection Algorithm.
