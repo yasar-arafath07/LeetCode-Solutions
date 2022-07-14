@@ -1,0 +1,74 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        
+        /************** APPROACH 1 *****************/
+        
+        stack<char> st;
+        for(char c : s){
+            if(c == '(' || c == '{' || c == '['){
+                st.push(c);
+            }else{
+                if(st.empty())
+                    return false;
+                else if(c == ')' && st.top() != '(')
+                    return false;
+                else if(c == '}' && st.top() != '{')
+                    return false;
+                else if(c == ']' && st.top() != '[')
+                    return false;
+                else
+                    st.pop();
+                
+            }
+        }
+        return st.empty();
+        
+        
+        /************* APPROACH 2: ITERATIVE APPROACH **************/
+        /*
+        stack<char> st;
+        
+        for(int i=0; i<s.length(); i++){
+            if(s[i] == '(' || s[i] == '{' || s[i] == '[')
+                st.push(s[i]);
+            else if(st.empty())
+                return false;
+            else if(s[i] == ')' && st.top() == '(')
+                st.pop();
+            else if(s[i] == '}' && st.top() =='{')
+                st.pop();
+            else if(s[i] == ']' && st.top() == '[')
+                st.pop();
+            else
+                return false;
+        }
+        return st.empty();
+        */
+        
+        
+        
+        
+        /***************** APPROACH 3 *******************/
+        /*
+        stack<char> st;   //taking a stack to keep track of the order of brackets.
+        for(auto i : s){ //iterate over each and every elements.
+            if(i == '(' || i == '{' || i == '[')
+                st.push(i);
+            else{
+                if(st.empty() || (st.top()== '(' && i!=')') || (st.top()=='{' && i!='}') || (st.top()=='[' && i!=']'))
+                    return false;
+                else
+                    st.pop();
+            }
+        }
+        return st.empty();
+        */
+        
+    }
+};
+
+// st.push(i), i.e if the current element of the string is any of the given opening brackets, then we will justy simply push into the stack.
+//i.e if control comes to else part, it means that current element is a closing bracket, so check two conditions  current element matches with top of the stack and the stack must not be empty...
+// st.pop(), i.eif control reaches to that line, it means we have got the right pair of brackets, so just pop it.
+// return st.empty(), i.e at last, it may possible that we left something into the stack unpair so return checking stack is empty or not..
