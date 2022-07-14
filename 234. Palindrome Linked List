@@ -1,0 +1,50 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode *slow, *fast, *prev, *temp;
+        slow = head;
+        fast = head;
+        
+        // Step1: Finding the Middle Element of the Linked List.
+        while(fast != 0 && fast->next != 0){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        prev = slow; //here slow pointer will be the middle element.now prev will point to the middle
+        slow = slow->next; // i.e now slow pointer will point to the next of the middle node.
+        prev->next = NULL;//ie the link(next) part of middle node is set to NULL.So the list is broke
+        
+        //Step2: Reversing the Linked list from the middle (i.e after the middle node)
+        while(slow != 0){
+            temp = slow->next;
+            slow->next = prev;//ie storing the Address of previous node in the link part of next node
+            prev = slow;
+            slow = temp;
+        }
+        fast = head;
+        slow = prev;//because, by the end of step 2, prev pointer will be pointing to the end of list
+        
+        //So by the End of Step 2, i.e after above line, fast will be at starting of linked list and           slow pointer will be at the end of the linked list. and now the 2nd half of the linked               list is properly reversed.
+        
+        //Step3: Now Compare the 2 halves of the linked list if it is palindrome.
+        while(slow != 0){ // slow->next will be equal to 0 once it reaches the middle of list.
+            if(fast->val != slow->val)
+                return false;
+            else{
+                fast = fast->next;
+                slow = slow->next;
+            }
+        }
+        return true;
+    }
+};
