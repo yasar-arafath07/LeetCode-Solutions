@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        //OPTIMIZED APPROACH
+        int ans = nums[0];   //or take ans = 0, and then start the iteration from i=0.
+        
+        for(int i=1; i<nums.size(); i++){
+            ans = ans ^ nums[i];
+        }
+        return ans;
+        
+        
+        //BRUTEFORCE APPROACH
+        /*
+        sort(nums.begin(), nums.end());
+        for(int i=1; i<nums.size(); i+=2){  // i=i+2
+            if(nums[i] != nums[i-1])
+                return nums[i-1];
+        }
+        return nums[nums.size()-1];
+        */
+    }
+};
+
+
+/*
+// 1. BRUTEFORCE APPROACH
+1. Sort the array.
+2. Traverse the array and check if one of the adjacent elements is equal to the current element or not.
+3. If yes , move ahead. Else return the current element.
+
+TC: O(NlogN)
+SC: O(1)
+*/
+
+/*
+
+// 2. OPTIMIZED APPROACH
+(Use XOR Operation)
+
+-Since in XOR Operations: 0^0 = 0 and 1^1 = 0.
+-Hence here the same bits(numbers) will cancel out each other i.e result to zero and only the unique bit (number) will be left.!!!
+
+*/
