@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.size() != t.size())
+            return false;
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
+        
+        return s == t; /* if(s == t)
+                               return true;
+                          return false;
+                                        */
+    }
+};
+
+/*
+
+// TIME & SPACE COMPLEXITY
+
+Time Complexity: O (n log n).
+    
+Space Complexity: Nothing really, but:
+- Some sorting algorithms do take up space so be mindful of that.
+- It can be langauge dependent
+
+*/
