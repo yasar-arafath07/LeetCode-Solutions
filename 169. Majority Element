@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        return nums[n/2];   // return nums[n/2] or nums[n/2 + 1]. But returning nums[n/2 + 1] results in overflow.
+    }
+};
+
+
+//TIME and SPACE COMPLEXITY : 
+/*
+
+TIME COMPLEXITY : O(Nlogn)
+SPACE COMPLEXITY : O(1)
+
+*/
