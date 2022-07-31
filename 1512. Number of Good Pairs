@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int numIdenticalPairs(vector<int>& nums) {
+        //BRUTE FORCE Approach
+        int counter = 0;
+        int length = nums.size();
+        
+        for(int i=0; i<length-1; i++){
+            for(int j=i+1; j<length; j++)
+                if(nums[i] == nums[j])
+                    counter++;
+        }
+        return counter;
+    }
+};
+
+// TIME COMPLEXITY : O(n^2).
+
+// Use "unordered_map" for optimizing the solution having a Time Complexity of O(n)
