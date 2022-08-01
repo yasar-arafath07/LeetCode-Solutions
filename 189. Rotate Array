@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        k = k % nums.size();  
+        reverse(nums.begin(), nums.end()); // Reversing the Whole Array
+        reverse(nums.begin(), nums.begin()+k); // Reversing the first k elements in the Array.
+        reverse(nums.begin()+k, nums.end()); // Reversing the Remaining Elements.
+    }
+};
+
+
+
+/*
+
+// APPROACH: REVERSAL of ARRAY
+
+Step1: Reverse the Whole Array.
+Step2: Then Reverse the First k Elements in the Array.
+Step3: Finally Reverse the Remaining Elements.
+
+Q: Why do k = k%nums.size()?
+ans: Suppose if k>n, to handle this case we are writing k=k%nums.size();
+
+// TIME COMPLEXITY: O(n)
+// SPACE COMPLEXITY: O(1)
+
+*/
