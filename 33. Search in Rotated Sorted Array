@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int low = 0, high = nums.size()-1;
+        while(low <= high){
+            int mid = (low + high)/2;
+            if(nums[mid] == target)
+                return mid;
+            
+            // There Exists Rotation and the Middle ELement is Present in the Left Part of the Array.
+            else if(nums[mid] > nums[high]){
+                if(target < nums[mid] && target >= nums[low]) //i.e if target is present in the first half of Array.
+                    high = mid - 1;
+                else
+                    low = mid + 1;
+            }
+            
+            // There Exists Rotation and the Middle Element is Present in the Right Part of the Array.
+            else if(nums[mid] < nums[low]){
+                if(target > nums[mid] && target <= nums[high]) //i.e if target is present in the second half of Array.
+                    low = mid + 1;
+                else
+                    high = mid - 1;
+            }
+            
+            // There is no Rotation, just like Normal Binary Search.
+            else{
+                if(target < nums[mid])
+                    high = mid - 1;
+                else
+                    low = mid + 1;
+            }
+            
+        }
+        return -1;
+    }
+};
