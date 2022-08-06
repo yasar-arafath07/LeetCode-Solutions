@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int thirdMax(vector<int>& nums) {
+        sort(nums.begin(), nums.end(), greater<int>());
+        vector<int> v;
+        v.push_back(nums[0]);
+        
+        for(int i=1; i<nums.size(); i++){
+            if(nums[i] != nums[i-1])
+                v.push_back(nums[i]);
+        }
+        
+        if(v.size() < 3)
+            return v[0];
+        return v[2];
+    }
+};
+
+
+/*
+
+// APPROACH:
+Step1: Sort the Array in Decreasing Order.
+Step2: Maintain an Integer Vector for Storing Distinct Array Values.
+Step3: Push the 1st Element from the Array i.e the Largest ELement into the Vector.
+Step4: Run a 'for' loop for Comparing the Adjacent Elements of the Array. and if the Adjacent Elements are Distinct, Push that Particular Element into int Vector v.
+Step5: Since We Want the 3rd Maximum no, If the Vector size is Less than 3 i.e if there are only 2 or 1 Elements, then Return the Largest Element which is v[0].
+Step6: Else Return the 3rd Element from the Beginning i.e v[2], Since we have Sorted the Elements in Decreasing Order and we want the 3rd Maximum Element.
+
+// TIME COMPLEXITY: O(Nlog(N)). [Because sort() function took O(NlogN) and One iteration took O(n). So Total Time Complexity is O(NlogN + N) that is O(NlogN)].
+
+*/
