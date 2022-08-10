@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int reverse(int x) {
+        
+        // APPROACH 1:
+        long int ans = 0;
+        while(x != 0){
+            ans = (ans*10) + (x%10);
+            x /= 10;    // x = x/10;
+        }
+        if(ans > INT_MAX || ans < INT_MIN){
+            return 0;
+        }
+        return ans;
+        
+        
+        /*
+        //APPROACH 2: (same code as Above but little modofied)
+        long int res = 0;
+        while(x != 0){
+            res = (res*10) + (x%10);
+            x /= 10;   //x = x/10;
+        }
+        return(res > INT_MAX || res < INT_MIN)? 0 : res;  // i.e if result is Greater than INT_MAX value OR if result is                                                          //less than INT_MIN value, return 0. else return result i.e res
+        */
+    }
+};
+
