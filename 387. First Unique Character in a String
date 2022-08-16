@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        // BRUTE FORCE Solution: Traverse the String 2 times. First Time, Store the count of every character into hash table. Second time, find the 1st character that 
+       //Appears only once.
+        
+        unordered_map<char, int> map;  //maintain a map to store the frequency of each characters of the given string.
+        
+        for(int i=0; i<s.length(); i++){  // this for loop will maintain the frequency of each characters.
+            map[s[i]]++;
+        }
+        
+        for(int i=0; i<s.length(); i++){
+            if(map[s[i]] == 1)
+                return i;
+        }
+        return -1;
+    }
+};
+
+
+/*
+for(int i=0; i<s.length(); i++){
+    map[s[i]]++;
+} 
+
+the above for loop can also be written as:
+for(auto& i : s){
+    map[i]++;
+}
+*/
