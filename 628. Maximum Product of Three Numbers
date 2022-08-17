@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maximumProduct(vector<int>& nums) {
+        
+        // APPROACH: Using SORTING
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        return max((nums[n-1] * nums[n-2] * nums[n-3]), (nums[0] * nums[1] * nums[n-1]));
+        
+        /*
+        //  APPROACH 1 in Other way:
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        int res1 = nums[n-1]*nums[n-2]*nums[n-3]; // Largest 3 Numbers.
+        int res2 = nums[0]*nums[1]*nums[n-1];  // Largest Positive number and 2 negative numbers if Present.
+        return res1>res2? res1 : res2;  // i.e if res1 is greater, it'll return res1. else res2. OR 'max(res1, res2);'
+        */
+    }
+};
+
+/* Either Product of 3 Largest Positive Elements will be the maximum product OR if there are negative values, then pick the 2 Largest negative values and Multiply it 
+   with the Largest Positive Value */
