@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        
+        // (BRUTE FORCE) APPROACH 1: (Code is not working for 2nd eg)
+        /* A Brute Force way to Solve this Question is to take each number in the Range [1,n] and Push it into ans Array if it Doesn't occur in nums */ 
+        /*
+        vector<int> ans;
+        for(int i=1; i<nums.size(); i++){
+            if(find(nums.begin(), nums.end(), i) == nums.end())  // linear search in nums for each i
+                ans.push_back(i);
+        }
+        return ans;
+        */
+            
+            
+        /*
+        //APPROACH 2: Using SET (to Copy All the Values of Array in Set) [This code is not working for 2nd eg]
+        
+        set<int> s(nums.begin(), nums.end()); //Copying All the Values of nums in set.
+        vector<int> v;   // Maintaining a integer vector to store the Disappearing Numbers.
+        
+        for(int i=1; i<nums.size(); i++){
+            if(s.count(i) == 0)  // to check if the Element is Already Present or Not.
+                v.push_back(i);
+        }
+        return v;
+        */
+        
+        //APPROACH 3: Using C++ Set Method
+        vector<int> ans;
+        unordered_set<int> s;
+        for(auto i : nums){   // iterating on nums linearly
+            s.insert(i);
+        }
+        for(int i=1; i<=nums.size(); i++){   // Iterate on nums from 1 to n and find if the no is present in the set
+            if(s.find(i) == s.end()){         // and store it in the ans.
+                ans.push_back(i);
+            }
+        }
+        return ans;
+    }
+};
