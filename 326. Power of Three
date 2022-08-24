@@ -1,7 +1,16 @@
 class Solution {
 public:
     bool isPowerOfThree(int n) {
+        // APPROACH 2: Recursive Solution
+        if(n==0)
+            return false;
+        else if(n==1)
+            return true;
+        else return n%3==0 && isPowerOfThree(n/3);
         
+        
+        /*
+        // APPROACH 1: Using loops 
         if(n==0){
             return false;
         }
@@ -9,8 +18,20 @@ public:
             while(n%3==0){
                 n /= 3;     // i.e n=n /3
             }
-        return n==1;
-                
-        
+        return n==1;  // if(n==1) return true; else return false;
+        */
     }
 };
+
+
+/*
+// APPROACH 1: loops
+Time Complexity: O(log3(n))
+Space Complexity: O(1)
+*/
+
+/*
+//APPROACH 2: Recursive
+Time Complexity: O(log3(n))
+Space Complexity: O(log3(n))
+*/
