@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& nums) {
+        // APPROACH 1: Separate Odd and Even Numbers using vectors to store them.
+        /* Iterate over the whole Array and separate Odd and Even Numbers into 2 groups and store it in 2 different Vectors Odd and Even. Then we Create a new Array 
+           from the Start by choosing an Even number for each even index and an Odd number for each odd index. */
+        // Time Complexity: O(n), since we have to atleat check every element, so that they are all at their place.
+        // Space Complexity: It also requires extra space of O(n) for storing the even and odd numbers.
+        //CODE:
+        vector<int> odd, even;
+        int n = nums.size();
+        odd.reserve(n/2);   // Ensuring beforehand that our vectors have adequate capacities, so that all push_back()
+        even.reserve(n/2); // operations are completed in O(1).
+        for(int i=0; i<n; i++){
+            if(nums[i]%2 == 0)
+                even.push_back(nums[i]);  // pushing all even elements into even vector.
+            else 
+                odd.push_back(nums[i]);  // pushing all odd elements into odd vector.
+        }
+        //filling even spaces
+        for(int i=0; i<n; i+=2){
+            nums[i] = even[i/2];  // since we are incrementing by 2 positions, we do i/2 here.
+        }
+        for(int i=1; i<n; i+=2){
+            nums[i] = odd[i/2];
+        }
+        return nums;
+        
+        
+        /*
+        //APPROACH 2: 2 Pointers and Swapping
+        //CODE:
+        for(int i=0, j=1; i<nums.size();){
+            if(nums[i]%2 == 0)
+                i += 2; // i = i + 2;
+            else if(nums[j]%2 != 0)
+                j += 2; // j = j + 2;
+            else 
+                swap(nums[i], nums[j]);  // anyways half of the elements are odd and rest half are even, so it should
+        }                               // get sorted.
+        return nums;
+        */
+    }
+};
