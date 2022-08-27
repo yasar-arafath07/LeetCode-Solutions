@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int minimumOperations(vector<int>& nums) {
+        //APPROACH 2:
+        unordered_set<int> s; 
+        for(auto i : nums){
+            if(i != 0){
+                s.insert(i);
+            }
+        }
+        return s.size();
+        
+        
+        //APPROACH 1:
+        /* Here basically count the no of unique elements which are strictly positive and just return it*/
+        /*
+        //CODE:
+        unordered_set<int> s(nums.begin(), nums.end());  //copying all the element of nums into the set s.
+        return s.size() - s.count(0);
+        */
+    }
+};
+
+/*
+- If same elements are there, then count them only once
+- Count the unique elements and return the number of different positive elements.
+- So the basic observation here is that, in 1st operation, smallest element will make all its equal values to 0.
+- In 2nd operation, next smallest element will make all its equal values to be 0.
+- So by doing so, we can observe a pattern here i.e no of Operations = no of unique elements in the Array.
+*/
+
+//TIME COMPLEXITY: O(n)
+//SPACE COMPLEXITY: O(n)
