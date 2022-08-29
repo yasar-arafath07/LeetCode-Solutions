@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int findMiddleIndex(vector<int>& nums) {
+        int postfix_sum = accumulate(nums.begin(), nums.end(), 0);  // calculate the total sum of the Array
+        int prefix_sum = 0;  // initially the prefix sum is 0.
+        
+        for(int i=0; i<nums.size(); i++){
+            postfix_sum -= nums[i]; // postfix_sum = postfix_sum - nums[i];
+            if(postfix_sum == prefix_sum)
+                return i;
+            else
+                prefix_sum += nums[i]; // prefix_sum = prefix_sum + nums[i];
+        }
+        return -1;
+    }
+};
+
+/*
+// TIME COMPLEXITY : O(N)
+// SPACE COMPLEXITY : O(1)
+*/
+
+/*
+Approach:
+Step1: Calculate the total sum of the Array.
+Step2: In the for loop, check at every iteration whether the current unchanged prefix_sum is equal to postfix_sum (ith element should not be included in both prefix_sum 
+       and postfix_sum)
+       a) If the prefix_sum and postfix_sum are equal, return the index i;
+       b) else, Add this element into prefix_sum.
+Step3: If we exited from the loop, this tells that we don't have any middle element. So we return -1.
+*/
