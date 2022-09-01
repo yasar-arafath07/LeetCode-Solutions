@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maximum69Number (int num) {
+        // Just find the first 6 in nums and convert it to 9.
+        // To do so, we have to convert num (which is int) into a string so that we can traverse through it.
+        string s = to_string(num); // convert num to string to iterate over each element
+        
+        //traverse through the string
+        for(int i=0; i<s.size(); i++){
+            if(s[i] == '6'){
+                s[i] = '9';
+                break;
+            }
+        }
+        return stoi(s);  // convert string to int and return it.
+    }
+};
