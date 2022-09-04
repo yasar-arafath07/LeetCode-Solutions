@@ -1,0 +1,9 @@
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        //APPROACH 1: Using Inbuilt Function (__builtin_popcount(n)) for counting set bits.
+        return __builtin_popcount(n);
+    }
+};
+
+// Can be OPTIMIZED.
