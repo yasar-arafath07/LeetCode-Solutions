@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int findGCD(vector<int>& nums) {
+        
+        //APPROACH 1: One Liner
+        return gcd(*min_element(nums.begin(), nums.end()), *max_element(nums.begin(), nums.end()));
+        
+        
+        /*
+        //APPROACH 2: Using inbuilt gcd() function directly.
+        int min = *min_element(nums.begin(), nums.end());
+        int max = *max_element(nums.begin(), nums.end());
+        
+        return gcd(min, max);
+        */
+        
+        /*
+        //APPROACH 3: Using gcd() function indirectly.
+        int min = INT_MAX;  // means the integer variable min cannot store any value beyond a limit.
+        int max = INT_MIN;  // means the integer variable max cannot store any value below this limit.
+        
+        for(int i=0; i<nums.size(); i++){
+            if(min > nums[i])
+                min = nums[i];
+            if(max < nums[i])
+                max = nums[i];
+        }
+        return gcd(min, max);
+        */
+        
+        /*
+        //APPROACH 4: Using Sorting
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        int min = nums.front(); // nums.front() is used to fetch the 1st element of a vector container i.e nums[0].
+        int max = nums.back(); //nums.back() is used to fetch the last element of a vector container i.e nums[n-1].
+        return gcd(min, max);
+        */
+    }
+};
+
+// CODE for gcd() function:
+/*
+int gcd(int a, int b){
+    if(b == 0)
+        return a;
+    return gcd(b, a%b);
+}
+*/
