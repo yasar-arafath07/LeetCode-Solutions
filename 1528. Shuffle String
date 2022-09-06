@@ -1,0 +1,16 @@
+class Solution {
+public:
+    string restoreString(string s, vector<int>& indices) {
+        //APPROACH: Using Extra Space
+        string res = s;  //initially store given string s in a new string res.
+        
+        for(int i=0; i<indices.size(); i++){
+            res[indices[i]] = s[i];
+        }
+        return res;
+    }
+};
+
+//TIME COMPLEXITY: O(N)
+//SPACE COMPLEXITY: O(N)
+//Use Inplace Approch by Swapping to Optimize OR use Cyclic Sort.
