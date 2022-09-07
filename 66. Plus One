@@ -15,11 +15,10 @@ public:
         //If the program runs to this point, each 9 is now a 0. So to get a Correct Solution, we need to Add one more element with a value of zero AND set digits[0] to 1 
           (in the most significant position) to account for the carry digit.
         digits[0] = 1;
-        digits.push_back(0);
+        digits.push_back(0);  // DRY run for the test case, digits = [9,9,9] to understand this line.
         return digits;
     }
 };
-
 
 
 
