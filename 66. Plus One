@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int n = digits.size()-1;
+        
+        for(int i=n; i>=0; i--){ // traverse the digits from last element (least significant)
+            if(digits[i] == 9){
+                digits[i] = 0;
+            }
+            else{
+                digits[i]++; // digits[i]=digits[i]+1;
+                return digits;
+            }
+        }
+        //If the program runs to this point, each 9 is now a 0. So to get a Correct Solution, we need to Add one more element with a value of zero AND set digits[0] to 1 
+          (in the most significant position) to account for the carry digit.
+        digits[0] = 1;
+        digits.push_back(0);
+        return digits;
+    }
+};
+
+
+
+
+/* 
+- We are Traversing the Array from the last element. (least significant). 
+- Since we begin with the last digit, increasing that digit by one results in overflow. 
+- Therefore, all elements PRIOR (before) to digits[0] need to be considered since there may be additional 9's between digits[0],........, digits[n].
+- If digit is 9, So after Adding 1 to it, it'll become 10 which means 1 will be carried and that particular index will become 0. else if number is not 9, then we will 
+  increment it by 1.
+- But if the digits are, for eg: [9, 9, 9], then all will become 0. So we need to change 1st bit to 1 and add one extra 0 to add it by 1. (999 -> 1000)
+*/
