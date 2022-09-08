@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        int dupl = -1;
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        
+        //finding the duplicate element
+        for(int i=0; i<n-1; i++){  //we traverse till n-1 since anyways last element will be compared via below code
+            if(nums[i] == nums[i+1]){
+                dupl = nums[i];
+                break;
+            }
+        }
+        // finding the sum of n natural numbers
+        int sum = (n*(n+1))/2; 
+        for(int i=0; i<n; i++){
+            sum -= nums[i];  // sum = sum-nums[i];
+        }
+        return {dupl, sum + dupl};  // basically 'sum + dupl' will be the mising number. 
+    }
+};
