@@ -9,9 +9,9 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution{
 public:
-    vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> inorderTraversal(TreeNode* root){
         vector<int> nodes;
         inTraversal(root, nodes);
         return nodes;
@@ -23,5 +23,13 @@ public:
         nodes.push_back(root->val);
         inTraversal(root->right, nodes);
     }
-        
 };
+
+
+
+/*
+//INORDER Traversal: 
+- Visit the Leftmost node first.
+- Then visit the Root node.
+- Finally visit the Right most node.
+*/
