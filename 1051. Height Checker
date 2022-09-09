@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int heightChecker(vector<int>& heights) {
+        // BRUTE FORCE:
+        int n = heights.size();
+        vector<int> expected;  //OR vector<int> expected(heights.begin(), heights.end()); and delete below line of Code
+        expected = heights;  // cloning the given array to compare OR insert above in the vector expected directly 
+        
+        sort(expected.begin(), expected.end());
+        int count = 0;
+        for(int i=0; i<n; i++){
+            if(heights[i] != expected[i])
+                count++;
+        }
+        return count;
+    }
+};
+
+
+
+/* The Approach here is to create a new Clone called 'expected' of the given Array 'heights' and then sort the cloned vector 'expected' and then check where inequality 
+   occurs in the Array. As we find the inequality, we may count the moves required by counting all the elements lying after it */
+// Use map to optimize it.
