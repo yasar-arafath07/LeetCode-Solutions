@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        //Approach 1: Using HashMap
+        //TIME COMPLEXITY : O(n) Extra Space. So not recommended (OPTIMIZABLE)
+        vector<int> ans;
+        unordered_map<int,int> map;
+        for(auto i : nums){
+            map[i]++;
+            if(map[i] == 2){
+                ans.push_back(i);
+            }
+        }
+        return ans;
+    }
+};
+
+
+/*
+//APPROACH 1 : Using HashMap
+Step 1: Take an Empty Vector 'ans' to store the answer and an unordered_map 'map' and iterate over every element and increase the count value in the map.
+Step 2: At any Point of time, if the count value becomes 2, which means it'a a duplicate. So we push it into the ans.
+Step 3: Return the ans vector.
+*/
