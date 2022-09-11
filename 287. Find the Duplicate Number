@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        //Approach 2 : Using Slow and Fast Pointers Concept of Linked List
+        
+        
+        
+        /*
+        //Approach 1 : BRUTE FORCE
+        //Time Complexity : O(NlogN)
+        //Space Complexity : O(1) Extra Space
+        //CODE:
+        
+        int ans = 0;
+        sort(nums.begin(), nums.end());
+        
+        for(int i=0; i<nums.size()-1; i++){
+            if(nums[i] == nums[i+1]){
+                ans = nums[i];
+                break;
+            }
+        }
+        return ans;
+        */
+    }
+};
