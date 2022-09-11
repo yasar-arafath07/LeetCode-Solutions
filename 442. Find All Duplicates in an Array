@@ -2,7 +2,8 @@ class Solution {
 public:
     vector<int> findDuplicates(vector<int>& nums) {
         //Approach 1: Using HashMap
-        //TIME COMPLEXITY : O(n) Extra Space. So not recommended (OPTIMIZABLE)
+        //TIME COMPLEXITY : O(n)
+        //SPACE COMPLEXITY : Using HashMap takes O(n) Extra Space
         vector<int> ans;
         unordered_map<int,int> map;
         for(auto i : nums){
@@ -22,3 +23,5 @@ Step 1: Take an Empty Vector 'ans' to store the answer and an unordered_map 'map
 Step 2: At any Point of time, if the count value becomes 2, which means it'a a duplicate. So we push it into the ans.
 Step 3: Return the ans vector.
 */
+
+// Can be Optimized 
