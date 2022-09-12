@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        //Approach : Bitwise Solution
+        //Time Complexity : O(N)
+        int res = nums[0];
+        for(int i=1; i<nums.size(); i++){
+            res ^= nums[i];   //res = res ^ nums[i]; i.e here we are using logical XOR operator so that it cancels all
+        }                    //similar elements next to each other and in the end only the unique element will be left
+        return res;  // we will return that unique element which is left in the array
+    }
+};
+
+
+
+/* If we XOR the Entire Array, all the similar elements will gets cancelled and we will be left with the element that appears only once. Since the XOR of 2 equal 
+   elements is 0 */
+// Use Binary Search for Optimization of Complexity
