@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void duplicateZeros(vector<int>& arr) {
+        for(int i=0; i<arr.size(); i++){
+            if(arr[i] == 0){
+                arr.insert(arr.begin()+i, 0); // "vector_name.insert(position, value);"
+                arr.pop_back();  //once we add a zero, we remove an element from the back of the Array since given in Q
+                i++; // we are incrementing here also because if any 0 is found, we insert a new 0 and we dont want our 
+                    // pointer i pointing to the new 0. So we make i point to the next element of newly inserted 0.
+            }
+        }
+        return;
+    }
+};
+
+
+
+/* Every time we push 0, we need to increment again (DRY run for better understanding) */
