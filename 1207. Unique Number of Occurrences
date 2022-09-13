@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_map<int,int> map; 
+        
+        //Counting the Frequency of Elements
+        for(int i=0; i<arr.size(); i++){
+            map[arr[i]]++;
+        }
+        
+        vector<int> freq;
+        // Copying Frequency of map into Vector
+        for(auto i : map){
+            freq.push_back(i.second);
+        }
+        
+        //Copying the above Vector into a set (set will neglect duplicate elements)
+        set<int> s(freq.begin(), freq.end());
+        
+        int n = freq.size();  // size of the vector
+        int m = s.size(); // size of the set
+        
+        // compare the sizes of vector and set. If both are equal, then elements are unique so return true, else false.
+        if(n == m)
+            return true;
+        return false;
+    }
+};
