@@ -1,13 +1,12 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        
         //int N = nums.size();
         
         int l=0, h=nums.size()-1;
         
         while(l<=h){
-            int mid = l + (h-l)/2;    // i.e mid = (l + h)/2;
+            int mid = l + (h-l)/2;    //  mid = (l + h)/2;
             if(nums[mid] == target){
                 return mid;
             }
@@ -18,9 +17,14 @@ public:
                 h = mid -1;
             }
         }
-        
-        
         return -1;
-        
     }
 };
+
+
+/* 
+- There is a C++ STL in-built function called 'binary_search()' which takes 3 parameters.
+- Syntax: binary_search(nums.begin(), nums.end(), target);
+- binary_search(nums.begin(), nums.end(), target); will perform binary search algorithm on nums array for finding the   target element from the beginning of the array 
+  till the end.
+*/
