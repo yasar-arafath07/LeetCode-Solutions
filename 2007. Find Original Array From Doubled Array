@@ -1,0 +1,54 @@
+class Solution {
+public:
+    vector<int> findOriginalArray(vector<int>& changed) {
+        unordered_map<int,int> map;
+        int n = changed.size();
+        
+        if(n%2 != 0){  //if the size of the array is odd i.e if array elements are not doubled then return empty array
+            return {};  // return empty array
+        }
+        
+        for(int i=0; i<n; i++){
+            map[changed[i]]++;  // storing count of elements in a map i.e storing the frequencies
+        }
+        // OR we can also use below approach to store the frequencies of array elements
+        /*
+        for(auto x : changed){
+             map[x]++;
+        }
+        */
+        
+        vector<int> ans;
+        sort(changed.begin(), changed.end());
+        
+        for(int i=0; i<n; i++){
+            int twice = changed[i] * 2;
+        
+            if(map[changed[i]] == 0)
+                continue;
+            
+            if(map[twice] == 0){
+                return {};
+            }
+            
+            ans.push_back(changed[i]);
+            map[changed[i]]--;  // decrease the frequency of changed[i]
+            map[twice]--;  // decrease the frequency of twice (twice = changed[i]*2)
+            
+        }
+        return ans;
+    }
+};
+
+/*
+// Approach : Using Map and Sorting
+Step1: First we take a map and store the count of all elements in the map.
+Step2: Then sort the given array 'changed' so that we first encounter smaller elements and remove it's double from map
+Step3: We keep removing the smallest element 'n' and '2*n' and keep putting n into the ans vector until 'changed' array becomes empty.
+Step4: If at any moment, for some element if we do not find it's doubled value, return empty array from there.
+Step5: Otherwise, Add element into resultant vector.
+Step6: Also, if array has odd no. of elements, return empty array from there as we cannot find in pairs.
+
+// TIME COMPLEXITY : O(n logn)
+// SPACE COMPLEXITY : O(n)
+*/
