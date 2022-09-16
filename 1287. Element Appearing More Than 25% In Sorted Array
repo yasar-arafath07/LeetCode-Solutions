@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int findSpecialInteger(vector<int>& arr) {
+        //Approach: Using Hashmap
+        unordered_map<int,int> map;
+        
+        /*
+        for(int x : arr){
+            map[x]++; // storing the frequency of array elements
+        }
+        */
+        // storing the frequency of elements 
+        for(int i=0; i<arr.size(); i++){
+            map[arr[i]]++;
+        }
+        
+        // checking for the element that appears more than 25% of the time
+        for(auto i : map){
+            if(i.second > arr.size()/4){  // i.second is to access the value 
+                return i.first;  // i.first is to access the key
+            }
+        }
+        return 0;
+    }
+};
