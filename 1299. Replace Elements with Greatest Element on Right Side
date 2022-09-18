@@ -1,0 +1,14 @@
+class Solution {
+public:
+    vector<int> replaceElements(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> ans(n); // initialize a vector of size n which is same as array size to store the result
+        int max_no = -1;
+        
+        for(int i=n-1; i>=0; i--){
+            ans[i] = max_no;   // because the last element in the Array doesn't have any larger element after that
+            max_no = max(max_no, arr[i]); // checking the max no between the current max and the array element
+        }
+        return ans;
+    }
+};
