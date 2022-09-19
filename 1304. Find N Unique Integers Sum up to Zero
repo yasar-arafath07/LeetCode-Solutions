@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> sumZero(int n) {
+        vector<int> arr(n); // since we know the resultant array size will be n, create a vector of size n
+        
+        for(int i=0; i<n; i++){
+            arr[i] = i * 2 - n + 1;
+        }
+        return arr;
+    }
+};
+
+
+// Time Complexity : O(n)
+// Space Complexity : O(n)
+
+
+/*
+
+// Explanation
+- Basically the sum of all elements in the Array should be 0 for any integer n
+- So, if n = 0, return 0 because there is no element only
+- If n = 1, arr = [0] i.e array has one element that sums to 0
+- If n = 2, arr = [-1, 1] i.e array has 2 elements that sums to 0
+- Now, writing for more n based on above observation
+- If n = 3, arr = [-2, 0, 2] 
+- If n = 4, arr = [-3, -1, 1, 3]
+- If n = 5, arr = [-4, -2, 0, 2, 4]
+- Now, try to find the Rule
+- So, the Rule is: arr[i] = i * 2 - n + 1;
+
+*/
