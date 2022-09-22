@@ -1,0 +1,37 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        // Approach 2:
+        int i=0; 
+        for(int j=0; j<s.size()+1; j++){
+            if(s[j] == ' ' || j == s.length()){
+                reverse(s.begin()+i, s.begin()+j);
+                i = j + 1;
+            }
+        }
+        return s;
+        
+        
+        
+        /*
+        // Approach 1: 
+        int i=0;
+        
+        // this for loop will reverse each word in the input s
+        for(int j=0; j<s.size(); j++){
+            if(s[j] == ' '){
+                reverse(s.begin()+i, s.begin()+j);
+                i = j + 1;
+            }
+        } 
+        
+        /* till the above line, only till one before last word in s will be reversed. last letter wont be reversed 
+           because, after the last word there is no extra space. so above for loop will be rejected for last word *//*
+        reverse(s.begin()+i, s.end());  // reversing the last word
+        
+        return s;
+        */
+        
+        
+    }
+};
