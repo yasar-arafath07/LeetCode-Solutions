@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        // Approach 1: BRUTE FORCE
+        // TimE Complexity : O(m*n)
+        // Space COmplexity : O(1)
+        for(int i=0; i<matrix.size(); ++i){
+            for(int j=0; j<matrix[0].size(); ++j){  // i.e size of each row
+                if(matrix[i][j] == target){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
+// Use Binary Search to optimize it.
