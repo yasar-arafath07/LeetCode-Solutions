@@ -1,6 +1,7 @@
 class Solution {
 public:
     string reverseStr(string s, int k) {
+        /*
         //Approach 1: 
         //Time Complexity : O(N)
         //CODE:
@@ -11,6 +12,26 @@ public:
             else{
                 reverse(s.begin()+i, s.begin()+i+k);
             }
+        }
+        return s;
+        */
+        
+        
+        /*
+        //Approach 2: Approach 1 Code in other way
+        for(int i=0; i<s.size(); i+=(2*k)){
+            reverse(s.begin()+i, min(s.begin()+i+k, s.end()));
+        }
+        return s;
+        */
+        
+        
+        // Approach 3: Using while loop for same logic above
+        int i = 0;
+        
+        while(i < s.size()){
+            reverse(s.begin()+i, s.begin()+i+k > s.end() ? s.end() : s.begin()+i+k);
+            i += (2*k);
         }
         return s;
     }
