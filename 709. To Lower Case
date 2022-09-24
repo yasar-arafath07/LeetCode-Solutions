@@ -1,0 +1,32 @@
+class Solution{
+public:
+    string toLowerCase(string s){
+        /*
+        // Approach 1: Using foreach loop
+        // Time Complexity : O(N)
+        // Space Complexity : O(1) excluding the space of the output
+        for(auto& c : s){
+            if(c >= 'A' && c <= 'Z'){
+                c += 32;  // c = c + 32;
+            }
+        }
+        return s;
+        */
+        
+        
+        /*
+        // Approach 2: Using for loop
+        for(int i=0; i<s.size(); i++){
+            if(s[i]>=65 && s[i]<=90){
+                s[i] += 32; // s[i] = s[i] + 32;
+            }
+        }
+        return s;
+        */
+        
+        
+        // Approach 3: Using C++ STL
+        transform(s.begin(), s.end(), s.begin(), :: tolower);
+        return s;
+    }
+};
