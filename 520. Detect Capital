@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool detectCapitalUse(string word) {
+        // Approach 2 : Using C++ STL
+        return all_of(word.begin(), word.end(), :: isupper) || all_of(next(word.begin()), word.end(), :: islower); 
+        
+        
+        
+        /*
+        //Approach 1 : Using ASCII Codes of Alphabets
+        //Code doesn't run properly for 'FlaG' test case 
+        int n = word.size();
+        
+        for(int i=0; i<n; i++){
+            if(word[i] >= 65 && word[i] <= 90 || word[i] >= 97 && word[i] <= 122){
+                return true;
+            }
+            else if(word.front() >= 65 && word.front() <= 90){
+                return true;
+            }
+        }
+        return false;
+        */
+        
+    }
+};
