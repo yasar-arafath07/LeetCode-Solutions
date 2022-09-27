@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
+        /*
+        // Approach 1 : Using Vector Pairs
+        vector<string> ans;  //  to store the names of the result
+        vector<pair<int, string>> v; // to store {height, name}. So, by putting height at first, we can skip writing a 
+                                     // comparator as it'll sort by first element of the pair.
+        
+        // inserting elements into the vector pair
+        for(int i=0; i<names.size(); i++){
+            v.push_back({heights[i], names[i]});
+        }
+        
+        // sort the vector in decreasing order
+        sort(v.rbegin(), v.rend());
+        
+        // run a for loop to store the names according to heights value
+        for(int i=0; i<names.size(); i++){
+            ans.push_back(v[i].second);
+        }
+        return ans;
+        */
+        
+        
+        // Apprach 2: Using Priority Queue
+        //CODE:
+        priority_queue<pair<int, string>> pq;
+        
+        for(int i=0; i<names.size(); i++){
+            pq.push({heights[i], names[i]});
+        }
+        // pq = ({180, Mary}, {170, Emma}, {165, John})
+        // after the above for loop, i.e after pushing into priority queue, the pairs will be sorted automatically by priority_queue
+        
+        vector<string> ans;
+        while(!pq.empty()){
+            ans.push_back(pq.top().second);
+            pq.pop();    
+        }
+        return ans;
+    }
+};
