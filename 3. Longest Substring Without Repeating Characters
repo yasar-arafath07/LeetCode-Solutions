@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char,int> map; // this will store the frequency ofthe characters in the map as we move the
+                                     // tail of the window
+        int maxi = INT_MIN; // this will return the length of the longest substring without repeating characters
+        int i = 0; // starting of the window
+        int j = 0; // end or tail of the window
+        
+        if(s.length() == 0){
+            return 0;
+        }
+
+        while(j < s.length()){
+            // CALCULATIONS:
+            //We Insert the character into map and then increment the count of frequency of character in the map
+            map[s[j]]++; // 'map[s[i]]' will insert the element s[j] inside the map and then '++' will increment
+                        // the count of s[j] in the map 
+            
+            // CASE 1: If the Condition is not met i.e if the size of the map is lesser than the size of window
+            if(map.size() < j-i+1){
+                // In this case, we need to remove s[i] till the size becomes equal
+                while(map.size() < j-i+1){
+                    map[s[i]]--; // i.e decrement the count of s[i] in the map
+                    //Now, once we decrement the count of s[i] in the map, we need to check if the count of s[i]
+                    //in the map is 0. If YES, then remove that element from the map. So,
+                    if(map[s[i]] == 0){
+                        map.erase(s[i]);
+                    }
+                    i++; // and then we increment the start of the window
+                }
+                j++; // and then we increment the tail of the window which is j
+            }
+
+            // CASE 2: If the Conditon is met i.e if the size of the map is equal to the window size i.e if all
+            // the characters in the window is all unique
+            else if(map.size() == j-i+1){
+                maxi = max(maxi, j-i+1);  // 'j-i+1' is the size of the window
+                j++; // and then we move j
+            }
+
+            // CASE 3: this can never exist in this problem
+            // i.e if(map.size() > j-i+1), this will never occur. So we can skip this condition in this problem
+            // still lets write it
+            else if(map.size() > j-i+1){
+                j++;
+            }
+        }
+        return maxi;
+    }
+};
