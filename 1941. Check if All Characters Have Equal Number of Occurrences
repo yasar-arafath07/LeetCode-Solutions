@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool areOccurrencesEqual(string s) {
+        unordered_map<char,int> map;  // to store the frequency of the string characters
+        int n = s.size(); // size of the string
+
+        for(auto i : s){
+            map[i]++;  //storing the element i in the map and then incrementing the count of frequency of i in map
+        }
+
+        int val = map[s[0]];  // we store the 'value' of 1st key of the map in the variable val
+        // and then we iterate on the map and parallelly we check if the 'value' of all keys are same as val
+        // If same, return true. else return false
+        for(auto it=map.begin(); it!=map.end(); it++){
+            if(it->second != val){
+                return false;
+            }
+        }
+        return true;
+    }
+};
