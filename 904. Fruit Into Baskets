@@ -1,0 +1,59 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        // So here, We need to find the Longest Subarray with only 2 unique characters (characters may repeat)
+        unordered_map<int,int> map; // to store the count of fruitsas we move to the right
+        int maxi = INT_MIN; // this will store and in the end returns the maximum no. of fruits we can have i.e
+                            // the length of the longest substring with only 2 unique characters 
+        int i = 0; // start of the window
+        int j = 0; // end or tail of the window
+
+        // EDGE/CORNER CASE:
+        if(fruits.size() == 1){
+            return 1;
+        }
+        else if(fruits.size() == 2){
+            return 2;
+        }
+
+        while(j < fruits.size()){
+            // CALCULATIONS:
+            //As we move to the right in the Array,we insert the element into the map parallelly by map[fruits[j]]
+            // and then increment the count of the element in the map by doing '++'
+            map[fruits[j]]++;
+
+            // CASE 1: If the given Condition i.e 2 is not met then we move the tail of the window by doing j+
+            if(map.size() <= 2){
+                maxi = max(maxi, j-i+1);
+                j++;  // map.size() will tell us the total no. of unique fruits it has 
+            }
+            /*
+            // CASE 2: If the given Condition i.e 2 is met, we pick an Answer from the Calculation
+            else if(map.size() == 2){
+                maxi = max(maxi, j-i+1); // where 'j-i+1' is the size of the window
+                j++;
+            }
+            */
+
+            // CASE 3: If the given Condition i.e 2 is Crossed, then we remove the Calculation for i i.e fruits[i]
+            else if(map.size() > 2){
+                // In this Case, we need to remove the calculation for i
+                // So, we remove fruits[i] from the map till the condition i.e size of map comes back to normal
+                while(map.size() > 2){
+                    map[fruits[i]]--; // decrement the count for fruits[i] i.e removing the element from the map
+                    // As we Decrement the count of fruits[i] in the map, we need to check if the count of that
+                    // element in the map is 0 or not. If YES i.e if 0, then erase that element from the map
+                    if(map[fruits[i]] == 0){
+                        map.erase(fruits[i]);
+                    }
+                    i++; // then we increment the starting of the window
+                }
+                j++; // then we increment the tail of the window
+            }
+        }
+        return maxi;
+    }
+};
+
+// TIME COMPLEXITY : O(N)
+// SPACE COMPLEXITY : O(K), (here k = 2)
