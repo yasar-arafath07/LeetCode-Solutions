@@ -1,0 +1,147 @@
+class Solution {
+public:
+    string minWindow(string s, string t){
+        
+        // Approach 2: Aditya Verma's
+        unordered_map<char,int>mpp;
+        int m = s.length();
+        int n = t.length();
+        int i = 0; // start of the window
+        int j = 0; // end or tail of the window
+        int mini = INT_MAX;
+        int index = -1;
+        //string ans = "";
+
+        // storing the frequency of string t in the map
+        for(auto x : t){
+            mpp[x]++;
+        }
+        // size of map will be stored in count variable
+        int count = mpp.size(); 
+        
+        /*
+        // If size of string s is less than size of string t
+        if(m < n){
+            return "";
+        }
+        */
+        
+        // Sliding Window Starts
+        while(j < m){
+            if(mpp.find(s[j]) != mpp.end()){ // i.e if s[j] is found in the map
+                mpp[s[j]]--;  // if s[j] is found in the map, then decrement the frequency of it in the map
+                //now check if the frequency became 0, if YES then decrement count
+                if(mpp[s[j]] == 0){
+                    count--;
+                }
+            }
+
+            // if we get an answer i.e when count becomes 0
+            while(count == 0){
+                // taking out an answer
+                //mini = min(mini, j-i+1);
+                if(mini > j-i+1){
+                    mini = j-i+1; // since we want the minimum length
+                    index = i; // keeping track of the starting index of the window/substring 
+                }
+        
+                // optimizing the found answer
+                if(mpp.find(s[i]) != mpp.end()){ // i.e if s[i] is present in the map
+                    if(mpp[s[i]] == 0){ // if s[i] is present in the map and if it's frequency is 0, then count++
+                        count++;
+                    }
+                    mpp[s[i]]++;  // and then we increment the frequency of it. So we did count++ above
+                }
+                i++;  // we move i while(count == 0)
+            }
+            j++; // we keep moving j while(j < s.length())
+        }
+        // returning the string
+        return (index == -1) ? "" : s.substr(index,mini);
+        // i.e if there is no change in the index, then there is no substring. So we return an empty string "".
+        // But, if there is a substring, then we return that substring of s starting from 'index' till the next
+        // mini letters because mini stores the size.
+        
+
+
+        
+        // Approach 1: Aditya Verma's 
+        /*
+        unordered_map<char,int> map; // this is to store the character frequency of the string 't'
+        int mini = INT_MAX; // this will store the size or the substring with minimum size
+        int i = 0; // starting of the window
+        int j = 0; // end or tail of the window
+        int start = 0;
+        string ans = "";
+
+        // storing the frequencies of string 't' in a map
+        for(auto i : t){
+            map[i]++;
+        }
+
+        int count = map.size(); // this stores the total no. of unique characters in the map
+
+        if(map.find(s[j]) != map.end()){
+            map[s[j]]--;
+            if(map[s[j]] == 0){
+                count--;
+            }
+        }
+
+    
+        // Starting the Sliding Window
+        while(j < s.length()){
+            // CALCULATION:
+            if(count > 0){
+                j++; // we write j++ here, that's why we check in the map for 1st element above
+                // now we check if s[j] is present in the map, if yes, then decrement the frequency of it in map
+                if(map.find(s[j]) != map.end()){ // i.e if s[j] is present in the map
+                    map[s[j]]--; // if s[j] is present in the map, then decrement the frequency of it in the map
+                    //Now, check if the frequency of it became 0, if yes count--
+                    if(map[s[j]] == 0){
+                        count--;
+                    }
+                }
+            }
+            //Now, if we get an Answer i.e if count becomes 0
+            else if(count == 0){
+                // picking an answer
+                // mini = min(mini, j-i+1); 
+                if(mini > j-i+1){
+                    mini = j-i+1;
+                    start = i;
+                }
+    
+                // optimizing the ans by removing s[i] and doing i++
+                while(count == 0){
+                    if(map.find(s[i]) != map.end()){ // i.e if there is s[i] in the map i.e extra element
+                        map[s[i]]++; // then increment the frequency of it in the map
+                        // Now check if the frequency of that element crosses 0, if yes, then count++
+                        if(map[s[i]] == 1){
+                            count++;
+                            //mini = min(mini,j-i+1);
+                            if(mini > j-i+1){
+                                mini = j-i+1;
+                                start = i;
+                            }
+                        }
+                        i++;
+                    }
+                    else{
+                        i++; // i.e if s[i] is not present in the map, we simply move i forward
+                    }
+                }
+            }
+        }
+        // since we have to return a string
+        
+        if(mini != INT_MAX){
+            return ans.append(s.substr(start,mini));
+        }
+        else{
+            return ans;
+        }
+        */
+
+    }
+};
