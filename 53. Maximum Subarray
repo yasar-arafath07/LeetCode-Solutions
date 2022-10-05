@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums){
+        // KADANE's ALGORITHM
+        // TC : O(N)
+        // SC : O(1), because we are not using any Extra Space
+        // CODE:
+        int sum = 0; // Initially the Sum will be 0
+        int maxi = nums[0]; //because, it's given the subarray should contain atleast 1 element OR simply take INT_MIN
+        
+        for(int i=0; i<nums.size(); i++){  // We linearly Traverse through the nums vector
+            sum += nums[i];  // sum = sum + nums[i];
+            maxi = max(maxi, sum); // if(sum>maxi), maxi=sum;
+    
+            if(sum < 0){
+                sum = 0; // because, if a subarray which is carrying -ve sum is of no use bec we want to maximize the subarray sum
+            }            
+        }
+        return maxi;
+    }
+};
+
+/*
+// BRUTE FORCE : Run 3 for loops (Least Optimized - WORST)
+// TC : O(N^3)
+- a) for(i=0 to n-1)
+- b) for(j=i to n-1)
+- c) for(k=i to j)
+- and then do the Calculations of finding the sum and finding the maximum
+*/
+
+
+/*
+// OPTIMIZED : Run 2 for loops (Better)
+// TC : O(N^2)
+*/
+
+
+/*
+// KADANE's ALGORITHM [Most Optimized]
+// TC : O(N)
+- It is widely used to find the Maximum Subarray Sum.
+- Here, we linearly traverse on the Array
+// Intuition Behind Kadane's Algorithm : We carry a Subarray Sum with negative numbers as long as it gives us a Positive Sum
+*/
