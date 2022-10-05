@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int smallestEvenMultiple(int n){
+        // If n is even
+        if(n%2 == 0){
+            return n;
+        }
+        // If n is odd
+        else{
+            return 2*n;
+        }
+    }
+};
