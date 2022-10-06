@@ -1,0 +1,52 @@
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums){
+        // Approach 2: SLIDING WINDOW (Educative.io)
+        // TC : O(N + N) == O(N)
+        // SC : O(1) Constant Space
+        // CODE:
+        int minLength = INT_MAX;
+        int windowSum = 0;
+        int i = 0; // windowStart
+        int j = 0; //windowEnd
+
+        for(int j=0; j<nums.size(); j++){
+            // CALCULATION:
+            windowSum += nums[j];  // Add the next element i.e windowSum = windowSum + nums[j]
+            // If the Condition required is met, Shrink the Window as Small as Possible until the 'windowSum' becomes smaller than 'target' value.
+            while(windowSum >= target){
+                // Pick an ANSWER from the Calculation:
+                minLength = min(minLength, j-i+1); // 'j-i+1' is the size of the Window
+                windowSum -= nums[i]; // remove the calculation for 'i' i.e windowSum = windowSum-nums[i]
+                i++;  // shrink the Window 
+            }
+        }
+        return minLength == INT_MAX ? 0 : minLength;
+
+        /*
+        // Approach 1: BRUTE FORCE
+        // TC : O(N * N)
+        // SC : O(1)
+        // Gives TLE Error
+        // CODE:
+        int mini = INT_MAX;
+        int windowSum = 0;
+        int i = 0; // windowStart
+        int j = 0; // windowEnd
+
+        for(i=0; i<nums.size(); i++){
+            windowSum = 0;
+            for(j=i; j<nums.size(); j++){
+                windowSum += nums[j];  // windowSum = windowSum + nums[j] i.e adding the next element 
+                if(windowSum >= target){
+                    mini = min(mini, j-i+1);  // 'j-i+1' is the size of the current window
+                }
+            }
+        }
+        if(mini == INT_MAX){
+            return 0;
+        }
+        return mini;
+        */
+    }
+};
