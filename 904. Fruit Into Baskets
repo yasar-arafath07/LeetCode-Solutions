@@ -1,7 +1,38 @@
 class Solution {
 public:
-    int totalFruit(vector<int>& fruits) {
-        // So here, We need to find the Longest Subarray with only 2 unique characters (characters may repeat)
+    int totalFruit(vector<int>& fruits){
+        // Approach 2: Using While loop (DG)
+        // TC : O(N)
+        // SC : O(1), as there can be a maximum of 3 types of fruits stored in the frequency map
+        // Only 87/91 Test Cases Passed
+        unordered_map<char, int> mpp; // to store the frequency of the fruits
+        int maxLength = 0;
+        int i = 0; // windowStart
+        int j = 0; // windowEnd
+
+        // try to extend the range [i, j]
+        for(int j=0; j<fruits.size(); j++){
+            mpp[fruits[j]]++; // Insert the fruit into the map and then increment the frequency
+            
+            // If the condition/requirement exceeds, remove fruits from the beginning i.e remove calculation for i
+            // Shrink the sliding window until we are left with 2 'fruits' in the frequency map
+            // mpp.size() tells us the total no. of unique fruits present in the map
+            while(mpp.size() > 2){ 
+                mpp[fruits[i]]--; // decrement the frequency of fruits[i]
+                // If the frequency becomes 0, remove it from the map
+                if(mpp[fruits[i]] == 0){
+                    mpp.erase(fruits[i]);
+                }
+                i++; // shrink the window
+            }
+            maxLength = max(maxLength, j-i+1);
+        }
+        return maxLength;
+
+
+        /*
+        // Approach 1: Using While loop 
+        // So here, We need to find the Longest Subarray with only 2 unique characters atmost (characters may repeat)
         unordered_map<int,int> map; // to store the count of fruitsas we move to the right
         int maxi = INT_MIN; // this will store and in the end returns the maximum no. of fruits we can have i.e
                             // the length of the longest substring with only 2 unique characters 
@@ -34,7 +65,7 @@ public:
                 j++;
             }
             */
-
+            /*
             // CASE 3: If the given Condition i.e 2 is Crossed, then we remove the Calculation for i i.e fruits[i]
             else if(map.size() > 2){
                 // In this Case, we need to remove the calculation for i
@@ -52,6 +83,7 @@ public:
             }
         }
         return maxi;
+        */
     }
 };
 
