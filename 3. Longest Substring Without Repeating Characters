@@ -1,6 +1,39 @@
 class Solution {
 public:
-    int lengthOfLongestSubstring(string s) {
+    int lengthOfLongestSubstring(string s){
+        // Approach 2: using for loop (DG)
+        // TC : O(N)
+        // SC : O(K), where K is the no. of distinct characters in the input string
+        unordered_map<char,int> map; // here we are using map to store the previous index of each character we 
+                                     // processed
+        int maxi = INT_MIN;
+        int i = 0; // windowStart
+        int j = 0; // windowEnd
+
+        if(s.size() == 0){
+            return 0;
+        }
+
+        for(int j=0; j<s.size(); j++){
+            // If the map already contains 's[j]', shrink the window from the beginning so that we have only 1 
+            // Occurence of 's[j]'
+            // i.e if the map contains 's[j]' already, which means we found a duplicate character. So we shrink the
+            // window from the beginning so that we have only 1 occurence of 's[j]'
+            if(map.find(s[j]) != map.end()){  // i.e if s[j] is found in the map, then move i 
+                i = max(i, map[s[j]]+1);  // shrink the window
+                // this is tricky: in the current window, we will not have any s[j] after it's previous index and 
+                // if 'i' is already ahead of the last index of s[j], we'll keep 'i'
+            }
+            map[s[j]] = j; // Insert s[j] into the map i.e, remembering the last index of each character we processed
+            // i.e, we store the index of the current s[j] in the map by overriding the previous index
+            maxi = max(maxi, j-i+1); // remember the maximum length so far
+        }
+        return maxi;
+
+
+
+        /*
+        // Approach 1: using While loop (AV)
         unordered_map<char,int> map; // this will store the frequency ofthe characters in the map as we move the
                                      // tail of the window
         int maxi = INT_MIN; // this will return the length of the longest substring without repeating characters
@@ -47,5 +80,6 @@ public:
             }
         }
         return maxi;
+        */
     }
 };
