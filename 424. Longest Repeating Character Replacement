@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k){
+        // Approach : using for loop (DG)
+        // TC : O(N), 'N' no. of letters in input string
+        // SC : O(26), since we expect only the uppercase letters in the input string. So it'll be equivalent to O(1)
+        unordered_map<char,int> map; // to store the frequency of the string characters
+        int maxRepeatLetterCount = 0; // this will store the maximum repeating letter's count prsent in the window
+        int maxi = INT_MIN; // this will store the length of the longest substring containing the same letter
+        int i = 0; // start of the window
+        int j = 0; // windowEnd
+
+        for(int j=0; j<s.size(); j++){
+            map[s[j]]++; // store the character in the map and increment the frequency as we move from left to right
+
+            //we don't need to place the maxRepeatLetterCount under the below 'if' statement
+            maxRepeatLetterCount = max(maxRepeatLetterCount, map[s[j]]);
+
+            // Current window size is from 'i' to 'j', overall we have a letter which is repeating 
+            // 'maxRepeatLetterCount' times, this means we can have a window which has one letter repeating for
+            // 'maxRepeatLetterCount' times and the remaining letters we should replace. If the remaining letters
+            // are more than 'k', then it is the time to shrink the window as we are not allowed to replace more 
+            // than 'k' letters. So, 
+            if(j-i+1-maxRepeatLetterCount > k){ // i.e if windowSize - maxRepeatLetterCount > k, then we shrink 
+                map[s[i]]--;  // decrement the frequency of str[i] in the map 
+                i++;  // shrinking the window
+            }
+            maxi = max(maxi, j-i+1);
+        }
+        return maxi;
+    }
+};
