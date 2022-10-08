@@ -2,6 +2,64 @@ class Solution {
 public:
     string minWindow(string s, string t){
         
+        // Approach 3 : SLIDING WINDOW (DGs)
+        // TC : O(N+M), where 'N' is the no. of characters in the input string s and 'M' is the no. of chars in t.
+        // SC : O(M), since in the worst case, the whole pattern can have distinct characters which will go to map.
+        // CODE:
+        unordered_map<char,int> map(26); // to store the frequency of the characters of string t
+        int matched = 0;
+        int minLength = s.length()+1; // this will store the smallest length of the substring that has all the 
+        // characters of t
+        int subStrStart_index = 0; // this is to keep track of the starting index of the substring
+        int i = 0; // windowStart
+        int j = 0; // windowEnd
+
+        // Store the frequencies of the character from the string 't' inside a map
+        for(auto it : t){
+            map[it]++;
+        }
+
+        if(s.size() < t.size()){
+            return "";
+        }
+        if(s == t){
+            return s;
+        }
+
+        // try to extend the range [i,j]
+        for(int j=0; j<s.length(); j++){  
+            if(map.find(s[j]) != map.end()){ // if s[i] is present in the map, then decrement the frequency of it
+                map[s[j]]--;
+                if(map[s[j]] >= 0){ // if the frequency is >= zero, then do matched++.
+                    matched++;
+                }
+            }
+
+            // Shrink the window if we can, finish as soon as we remove a matched character
+            // if the condition required is met i.e if we found our substring, shrink it as small as possible
+            while(matched == t.size()){
+                if(minLength > j-i+1){
+                    minLength = j-i+1;
+                    subStrStart_index = i; // keeping track of the starting index of the substring
+                }
+                // Now, we found an answer, so try to reduce the length of the substring
+                // So, start removong elements from the beginning, i.e, start shrinking the window as low as
+                // possible so that the length becomes minimum. So before we do shrinking, check in the map. So,
+                if(map.find(s[i]) != map.end()){
+                    if(map[s[i]] == 0){
+                        matched--;
+                    }
+                    map[s[i]]++;
+                }
+                i++;
+            } // end of 'while' loop
+        } // end of 'for' loop
+        return minLength > s.length() ? "" : s.substr(subStrStart_index, minLength);
+        // i.e if minLength is greater than the length of the string, then we return an empty string. else, we 
+        // return the substring starting from the index "subStrStart_index" till the next "minLength" elements.
+
+
+        /*
         // Approach 2: Aditya Verma's
         unordered_map<char,int>mpp;
         int m = s.length();
@@ -19,12 +77,7 @@ public:
         // size of map will be stored in count variable
         int count = mpp.size(); 
         
-        /*
-        // If size of string s is less than size of string t
-        if(m < n){
-            return "";
-        }
-        */
+        // If size of string s is less than size of string t, return empty string (not needed)
         
         // Sliding Window Starts
         while(j < m){
@@ -61,6 +114,7 @@ public:
         // i.e if there is no change in the index, then there is no substring. So we return an empty string "".
         // But, if there is a substring, then we return that substring of s starting from 'index' till the next
         // mini letters because mini stores the size.
+        */
         
 
 
