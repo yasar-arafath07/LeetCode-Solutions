@@ -1,0 +1,52 @@
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2){
+        // Approach : using SLIDING WINDOW (DGs)
+        // TC : O(N+M), where 'N' and 'M' are the no. of characters in the input string and pattern string respctvly.
+        // SC : O(M), since in the worst case, the whole pattern can have distinct characters that will go into map.
+        // CODE:
+        unordered_map<char,int> map; // to store the frequency of characters of the 'pattern' string
+        int matched = 0; // this is to keep track of the matched items from the map in the window
+        int i = 0; // windowStart
+        int j = 0; // windowEnd
+
+        // Initially, store the frequencies of characyters of 'pattern' string in the map
+        for(auto it : s1){
+            map[it]++;
+        }
+
+        // Our goal is to match all the characters from the 'map' with the current window
+        // Iterate on the s2 string
+        for(int j=0; j<s2.size(); j++){
+            // CASE 1: if s2[j] is present in the map, then decrement the frequency of it in the map
+            if(map.find(s2[j]) != map.end()){ // i.e if s2[j] is present in the map
+                map[s2[j]]--; // decrement the frequency of the matched character
+                // After decrementing, if the frequency of character in the map becomes 0, then do matched++
+                if(map[s2[j]] == 0){
+                    matched++;
+                }
+            }
+
+            // CASE 2: If the condition is met, i.e, if 'matched' becomes equal to the size of the map, return true
+            if(matched == map.size()){
+                return true;
+            }
+
+            // CASE 3: If the window size is greater than the length of the pattern i.e, if(j >= patter.length()-1),
+            // then we shrink the window to make the window size equal to the pattern's size
+            if(j-i+1 >= s1.length()){  //OR if(j >= s1.length()-1)
+                // In this case, we shrink the window. but before shrinking check if str[i] is present in the map
+                // i.e here we try to maintain the window size 
+                if(map.find(s2[i]) != map.end()){  // .e if str[i] is present in the map
+                    // take care of 'matched' also, So
+                    if(map[s2[i]] == 0){
+                        matched--; // before putting the character back, decrement the match count
+                    }
+                    map[s2[i]]++; // put the character back for matching
+                }
+                i++; // shrink the window
+            } // end of 3rd 'if' condition 
+        } // end of main 'for' loop
+        return false;
+    }
+};
