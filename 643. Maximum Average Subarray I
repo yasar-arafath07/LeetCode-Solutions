@@ -1,6 +1,31 @@
 class Solution {
 public:
     double findMaxAverage(vector<int>& nums, int k){
+        // Approach 1: Using DG's for loop
+        double windowSum = 0;
+        double maxi = INT_MIN;
+        double avg = 0;
+        int i = 0; // windowStart
+        int j = 0; // windowEnd
+
+        for(int j=0; j<nums.size(); j++){
+            // CALCULATION:
+            windowSum += nums[j]; // windowSum = windowSum + nums[j]
+            
+            // If the condition is met, Slide the window
+            // We dont need to slide if we've not hit the window size of 'k'
+            if(j >= k-1){ 
+                avg = windowSum / k;
+                maxi = max(maxi, avg);
+                windowSum -= nums[i]; // windowSum = windowSum - nums[i]
+                i++; // shrink the window
+            }
+        }
+        return maxi;
+
+
+        /*
+        // Approach 1 : Using AV's while loop
         double windowSum = 0;
         double maxi = INT_MIN;
         double avg = 0;
@@ -9,7 +34,7 @@ public:
 
         while(j < nums.size()){
             // CALCULATION:
-            windowSum = windowSum + nums[j];
+            windowSum = windowSum + nums[j]; // windowSum += nums[j]
 
             // CASE 1: If the window size 'k' is not hit
             if(j-i+1 < k){
@@ -22,11 +47,12 @@ public:
                 avg = windowSum / k;
                 maxi = max(maxi, avg);
                 // Now, remove the calculations for i and then shrink the window
-                windowSum = windowSum - nums[i];
+                windowSum = windowSum - nums[i]; // windowSum -= nums[i]
                 i++; // shrink the window
                 j++; 
             }
         }
         return maxi;
+        */
     }
 };
