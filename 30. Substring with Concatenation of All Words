@@ -1,0 +1,56 @@
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        // Approach : using for loop (DGs)
+        // TC : O(N*M*Len), where 'N' is the no. of character in the given string 's', 'M' is the total no. of words
+        // in 'words' string and 'Len' is the length of each word
+        // SC : O(M) since at most, we will be storing all the words in the 2 HashMaps. and O(N), since in the worst
+        // case, we also need O(N) space for resulting vector list. So total TC = O(M+N)
+        // CODE:
+        unordered_map<string, int> map; // this map is to store the frequency of each word of 'words' string
+        vector<int> res={}; // this is to store the index of the starting indices of substrings in the given string 
+        // that are concatenation of all the given words
+        int wordsCount = words.size(); // size of the given 'words' string
+        int wordLength = words[0].length(); // length of each word in 'words' string
+
+        // storing the frequencies of each word of 'words' string inside the map
+        for(auto word : words){
+            map[word]++;
+        }
+
+        // 'i' will traverse on the string 's'
+        for(int i=0; i<=s.length()-wordsCount*wordLength+1; i++){
+            unordered_map<string, int> wordsSeen_map; // if the string variable 'word' is found in the 1st map, 
+            // then we put it into this map also
+            // 'j' will traverse on 'words' string
+            for(int j=0; j<wordsCount; j++){ // j will traverse from index 0 till the last element of 'words' string
+                int nextWordIndex = i + (j*wordLength); // at each iteration, 'nextWordIndex' increases by
+                // 'wordLength' amount basically
+
+                // Now, get the word from the string to match using nextWordIndex
+                string word = s.substr(nextWordIndex, wordLength);
+
+                // Now, check that word in the 1st map
+                // If the word is not present in the map, then come out of the loop.i.e, come out of inner loop, i++
+                if(map.find(word) == map.end()){ // break if we dont need this word
+                    break; // control will come out of the nearest loop
+                }
+
+                // If the control reaches here, means that the word is present in the 1st map, so put that word
+                // in the 'wordsSeen_map'.
+                wordsSeen_map[word]++;
+
+                // no need to process further if the word has higher frequency than required
+                if(wordsSeen_map[word] > map[word]){
+                    break;
+                }
+
+                // store the index if we have found all the words
+                if(j+1 == wordsCount){ // 'j+1' means we have reached till the end of the 'words' string.
+                    res.push_back(i);
+                }
+            } // end of 'inner for loop' i.e, 2nd for loop
+        } // end of 'outer for loop' i.e 1st for loop
+        return res;
+    }
+};
