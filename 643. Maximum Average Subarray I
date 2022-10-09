@@ -1,0 +1,32 @@
+class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k){
+        double windowSum = 0;
+        double maxi = INT_MIN;
+        double avg = 0;
+        int i = 0; // windowStart
+        int j = 0; // windowEnd
+
+        while(j < nums.size()){
+            // CALCULATION:
+            windowSum = windowSum + nums[j];
+
+            // CASE 1: If the window size 'k' is not hit
+            if(j-i+1 < k){
+                j++;
+            }
+
+            // CASE 2: If the window size 'k' is hit, then pick an answer from the Calculation
+            else if(j-i+1 == k){
+                // Pick an ANswer from the calculation
+                avg = windowSum / k;
+                maxi = max(maxi, avg);
+                // Now, remove the calculations for i and then shrink the window
+                windowSum = windowSum - nums[i];
+                i++; // shrink the window
+                j++; 
+            }
+        }
+        return maxi;
+    }
+};
