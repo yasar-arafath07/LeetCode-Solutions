@@ -1,6 +1,55 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> twoSum(vector<int>& nums, int target){
+        // Approach 4: HashTable (DG's)
+        // TC : O(N)
+        // SC : O(N), as in the worst case, we will be pushing 'N' numbers in the Hashtable
+        unordered_map<int, int> map; // this is to store the Array elements with it's index as value.
+        vector<int> ans; // to store the 2 indices that adds up to sum
+        
+        // Iterate on the Array and check if each element's partner (target-nums[i]) is present in the map or not
+        for(int i=0; i<nums.size(); i++){
+            if(map.find(target-nums[i]) != map.end()){ // if the partner is found in map
+                ans.push_back(i); // push the first index into the vector
+                ans.push_back(map[target-nums[i]]); // push the index of the partner into the vector
+            }
+            // If the partner is not found in the map, then insert the element along with its index in the map 
+            else{
+                map[nums[i]] = i; // store the element in the map along with it's index as value
+            }
+        }
+        return ans;
+
+
+        /*
+        // Approach 3: 2 Pointers (DG's)
+        // Gives Memory Limit Exceeded Error
+        vector<int> ans;
+        int left = 0;  // pointer 1
+        int right = nums.size()-1; // pointer 2
+        int sum = 0; // stores the sum of left and right sum
+
+        while(left < right){
+            sum = nums[left] + nums[right]; // calculating the sum of 2 indices
+
+            // If the Sum is exactly equal to the target, return the indices i.e left and right as a pair
+            if(sum == target){
+                ans.push_back(left);
+                ans.push_back(right);
+            }
+            // if the sum is lesser than the target, then increment pointer 1 i.e left++
+            else if(sum < target){
+                left++;
+            }
+            // if the sum is greater than the target, then we decrement the right pointer i.e right--
+            else{
+                right--;
+            }
+        }
+        return ans;
+        */
+
+
         /*
         // Approach 1:
         //CODE:
@@ -20,13 +69,13 @@ public:
         return res;
         */
         
-        
-        // Approach 2: Using Hash Table (Explanation to code is written below)
+        /*
+        // Approach 2: Hash Table - M Fraz (Explanation to code is written below)
         CODE:
         vector<int> ans;
         unordered_map<int, int> map; //declaring the hash table
         for(int i=0; i<nums.size(); i++){
-            if(map.find(target-nums[i]) != map.end()){ //i.e if the partner of this nums[i] value is present in table
+            if(map.find(target-nums[i]) != map.end()){ //i.e if the partner of this nums[i] value is present in tabl
                 ans.push_back(map[target-nums[i]]);
                 ans.push_back(i);
                 return ans;
@@ -36,15 +85,17 @@ public:
             }
         }
         return ans;
+        */
     }
 };
 
+
 /*
 // BRUTE FORCE Approach: ( eg: nums = [2,6,5,8,11], target=14 )
-- We keep 'i' on the starting element of Array i.e on index 0, and we check in the right side of the Array if (target - nums[i]) exists in the Array or not. 
-  (i.e if 14-2 = 12 exists or not).
-- 12 does not exist in the Array. So we increment i and we move i to index 1. and we check in the right if target-nums[i] i.e 14-6 = 8 is present or not. 
-  we find 8 at index 3.
+- We keep 'i' on the starting element of Array i.e on index 0, and we check in the right side of the Array if 
+  (target - nums[i]) exists in the Array or not. (i.e if 14-2 = 12 exists or not).
+- 12 does not exist in the Array. So we increment i and we move i to index 1. and we check in the right if 
+  target-nums[i] i.e 14-6 = 8 is present or not. we find 8 at index 3.
 - So the 1st index and the 3rd index is our required pair.
 - If we did'nt find the pair then we would've moved our i pointer to the next index and check for the same above condition which is target-nums[i] exists in the 
   right side of i. 
@@ -57,8 +108,8 @@ public:
 //OPTIMIZED APPROACH: Use HASH TABLE
 eg: nums = [2,6,5,8,11] and target=14
 - Initially we take a empty Hash Table.
-- Now, we iterate over the wholoe Array. So we start with index 0 and check if (target-nums[i]) is present in the hash table. i.e we check if 14-nums[0] = 14-2 = 12 
-  is present in hash table or not.
+- Now, we iterate over the wholoe Array. So we start with index 0 and check if (target-nums[i]) is present in the hash table. i.e we check if 14-nums[0] = 14-2 = 12 is
+  present in hash table or not.
 - We can see that 12 is not present in the hash table. So what we do is we put this 2 along with it's index number inside the hash table as (2,0).
   hash_table = [(2,0)]
 - Now the pointer comes to index 1. Now we check if target-nums[i] = 14-6 = 8 is present in hash table or not? 8 is not present in the hash table so we put nums[i] 
@@ -70,7 +121,7 @@ eg: nums = [2,6,5,8,11] and target=14
 - The next index is 3. So check target-nums[i] i.e 14-8 = 6. Now we can see that 6 is present inside the hash table.
   Now 6 exists at index 1. Currently our pointer i is pointing to 8 at index 3.
 - So we get index 1 from the hash table and index 3 from i. So we return (1,3).
-// TIME COMPLEXITY: Hash table will take O(1) for insertion and for searching in an average case. so we can say that we are doing a linear iteration. 
-   So the time complexity will be O(N).
+// TIME COMPLEXITY: Hash table will take O(1) for insertion and for searching in an average case. so we can say that we are doing a linear iteration. So the time 
+   complexity will be O(N).
 // SPACE COMPLEXITY: O(N) because we are storing all the values in the hash table.
 */
