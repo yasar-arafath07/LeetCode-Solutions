@@ -1,6 +1,22 @@
 class Solution {
 public:
-    int removeDuplicates(vector<int>& nums) {
+    int removeDuplicates(vector<int>& nums){
+        // Approach : 2 pointers (DG's)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int nextNonDuplicate = 1; // stores the index of the next non-Duplicate element
+
+        for(int i=0; i<nums.size(); i++){
+            if(nums[nextNonDuplicate-1] != nums[i]){
+                nums[nextNonDuplicate] = nums[i];
+                nextNonDuplicate++;
+            }
+        }
+        return nextNonDuplicate;
+
+
+        /*
         // TWO POINTER APPROACH : 2
         int n = nums.size();
         if(n<2)  // if there is only 1 or 0 element, then return that.
@@ -14,6 +30,7 @@ public:
             }
         }
         return count;
+        */
         
         
         
