@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target){
+        
+        // Approach : TwoPointers (DG's)
+        // TC : 
+        // SC : 
+        // CODE:
+        int smallestDifference = INT_MAX; //stores the smallest difference b/w target and triplet sum of all triplets
+        sort(nums.begin(), nums.end()); // sort the Array
+        //int closest = nums[0] + nums[1] + nums[2];
+
+        // Base Case 
+        if(nums.size() < 3){
+            return 0;
+        }
+        
+        for(int i=0; i<nums.size()-2; i++){
+            int left = i+1; // pointer 1
+            int right = nums.size()-1; // pointer 2
+
+            while(left < right){
+                // Comparing the sum of 3 numbers to the target can cause overflow
+                //So, we will try to find a target difference, which is the difference b/w target and sum of triplet
+                int targetDiff = target - nums[i] - nums[left] - nums[right];
+                
+                // if targetDiff is equal to 0, then return target which will be the sum of all the triplets
+                if(targetDiff == 0){
+                    return target; 
+                }
+
+                if(abs(targetDiff) < abs(smallestDifference) || abs(targetDiff) == abs(smallestDifference) && 
+                targetDiff > smallestDifference){
+                    smallestDifference = targetDiff; // save the closest difference
+                }
+
+                if(targetDiff > 0){
+                    left++;
+                }
+                else{
+                    right--;
+                }
+            }
+        }
+        return target - smallestDifference; // return the sum of the triplets
+        
+    }
+};
