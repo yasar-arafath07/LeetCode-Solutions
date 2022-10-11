@@ -1,0 +1,140 @@
+class Solution{
+public:
+    vector<vector<int>> threeSum(vector<int>& nums){
+        // Approach 2: Two Pointers 
+        // CODE:
+        vector<vector<int>> ans; // to store the unique triplets that add up to 0
+
+        sort(nums.begin(), nums.end()); // sort the given Array
+
+        // Base case 1
+        if(nums.size() < 3){
+            return {};
+        }
+
+        // Base Case 2
+        if(nums[0] > 0){
+            return {}; // because if the 1st element is greater than 0, then there is no such triplets in the 
+        }   // sorted array that add up to 0 since there won't be any -ve numbers
+        
+        // Traversing the Array to fix the Number
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] > 0){ // i.e if at any point of time, nums[i] is graters than 0, then break the loop
+                break; // If number fixed is +ve, stop there because we can't make it zero by searching after it.
+            }
+
+            if(i>0 && nums[i] == nums[i-1]){ // i.e if there is any duplicate, ignore the lower loop and continue
+                continue; // i.e code inside the loop following the continue statement will be skipped and next 
+            }             // iteration of the loop will begin
+
+            //Searching for the triplets
+            // nums = [-3, -2, -1, 0, 1, 1, 2]  (nums after sorting)
+            int low = i+1; // low will point to i+1 i.e next to i
+            int high = nums.size() - 1; // high will point tolast element
+            int sum = 0;  // initially sum is 0
+
+            while(low < high){
+                sum = nums[i] + nums[low] + nums[high];
+                
+                // If we found our triplet, push it into the resultant vector
+                if(sum == 0){
+                    ans.push_back({nums[i], nums[low], nums[high]});
+                    low++; // now move the low pointer forward
+                    high--; // move the high pointer backward
+                    
+                    // Skipping the same element to avoid duplicates in the left side i.e in the low part
+                    while(low<high && nums[low] == nums[low-1]){
+                        low++;
+                    }
+                    // Skipping the same element to avoid duplicates in the right side i.e in the high part
+                    while(low<high && nums[high] == nums[high+1]){
+                        high--;
+                    }
+                }
+                //If sum > 0,i.e if sum is +ve, means we need more -ve numbers to make the sum 0, so decrement high
+                else if(sum > 0){
+                    high--;
+                }
+                //if sum<0, i.e if sum is -ve, then we need more +ve numbers to make the sum 0, so increment low
+                else{
+                    low++;
+                }
+            }
+
+        }
+        return ans; // return the resultant vector
+
+
+
+
+        /*
+        // Approach 1: 2 Pointers (DG's)
+        // Doesn't Pass All Test Cases
+        // TC : O(N^2)
+        // SC : O(N)
+        // CODE:
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans; // to store the unique triplets that add up to 0
+        
+        /*
+        // Base Case: 1 
+        if(nums.size() < 3){
+            return {};
+        }
+        
+        // Base Case: 2
+        if(nums[0] > 0){
+            return {};
+        }
+        */
+        
+        /*
+        for(int i=0; i<nums.size()-2; i++){
+            if(i>0 && nums[i] == nums[i-1]){ // i.e skip the same element to avoid duplicates
+                continue; // So, here if the condition in 'if' block is FALSE, then execute the remaining part of 
+            }              // loop body. else if the condition is TRUE, then continue i.e code inside the loop 
+            // following the continue statement will be skipped and next iteration of the loop will begin.
+            searchPair(nums, -nums[i], i+1, ans); // nums : given Array, -nums[i] : targetSum, i+1: leftpointer
+        }                                         // ans : result vector
+        return ans;
+    }
+
+// we don't need to return anything here inside this below function because anyways inside the function we are
+// pushing the triplets inside the ans vector. So, the threeSum function will return that vector
+private:
+    static void searchPair(const vector<int>& nums, int targetSum, int left, vector<vector<int>> &ans){
+        int right = nums.size()-1;
+        int currentSum = 0;
+
+        while(left < right){
+            currentSum = nums[left] + nums[right];
+            
+            // If we found our pair
+            if(currentSum == targetSum){
+                ans.push_back({-targetSum, nums[left], nums[right]});
+                left++; // move the left pointer forward
+                right--; // move the right pointer backward
+
+                while(left < right && nums[left] == nums[left-1]){
+                    left++; // skipping the same element to avoid duplicates in the left side
+                }
+                while(left < right && nums[right] == nums[right+1]){
+                    right--; // skipping the same element to avoid duplicates in the right side 
+                }
+            }
+            // If the target sum is greater than the required sum, we move the right pointer backward
+            else if(targetSum > currentSum){
+                right--;
+            }
+            // else if the target sum is lesser than the curren sum, we move the left pointer forward
+            else{
+                left++;
+            }
+        }
+    }
+    
+    }
+    */
+    
+    }
+};
