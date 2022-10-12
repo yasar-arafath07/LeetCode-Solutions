@@ -1,14 +1,48 @@
-class Solution {
+class Solution{
 public:
     int threeSumClosest(vector<int>& nums, int target){
+        // Approach 2: 2 Pointers
+        // TC : O(N^2)
+        // CODE:
+        sort(nums.begin(), nums.end());  // sort the given Array
+        int res = nums[0] + nums[1] + nums[2]; // this handles the base case i.e, if(nums.size() < 0)
+        int sum = 0;
+
+        for(int i=0; i<nums.size(); i++){
+            int left = i+1; // pointer 1
+            int right = nums.size()-1; // pointer 2
+
+            while(left< right){
+                sum = nums[i] + nums[left] + nums[right];  // calculating the sum of the triplet
+
+                if(sum == target){
+                    return target;
+                }
+                else if(sum < target){
+                    left++;
+                }
+                // if(sum > target)
+                else{
+                    right--;
+                }
+
+                // Finding the closest to target
+                if(abs(target-sum) < abs(target-res)){
+                    res = sum;
+                }
+            }
+        }
+        return res;
         
+
+
+        /*
         // Approach : TwoPointers (DG's)
-        // TC : 
-        // SC : 
+        // TC : O(N * logN + N*N) = O(N*N)
+        // SC : O(N), which will be required for Sorting
         // CODE:
         int smallestDifference = INT_MAX; //stores the smallest difference b/w target and triplet sum of all triplets
         sort(nums.begin(), nums.end()); // sort the Array
-        //int closest = nums[0] + nums[1] + nums[2];
 
         // Base Case 
         if(nums.size() < 3){
@@ -24,11 +58,12 @@ public:
                 //So, we will try to find a target difference, which is the difference b/w target and sum of triplet
                 int targetDiff = target - nums[i] - nums[left] - nums[right];
                 
-                // if targetDiff is equal to 0, then return target which will be the sum of all the triplets
+                // if targetDiff is equal to 0, then return target which will be the sum triplets
                 if(targetDiff == 0){
                     return target; 
                 }
-
+                
+                // consider smallestDifference = -2 and targetDiff = 2 as an example for better understanding
                 if(abs(targetDiff) < abs(smallestDifference) || abs(targetDiff) == abs(smallestDifference) && 
                 targetDiff > smallestDifference){
                     smallestDifference = targetDiff; // save the closest difference
@@ -37,12 +72,14 @@ public:
                 if(targetDiff > 0){
                     left++;
                 }
+                // if(targetDiff < 0)
                 else{
                     right--;
                 }
             }
         }
         return target - smallestDifference; // return the sum of the triplets
-        
+        // i.e return target - (target- sum of triplets) = target - target + sum of triplets = sum of triplets
+        */ 
     }
 };
