@@ -1,6 +1,32 @@
 class Solution {
 public:
-    int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+    int numSubarrayProductLessThanK(vector<int>& nums, int k){
+        // Approach 2: 2 Pointers (DG's)
+        // TC : O(N^3), because the main for-loop managing the Sliding Window takes O(N). But creating subarrays
+        // can take upto O(N^2) in the worst case. Therefore, overall the Algorithm will take O(N^3) TC
+        // SC : O(1) since we are not using any extra space
+        // CODE:
+        int count = 0;
+        int product = 1;
+        int left = 0; // pointer 1
+        int right = 0; // pointer 2
+
+        for(int right=0; right<nums.size(); right++){
+            product *= nums[right]; // product = product * nums[right];
+            
+            // if the condition exceeds, we shrink the window by removing calculation for left and then doing left++
+            while(left <= right && product >= k){
+                product /= nums[left]; // product = product / nums[left];
+                left++; // shrink the window
+            }
+            count = count + (right-left+1);  // 'right-left+1' is the window size
+        }
+        return count;
+        
+
+
+        /*
+        // Approach 1: SLIDING WINDOW
         int count = 0; // stores the subarrays whose product of all the elements is less than k
         int prod = 1;  // initial product
         int i = 0; // windowStart
@@ -16,7 +42,7 @@ public:
             prod *= nums[j];  // prod = prod * nums[j]
             
             // If the Condition exceeds i.e if product becomes more or equal to k, we shrink the window
-            // Before we sheink the window, we remove calculation for i and then we shrink by doing i++
+            // Before we shrink the window, we remove calculation for i and then we shrink by doing i++
             while(i<=j && prod >= k){
                 prod /= nums[i]; // prod = prod / nums[i]
                 i++;
@@ -25,5 +51,6 @@ public:
             count = count + (j-i+1); // 'count = count + windowSize'
         }
         return count;
+        */
     }
 };
