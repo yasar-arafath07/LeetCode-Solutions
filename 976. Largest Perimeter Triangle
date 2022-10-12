@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int largestPerimeter(vector<int>& nums){
+        // Approach : 
+        // TC : O(N*logN)
+        // CODE:
+        sort(nums.begin(), nums.end());  // sort the given Array
+        
+        // i will start from last element which is the greatest element of the Array once we sort, and goes till 3rd
+        // element from the beginning.  
+        // If we say i>=0, then if nums[i] < nums[i-1] + nums[i-2], this line will create an underflow situation by
+        // taking i==1 or i==0 as the array index wwill lead to negative indices which will throw an error.
+        for(int i=nums.size()-1; i>=2; i--){
+            if(nums[i] < nums[i-1] + nums[i-2]){
+                return nums[i] + nums[i-1] + nums[i-2];
+            }
+        }
+        return 0;
+    }
+};
+
+/*
+- Basic Rule of Length of Sides of a Triangle is "Sum of any 2 sides of a Triangle Should be Greater than the 
+  3rd Side"
+- If A, B and C are the length of Sides of a Triangle, then Simply A + B > C
+
+// APPROACH : Since we need the Largest Perimeter from the given Array, We sort the Array and Traverse from End.
+- We know that Perimeter of a Triangle = A + B + C
+- So while Traversing in the Array from last, if nums[i] < nums[i-1] + nums[i-2], we stop and return the perimeter
+  as sum of these i.e nums[i] + nums[i-1] + nums[i-2].
+- If there is no Value satisfying the given condition, then we return 0.
+*/
