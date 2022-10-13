@@ -1,0 +1,26 @@
+class Solution{
+public:
+    int mostFrequentEven(vector<int>& nums){
+        // Approach: Using map
+        // unordered_map gives WA (Wrong Answer)
+        // TC : O(N), since single pass of Array
+        // SC : O(N), when all elements are even and unique
+        map<int,int> map;  // to store the elements and it's frequqncy
+        int ans = -1;  // store the answer which is the most frequent even element
+        int maxi = INT_MIN; // stores the maximum frequency of element 
+        
+        // Traverse on array and store the elements inside a map
+        for(auto it1 : nums){
+            map[it1]++;  // store the element in the map and then increse it's frequency
+        }
+
+        // Now, traverse on the map and check 
+        for(auto it2 : map){
+            if(it2.first % 2 == 0 && it2.second > maxi){
+                maxi = it2.second;
+                ans = it2.first;
+            }
+        }
+        return ans;
+    }
+};
