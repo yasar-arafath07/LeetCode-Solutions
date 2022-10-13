@@ -1,0 +1,132 @@
+class Solution{
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target){
+        // Approach 2: Two Pointers
+        // TC : O(N^3)
+        // SC : O(N)
+        // CODE:
+        vector<vector<int>> res; // to store the resultant quadruplets
+        int left; // pointer 1
+        int right; // pointer 2
+
+        sort(nums.begin(), nums.end()); // sort the given Array
+
+        // EDGE Case:
+        if(nums.size() < 4){
+            return res;
+        }
+
+        // fix 1st element of quadruplets
+        for(int i=0; i<nums.size()-3; i++){
+            // skip same element to avoid duplicate quadruplets
+            if(i>0 && nums[i] == nums[i-1]){
+                continue; // i.e skip this iteration and do i++
+            }
+
+            // fixing 2nd element of quadruplets
+            for(int j=i+1; j<nums.size()-2; j++){
+                // Skip same element to avoid duplicate quadruplets
+                if(j>i+1 && nums[j] == nums[j-1]){
+                    continue; // i.e skip this iteration and do j++
+                }
+                // Now, we are left with 2 Sum i.e we need to find 2 more elements 
+                //So, initialize left and right
+                left = j+1;
+                right = nums.size()-1;
+
+                while(left < right){
+                    if((long) nums[i] + nums[j] + nums[left] + nums[right] == target){
+                        res.push_back({nums[i], nums[j], nums[left], nums[right]});
+                        left++;
+                        right--;
+
+                        while(left < right && nums[left] == nums[left-1]){
+                            left++; // skip same element to avoid duplicate quadruplets
+                        }
+                        while(left < right && nums[right] == nums[right+1]){
+                            right--; // skip same element to avoid duplicate quadruplets
+                        }
+                    }
+                    else if((long) nums[i] + nums[j] + nums[left] + nums[right] < target){
+                        left++; // since we need a larger sum
+                    }
+                    // if(> target)
+                    else{
+                        right--; // since we need a smaller sum
+                    }
+                } // end of while loop
+            } // end of for loop
+        }
+        return res;  // return the resultant vector
+
+
+
+        /*
+        // Approach 1: Two Pointers (DG's)
+        // Throws Overflow error
+        // TC : O(N*logN +N^3) = O(N^3)
+        // SC : O(N), which is required for Sorting
+        // CODE:
+        vector<vector<int>> res; // to store the quadruplets
+
+        sort(nums.begin(), nums.end()); // sort the given Array
+
+        // fix 'i' at 1st position
+        for(int i=0; i<nums.size()-3; i++){
+            // Now, skip same element to avoid duplicate quadruplets
+            if(i>0 && nums[i] == nums[i-1]){
+                continue; // i.e do next iteration i.e skip this iteration and do i++
+            }
+
+            // fix 'j' at 2nd position in the Array i.e next to 'i'
+            for(int j=i+1; j<nums.size()-2; j++){
+                // skip same element to avoid duplicate quadruplets
+                if(j>i+1 && nums[j] == nums[j-1]){
+                    continue;  // i.e skip this iteration and do j++
+                }
+
+                // Now we have 2 elements from 'i' and 'j', So, we need 2 more to compare with target
+                // To find this 2 more elements, we create a new function searchPairs
+                searchPairs(nums, target, i, j, res);
+            }
+        }  // close of main for loop
+        return res;  // return the resultant vector containing the quadruplets
+    }
+
+// searchPair() function
+private:
+    static void searchPairs(const vector<int> &nums, int targetSum, int first, int second, vector<vector<int>> &res){
+        int left = second + 1; // second is 'j' basically and first is 'i'
+        int right = nums.size()-1;
+
+        while(left < right){
+            long sum = nums[first] + nums[second] + nums[left] + nums[right];
+
+            // If we found our quadruplet
+            if(sum == targetSum){
+                res.push_back({nums[first], nums[second], nums[left], nums[right]});
+                left++;
+                right--;
+
+                // Avoiding Duplicates
+                while(left < right && nums[left] == nums[left-1]){
+                    left++; // skip same element to avoid duplicate quadruplets in the left side
+                }
+                while(left < right && nums[right] == nums[right+1]){
+                    right--; // skip same element to avoid duplicate quadruplets in the right side
+                }
+            }
+
+            else if(sum < targetSum){
+                left++; // we need a pair with bigger sum
+            }
+
+            // if(sum > targetSum)
+            else{
+                right--; // we need a pair with a smaller sum
+            }
+        } // close of while loop
+    }
+    */
+    }
+};
