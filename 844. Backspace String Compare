@@ -1,0 +1,59 @@
+class Solution{
+public:
+    bool backspaceCompare(string s, string t){
+        // Approach : Using STACK Data Structure
+        // TC : O(M+N), where 'M' and 'N' are the lengths of the 2 input strings respectively
+        // SC : O(L1+L2), where 'L1' and 'L2' is the length or size of the 2 stacks s1 and s2 respectively
+        // CODE:
+        stack<char> s1;  // for string s
+        stack<char> s2;  // for string t
+        string str1; // to store elements of stack1 after traversing the string s
+        string str2; // to store the elements of stack2 after traversing the string t
+
+        // traversing string s
+        for(int i=0; i<s.length(); i++){
+            if(s[i] == '#' && !s1.empty()){
+                s1.pop();
+            }
+            else if(s[i] != '#'){
+                s1.push(s[i]);
+            }
+        }
+
+        // traversing string t
+        for(int i=0; i<t.length(); i++){
+            if(t[i] == '#' && !s2.empty()){
+                s2.pop();
+            }
+            else if(t[i] != '#'){
+                s2.push(t[i]);
+            }
+        }
+
+        // Now, put the elements from stack1 into string str1
+        while(!s1.empty()){
+            str1.push_back(s1.top());
+            s1.pop();  // after pushing a element, remove it from the stack
+        }
+
+        // Again, put the elements from stack2 into string str2
+        while(!s2.empty()){
+            str2.push_back(s2.top());
+            s2.pop();
+        }
+
+        // Now, check the 2 strings str1 and str2. if they are equal, return true. else return false
+        return str1 == str2;
+    }
+};
+
+/*
+- So, we can store the string from the beginning in a Stack (the 1st element of the string goes into bottom of stack)
+- Store string 's' in stack1 and string 't' in stack2
+- and then we traverse the string. Whule traversing, if the element of the string is a normal character, we push it 
+  into the stack.
+- and whenever we see a '#' character while traversing, we pop the topmost element from the stack
+- After the completion of the traversal of both strings, we take a string and store the elements of the stack1 and
+  stack2 in 2 different strings
+- Now, compare these 2 strings, if they are equal, return true. else return false
+*/
