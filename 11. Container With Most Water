@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int maxArea(vector<int>& height){
+        // Approach : TWO POINTERS (Codebix)
+        // TC : O(N)
+        // CODE:
+        int low = 0; // pointer 1
+        int high = height.size()-1; // pointer 2
+        int maxi = INT_MIN;  // Stores the maximum area out of all the containers
+
+        while(low < high){
+            int min_Height = min(height[low], height[high]);  // finding the minimum height of 2 pillars
+            maxi = max(maxi, min_Height * (high-low)); // finding the maximum area of the container
+            // i.e area = length * breadth
+            // here length is the gap between 2 pillars (high-low) and breadth is the minimum height of 2 pillars
+
+            // Now, move the pointer according to the height of the pillar
+            // we move that pillar which is of lower height
+            if(height[low] > height[high]){
+                high--;
+            }
+            else{  // if(height[low] < height[high])
+                low++;
+            }
+        }
+        return maxi;  // return the maximum area
+    }
+};
+
+/*
+// BRUTE FORCE:
+- Apply 2 for loops. 
+- Fix 1 Pointer at index 0 and 2nd pointer at next to 1st pointer.
+- Now, find the area b/w pointer 1 and pointer 2 i.e min(pointer1, pointer 2) * index gap b/w pointer 1 and pointer 2
+- Then, increment pointer2 till it reaches end of the Array
+- While incrementing, also store the maximum area of all
+- Then increment pointer 1 till the end and store the maximum parallelly
+// TC : O(N^2)
+*/
