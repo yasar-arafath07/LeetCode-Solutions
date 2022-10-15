@@ -1,4 +1,4 @@
-/********* C++ SOLUTION ********/
+/************* C++ CODE *************/
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -7,11 +7,34 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-class Solution {
+class Solution{
 public:
-    void deleteNode(ListNode* node) {
+    void deleteNode(ListNode* node){
+        // Approach 2: Using Swap() [M Fraz]
+        // CODE:
+        // EDGE Case:
+        // If the node to be deleted is the last node, we can't swap it with anything. So we directly use delete 
+        // operator
+        if(node->next == NULL){
+            delete node;
+        }
+
+        // else, we will swap the values between the node to be deleted with the node's next value. and then we delete
+        swap(node->val, node->next->val);
+
+        // So, first create a temporary variable and store the address of the node to be deleted
+        ListNode *temp = node->next;
+        // Before completely deleting the node, save that node's address field in the previous node
+        node->next = node->next->next;
+
+        // Now, we can permanenty delete the node from the memory i.e clean up
+        delete temp;
+
+
+        /*
+        // Approach 1: BRUTE FORCE
         *node = *node->next;
-        
+        */
     }
 };
 
