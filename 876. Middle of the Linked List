@@ -2,17 +2,55 @@
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
- *     struct ListNode *next;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+class Solution{
+public:
+    ListNode* middleNode(ListNode* head){
+        // Approach 2: SLOW & FAST POINTERS (M Fraz)
+        // CODE:
+        ListNode *slow = head; // pointer1
+        ListNode *fast = head; // pointer 2
+
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next; // move 'slow' pointer by 1 node at a time
+            fast = fast->next->next; // move 'fast' pointer by 2 nodes at atime
+        }
+        // So, whenever fast reaches the end, slow will be pointing to the middle node of LL. So we return slow
+        return slow;
 
 
-struct ListNode* middleNode(struct ListNode* head){
-    struct ListNode *slow=head, *fast=head;
-    
-    while(fast != 0 && fast->next != 0){
-        slow = slow->next;
-        fast = fast->next->next;
+        /*
+        // Approach 1: By finding the Length of the LL (M Fraz)
+        // TC : O(N), where N is the total no. of nodes
+        // SC : O(1), we are not using any extra space
+        // CODE:
+        int length = 0; // initially length of LL is 0
+        
+        // Now, for traversing we need a temporary pointer 'temp' which will store the address of 1st node i.e head
+        ListNode *temp = head;
+
+        // traversal starts
+        while(temp->next != NULL){
+            length++; // increase the count of length
+            temp = temp->next; // move the 'temp' pointer
+        }
+        // Now, once the above while loop breaks, we will be having the length of the LL
+        // Now, we want the half of it
+        int half = length/2;
+
+        // Now we need to move 'half' times from the start i.e from the head
+        // So, create a another temporary pointer 'temp2'
+        ListNode *temp2 = head;
+        while(half--){
+            temp2 = temp2->next;
+        }
+        // Now, temp2 will be at the middle, So return it.
+        return temp2; 
+        */
     }
-    return slow;
-}
+};
