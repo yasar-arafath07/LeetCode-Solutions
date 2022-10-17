@@ -1,0 +1,53 @@
+class Solution{
+public:
+    bool checkIfPangram(string sentence){
+        // Approach 3: Using frequency count by using an Array
+        
+        vector<int> v(26,0); // take a vector of size 26 and initialize all the elements to 0
+        
+        for(auto it : sentence){
+            v[it - 'a'] = 1;  // '0' based index
+        }
+        return accumulate(v.begin(), v.end(), 0) == 26;  // if the sum is 26, return true. else return false
+
+
+
+        /*
+        // Approach 2: Using SET - 1 Line
+        // Explanation - Create a set and copy all the characters of the sentence into the set and check if the 
+        // size of set is equal to 26
+        return set<char> (sentence.begin(), sentence.end()).size() == 26;
+        */
+
+
+        /*
+        // Approach 1: Using SET
+        // Explanation - Use set to store all the characters of the sentence. 
+        // Since the set stores only unique characters, if the size of set is 26 then return true, else return false
+        // TC : O(N)
+        // SC : O(26)
+        set<char> s;
+
+        for(auto& it : sentence){
+            s.insert(it);  // Insert all the characters of the sentence in the set
+        }
+        return s.size() == 26;  // if(s.size() == 26) return true; else, return false.
+        */
+    }
+};
+
+
+/*
+// Explanation for Approach: 3 
+- Create an Array of size 26 and fill with all 0's
+- Iterate all the elements of given sentence and mark the character present in our array
+- Eg: if we are at character 'g', ASCII value of g = 103. So we substract ASCII value of 'a'(97) from 'g' to get 
+  the correct index of 'g' in our Array
+- So, now it would be 103-97 = 6. So 6 is the index of 'g'. So now at index 6 we increase the frequency to 1.
+- Also we can verify that 6 is the position of 'g' in alphabetical sequence (0 based indexing)
+- Now, fill the positions in the Array as 1 if the corresponding character is present in the sentence
+- Now, we can find the sum of all the elements in the Array. If all the characters are present in the 
+  sentence, then the vector sum will be equal to 26. so we return true. else we return false
+  If any english character is not present in the sentence, then that character's index in the array will be 0. 
+  So sum won't be 26. so it'll return false
+*/
