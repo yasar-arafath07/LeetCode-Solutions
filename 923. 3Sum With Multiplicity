@@ -1,0 +1,47 @@
+class Solution{
+public:
+    int threeSumMulti(vector<int>& arr, int target){
+        // Approach: TWO POINTERS and HASHMAP (AS)
+        // TC : O(N*N)
+        // SC : O(N)
+        // CODE:
+        unordered_map<int, long> map;  // take a map to store the count of each elements of the Array
+        int mod = 1e9 + 7;  // i.e (10^9) + 7
+        long ans = 0;
+
+        // iterate throught the array and store the frequency of each element inside the map
+        for(auto it : arr){
+            map[it]++;
+        }
+
+        // Now, traverse on the map
+        for(auto it1 : map){
+            for(auto it2 : map){
+                int i = it1.first;  // fixing 1 element i.e fixing arr[i]
+                int j = it2.first;  // fixing 2nd element i.e, fixing arr[j]
+                int k = target - i - j; // this k we need to find in the map
+                
+                // if the count of k is not present, we skip the current iteration and continue to next iteration
+                if(!map.count(k)){ // if k is not present in the map for current iteration, skip and go to next 
+                    continue;    // iteration
+                }
+                
+                // Case1: If all the elements in the tuple are equal
+                if(i == j && j == k){
+                    ans += map[i] * (map[i]-1) * (map[i]-2) / 6; // avoiding duplicates, so divide by 6 for 3 same 
+                }                                                // elements
+                
+                // Case 2: If 2 elements are equal, but 3rd is different
+                else if(i == j && j != k){
+                    ans = ans + map[i] * (map[i]-1) / 2 * map[k];
+                }
+                
+                // Case 3: If all 3 are different
+                else if(i<j && j<k){
+                    ans = ans + map[i] * map[j] * map[k]; // if all elements are different, then we can arrange 
+                }      // them in those many no. of ways
+            }
+        }
+        return ans % mod;  // given in the problem statement to return modulo 1e9+7
+    }
+};
