@@ -1,0 +1,32 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+ 
+class Solution{
+public:
+    int getDecimalValue(ListNode* head){
+        // Approach: M Fraz
+        // Explanation: Traverse the list and assume the 1st node as last node. So, it'll hold the value 2^0 and 
+        // whenever we see a new node, w.k.t the previous node was not the last node. So, we multiply all the 
+        // previous nodes by 2 i.e increase the power of 2 by 1 and then add the value at the node to the ans 
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int ans = 0;
+        ListNode *temp = head;  // to traverse
+        
+        while(temp != NULL){
+            ans *= 2;  // ans = ans * 2 i.e whenever we find a new node, we know the prev node is not the last node
+            ans += temp->val;  // ans = ans + temp->val i.e add the value of node to the answer
+            temp = temp->next; // move temp forward
+        }
+        return ans;  // return the calculated answer
+    }
+};
