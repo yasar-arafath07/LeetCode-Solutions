@@ -1,0 +1,52 @@
+class Solution{
+public:
+    string removeStars(string s){
+        // Approach 2: TWO POINTERS (CwA)
+        // TC : O(N)
+        // SC : O(1)
+        // Explanation: Whenever we see a normal character, we move both 'i' & 'j' forward i.e, i++ & j++.
+        // Once we see a '*', we move 'j' pointer backward and then whenever we see a normal character again, 
+        // before moving what we will do is we will replace whatever element is at 'i'th index with 'j'th index
+        // CODE:
+        int i = 0; // pointer 1
+        int j = 0; // pointer 2
+
+        // Iterate on the string
+        for(int i=0; i<s.length(); i++){
+            // if the character is a '*', we move pointer j backward
+            if(s[i] == '*'){
+                j--;
+            }
+            else{
+                // replace the values at index i and index j before moving
+                s[j] = s[i];
+                j++;
+                // i will anyway get incremented in the main for loop. So, no need to increment again here
+            }
+        }
+        return s.substr(0, j); // return the substring of string s from index 0 till the index j
+
+
+
+        /*
+        // Approach 1: Using STACK DS (Not Optimal)
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        string ans ="";  // to store the resultant string
+        
+        // iterate through the string
+        for(int i=0; i<s.length(); i++){
+            // if the string character is '*', we remove the last element from the resultant string
+            if(s[i] == '*'){
+                ans.pop_back();
+            }
+            // else we will keep adding the character in the resultant string
+            else{
+                ans += s[i]; // ans = ans + s[i]
+            }
+        }
+        return ans;  // return the resultant string
+        */
+    }
+};
