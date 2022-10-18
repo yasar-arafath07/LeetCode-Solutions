@@ -1,0 +1,103 @@
+class MyHashSet{
+public:
+    // Approach 2: Using HASHING FUNCTION - MODULO FUNCTION (M FRAZ)
+    vector<list<int>> v; // at every index of the vector, we store a Doubly Linked List. That's why it is a vector
+    // of list of integers
+    int size;
+    MyHashSet(){
+        size = 1e6;  // also try taking size = 100
+        v.resize(size);  // modify the size of vector of list to 'size'
+    }
+
+    // So, here we need to create a hashing function also
+    // Our key/element will go inside the hashing function and it will return an index to insert the key/element
+    int hash(int key){
+        return key % size;
+    }
+
+    // Also, we will create a search() function to search for a particular element in a LL inside a particular
+    // index/position. Search() function will return the position/index.
+    // here we use iterator instead of a pointer. So we need to create a iterator of the type list of int. So,
+    list<int> :: iterator search(int key){
+        // Now, key is given, eg: if we want to search 11, first of all we need to see on which index 11 can be 
+        // stored. So, we will find the index using hash function first
+        int index = hash(key);  // this will return the index
+
+        // Now, inside this index, a whole LL will be stored.
+        // So let's use STL find() function to search for an element
+        return find(v[index].begin(), v[index].end(), key); // key is the value to be searched and v[index] is LL
+        // this will return the iterator i.e, basically it'll return the position
+        // if nothing is found, it returns v[index].end()
+    }
+    
+    void add(int key){
+        // If key/element is already presentin the set, reject it
+
+        if(contains(key)){
+            return;
+        }
+        // else add the element into the set
+        // first of all, find the index of where to add
+        int index = hash(key);
+        v[index].push_back(key); // insert key in the list
+        // v[index] will return the whole LL at the index mentioned.
+    }
+    
+    void remove(int key){
+        // finding the index of key to remove
+        int index = hash(key);
+
+        // If key is not present to remove, just return
+        if(!contains(key)){
+            return;
+        }
+        // else we erase it
+        v[index].erase(search(key));
+    }
+    
+    bool contains(int key){
+        int index = hash(key);  // find the index
+
+        // If key is found
+        if(search(key) != v[index].end()){
+            return true;
+        }
+        // If key is not found
+        else{
+            return false;
+        }
+    }
+    
+
+    /*
+    // Approach 1: Using VECTORS
+    vector<int> v;  // we will be storing only 0 or 1 in the vector. So better to take bool instead of int
+    int size;
+    MyHashSet(){
+        size = 1e6 + 1;  // i.e 10^6, which is the maximum range of a vector (also given in the problem constraints)
+        v.resize(size);  // So, now our size of the vector will be 'size'
+    }
+    
+    void add(int key){
+        v[key] = 1;  // i.e if we add/insert an element 'key' in the vector, make that positions value to 1
+    }
+    
+    void remove(int key){
+        v[key] = 0; // while removing, change the value to 0
+    }
+    
+    bool contains(int key){
+        return v[key];  // It'll return either 0 or 1. If the position contains 0, then 0 will be returned. If it 
+                       // contains 1 means 1 will be returned.
+    }
+    */
+};
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet* obj = new MyHashSet();
+ * obj->add(key);
+ * obj->remove(key);
+ * bool param_3 = obj->contains(key);
+ */
+
