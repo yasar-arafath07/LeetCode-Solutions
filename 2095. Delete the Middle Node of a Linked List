@@ -1,0 +1,47 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head){
+        // Approach: TWO POINTERS (SLOW & FAST)
+        // TC : O(N)
+        // SC : O(1)
+        // Explanation: Use SLOW & FAST Pointers to find the middle element and then delete it by updating the links.
+        // CODE:
+        ListNode *slow = head; // pointer 1
+        ListNode *fast = head; // pointer 2
+        ListNode *prev; // this will point to before of middle node in the end
+
+        // EDGE CASE 1:
+        if(head == NULL){
+            return NULL;
+        }
+        
+        // EDGE CASE 2:
+        if(head->next == NULL){
+            delete head;
+            return NULL;
+        }
+
+        // now find the miidle node
+        while(fast != NULL && fast->next != NULL){
+            prev = slow; 
+            slow = slow->next;  // move slow forward by 1 node at a time
+            fast = fast->next->next; // move fast pointer forward by 2 nodes at a time
+        }
+
+        // Now, slow will be pointing to the middle node of the linked list and prev will be pointing to 1 node
+        // before the middle node
+        prev->next = slow->next;
+        delete slow;  // free it from the memory
+        return head;
+    }
+};
