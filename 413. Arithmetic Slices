@@ -1,0 +1,25 @@
+class Solution{
+public:
+    int numberOfArithmeticSlices(vector<int>& nums){
+        // Approach: AS
+        // TC : O(N), since we have only single traversal
+        // SC : O(1), since we are not using any extra space
+        // CODE:
+        int curr = 0; // calculates the no. of current subarrays of nums
+        int total = 0; // stores the total no. of subarrays of nums 
+
+        // Traverse the array from 3rd element i.e from index 2 since we need minimum 3 elements in the subaray
+        for(int i=2; i<nums.size(); i++){
+            // check the condition of arithmetic slice
+            // i.e check the difference between any 2 consecutive elements
+            if(nums[i]-nums[i-1] == nums[i-1]-nums[i-2]){
+                curr++;
+                total += curr; // total = total + curr
+            }
+            else{
+                curr = 0;
+            }
+        }
+        return total; 
+    }
+};
