@@ -1,0 +1,35 @@
+class Solution{
+public:
+    int triangleNumber(vector<int>& nums){
+        // BRUTE FORCE : Run 3 for loops and check for the condition [TC : O(N^3)]
+        // Approach: TWO POINTERS (AS)
+        // TC : O(N)
+        // SC : O(1)
+        // Explanation: Condition for a triplet to form a triangle is that the sum of any 2 sides of the triangle 
+        // should be greater than the other side
+        // CODE:
+        int n = nums.size();
+        int ans = 0; // this will store the total no. of triplets
+
+        // sort the given array 
+        sort(nums.begin(), nums.end());
+
+        // traverse the Array from last 
+        // for loop is to fix the largest element of the array
+        for(int i=n-1; i>=2; i--){  
+            int low = 0, high = i-1;
+            while(low < high){
+                if(nums[low] + nums[high] > nums[i]){
+                    ans += (high-low);  // ans = ans + (high-low)
+                    high--;
+                }
+                else{
+                    low++;
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+// Condition for a Triangle: Sum of any 2 sides of a triangle should be greater than the other side for all cases
