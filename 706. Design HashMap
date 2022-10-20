@@ -1,0 +1,125 @@
+class MyHashMap{
+public:
+    // Approach 2: Using HASHING
+    vector<list<pair<int,int>>> v;//since we need to store key-value pairs, we create a vector of list of pair of int
+    int size;
+    MyHashMap(){
+        //size = 1e6 + 1;  // as given in the constraints. We can take a size of 100 also to reduce the memory usage
+        // reduce the size. give size = 1000, since anyways we are handling collisions also
+        size = 1000;
+        v.resize(size);  // now the size of the vector will become 1000 
+    }
+
+    // hashing function: this will take the key and will return a index to store the corresponding value
+    int hash(int key){
+        return key % size;
+    }
+
+    // Now, we need to implement a search() function which will return the position of value i.e, return iterator
+    // here we use iterator instead of a pointer. So, we need to create an iterator of type list of pair of int
+    list<pair<int,int>> :: iterator search(int key){
+        // so we need to find the index
+        int index = hash(key);
+        // here we can't use find function on the vector index to search since it is a pair. because we know the key
+        // of the pair but we don't know the value of the pair. So, we can't use find function here
+        // So, run a for loop using an iterator
+        list<pair<int,int>> :: iterator it = v[index].begin();
+        while(it != v[index].end()){
+            if(it->first == key){  // 'it' denotes a position of a particular node
+                return it;  // so, if we found the key, return the position
+            }
+            it++;
+        }
+        // else if we don't find the key, iterator 'it' will point to the end of the index. So return it
+        return it;
+    }
+    
+    void put(int key, int value){
+        int index = hash(key);
+        // if key-value pair exists, just remove it and add a new key-value pair
+        remove(key);  //this will remove the key-value pair if it exists
+        // Now, we are sure that this key-value pair doesn't exists, so we add them
+        v[index].push_back({key,value});
+    }
+    
+    int get(int key){
+        // find the index
+        int index = hash(key);
+        list<pair<int,int>> :: iterator it = search(key);
+        // if element doesn't exist
+        if(it == v[index].end()){
+            return -1;
+        }
+        // else we will return the value at the iterator pointing to which is it->second
+        else{
+            return it->second;
+        }
+    }
+    
+    void remove(int key){
+        // find the index at which the key to remove can be present
+        int index = hash(key);
+        list<pair<int,int>> :: iterator it = search(key);
+        // Now, let's find the position . So, we will search by which we will be getting the position of the element 
+        // which we want to remove. So,
+        if(it != v[index].end()){
+            v[index].erase(it); // this will remove the element key from the index v[index]
+        }
+    }
+    
+
+    /*
+    // Approach 1: Using VECTORS
+    vector<int> v; //here we will store the value of a corresponding key in the vector where key will act as an index
+    int size;
+    
+    // constructorr
+    MyHashMap(){
+        size = 1e6 + 1; //since index starts from 0, we add 1 because if we don't add 1, it'll create (10^6)-1 index
+        v.resize(size); // now the size of the vector will become 10^6 + 1
+        // filling the map/or vector initially with -1 for all positions using STL 'fill' function
+        fill(v.begin(), v.end(), -1);  // because we need to return -1 if the map contains no mapping for the key
+    }
+    
+    void put(int key, int value){
+        // key will act as an index
+        v[key] = value;
+    }
+    
+    int get(int key){
+        // here we just return the value of a corresponding key
+        return v[key];
+    }
+    
+    void remove(int key){
+        v[key] = -1;
+    }
+    */
+};
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap* obj = new MyHashMap();
+ * obj->put(key,value);
+ * int param_2 = obj->get(key);
+ * obj->remove(key);
+ */
+
+
+/*
+ MyHashMap(){
+        
+    }
+    
+    void put(int key, int value){
+        
+    }
+    
+    int get(int key){
+        
+    }
+    
+    void remove(int key){
+        
+    }
+*/
