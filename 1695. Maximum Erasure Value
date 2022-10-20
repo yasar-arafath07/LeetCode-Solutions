@@ -1,0 +1,31 @@
+class Solution{
+public:
+    int maximumUniqueSubarray(vector<int>& nums){
+        // Approach: SLIDING WINDOW
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int i = 0; // window start
+        int j = 0; // window end
+        int sum = 0; // stores the sum of the current window
+        int maxi = 0; // stores the maximum sum of the subarray
+        unordered_map<int,int> map; // use HashMap to keep track of unique elements
+
+        while(j < nums.size()){
+            // CALCULATION:
+            sum += nums[j]; // currSum = currSum + nums[j]
+            map[nums[j]]++; // update the current j element in the map
+
+            // slide the window if there are duplicates in the window
+            while(map[nums[j]] > 1){
+                // Int his case, we shrink the window by doing i++
+                map[nums[i]]--; // decrement the count of i
+                sum = sum - nums[i];
+                i++; // shrink the window
+            }
+            maxi = max(maxi, sum);  // keep updating the maximum sum 
+            j++;
+        }
+        return maxi;
+    }
+};
