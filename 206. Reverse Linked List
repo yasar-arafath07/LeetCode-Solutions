@@ -1,24 +1,75 @@
-/********** C SOLUTION ***********/
 /**
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
- *     struct ListNode *next;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+class Solution{
+public:
+    // Let's create our Recursive function to reverse the list
+    ListNode* reverse(ListNode* head){
+        // BASE CASE: If we are standing on the last node
+        if(head->next == NULL){
+            return head;
+        }
 
-
-struct ListNode* reverseList(struct ListNode* head){
-    struct ListNode *prevnode, *currentnode, *nextnode;
-    prevnode = 0;
-    currentnode = nextnode = head;
-    while(nextnode != 0){
-        nextnode = nextnode->next;
-        currentnode->next = prevnode;
-        prevnode = currentnode;
-        currentnode = nextnode;
+        // let's create a new head which the recursive function will return in the end
+        ListNode* reverseHead = reverse(head->next); // reverse from head->next till the end
+        head->next->next = head;  // storing the address of 1st node in the address field of next node
+        head->next = NULL; // connect the first node to NULL
+        return reverseHead;
     }
-    head = prevnode;
-    return head;
+    ListNode* reverseList(ListNode* head){
+        // Approach 2: RECURSIVE SOLUTION
+        // TC : O(N), where 'N' is the no. of nodes
+        // SC : O(N), Takes extra space for the internal stack
+        // CODE:
 
-}
+        // BASE CASE: If there is nothing in the head
+        if(head == NULL){
+            return NULL;
+        }
+
+        // return the reversed list
+        return reverse(head);
+    }
+
+
+        /*
+        // Approach 1: ITERATIVE SOLUTION
+        // Expalantion: Use 3 Pointers - previous, current and temp.
+        // TC : O(N), where 'N' is the no. of nodes
+        // SC : No extra space required
+        // CODE:
+
+        // EDGE CASE:
+        if(head == NULL){
+            return NULL;
+        }
+
+        // 3 pointers
+        ListNode *previous = NULL; // 'previous' pointer will be pointing to NULL initially
+        ListNode *current = head; 
+        ListNode *temp = head->next;
+
+        while(current != NULL){
+            current->next = previous;  // this is the basic operation to reverse the link between the nodes
+            // Now, shift the pointers i.e, move the pointers forward by 1 step
+            previous = current;
+            current = temp;
+            // move temp forward only if it is not pointing to NULL
+            if(temp != NULL){
+                temp = temp->next;
+            }
+        }
+        // In the end, 'previous' pointer will be pointing to the last node which will be the new head of the LL
+        // So, we return 'previous' pointer
+        return previous; 
+        
+    }
+    */
+};
