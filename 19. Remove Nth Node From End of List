@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n){
+        // Approach: SLOW & FAST POINTERS (tUf)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        
+        // declare a dummy node and assign that dummy's next to head
+        ListNode* dummy = new ListNode();  // we are not storing anything in the dummy node here
+        dummy->next = head;  // now dummy node will be present before the head of the LL
+        // create 2 pointers 'SLOW' and 'FAST' and assign both to dummy node
+        ListNode* slow = dummy; // 'slow' pointer will point to dummy node initially
+        ListNode* fast = dummy; // 'fast' pointer will also point to dummy node initially i.e before head
+
+        // run a for loop till n 
+        for(int i=1; i<=n; i++){
+            fast = fast->next; // move fast pointer forward by 1 step
+        }
+
+        while(fast->next != NULL){
+            fast = fast->next; // move fast forward by 1 step
+            slow = slow->next; // move slow forward by 1 step
+        }
+
+        //After the above while loop, slow pointer will be pointing to the previous node of 'nth' node from the last
+        // So, now we need to delete the 'nth' node from previous
+        // So, update the links
+        slow->next = slow->next->next;
+        // free up the memory
+        // delete(slow->next);  // delete that node from the memory
+
+        // return the head which is dummy->next
+        return dummy->next;
+    }
+};
