@@ -1,3 +1,5 @@
+/**************************** C CODE ********************************/
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -27,3 +29,98 @@ struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){
     }
     return result;
 }
+
+
+
+/*************************************** C++ CODE **************************************/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+/*
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2){
+        // Approach 2: ITERATIVE SOLUTION - SPACE OPTIMIZED (M Fraz)
+        // Gives TLE error
+        // TC : O(M+N)
+        // SC : O(M+N)
+        // CODE:
+        ListNode* ans = new ListNode(-1);  // create a ans ListNode to store the ans and initialize it with a dummy
+        // node which will help in adding the nodes to ans as we compare 
+        ListNode* tail = ans;  // 'tail' pointer will always point to the last node of the ans 
+        
+        // BASE CASE:
+        if(list1 == NULL){
+            return list2;
+        }
+        if(list2 == NULL){
+            return list1;
+        }
+
+        while(list1 != NULL && list2 != NULL){
+            if(list1->val < list2->val){
+                tail->next = list1;
+                tail = list1;  // tail will always point to the last node of the ans
+                tail = tail->next; // move tail forward
+            }
+            else{
+                // if(list2->val < list1->val)
+                tail->next = list2;
+                tail = list2;  // tail will always point to the last node of the ans
+                tail = tail->next; // move tail forward
+            }
+        }
+
+        // In the end, if one of the list gets completed fully, attach the other list as it is into the ans
+        if(list1 == NULL){
+            tail->next = list2; // attach all the remaining nodes of list2 
+        }
+        else{
+            // if(list2 == NULL)
+            tail->next = list1; // attach all the remaining nodes of list1 
+        }
+        return ans->next;  // we will return ans->next, not ans. Since we don't need the 1st node of ans because it
+        // is a dummy node created by us
+    }
+    */
+    
+    // function created to merge
+    ListNode* merge(ListNode* list1, ListNode* list2){
+        // BASE CASE:
+        if(list1 == NULL){
+            return list2;
+        }
+        if(list2 == NULL){
+            return list1;
+        }
+
+        // else we will compare the value at the node between list1 and list2 and then merge according to it
+        if(list1->val < list2->val){
+            // use the value of list1 and send the rest to recursive function
+            list1->next = merge(list1->next, list2);
+            return list1;
+        }
+        else{
+            // if(list2->val < list1->val)
+            list2->next = merge(list1, list2->next);
+            return list2;
+        }
+    }
+
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2){
+        // Approach 1: RECURSIVE SOLUTION (M FRAZ)
+        // TC : O(M+N), where 'M' and 'N' are the total no.of nodes in list1 and list2 respectively
+        // SC : O(M+N), because the recursive function will be called for M+N no.of times in the stack memory
+        // CODE:
+        return merge(list1, list2);
+    }
+    
+};
