@@ -1,0 +1,149 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* reverseKGroup(ListNode* head, int k){
+        // Approach 2: ITERATIVE SOLUTION (NO EXTRA SPACE)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        
+        // BASE CASE:
+        if(head == NULL || head->next == NULL || k==1){
+            // means we don't need to do anything
+            return head;
+        }
+
+        // Create a dummy node which will be present before the 1st node of the LL and for which temp will point to
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
+        ListNode* temp = dummy;
+        ListNode* end = head;  // end will point to head initially. Lter we move 'end' forward k-1 steps
+        int i = 0;
+
+        while(end != NULL){
+            i++;
+
+            if(i%k == 0){
+                // then we perform reversal of nodes
+                //So,we need a 'start' pointer which is the next of temp bec,temp will point to 1 node before start
+                ListNode* start = temp->next;
+                ListNode* temp2 = end->next; 
+                reverse(start, end);
+                // Now, we have reversed the nodes in K-sized groups. Now, we need to attach the links
+                // So, after reversing, 'start' pointer will be pointing to end of k-sized reversed LL and 
+                // 'end' pointer will be pointing to start of k-sized reversed LL
+                temp->next = end;
+                start->next = temp2;
+                // Now, we move forward temp and end pointer for next k-nodes 
+                temp = start;
+                end = temp2; 
+            }
+            // else we move end forward
+            else{
+                end = end->next;
+            }
+        }
+        return dummy->next;
+    }
+
+    // function for reversing nodes
+    void reverse(ListNode* start, ListNode* end){
+        // use 3 pointers
+        ListNode *previous = NULL;
+        ListNode *current = start;
+        ListNode *nxt = start->next;
+
+        while(previous != end){
+            current->next = previous; // basic operation for reversing
+            // move the pointers forward
+            previous = current;
+            current = nxt;
+            // move nxt only if it is not pointing to NULL
+            if(nxt != NULL){
+                nxt = nxt->next;
+            }
+        }
+    }
+
+
+
+        /*
+        // Approach 1: RECURSIVE Approach 
+        // TC : O(N), since we are iterating each node twice
+        // SC : O(N/k), which is the memory used in recursion stack
+        // CODE:
+
+        // BASE CASE: If head is NULL or there is only 1 node, we can't reverse anything. So, we return head.
+        // and if k==1, means reverse the LL in one one groups which means don't reverse the LL.
+        if(head == NULL || head->next == NULL || k == 1){
+            return head;
+        }
+         
+        // We know that, for the first k-nodes, we are going to reverse it manually and for the rest of the nodes, 
+        // recursion will take care.
+        // we'll use 2 pointers, start and end which will point to start and end of k-sized Linked List.
+        ListNode* start = head; // 'start' will point to the starting of the k-sized group LL
+        ListNode* end = head;  // 'end' will point to the last node of the k-sized group
+        int inc = k-1; // so, we have to move the end pointer forward 'k-1' steps i.e, 'inc' steps forward
+
+        // move 'end' forward
+        while(inc--){
+            end = end->next;  // move 'end' forward
+            // If we can't perform k-sized group, then in that case 'end' pointer will point to NULL at some point 
+            // of time. So, in that case we return head
+            // this case will take care of those nodes from which we can't form any k-sized group
+            if(end == NULL){
+                return head;
+            }
+        }
+        // After the end of above while loop, 'start' pointer will be pointing to starting of the k-sized group and
+        // 'end' pointer will be pointing to the end i.e, last node of k-sized group LL
+
+        // Now, call the recursive function
+        // So, till the end of k-sized group, we have done the reversal manually, now we ask the recursion to 
+        // perform the reversal from end->next till next k nodes.
+        ListNode* nextHead = reverseKGroup(end->next, k); 
+
+        // So, now let's perform the reversal of k-sized group by calling the reverse() function
+        reverse(start, end);
+        // after reversing, 'start' will be pointing to the last node of reversed LL and 'end' pointer will be
+        // pointing to starting node of the reversed LL
+
+        // Now, attach the link between the first k nodes reversed by us and the nodes reversed by recursion
+        // here, 'start->next' which is actually the last node of the reversed group
+        start->next = nextHead;  // after reversing, start will be pointing to the last node of reversed LL
+
+        // in the end, return 'end' pointer because, after the reversal, 'end' pointer will be pointing to the 
+        // starting node of the k-sized LL and so 'end' will be the new head
+        return end;
+    }
+
+    // let's create a separate function for reversal
+    void reverse(ListNode* start, ListNode* end){
+        // Use 3 Pointers
+        ListNode* previous = NULL;
+        ListNode* current = start;
+        ListNode* temp = start->next;
+
+        while(previous != end){
+            current->next = previous;  // basic operation for reversing
+            // now move the pointers forward
+            previous = current;
+            current = temp;
+            if(temp != NULL){
+                temp = temp->next;
+            }
+        }
+    }
+    */
+    
+};
