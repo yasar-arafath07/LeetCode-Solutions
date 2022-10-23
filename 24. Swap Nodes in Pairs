@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* swapPairs(ListNode* head){
+        // Approach: RECURSION (AS)
+        // Explanation: So, we cannot modify the value. 
+        // for eg: We need to bring the entire node 2 this side to swap with 1 and we need to move the entire node 1
+        // So, for the first 2 nodes, we will swap the entire 2 node and for the rest of the node, we will pass it
+        // to recursion. Recursion will return the head of the new swapped LL
+        // So, here swapping 2 nodes is similar to reversing those 2 nodes
+        // So, we reverse the first 2 nodes manually and for the rest of the nodes, recursion will take care
+        // TC : O(N)
+        // SC : O(N), since it is the space required in recursion stack
+        // CODE:
+
+        // use 3 pointers to reverse
+        ListNode* previous = NULL; 
+        ListNode* current = head;
+        ListNode* nextnode = NULL;
+
+        // follow the below steps to reversse
+        int count = 0;
+        while(current != NULL && count<2){
+            nextnode = current->next;
+            current->next = previous; // basic operation for reversing    
+            previous = current;
+            current = nextnode;
+            count++;
+        }
+
+        // pass the next remaining nodes into the recursive function
+        if(nextnode != NULL){
+            head->next = swapPairs(nextnode);
+        }
+        return previous; // because after reversing, previous will be the starting node
+    }
+};
