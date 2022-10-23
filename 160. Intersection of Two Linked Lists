@@ -1,0 +1,74 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB){
+        // Approach 2: TWO POINTERS (Understand the Intuition behind the Solution)
+        // TC : O(M+N)
+        // SC : O(1)
+        // CODE:
+        ListNode* ptr1 = headA; // ptr1 will point to head of 1st LL initially
+        ListNode* ptr2 = headB; // ptr2 will point to head of 2nd LL initially
+
+        while(ptr1 != ptr2){
+            // CASE 1:
+            if(ptr1 == NULL){
+                ptr1 = headB;
+            }
+            else{
+                ptr1 = ptr1->next; // move ptr1 forward
+            }
+
+            // CASE 2:
+            if(ptr2 == NULL){
+                ptr2 = headA;
+            }
+            else{
+                ptr2 = ptr2->next; // move ptr2 forward
+            }
+        }
+        return ptr1;
+
+
+
+        /*
+        // Approach 1: TWO POINTERS 
+        // TC : O(M+N)
+        // SC : O(1)
+        // CODE:
+
+        // create 2 pointers p1 and p2
+        ListNode* p1 = headA; // p1 will point to head of LinkedList A initially
+        ListNode* p2 = headB; // and p2 will point to head of Linked List B initially
+
+        // EDGE CASE:
+        if(p1 == NULL || p2 == NULL){
+            return NULL; // because there won't be any intersection
+        }
+
+        while(p1 != NULL && p2 != NULL && p1 != p2){
+            p1 = p1->next; // move p1 forward
+            p2 = p2->next; // mopve p2 forward
+
+            // if they both p1 and p2 becomes equal i.e, if they collide i.e, if both p1 and p2 points to same node,
+            // then return any of them. either p1 or p2
+            if(p1 == p2){
+                return p1;  // return p1 or p2 since it is the intersection
+            }
+
+            // If one of the pointer reaches the end (NULL) earlier than the other, then reuse it by moving it to
+            // the beginning of the other list.
+            // Once both of them p1 and p2 go throgh reassigning, they will be equidistant from the collision point
+            if(p1 == NULL) p1 = headB;
+            if(p2 == NULL) p2 = headA;
+        }
+        return p1;
+        */
+    }
+};
