@@ -1,0 +1,71 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+// comparator class created by us
+class cmp{
+    public:
+    // we need to create a function which is of boolean type inside this class
+    // this function we are creating for comparison
+    bool operator() (ListNode* a, ListNode* b){
+        if(a->val > b->val){
+            return true;
+        }
+        return false;
+        // OR just write: return a->val > b->val;
+    }
+};
+
+class Solution{
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists){
+        // Approach: Using min Heap (PRIORITY QUEUE)
+        // TC : O(N logK)
+        // SC : O(K)
+        // CODE:
+
+        // Here we are given a vector of LL. So, what we have to do is we need to store the starting node of all the 
+        // Linked List which is given inside the vector inside the heap
+        // So, let's create a minHeap
+        priority_queue<ListNode*, vector<ListNode*>, cmp> pq;  // this heap is to store all the first nodes from all
+        // the Linked List
+        // also in the above syntax, we need to pass a comparator function 'cmp' because we are creating a minHeap
+        // definintion of 'cmp' class in the end
+
+        // create a dummy node so that insertion of 1st node which is popped from the heap becomes easy.
+        // it's simply because, if we don't have any node, where can we insert? That's why we have dummy node
+        ListNode* dummy = new ListNode(-1); // dummy node is used to insert the 1st node which is a ans 
+        ListNode* tail = dummy; // tail will be pointing to last node of the ans so that we can insert new node
+        // in the end of ans as we pop from the heap
+
+        // So, now let's insert the starting node of all LL inside this heap
+        // So, we will traverse on the given vector of lists
+        for(int i=0; i<lists.size(); i++){
+            if(lists[i] != NULL){
+                pq.push(lists[i]);  // pushing all the starting nodes of LL inside the heap
+            }
+        }
+
+        // After the above for loop, we have a heap of size k
+        // till the size of the heap doesn't becomes empty, do the following inside the while loop
+        while(pq.size()){
+            ListNode* temp = pq.top(); // now, the top element of the heap which is the min is stored in a temp
+            tail->next = temp;  // now, put temp i.e the ans to the next of tail
+            tail = temp; // now, the ans becomes the new tail
+            pq.pop(); // now, remove that top element from the heap
+            // Now, insert the next node of the ans in the heap if it is not pointing to NULL
+            if(temp->next != NULL){
+                pq.push(temp->next);
+            }
+        }
+        return dummy->next;
+    }
+};
+
