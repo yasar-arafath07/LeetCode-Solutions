@@ -1,3 +1,5 @@
+/************************************************** C Solution *********************************************************/
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -27,3 +29,82 @@ struct ListNode* deleteDuplicates(struct ListNode* head){
     }
     return head;
 }
+
+
+
+
+/*********************************************** C++ CODE *******************************************************/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* deleteDuplicates(ListNode* head){
+        // Approach 2: ITERATIVE SOLUTION (M Fraz)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+
+        // create a temp pointer to traverse and compare and initialize it to head
+        ListNode* temp = head;
+
+        // EDGE CASE:
+        if(head == NULL || head->next == NULL){
+            return head;
+        }
+
+        while(temp->next != NULL){
+            // if we found a duplicate
+            if(temp->val == temp->next->val){
+                ListNode* del = temp->next;
+                // and then update the links
+                temp->next = del->next;
+                // Now, we can delete the duplicate from the memory
+                delete(del);
+                // here inside the if statement, dont move temp forward, because wherever we are currently standing
+                // at, the next node can also be the current node's duplicate. So we need to handle this also
+            }
+            // if the values of adjacent nodes are not same, we simply move temp
+            else{
+                temp = temp->next;
+            }
+        }
+        return head;
+
+
+        /*
+        // Approach 1: RECURSIVE SOLUTION (M Fraz)
+        // TC : O(N)
+        // SC : O(N), which is the space used in the recursion stack memory
+        // CODE:
+
+        // EDGE CASE:
+        if(head == NULL || head->next == NULL){
+            return head;
+        }
+
+        // call the recursive function
+        ListNode* newHead = deleteDuplicates(head->next);
+
+        // Now, compare the value between head and whatever returned by recursion
+        if(head->val == newHead->val){
+            // means we found the duplicate, so we skip head and return whatever is returned by recursion
+            return newHead;
+        }
+
+        // else we will attach the links i.e, we will add newHead into next of head
+        head->next = newHead;
+
+        // So, we return head
+        return head;
+        */
+    }
+};
