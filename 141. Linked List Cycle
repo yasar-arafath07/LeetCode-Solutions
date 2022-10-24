@@ -1,3 +1,5 @@
+/****************************************************** C Code *************************************************************/
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -21,5 +23,95 @@ bool hasCycle(struct ListNode *head) {
 // OR write it as while(fast && fast->next)
 // what it means : while (fast && fast->next) ?
 // As long as fast and fast->next != NULL loop will continue running.
-//This is a classic algo for detecting cycles in a linked list. We use two pointers to traverse the list: The first one is moving 'one node' at the time and the second 'two nodes' at a time. If there is a cycle, sooner or later pointers will meet and we return true. If the fast pointer reached the end of the list, that means there is no cycle and we can return false.
+//This is a classic algo for detecting cycles in a linked list. We use two pointers to traverse the list: The first one is moving 'one node' at the time and 
+  the second 'two nodes' at a time. If there is a cycle, sooner or later pointers will meet and we return true. If the fast pointer reached the end of the list, 
+  that means there is no cycle and we can return false.
 // This Algorithm is Known as Floyd's Cycle Detection Algorithm.
+
+
+
+/******************************************************************* C++ Code ******************************************************************/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+class Solution{
+public:
+    bool hasCycle(ListNode *head){
+        // Approach 3: FAST & SLOW POINTERS 
+        // FLOYD'S CYCLE DETECTION ALGORITHM 
+        // TC : O(N)
+        // SC : O(1), there is no space required
+        // CODE:
+        ListNode* slow = head; // both slow and fast pointer will start from same position
+        ListNode* fast = head;
+
+        // we assume that there is no cycle. So the condition inside while loop will be:
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next; // move slow by 1 step at a time
+            fast = fast->next->next; // move fast by 2 steps at a time
+
+            // If 'fast' pointer catches 'slow' pointer at any point of time, we return true since there is a cycle
+            if(fast == slow){
+                return true;
+            }
+        }
+        return false;
+
+
+
+        /*
+        // BETTER SOLUTION 
+        // Approach 2: Without HASHMAP (GFG Article)
+        // Gives Error
+        // TC : O(N)
+        // SC : O(1), since no extra space is required
+        // CODE:
+        ListNode* temp = head;  // initialize a temp pointer to head for traversal of LL
+
+        while(temp != NULL){
+            // If we have already visited the node before, then it's flag will be set to 1. So, if we again encounter
+            // the same node, means there is a Cycle
+            if(temp->flag == 1){
+                return true;
+            }
+            // else if we are seeing the node for the 1st time, mark it's flag as 1 and then move temp forward
+            temp->flag = 1;
+            temp = temp->next;
+        }
+        return false;
+        */
+
+
+        /*
+        // BRUTE FORCE
+        // Approach 1: Using Hashset (GFG Article)
+        // TC : O(N), because only 1 traversal of the loop is needed
+        // SC : O(N), N is the space required to store the value in Hashset
+        // CODE:
+
+        unordered_set<ListNode*> s;  // create an unordered_set of pointer to ListNode type
+        ListNode* temp = head;  // create a pointer temp to traverse
+        
+        // traversal starts
+        while(temp != NULL){
+            // If the current temp node is already present in the Hashset, means if temp is visited twice, then 
+            // there is a cycle in the LL because we will be encountering the temp node for the 2nd time
+            if(s.find(temp) != s.end()){
+                return true; // we return true if there is a cycle
+            }
+            // If the element is not found in the Hashset,i.e, if we are visiting the node for 1st time, we insert
+            // that node in the Hashset
+            s.insert(temp);
+            temp = temp->next;  // we move the temp pointer forward
+        }
+        return false;
+        */
+    }
+};
