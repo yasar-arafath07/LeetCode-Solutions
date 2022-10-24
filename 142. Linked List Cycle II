@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode *detectCycle(ListNode *head){
+        // Approach 2: SLOW & FAST POINTERS (M Fraz)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+
+        // first, we need to find the point where slow and fast pointers meet. So, same code as detecting cycle in LL
+        ListNode* slow = head; 
+        ListNode* fast = head;
+
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+
+            // If there is a cycle, at some point of time, both the pointers will meet at the same point
+            if(fast == slow){
+                // so, we found the point, so we break
+                break;
+            }
+        }
+
+        // If there is no cycle
+        if(fast == NULL || fast->next == NULL){
+            return NULL;  // as given in problem description, if there is no cycle, retutn null
+        }
+
+        // Now, take 2 pointers ptr1 and ptr2
+        // Start ptr1 from head and ptr2 from the point where fast and slow pointers met
+        ListNode* ptr1 = head;
+        ListNode* ptr2 = slow;  // slow or fast, since both are at same position now
+
+        // move ptr1 and ptr2 forward until both meet at a point which is the starting point of the cycle in the LL
+        while(ptr1 != ptr2){
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+        }
+        return ptr1;  // or return ptr2
+        
+
+
+
+        /*
+        // Approach 1: Using set 
+        set<ListNode*> s;
+        ListNode* temp = head;
+        
+        while(temp != NULL){
+            // if temp is not found in the set
+            if(s.find(temp) == s.end()){
+                s.insert(temp);
+                temp = temp->next;
+            }
+            else{
+                // if we found the temp in set,i.e if we encounter a node for the 2nd time
+                return temp;
+            }
+        }
+        // return NULL since there is no cycle
+        return NULL;
+        */
+    }
+};
