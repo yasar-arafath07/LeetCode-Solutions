@@ -1,0 +1,36 @@
+class Solution{
+public:
+    vector<int> sortArray(vector<int>& nums){
+        // Approach 2: STL - Stable Method
+        // TC : O(N*logN)
+        // SC : O(1)
+        // CODE:
+        stable_sort(nums.begin(), nums.end());
+        return nums;
+
+
+
+        /*
+        // Approach 1: STL - Standard Approach
+        // TC : O(N*logN)
+        // SC : O(1)
+        // CODE:
+        sort(nums.begin(), nums.end());
+        return nums;
+        */
+    }
+};
+
+/*
+// Different SORTING Methods:
+- Using STL (Standard Template Library): Standard (Method 1) and Stable (Method 2)
+- INSERTION SORT : Iterative (Method 1) & Recursive (Method 2)
+- SELECTION SORT : Standard (Method 1) & Standard using inbuilt (Method 2)
+- BUBBLE SORT
+- QUICK SORT : Standard (Method 1) & Randomized (Method 2)
+- MERGE SORT : Outplace Merging (Method 1) & Inplace Merging (Method 2)
+- Generalized RADIX SORT : Using MinVal (Method 1) & Using Partitioning (Method 2)
+- Generalized COUNT SORT
+- HEAP SORT
+- BUCKET SORT
+*/
