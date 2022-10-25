@@ -1,0 +1,70 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2){
+        // Approach: (tUf)
+        // This problem only has the optimal solution
+        // TC : O(max(M,N)), where 'M' and 'N' are the lengths of l1 and l2 respectively
+        // SC : O(N), since we are creating the new LL which will be having the summation of the 2 no's 
+        // CODE:
+        // create a dummy node and store -1 in it
+        ListNode* dummy = new ListNode(-1); 
+        ListNode* temp = dummy; // assign another pointer temp to dummy for Traversing
+        int carry = 0;
+
+        // We will iterate till all of l1, l2 and carry becomes NULL
+        // because in the end, both l1 and l2 may point to NULL and carry may have some values in it
+        while(l1 != NULL || l2 != NULL || carry != 0){
+            int sum = 0; // maintain a sum variable to store the sum of the node values
+            
+            // Adding current node's value to the sum in l1
+            if(l1 != NULL){
+                sum += l1->val; // sum = sum + l1->val;
+                l1 = l1->next; // move l1 forward
+            }
+
+            // Adding current node's value to the sum in l2
+            if(l2 != NULL){
+                sum += l2->val; // sum = sum + l2->val;
+                l2 = l2->next; // move l2 pointer forward
+            }
+
+            sum += carry; // add carry to the sum from previous if there
+            carry = sum/10; // calculate the new carry
+            // Create a new ans node and assign the value (sum%10) to it
+            ListNode* ans = new ListNode(sum%10);
+            temp->next = ans; // store this ans node at next of temp
+            temp = temp->next;  // make temp point to the newly added node by moving it forward
+        }
+        return dummy->next;
+    }
+};
+
+
+/*
+// EXPLANATION :
+- crate a dummy node 'dummy' and assign it to 0
+- create a copy of duumy and lets call it temp and assign temp to dummy, temp is only for traversing the LL
+- 'dummy' node always gives the head of the LL. So we are going to only move the temp node
+- At first, we carry a variable 'sum' and a variable 'carry'
+- Update sum to 0 in every iteration
+- We start the traversal and we check if the val at anode in l1 is NULL or not. If not NULL, then add the val to sum.
+  similarly, we add the val at node1 in l2 to sum
+- Now, we create a new node and assign 'sum' to it. and after this, we will make temp to point to this new node
+- Then we move l1 one step ahead and l2 also 1 step ahead
+- In the 2nd iteration, we assign sum to 0 again
+- If at any point, sum>=10, we assign (sum%10) in the ans node and then make temp point to this new node and 
+  add the carry to 'carry' variable.
+  carry = sum/10
+- The moment l1 points to NULL & l2 points to NULL & carry becomes 0, we stop there
+- In the end, we return dummy->next
+*/
