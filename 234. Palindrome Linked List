@@ -8,9 +8,81 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution {
+class Solution{
 public:
-    bool isPalindrome(ListNode* head) {
+    bool isPalindrome(ListNode* head){
+        /*
+        // Approach 2: (M Fraz)
+        // gives TLE error
+        // Explanation: Do the reversal from the Middle of the LL & then keep 2 pointers ptr1 and ptr2. ptr1 at 
+        // starting of the LL and ptr2 at the middle of the LL where we performed reversal
+        // and then keep comparing the elements using these 2 pointers & move the pointers forward
+        // If 1st half of the node values are equal to the 2nd half, return true. else return false.
+        // TC : O(N), O(N/2) to find the node before mid and then O(N/2) to perform the reversal operation,
+        // O(N/2) again for comparing values and then again O(N/2) for again reversal in the end
+        // So, total TC : O(2N) = O(N)
+        // SC : O(1)
+        // CODE:
+        // So, to perform the reversal from the middle of the LL, find the element just before the middle element
+        ListNode* slow = head;  // slow pointer
+        ListNode* fast = head;  // fast pointer
+        
+        // Now, we don't need the middle element, we need the element just before the middle element. So, 
+        while(fast->next != 0 && fast->next->next != 0){
+            slow = slow->next;  // moves by 1 step at a time
+            fast = fast->next->next;  // moves by 2 step at a time
+        }
+        // After the above while loop, slow pointer now will be pointing to the node which is just behind/before
+        // the middle element
+        // Now, we reverse the LL from the slow->next which is the mid of LL till the end and then attach the 
+        // reversed part to the next of slow
+        slow->next = reverseList(slow->next);
+
+        // Now, initialize 2 pointers ptr1 and ptr2
+        ListNode* ptr1 = head; // start ptr1 from the starting of the LL
+        ListNode* ptr2 = slow->next; // start ptr2 from the mid of the LL i.e, from slow->next
+
+        // Now, compare the values in the 1st half & 2nd half
+        while(ptr2 != NULL){
+            if(ptr1->val != ptr2->val){
+                return false;
+            }
+            // else we simply move the pointers
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+        }
+        // Now, we need to again fix the structure of the LL to it's original form. So call the reverseList()
+        // function and reverse the LL again from the mid and attach it to just before the mid which is slow->next
+        slow->next = reverseList(slow->next);
+        
+        return true; // if we come out of the above while loop means it is a plaindrome, so return true
+    }
+
+    // function to reverse the LL
+    ListNode* reverseList(ListNode* head){
+        if(head == NULL) return NULL;
+
+        // use 3 pointers for reversing
+        ListNode* previous = NULL;
+        ListNode* current = head;
+        ListNode* nextnode = head->next;
+
+        while(current != NULL){
+            current->next = previous;  // basic operation for reversing
+            previous = current;
+            current = nextnode;
+            if(nextnode->next != NULL){
+                nextnode = nextnode->next;
+            }
+        }
+        return previous;
+    }
+};
+*/
+
+        
+        // Approach 1:
+        // CODE:
         ListNode *slow, *fast, *prev, *temp;
         slow = head;
         fast = head;
@@ -20,21 +92,22 @@ public:
             slow = slow->next;
             fast = fast->next->next;
         }
-        prev = slow; //here slow pointer will be the middle element.now prev will point to the middle
-        slow = slow->next; // i.e now slow pointer will point to the next of the middle node.
-        prev->next = NULL;//ie the link(next) part of middle node is set to NULL.So the list is broke
+        prev = slow;  //here slow pointer will be the middle element.now prev will point to the middle
+        slow = slow->next;  // i.e now slow pointer will point to the next of the middle node.
+        prev->next = NULL;  //ie the link(next) part of middle node is set to NULL.So the list is broke
         
         //Step2: Reversing the Linked list from the middle (i.e after the middle node)
         while(slow != 0){
             temp = slow->next;
-            slow->next = prev;//ie storing the Address of previous node in the link part of next node
+            slow->next = prev; // i.e, storing the Address of previous node in the link part of current node
             prev = slow;
             slow = temp;
         }
         fast = head;
-        slow = prev;//because, by the end of step 2, prev pointer will be pointing to the end of list
+        slow = prev; //because, by the end of step 2, prev pointer will be pointing to the end of list
         
-        //So by the End of Step 2, i.e after above line, fast will be at starting of linked list and           slow pointer will be at the end of the linked list. and now the 2nd half of the linked               list is properly reversed.
+        // So, by the end of step 2, i.e, after the above line, fast pointer will be at the starting of the LL
+        // and slow pointer will be at the end of the LL. and now the 2nd half of the list is properly reversed
         
         //Step3: Now Compare the 2 halves of the linked list if it is palindrome.
         while(slow != 0){ // slow->next will be equal to 0 once it reaches the middle of list.
@@ -48,3 +121,4 @@ public:
         return true;
     }
 };
+
