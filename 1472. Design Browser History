@@ -1,0 +1,54 @@
+class BrowserHistory{
+public:
+    // Approach: Using DOUBLY LINKED LIST (M Fraz)
+
+    // create a DLL (Doubly Linked List) of type string which is called as list in C++ 
+    list<string> history; // since we are storing url in the DLL, we create of type string
+    // create an iterator of list of string
+    list<string> :: iterator it;
+    
+    // constructor
+    // home page will arrive in the constructor
+    BrowserHistory(string homepage){
+        history.push_back(homepage);
+        it = history.begin(); // iterator 'it' will point to the starting of the LL
+    }
+    
+    // we are now at 'it', now we want to visit something.
+    // so whatever is there after 'it', we will delete everything and the visited page will open
+    // so we use erase() function here
+    void visit(string url){
+        auto it2 = it;  // create another iterator it2
+        it2++;  // move it2 one position forward
+        history.erase(it2, history.end());  // delete all the nodes/pages from next of 'it' i.e, from it2 till the end
+        // Now, connect the new url 
+        history.push_back(url);
+        it++; // now it will point to this new page. So we increment it
+    }
+    
+    // here we need to go back 'step' no. of times. So, we need to put a loop
+    string back(int steps){
+        while(it != history.begin() && steps){ // because we can't go back if steps > no.of pages/nodes
+            it--; // i.e go to back page
+            steps--;
+        }
+        return *it;  // we will return the page for which 'it' is pointing to (dereferencing)
+    }
+    
+    // here also same feature as back(), but we need to go forward instead of backward
+    string forward(int steps){
+        while(it != (--history.end()) && steps){  // --history.end() will point to the last node of the DLL
+            it++; // i.e go to next page
+            steps--;
+        }
+        return *(it);  // dereferencing i.e, return the page at 'it' is pointing to
+    }
+};
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory* obj = new BrowserHistory(homepage);
+ * obj->visit(url);
+ * string param_2 = obj->back(steps);
+ * string param_3 = obj->forward(steps);
+ */
