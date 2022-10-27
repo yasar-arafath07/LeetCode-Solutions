@@ -1,0 +1,50 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* rotateRight(ListNode* head, int k){
+        // Approach : OPTIMIZED
+        // TC : O(N), since we are traversing once to find the length of the LL
+        // SC : O(1), since we are not using any extra
+        // CODE:
+        
+        ListNode* newHead;
+        ListNode* tail;
+        newHead = tail = head;  // the 2 pointers newHead and tail will point to head initially
+
+        // EDGE CASE:
+        if(head == NULL) return head;
+        
+        // find the length of the LL
+        int length = 1; // number of nodes
+        while(tail->next != NULL){ 
+            tail = tail->next;
+            length++; // get the number of nodes in the list
+        }
+        // After the above while loop, tail will be pointing to the last node of the LL
+        // Now, connect the last node to head i.e , connect the last node of the LL to the first node
+        tail->next = head; // circle the link
+        
+        // k = k % length;
+        if(k %= length){ 
+            for(auto i=0; i<length-k; i++){
+                tail = tail->next; // the tail node is the (len-k)-th node (1st node is hd
+            }
+            // after the above for loop, the tail node will be (length-k)th node of the LL
+        }
+        // Now, update the links 
+        newHead = tail->next; 
+        tail->next = NULL;
+
+        // return the newHead which is now the actual head of the LL
+        return newHead;
+    }
+};
