@@ -1,0 +1,51 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* partition(ListNode* head, int x){
+        // Approach: OPTIMIZED SOLUTION
+        // TC : O(N)
+        // SC : O(1) (not sure)
+        // CODE:
+        ListNode *head1 = new ListNode(-1); // this is to store all the elements which are less than x
+        ListNode *head2 = new ListNode(-1); // this is to store all the remaining elements which are greater than or 
+        // equal to x and then in the end, add these 2 LL which will be our final ans
+        // here store mean keep inserting nodes to the next of current node
+
+        // create 2 pointers h1 and h2 to iterate on head1 and head2 list respectively 
+        ListNode *h1 = head1; // h1 is the pointer pointing to the node pointed by head1
+        ListNode *h2 = head2; // h2 is also a pointer which will point to the node pointed by head2
+
+        // now we start iterating
+        while(head != NULL){
+            // if val of head is less than x, then add that node to head1 list
+            if(head->val < x){
+                head1->next = head; // add the curent node to head1 list
+                head1 = head1->next; // now, head1 will point to the newly added node
+                head = head->next; // move head to comparef or the next node's value
+            }
+            else{
+                // if(head->val >= x) i.e, if value of head is greater than or equal to x, we add that node to head2
+                // list
+                head2->next = head; // add the current node to head2 list
+                head2 = head2->next; // head2 will now point to the newly added node
+                head = head->next; // move head forward in the main LL for comparing the node's values
+            }
+        }
+        // After the above while loop, we have traversed through all the nodes of the given LL and we've compared the 
+        // value of each node with given value x and we created 2 lists 
+        // Now, we need to merge these 2 lists
+        head1->next = h2->next; // since the 1st node is a dummy node. So, we add next of h2
+        head2->next = NULL;
+        // return the new head which is h1->next, since h1 is pointing to that dummy node
+        return h1->next;
+    }
+};
