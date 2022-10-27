@@ -1,0 +1,80 @@
+class LRUCache{
+public:
+    // Approach: Using DOUBLY LINKED LIST (M Fraz)
+    // Gives TLE error
+    // TC : O(logN) for both get() & put() function
+    // SC : O(N)
+
+    // create a map
+    map<int,int> mpp;  // to store the data i.e, key and value pairs
+    list<int> l; // create a DOUBLY LINKED LIST (DLL) so that the data's are in well sorted order. i.e, all the 
+    // Most recently used data will be present at the front/start of DLL and Least recently used (LRU) data will 
+    // be present at the back/end
+    int cap; // capacity of the cache
+    int size; // size of the cache till now
+    // capacity is the maximum no. of elements that we can store in the cache and size is the total elements we have 
+    // stored till now in the cache
+    //  create another map to store the address of key's node so that we don't have to traverse the DLL
+    map<int, list<int> :: iterator> address;  // since we are storing address, we have taken a map
+    // of int, iterator of type list of int
+    
+    // constructor
+    LRUCache(int capacity){
+        cap = capacity;
+        size = 0;
+    }
+    
+    // return the value corresponding to the give key
+    int get(int key){
+        // if key is not present in the map, simply return -1
+        if(mpp.find(key) == mpp.end()){
+            return -1;
+        }
+        int ans = mpp[key]; // save the ans that we need to return in the end
+        // else find the iterator pointing to the key's node 
+        list<int> :: iterator it = address[key]; // now the iterator will point to the position where key is present
+        // in the DLL
+        // Now, delete it from currrent position and insert the node at the beginning since it is now the Most 
+        // Recently used data
+        l.erase(it);
+        address.erase(key); // delete it from the address storing map also
+        // Now, insert the node in the front of the DLL
+        l.push_front(key);
+        address[key] = l.begin(); // this will be the new position
+        return mpp[key]; // return the answer
+    }
+    
+    // put the given value to the corresponding given key in the map
+    void put(int key, int value){
+        // first check if key-value pair exist in the map or not
+        // If it exists already, remove it from the map and list both
+        if(mpp.find(key) != mpp.end()){
+            l.erase(address[key]);  // remove it from the DLL
+            address.erase(key);  // remove it from the address storing map also
+            mpp.erase(key); // remove it from the map
+            // since we removed a key, size will reduce by 1. So, update the size
+            size--;
+        }
+        // Now, check if the capacity of the cache became full or not
+        if(size == cap){
+            // if the size is full, remove the least recently used data which is present at the end of the DLL
+            int r = l.back(); // this we need to remove
+            l.pop_back();  // remove it from the DLL
+            address.erase(r); // remove it from the address storing map also
+            mpp.erase(r); // remove it from the map also
+            size--;  // since we removed an element, update the new size
+        }
+        // else, we insert it
+        size++; // since we are inserting, size will increase by 1
+        l.push_front(key); // Now, the new key will be the Most recent used, we insert it at the beginning of DLL
+        address[key] = l.begin(); 
+        mpp[key] = value; // update the new value to the corresponding key
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
