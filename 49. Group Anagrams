@@ -1,0 +1,36 @@
+class Solution{
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs){
+        // Approach: Using UNORDERED MAP (HELLO WORLD)
+        // TC : O(Nklogk), since we are performing sort() for all the N words
+        // SC : O(N)
+        // Explanation: 'ate' and 'tea' aere Anagrams of each other. If we sort them, we get 'aet'
+        // CODE:
+        vector<vector<string>> ans;
+        // create an unordered_map and store key as the Sorted Word of the Anagram and value as all Different words
+        // formed from the sorted word which are present in the given string 
+        unordered_map<string, vector<string>> map;
+
+        // for each word on strs
+        for(auto x : strs){
+            string temp = x;  // take one word and then sort it
+            sort(x.begin(), x.end());
+            map[x].push_back(temp);  // here in the map, 'x' is the key and corresponding to it a vector of string 
+            // is present where we push the actual string 'temp'
+        }
+
+        // now, the map is created and all the anagrams are grouped together inside the value field of map
+        for(auto i : map){
+            ans.push_back(i.second);
+        }
+        return ans;
+    }
+};
+
+
+/*
+unordered_map:
+aet ---> "eat", "tea", "ate"
+ant ---> "tan", "nat"
+abt ---> "bat" 
+*/
