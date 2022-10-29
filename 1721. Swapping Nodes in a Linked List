@@ -1,0 +1,53 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* swapNodes(ListNode* head, int k){
+        // Approach: TWO POINTERS (OPTIMIZED)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        ListNode* ptr1 = head; // pointer 1
+        ListNode* ptr2 = head; // pointer 2
+        ListNode* kth_node = NULL;  // this pointer will point to the kth node once we find that node
+
+        // trversal starts using ptr1 to find the kth node 
+        while(--k){
+            ptr1 = ptr1->next;
+        }
+        // After the above while loop, ptr1 will be pointing to kth node. So, save it
+        kth_node = ptr1; // save the kth node in a pointer
+
+        ptr1 = ptr1->next;
+
+        // traversal starts using ptr2 to find the kth node from the end
+        while(ptr1 != NULL){
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+        }
+        // In the above while loop, once ptr1 reaches till the end, ptr2 will be pointing to the kth node from the end
+        // So, now swap the values between kth node and ptr2 node
+        swap(kth_node->val, ptr2->val);
+        
+        // return the head
+        return head;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- We start from the head of the LL and traverse until we reach the kth node using ptr1.
+- Then we make some pointer to point to that node ('kth') to remember it so that it'll be used later to swap the values.
+- Now, set ptr2 to head and ptr1 to next of kth node, and then keep traversing till the end i.e till ptr1 points to NULL.
+- When ptr1 reaches the end, ptr2 will be pointing to (n-k)th node, which is the node we swap the value of kth node
+- Now, we swap the values of 'kth' node and 'ptr2' node and we're done
+*/
