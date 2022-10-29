@@ -1,0 +1,147 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+/*
+class Solution{
+public:
+    /
+    // function created to make copies of the nodes
+    void copyList(Node* head){
+        // create a temp pointer for traversal
+        Node* temp = head;
+        // Also, create 1 more pointer which will point to next node of temp so that the connection is not broken 
+        // when we create a copy of temp
+        Node* nextnode = head->next;
+
+        // traversal starts
+        while(temp != NULL){
+            // create a copy of each node
+            Node* copy = new Node(temp->val);  // put the value of original node inside the copy node
+            // Now, we need to connect this new node to next of temp
+            temp->next = copy; // i.e, for eg, node a is there and we'll make next of a as a'
+            copy->next = nextnode; // eg, join b to next of a'
+            temp = nextnode; // move temp forward
+            // save the next node since we are inserting copy in between original nodes
+            if(nextnode != NULL) nextnode = nextnode->next; 
+        }
+    }  // close of copyList() function
+
+    // function to handle the random pointers
+    void handleRandom(Node* head){
+        // create a temp pointer and initialize it to head
+        Node* temp = head;
+        
+        // while(temp)
+        while(temp != NULL){
+            if(temp->random != NULL){
+                temp->next->random = temp->random->next;  // this will attach the random pointer to required node
+                // move temp forward
+                temp = temp->next->next; // since temp->next is a copy of temp, so the next node is temp->next->next
+            }
+        }
+    }  // close of handleRandom() function
+
+    // function to separate/detach the merged LL to gain the copy LL
+    Node* separate(Node* head){
+        // create a dummy node to initially hold the first copy node from the merged LL
+        Node* dummy = new Node(-1);
+        // create a tail pointer which will help us to keep adding all the copy nodes to the end of dummy node
+        Node* tail = dummy;  // initialize tail pointer to dummy node
+        // [dummy is created only to catch the 1st copy node and tail is created to keep track the last copy node we
+        //added into the end of dummy so that again if a new copy node comes, we can easily add it using tail pointer]
+        // Also, create one more pointer temp for iterating
+        Node* temp = head;
+
+        // traversal starts
+        while(temp != NULL){
+            // keep adding the copy node to the end of dummy node i.e to the next of tail
+            tail->next = temp->next;
+            tail = tail->next; // now tail will point to newly added node
+            temp->next = tail->next;  // update the connection
+            temp = temp->next;
+        }
+        // In the end, return the new separated copy LL 
+        return dummy->next;
+    }
+
+    Node* copyRandomList(Node* head){
+        // Approach 2: without using MAP (NO EXTRA SPACE)
+        // Gives TLE error
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+
+        // EDGE CASE:
+        if(head == NULL) return NULL;
+        
+        // First, we'll create the copy of all the nodes, so we create a separate function for creating those copies
+        // call the copyList() function
+        copyList(head);
+
+        // Now, we need to handle random pointers. So, to connect random pointers, we create a separate function 
+        // call the handleRandom() function
+        handleRandom(head);
+
+        // Now, we need to separate the merged LL where we have added copy nodes in between original Nodes
+        // So, we need to gain the original structure of the copy LL
+        // So, we will create a separate function to do this task
+        // call the separate() function
+        return separate(head);
+    }
+};
+*/
+
+
+
+
+class Solution{
+public:
+    Node* copyRandomList(Node* head){
+    // Approach 1: Using MAP (Takes Extra Space)
+    // TC : O(N)
+    // SC : O(N), for creating the map
+    // CODE:
+
+    // create a map of type Node*,Node*
+    unordered_map<Node*,Node*> map; // we will store address of copy of address of each node corresponding to 
+    // address of original node
+
+    // then we will traverse the whole LL. So, create a temp pointer for traversing
+    Node* temp = head;
+
+    // traversal starts
+    while(temp != NULL){
+        // visit each node and make a copy of each node
+        Node* copy = new Node(temp->val); // In the created copy node, the value inside the node will be the value 
+        // which is present in the original node i.e, temp
+        map[temp] = copy; // store the address of copy node corresponding to address of original node insise the map
+        // then move temp forward
+        temp = temp->next;
+    }
+    // After the above while loop, whole copy of the LL is created. Now, we need to make connections
+    // So, we need to traverse again
+    temp = head;
+    while(temp != NULL){
+        // Now, we need to join 2 connections. One is 'next' connection of each node and the other is the 'random'
+        map[temp]->next = map[temp->next];
+        map[temp]->random = map[temp->random];
+        temp = temp->next;        
+    }
+
+    return map[head];
+        
+    }
+};
