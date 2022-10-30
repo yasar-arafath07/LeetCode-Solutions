@@ -1,0 +1,64 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2){
+        // Approach: Using VECTORS
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        vector<int> nums1;  // create a vector to store the values of 1st LL
+        vector<int> nums2; // create another vector to store the values of 2nd LL
+
+        // push the values of 1st LL into nums1 by traversing the 1st LL
+        while(l1 != NULL){
+            nums1.push_back(l1->val); // push the value into nums1
+            l1 = l1->next; // move l1 forward
+        }
+        // Now, nums1 = [7,2,4,3]
+
+        // push the values of 2nd LL into nums2 by traversing the 2nd LL
+        while(l2 != NULL){
+            nums2.push_back(l2->val); // push the value into nums2
+            l2 = l2->next; // move l2 forward
+        }
+        // Now, nums2 = [5,6,4]
+
+        int m = nums1.size(); // size of nums1 vector
+        int n = nums2.size(); // size of nums2 vector
+        int sum = 0;
+        int carry = 0;
+
+        ListNode* head = NULL; // this we will return in the end
+        ListNode* temp = NULL;  // temp is to add new calculated sum values in the LL
+
+        for(int i=m-1, j=n-1; i>=0 || j>=0 || carry>0; i--, j--){
+            sum = carry;  // add carry to sum if any carry is left from previous calculations
+
+            if(i >= 0){
+                sum += nums1[i];  // sum = sum + nums1[i]
+            }
+
+            if(j >= 0){
+                sum += nums2[j]; // sum = sum + nums2[j]
+            }
+
+            // calculate carry
+            carry = sum/10;
+
+            temp = new ListNode(sum%10);  // put the value in the calculated sum value in the LL
+            temp->next = head;
+            head = temp;
+        }
+        return head;  // since we have to return the LL in reverse manner, head will be pointing to end of calculated
+        // sum LL. 
+    }
+};
