@@ -1,0 +1,44 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* mergeNodes(ListNode* head){
+        // Approach: OPTIMIZED
+        // TC : O(N)
+        // Sc : O(1)
+        // CODE:
+        if(head->val == 0){
+            head = head->next;
+        }
+
+        ListNode* res = head;
+        ListNode* temp = head; // to traverse the LL till the end
+        int sum = 0; 
+
+        // traversal starts
+        while(temp != NULL){
+            // if the value inside the temp node is not zero, add it to sum
+            if(temp->val != 0){
+                sum += temp->val; // sum = sum + temp->val;
+                temp = temp->next; // move temp forward
+            }
+            else{
+                // if(temp->val == 0)
+                res->val = sum;  // insert the calculated sum in the ans node
+                res->next = temp->next;  // DRY RUN eg1 for Better Understanding
+                temp = temp->next;
+                res = temp;
+                sum = 0;  // if we found a zero in between, we update the sum to 0 as per question
+            }
+        }
+        return head;
+    }
+};
