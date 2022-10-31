@@ -1,1 +1,36 @@
 
+class Solution{
+public:
+    int arithmeticTriplets(vector<int>& nums, int diff){
+        // Approach: Using MAP
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        int count = 0;
+        unordered_map<int,int> map;
+
+        // store all the elements inside the map
+        for(int i=0; i<nums.size(); i++){
+            map[nums[i]]++;
+        }
+
+        // Now, for every element of the Array, lets say 'X', check if there exists both numbers, (X + diff) & (X - diff)
+        // inside the map
+        for(int i=0; i<nums.size(); i++){
+            if(map[nums[i]-diff] && map[nums[i]+diff]){
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- First store all the Array Elements inside a MAP or a SET by traversing the Array
+- Now, Again traverse the Array and see for every element 'X', if there are 2 more elements present in map i.e check if
+  'X + diff' and 'X - diff' is present in map or not.
+- If present, then increment count by 1.
+- In the end, return the count variable;
+*/
