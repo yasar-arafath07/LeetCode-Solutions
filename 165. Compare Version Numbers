@@ -1,0 +1,48 @@
+class Solution{
+public:
+    int compareVersion(string version1, string version2){
+        // Approach: TWO PONTERS (AS)
+        // TC : O(M+N), where 'M' & 'N' are the lengths of version1 string and version2 string respectively
+        // SC : O(1)
+        // CODE:
+        int i = 0; // to traverse version1
+        int j = 0; // to travrse version2
+        int v1Len = version1.size();
+        int v2Len = version2.size();
+        int n1, n2;
+
+        // start traversing till the end of both the strings
+        while(i < v1Len || j < v2Len){
+            n1 = 0; // n1 is the number which is present in between the dots in version1 string
+            n2 = 0; // n2 is the number which is present in between the dots in version2 string
+            // Now, we traverse again in version1 until we see a dot
+            while(i < v1Len && version1[i] != '.'){
+                // Now, we find the number that is present in between the dots
+                n1 = (n1 * 10) + (version1[i] - '0'); // since it is represented in string, we do this. eg: '4'-'0' = 0
+                i++;
+            }
+            // Now, we traverse in version2 string until we see a dot to find the number
+            while(j < v2Len && version2[j] != '.'){
+                // Find the number which is present in between the dots
+                n2 = (n2 * 10) + (version2[j] - '0');
+                j++;
+            }
+            
+            // Now, start comparing the values n1 and n2
+            if(n1 < n2) return -1;
+            else if(n1 > n2) return 1;
+            i++;
+            j++;
+        }
+        return 0;
+    }
+};
+
+/*
+// EXPLANATION:
+- revision in whatever exists between the dot.
+- Start comparing the 1st revision of both versions. If 1st revision of version1 > 1st revision of version2, return 1. No
+  need to compare after that since we got our answer. else return -1.
+- If they both are equal, then only go ahead and compare revision2 of version1 and version2
+- (version1[i] - '0') is used to convert from string to int since version1[i] is represented in string
+*/
