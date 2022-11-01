@@ -1,0 +1,42 @@
+class Solution{
+public:
+    int findMin(vector<int>& nums){
+        // Approach: BINARY SEARCH (AV)
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+        int N = nums.size();
+        int low = 0;
+        int high = N-1;
+        
+        // if it is already a sorted array
+        if(nums[0] <= nums[high]){
+            // means the array is not at all rotated. So, 1st element i.e nums[0] will be the min element. so return it.
+            return nums[0];  // return 1st element which will be the minimum element
+        }
+
+        // else, apply Binary Search
+        while(low <= high){
+            int mid = low + (high-low)/2;
+            int next = (mid+1) % N;  // to avoid boundary flow, we write (mid+1) as (mid+1)%N.
+            int prev = (mid+N-1) % N; // to avoid boundary flow, we write (mid-1) as (mid-1+N)%N.
+
+            // start comparing
+            // to find minimum elememt, nums[mid] should be lesser than both of it's neighbours. i.e it should be less
+            // than both prev and next
+            if(nums[mid] < nums[prev] && nums[mid] < nums[next]){
+                // we found the minimum element in the array, so return the minimum element
+                return nums[mid];
+            }
+            else if(nums[mid] >= nums[0]){  // we have to always compare with 1st element and not nums[low] because, low will keep changing
+                // means, first half is sorted, so minimum element will be present in the unsorted array
+                low = mid + 1; // search in the 2nd half
+            }
+            else{
+                // if(nums[mid] <= nums[high]), means 2nd half is sorted, so min will be present in the 1st half
+                high = mid - 1;  // search in the 1st half
+            }
+        }
+        return 0;
+    }
+};
