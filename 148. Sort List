@@ -1,0 +1,77 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    ListNode* sortList(ListNode* head){
+        // Approach: MERGE SORT (AS)
+        // TC : O(NlogN)
+        // SC : O(1)
+        // CODE:
+
+        // BASE CASE:
+        if(head == NULL || head->next == NULL){
+            return head;
+        }
+
+        // Find the Middle of the LL so that we can divide the LL into 2 
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* temp = NULL;
+
+        while(fast != NULL && fast->next != NULL){
+            temp = slow;  // temp will point to one node before 'slow' pointer 
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // Now, slow will be pointing to the middle of the LL which is the head of the 2nd half
+        // Now, break the connection i.e, divide the LL into 2 by doing temp->next = NULL
+        temp->next = NULL;
+
+        // Now, we have Broke the LL into 2 halfs, we need to sort first and second half by calling the sortList()
+        // function recursively
+        ListNode* l1 = sortList(head);  // sort the first half 
+        ListNode* l2 = sortList(slow);  // sort the 2nd half
+
+        // Now, we have 2 sorted LL. We need to merge them by calling the mergeList() function 
+        return mergeList(l1, l2);
+    }
+
+    // function to merge 2 sorted List
+    ListNode* mergeList(ListNode* list1, ListNode* list2){
+        // BASE CASE:
+        if(list1 == NULL){
+            return list2;
+        }
+        if(list2 == NULL){
+            return list1;
+        }
+
+        // else we will compare the value at the node between list1 and list2 and then merge according to it
+        if(list1->val < list2->val){
+            // use the value of list1 and send the rest to recursive function
+            list1->next = mergeList(list1->next, list2);
+            return list1;
+        }
+        else{
+            // if(list2->val < list1->val)
+            list2->next = mergeList(list1, list2->next);
+            return list2;
+        }
+    }
+};
+
+
+/*
+// EXPLANATION:
+- In MERGE SORT, we divide the Linked List into 2 by finding the middle element of the Linked List
+- Then sort the First half and Seconf half Recursively
+- Then, we merge these 2 sorted Linked List 
+*/
