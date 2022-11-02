@@ -1,0 +1,42 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    int numComponents(ListNode* head, vector<int>& nums){
+        // Approach : Using SET
+        // TC : O(N), where 'N. is the size of the LL
+        // SC : O(M), where 'M' is the size of the Array, since we are storing all the elements of the Array in the set
+        // CODE:
+        
+        // Create a unordered_Set and copy all the elements of the nums array into the set
+        unordered_set<int> s(nums.begin(), nums.end()); 
+        // Now, the set will only contain unique elements of the array
+
+        ListNode* temp = head;
+        int count = 0;
+        int res = 0;
+
+        // start traversing
+        while(temp != NULL){
+            count = 0;
+            while(temp != NULL && s.find(temp->val) != s.end()){
+                // if temp pointer is not pointing to NULL and if the value at temp is present in the set, count++
+                count++;
+                temp = temp->next;
+            }
+            if(count > 0){
+                res += 1;
+            }
+            if(temp != NULL) temp = temp->next;
+        }
+        return res;
+    }
+};
