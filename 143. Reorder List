@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    void reorderList(ListNode* head){
+        // Approach: Using VECTOR
+        // TC : O(N)
+        // SC : O(N), since we are inserting all the elements of the LL into the vector
+        // CODE:
+        ListNode* temp = head->next;
+        vector<ListNode*> v;
+
+        // push from the 2nd element of the LL into the vector
+        while(temp != NULL){
+            v.push_back(temp);
+            temp = temp->next;
+        }
+        temp = head;
+
+        while(!v.empty()){
+            temp->next = v.back();  // insert the last node into the next of current node
+            v.pop_back(); // remove the last node from the vector
+            temp = temp->next;
+            if(!v.empty()){
+                temp->next = v.front();  // insert the first element of the vector
+                temp = temp->next;
+                v.erase(v.begin()); // remove the first element from the vector
+            }
+        }
+        temp->next = NULL;
+    }
+};
