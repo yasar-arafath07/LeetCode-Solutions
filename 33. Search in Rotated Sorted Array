@@ -1,6 +1,94 @@
-class Solution {
+class Solution{
 public:
-    int search(vector<int>& nums, int target) {
+    int search(vector<int>& nums, int target){
+        // Approach: BINARY SEARCH (AV)
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+        int n = nums.size();
+        // call the findIndex() function which will find the Index of the mininum element of the given Array
+        int minElementIndex = findIndex(nums);
+
+        // once, we get the index of the min element, all the elements from that index till the end will be sorted 
+        // and all the elements from the start till the (index of min element - 1) will also be sorted
+        // so, now we can apply binary search on 2 sorted arrays
+        
+        // call the binary search function for the 1st part (1st sorted array)
+        int a1 = binarySearch(nums, target, 0, minElementIndex-1);
+        // call the binary search function for the 2nd part (2nd sorted array)
+        int a2 = binarySearch(nums, target, minElementIndex, n-1);
+
+        // Now, target will be found either in 1st sorted array or in 2nd sorted array or it wont be present in both
+        if(a1 == -1){
+            return a2;
+        }
+        else{
+            return a1;
+        }
+    }
+
+    // create a function to find the Index of the minimum element of the Array since the array is rotated
+    int findIndex(vector<int>& nums){
+        int n = nums.size();
+        int low = 0;
+        int high = n-1;
+
+        // return the 1st element directly if the array is not at all rotated
+        if(nums[low] < nums[high]){
+            return 0;
+        }
+        // else apply binary search
+        while(low <= high){
+            int mid = low + (high-low)/2;
+            int next = (mid+1) % n; // to avoid boundary overflow, we write like this instead of (mid+1)
+            int prev = (mid+n-1) % n; // to avoid boundary overflow, we write like this instead of (mid-1)
+
+            // start comparing
+            if(nums[mid] <= nums[next] && nums[mid] <= nums[prev]){
+                // if we found the min element
+                return mid;
+            }
+            if(nums[mid] <= nums[high]){
+                // i.e if right side is sorted
+                // search on the left side since the right side is sorted
+                high = mid - 1;
+            }
+            else if(nums[low] <= nums[mid]){
+                // search on the right side since left part is sorted
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    // binary search function to search for the target
+    int binarySearch(vector<int>& nums, int target, int start, int end){
+        int low = start;
+        int high = end;
+
+        while(low <= high){
+            int mid = low + (high-low)/2;
+
+            if(nums[mid] == target){
+                return mid;
+            }
+            else if(nums[mid] < target){
+                low = mid + 1;
+            }
+            else{
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
+};
+
+
+
+
+        /*
+        // Approach: Binary Search
+        // CODE:
         int low = 0, high = nums.size()-1;
         while(low <= high){
             int mid = (low + high)/2;
@@ -35,3 +123,5 @@ public:
         return -1;
     }
 };
+*/
+
