@@ -1,7 +1,54 @@
 class Solution{
 public:
     int search(vector<int>& nums, int target){
-        // Approach: BINARY SEARCH (AV)
+        // Approach 3: BINARY SEARCH
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+        int low = 0;
+        int high = nums.size()-1;
+
+        while(low <= high){
+            int mid = low + (high-low)/2;
+
+            if(nums[mid] == target){
+                return mid;
+            }
+
+            // Check in 1st HALF
+            else if(nums[low] <= nums[mid]){
+                // means 1st half is sorted
+                // target is in 1st half
+                // check if target is in the range of [low,mid-1], if(nums[low]<=target && nums[mid]>target), search it
+                if(nums[low] <= target && nums[mid] > target){
+                    high = mid - 1;
+                }
+                else{
+                    low = mid + 1;
+                } 
+            }
+
+            // check in 2nd HALF
+            // 2nd half is in order
+            // target is in 2nd half
+            else{
+                // if(nums[mid] <= nums[high]), means 2nd half is sorted
+                if(nums[mid] < target && nums[high] >= target){
+                    low = mid + 1;
+                }
+                else{
+                    high = mid - 1;
+                }
+            }
+        }
+        return  -1;
+    }
+};
+
+
+
+        /*
+        // Approach 2: BINARY SEARCH (AV)
         // TC : O(logN)
         // SC : O(1)
         // CODE:
@@ -82,7 +129,7 @@ public:
         return -1;
     }
 };
-
+*/
 
 
 
