@@ -1,0 +1,75 @@
+class Solution{
+public:
+    bool search(vector<int>& nums, int target){
+        // Approach 2: BINARY SEARCH
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+        int low = 0;
+        int high = nums.size()-1;
+
+        while(low <= high){
+            int mid = low + (high-low)/2;
+
+            if(nums[mid] == target){
+                return true;
+            }
+
+            // with duplicates, we need to handle this extra case where nums[low] == nums[high], so just update low 
+            // high towards the middle (eg test case: arr = [3,1,2,3,3,3,3])
+            if((nums[low] == nums[mid]) && (nums[high] == nums[mid])){
+                low++;
+                high--;
+            }
+
+            // Check in 1st HALF
+            else if(nums[low] <= nums[mid]){
+                // means 1st half is sorted
+                // search for target in 1st half
+                // check if target is in the range of [low,mid-1], if(nums[low]<=target && nums[mid]>target), search it
+                if((nums[low] <= target) && (nums[mid] > target)){
+                    high = mid - 1;
+                }
+                else{
+                    low = mid + 1;
+                } 
+            }
+
+            // check in 2nd HALF
+            // 2nd half is in order
+            // target is in 2nd half
+            else{
+                // if(nums[mid] <= nums[high]), means 2nd half is sorted
+                if((nums[mid] < target) && (nums[high] >= target)){
+                    low = mid + 1;
+                }
+                else{
+                    high = mid - 1;
+                }
+            }
+        }
+        return false;
+
+
+
+        /*
+        // Approach 2: 1 line STL SOLUTION
+        return count(nums.begin(), nums.end(), target);
+        */
+
+
+
+        /*
+        // Approach 1: LINEAR SEARCH (BRUTE FORCE)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] == target){
+                return true;
+            }
+        }
+        return false;
+        */
+    }
+};
