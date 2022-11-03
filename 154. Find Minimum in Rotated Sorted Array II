@@ -1,0 +1,78 @@
+class Solution{
+public:
+    int findMin(vector<int>& nums){
+        // Approach 4: Using STL
+        // CODE:
+        return *min_element(nums.begin(), nums.end());
+
+
+
+        /*
+        // Approach 3: Using SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // CODE:
+        sort(nums.begin(), nums.end());
+        return nums[0];
+        */
+
+
+
+        /*
+        // Approach 2: LINEAR TRAVERSAL
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int mini = INT_MAX;
+
+        for(auto it : nums){
+            mini = min(mini, it);
+        }
+        return mini;
+        */
+
+
+
+
+        /*
+        // Approach 1: BINARY SEARCH (AV)
+        // Doesn't passes all Test Cases
+        // TC : O(logN) and in worst case it takes O(N) if all the elements are same
+        // SC : O(1)
+        // CODE:
+        int N = nums.size();
+        int low = 0;
+        int high = N-1;
+        
+        // if it is already a sorted array
+        if(nums[0] <= nums[high]){
+            // means the array is not at all rotated. So, 1st element i.e nums[0] will be the min element. so return it.
+            return nums[0];  // return 1st element which will be the minimum element
+        }
+
+        // else, apply Binary Search
+        while(low <= high){
+            int mid = low + (high-low)/2;
+            int next = (mid+1) % N;  // to avoid boundary flow, we write (mid+1) as (mid+1)%N.
+            int prev = (mid-1+N) % N; // to avoid boundary flow, we write (mid-1) as (mid-1+N)%N.
+
+            // start comparing
+            // to find minimum elememt, nums[mid] should be lesser than both of it's neighbours. i.e it should be less
+            // than both prev and next
+            if(nums[mid] <= nums[prev] && nums[mid] <= nums[next]){
+                // we found the minimum element in the array, so return the minimum element
+                return nums[mid];
+            }
+            else if(nums[mid] >= nums[low]){
+                // means, first half is sorted, so minimum element will be present in the unsorted array
+                low = mid + 1; // search in the 2nd half
+            }
+            else{
+                // if(nums[mid] <= nums[high]), means 2nd half is sorted, so min will be present in the 1st half
+                high = mid - 1;  // search in the 1st half
+            }
+        }
+        return 0;
+        */
+    }
+};
