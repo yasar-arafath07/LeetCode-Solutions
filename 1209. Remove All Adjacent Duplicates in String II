@@ -1,0 +1,52 @@
+class Solution{
+public:
+    string removeDuplicates(string s, int k){
+        // Approach: Using STACK (AS)
+        // TC : O(N), for traversing
+        // SC : O(N), for creating a stack
+        // CODE:
+        int n = s.size();
+        if(n < k) return s;
+        // initialize a stack of pairs
+        stack<pair<char,int>> stack;
+
+        // iterate on the string
+        for(int i=0; i<n; i++){
+            // if the stack is empty or if the character in the top pair of stack is not equal to current character 
+            // of the string, push it into the stack
+            if(stack.empty() || stack.top().first != s[i]){
+                stack.push({s[i],1});  // push the character into the stack with count 1
+            }
+            else{
+                // add the character into the stack and increase it's count
+                auto prev = stack.top();
+                stack.pop(); // pop that element from the stack
+                stack.push({s[i],prev.second+1});
+            }
+            // if the count in the pair of a character becomes equal to k, pop it from the stack
+            if(stack.top().second == k) stack.pop();
+        }
+        
+        // finding the answer string from the stack
+        string ans = "";
+        while(!stack.empty()){
+            auto curr = stack.top();
+            stack.pop();
+            while(curr.second--){
+                ans.push_back(curr.first);
+            }
+        }
+        // since the beginning element of the string will be in the bottom of stack, it'll be popped in the end and it'll
+        // arrive at the end of ans. So, we reverse it so that we get the original form of it as in the given string
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- We will take a stack and we will be storing pair inside the stack.
+- The pair will consist of the character and it's count in the string. 
+  eg: {e,3} means character e has occured 3 times in the string
+*/
