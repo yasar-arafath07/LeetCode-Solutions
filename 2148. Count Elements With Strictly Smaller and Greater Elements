@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int countElements(vector<int>& nums){
+        // Approach 2: Using MIN & MAX
+        // Explanation: Just find the min and max element of the Array and compare each element with that using for loop
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int count = 0;
+        int mini = *min_element(nums.begin(), nums.end()); // find the smallest element of the Array
+        int maxi = *max_element(nums.begin(), nums.end()); // find the largest element of the Array
+
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] > mini && nums[i] < maxi){
+                count++;
+            }
+        }
+        return count;
+
+
+
+        /*
+        // Approach 1: SORTING (BRUTE FORCE)
+        // Doesn't pass all test cases, can't handle duplicates 
+        // TC : O(NlogN)
+        // SC : O(1)
+        // CODE:
+        int count = 0;
+        sort(nums.begin(), nums.end());
+
+        for(int i=1; i<nums.size()-1; i++){
+            if(nums[i-1] < nums[i] && nums[i] < nums[i+1]){
+                count++;
+            }
+        }
+        return count;
+        */
+    }
+};
