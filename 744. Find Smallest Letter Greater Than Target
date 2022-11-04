@@ -1,6 +1,40 @@
-class Solution {
+class Solution{
 public:
-    char nextGreatestLetter(vector<char>& letters, char target) {
+    char nextGreatestLetter(vector<char>& letters, char target){
+        // Approach 2: BINARY SEARCH (AV)
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+        int low = 0;
+        int high = letters.size()-1;
+        char res = letters[0];  // we store 1st character in the result since if we didnt't find any in the end, we need
+        // to return the 1st character
+
+        while(low <= high){
+            int mid = low + (high - low)/2;
+
+            if(letters[mid] == target){
+                // we need greater caharacter than the target. So, we search on the right of mid
+                low = mid + 1;
+            }
+            else if(letters[mid] > target){
+                // we found a candidate. So, save it
+                res = letters[mid];
+                high = mid - 1; // keep searching for a smaller character than the current res in the left of mid
+            }
+            else{
+                // if(letters[mid]<target), we search on the right of mid since we need a greater character than target
+                low = mid + 1;
+            }
+        }
+        return res;
+
+
+
+        /*
+        // Approach 1: BINARY SEARCH
+        // TC : O(logN)
+        // SC : O(1)
         int low = 0;
         int high = letters.size()-1;
         while(low < high){
@@ -14,7 +48,10 @@ public:
                 
         }
         return letters[low] > target? letters[low] : letters[0];
+        */
     }
 };
+
+
 
 /* If letters = ["a", "b", "c"] & target = "z", here all characters in the Array are smaller than the target. so we return letters[0]. */
