@@ -1,0 +1,57 @@
+class Solution{
+public:
+    int peakIndexInMountainArray(vector<int>& arr){
+        // Approach: BINARY SEARCH
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+        int n = arr.size();
+        int low = 0;
+        int high = n-1;
+        
+        if(n < 3) return 0;
+
+        while(low <= high){
+            int mid = low + (high-low)/2;
+            
+            // if mid is the 1st element or if mid is the last element, then there will be no 'mid-1' and 'mid+1' 
+            // respectively for checking. So, to avoid that scenario, we write the below condition
+            if(mid>0 && mid<n-1){
+                // check the condition for peak element
+                if(arr[mid] > arr[mid-1] && arr[mid] > arr[mid+1]){
+                    // if we find a element, we return the index of that element
+                    return mid;
+                }
+                // if arr[mid] < arr[mid-1], we move to the left of mid
+                else if(arr[mid] < arr[mid-1]){
+                    high = mid - 1;
+                }
+                else{
+                    // if arr[mid] < arr[mid+1]
+                    low = mid + 1;
+                }
+            } // close of 1st 'if' statement
+            // if 1st element is the mid, check that element with mid+1 th element which is it's right neighbour
+            else if(mid == 0){ // (this condition will be executed when only 2 elements are there and mid is 1st ele)
+                if(arr[mid] > arr[mid+1]){
+                    // we found a candidate, so return it's index
+                    return mid;
+                }
+                else{
+                    return mid+1; // if mid is not the peak element, then mid+1 is the peak element. so, return it
+                }
+            }
+            // if last element is the mid element, chack if its left neighbour is less than that or not
+            else if(mid == n-1){ // (this condition is executed when only 2 elements are left and mid is the last ele)
+                // if last element is greater than its previous element, we found a peak element. So, return its index
+                if(arr[mid] > arr[mid-1]){
+                    return mid;
+                }
+                else{
+                    return mid-1;
+                }
+            }
+        }  // close of while loop
+        return 0;
+    }
+};
