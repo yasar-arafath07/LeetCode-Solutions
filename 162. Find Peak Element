@@ -61,6 +61,10 @@ public:
 
 
         // Approach 2: BINARY SEARCH
+        // Explanation: Find the mid and if(nums[mid] < nums[mid+1]), then there has to be a peak element in the right
+        // side of mid. Either the numbers increase until we reach the end of the array and then the last element will
+        // be the peak, OR at some point a number gets smaller and we will find a peak right there.
+        // Same applies for left side of mid also
         // TC : O(logN)
         // SC : O(1)
         // CODE:
@@ -81,3 +85,12 @@ public:
         return low;
     }
 };
+
+/*
+Why we did high = mid; instead of high = mid - 1 ?
+Ans: Consider the Array, arr = [1,2,4,5,4,2,1]
+Here, low = 0, high = 6 and mid = 3 initially 
+- We can see that arr[mid] > arr[mid+1] i.e 5 > 4, So, if we do high = mid-1, then high will point to element 4 (index 2)
+- But if we do that we are loosing our actual answer which is element 5 which is the peak element
+- So, to avoid this, we write it as high = mid;
+*/
