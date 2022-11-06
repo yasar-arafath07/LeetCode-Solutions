@@ -1,0 +1,39 @@
+class Solution{
+public:
+    vector<int> pivotArray(vector<int>& nums, int pivot){
+        // Approach: TWO POINTERS
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        vector<int> gt;
+        int j = 0;
+        int count = 0; // 'count' is the total count of elements equal to pivot in the given array
+
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] < pivot){
+                // If the elements of the array are less than pivot, insert it in the beginning of the array
+                nums[j] = nums[i];
+                j++;
+            }
+            else if(nums[i] == pivot){
+                count++;
+            }
+            else{
+                // if nums[i] > pivot, push it into the gt vector
+                gt.push_back(nums[i]);
+            }
+        }
+        // After the above for loop, all the elements lesser than pivot will be inserted/arranged in the array
+        // Now, insert hte elements which are equal to pivot
+        while(count--){
+            nums[j] = pivot;
+            j++;
+        }
+        // Now, insert the elements which are greater than pivot (elements greater than pivot are present in the vector)
+        for(int i=0; i<gt.size(); i++){
+            nums[j] = gt[i];
+            j++;
+        }
+        return nums;
+    }
+};
