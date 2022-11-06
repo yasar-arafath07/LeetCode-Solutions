@@ -1,0 +1,35 @@
+class Solution{
+public:
+    bool validMountainArray(vector<int>& arr){
+        // Approach: TWO POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+
+        if(arr.size() < 3) return false;
+
+        int i = 0; // left pointer (pointer 1)
+        while(i+1 < arr.size() && arr[i]<arr[i+1]){  
+            // i pointer will tarverse from index 0 till the 2nd last element and if the array in strictly increasing
+            i++;  // keep moving towards the right
+        }
+
+        int j = arr.size()-1;
+        while(j > 0 && arr[j] < arr[j-1]){  // if j>0, then only arr[j-1] can be checked
+            j--;  // keep moving towards the left
+        }
+        
+        // return i>0 && i==j && j<arr.size()-1;
+        if(i>0 && j<arr.size()-1 && i==j){
+            return true;
+        }
+        return false;
+    }
+};
+
+
+
+/*
+- 2 people climb the same mountain from left and right separately.
+- If they are climbing the same mountain, they will meet at some point.
+*/
