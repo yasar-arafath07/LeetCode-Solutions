@@ -1,0 +1,123 @@
+/**
+ * // This is the MountainArray's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class MountainArray {
+ *   public:
+ *     int get(int index);
+ *     int length();
+ * };
+ */
+
+class Solution{
+public:
+    int findInMountainArray(int target, MountainArray &mountainArr){
+        // Approach: BINARY SEARCH
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+        
+        int n = mountainArr.length();
+
+        if(n < 3) return 0;
+
+        // find the peak element of the Array by calling the findPeakElement() function
+        int peakIndex = findPeakElement(mountainArr);
+
+        // Once we get the peak Element, the Array from the Start, till before the peak Element will be sorted Ascending
+        // and the subarray from the peak element till the end will be sorted in descending order
+        // So, we can apply binary search on the ascending and descending sorted array separately to find the target
+
+        // call binarySearch() function to find the target in the ascending sorted subarray
+        int ans1 = binarySearch(mountainArr, target, 0, peakIndex-1);
+
+        // call reverseBinarySearch() function to find the target in the reverse sorted subarray
+        int ans2 = reverseBinarySearch(mountainArr, target, peakIndex, n-1);
+
+        // Now, target will be found either in the 1st sorted subarray or in the 2nd reverse sorted subarray or it 
+        // won't be present in both
+        if(ans1 == -1) return ans2;
+        else return ans1;
+    }
+
+    // function to find the peak element (LeetCode 162: Find Peak Element)
+    int findPeakElement(MountainArray &mountainArr){
+        int n = mountainArr.length();
+        int low = 0;
+        int high = n-1;
+
+        while(low < high){ // (low <= high) only when we are expecting to return from the loop itself
+            int mid = low + (high-low)/2;
+
+            if(mountainArr.get(mid) < mountainArr.get(mid+1)){
+                low = mid + 1;
+            }
+            else{
+                // if(mountainArr.get(mid) > mountainArr.get(mid+1))
+                high = mid;  // not high = mid - 1, its high = mid so that if mid is the peak element, we dont loose it
+            }
+        }
+        return low; // after the while loop terminates, low will be pointing to the peak element
+    }
+
+    
+
+    // Binary Search function to find the target in the Ascending Sorted Array
+    int binarySearch(MountainArray &mountainArr, int target, int start, int end){
+        int low = start;
+        int high = end;
+        
+        // eg: arr = [10, 12, 13, 14, 15, 17, 20]
+        while(low <= high){
+            int mid = low + (high-low)/2;
+
+            if(mountainArr.get(mid) == target){
+                return mid;
+            }
+            else if(mountainArr.get(mid) > target){
+                high = mid - 1;
+            }
+            else{
+                // if(mountainArr[mid] < target)
+                low = mid + 1;
+            }
+        } // close of while loop
+        return -1; // if target is not found, return -1
+    }
+
+    // Binary Search function to find the target in the Reverse Sorted Array
+    int reverseBinarySearch(MountainArray &mountainArr, int target, int start, int end){
+        int low = start;
+        int high = end;
+        
+        // eg: arr = [20, 17, 15, 14, 13, 12, 10] 
+        while(low <= high){
+            int mid = low + (high-low)/2;
+
+            if(mountainArr.get(mid) == target){
+                // if we found the target, return it's index
+                return mid;
+            }
+            else if(mountainArr.get(mid) > target){
+                // move to the right side of mid since the array is sorted in reverse order
+                low = mid + 1;
+            }
+            else{
+                // if(mountainArr[mid] < target), move to the left part of mid
+                high = mid - 1;
+            }
+        }  // close of while loop
+        return -1; // if target is not found, return -1
+    }
+};
+
+
+/*
+In findPeakElement() function, 
+Why we did high = mid; instead of high = mid - 1 ?
+Ans: Consider the Array, arr = [1,2,4,5,4,2,1]
+Here, low = 0(index), high = 6(index) and mid = 3(index) initially. 
+- We can see that arr[mid] > arr[mid+1] i.e 5 > 4, So, if we do high = mid-1, then high will point to element 4 (index 2)
+- But if we do that we are loosing our actual answer which is element 5 which is the peak element
+- So, to avoid this, we write it as high = mid;
+*/
+      
