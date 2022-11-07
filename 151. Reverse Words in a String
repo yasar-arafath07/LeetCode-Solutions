@@ -1,0 +1,40 @@
+class Solution{
+public:
+    string reverseWords(string s){
+        // Approach: Using STACK (reverse it in place for optimized solution)
+        // TC : O(N)
+        // SC : O(N), for creating the stack
+        // CODE:
+        if(s.size() == 0) return s;  // EDGE CASE
+
+        stack<string> st;
+        string ans;  // to store the reversed words of the given string
+
+        for(int i=0; i<s.size(); i++){
+            // skip the spaces i.e skip ' '
+            if(s[i] == ' '){
+                continue;
+            }
+            string word;
+            // store continuous letters into the word string
+            while(i<s.size() && s[i] != ' '){
+                word += s[i];  // word = word + s[i]
+                i++;
+            }
+            // then push that single word into the stack
+            st.push(word);
+        }
+
+        // Now, all the words of the given string will be stored in the stack. Now, pop one by one from the stack and
+        // insert it into the resultant string
+        while(!st.empty()){
+            ans += st.top();  // ans = ans + st.top();
+            st.pop();
+            // also add spaces in between words
+            if(!st.empty()){
+                ans += " ";
+            }
+        }
+        return ans;
+    }
+};
