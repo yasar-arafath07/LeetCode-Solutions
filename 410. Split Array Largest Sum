@@ -1,0 +1,64 @@
+class Solution{
+public:
+    int splitArray(vector<int>& nums, int k){
+        // Approach: BINARY SEARCH (AV ref)
+        // In this problem, Array might not be sorted but still we can apply BINARY SEARCH
+        // CODE is same as "ALLOCATE MINIMUM no.of PAGES" (GFG)
+        // TC : O(nlogn), O(logn) for Binary Search Algorithm and O(n) for traversing the Array
+        // SC : O(1)
+        // CODE:
+        int n = nums.size(); // n represents total no. of elements
+
+        // EDGE CASE: If there are less no. of elements than k, return 0
+        if(n < k) return 0;
+
+        int start = *max_element(nums.begin(), nums.end()); // assign maximum element of the array to start since we
+                                                            // need to minimize the sum 
+        int end = accumulate(nums.begin(), nums.end(), 0);  // assign the total sum of the array to end
+        int res = 0;
+
+        // Now, apply Binary Search
+        while(start <= end){
+            int mid = start + (end-start)/2;
+
+            // Now, check if our scheme/thresold value(mid) holds good using isValid() function
+            if(isValid(nums, k, mid) == true){
+                // If we can divide the array, store the thresold(mid) in the resultant variable
+                res = mid;
+                end = mid - 1; // Now, we got a result but, we are not sure if it is the minimum. So, check in the left
+            }                  // of mid if we can find any minimized ans.
+            else{
+                // i.e, if our scheme/thresold fails, move to right side of mid to increase the thresold
+                start = mid + 1;
+            }
+        }
+        return res;
+    }
+
+    // create a isValid() function to check if the thresold value/scheme/current mid can divide the array into k parts
+    // i.e, in the below function, we will check if the current mid can be our thresold/scheme or not
+    bool isValid(vector<int>& nums, int k, int mid){
+        int n = nums.size();
+        int subArray = 1; // initially we give all the initial array elements to one subarray and if the sum exceeds 
+        // thresold (mid), we create a new subarray by doing subArray++ and give that element to new subarray
+        int sum = 0;
+
+        for(int i=0; i<n; i++){
+            sum += nums[i]; // sum = sum + nums[i]; i.e, splitting the array elements to a subarray
+
+            if(sum > mid){
+                // If, sum is greater than thresold, we create a new subarray and give the current array element to
+                // new subarray
+                subArray++;
+                // Now, check if the subArray count has exceeded the given subarray (k) since we created a new subarray,
+                // If YES, return false
+                if(subArray > k || nums[i] > mid){
+                    return false;
+                }
+                // else if (subArray count < k), we give the current 'i'th element to newly created subarray
+                sum = nums[i];
+            }
+        }
+        return true; // If we can divide the array into k subarrays using the passed mid as thresold, return true
+    }
+};
