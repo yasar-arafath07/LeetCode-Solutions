@@ -1,0 +1,61 @@
+class Solution{
+public:
+    int shipWithinDays(vector<int>& weights, int days){
+        // Approach: BINARY SEARCH (AV's ref)
+        // Code is same as "ALLOCATE MINIMUM NUMBER OF PAGES" (GFG)
+        // TC : O(NlogN), O(logN) for Binary Search and O(N) for traversing
+        // SC : O(1)
+        // CODE:
+        int n = weights.size();
+        
+        // EDGE CASE:
+        if(n < days) return 0; // If no.of packages is less than no.of days, return 0
+
+        int start = *max_element(weights.begin(), weights.end());  // assign the maximum of the array to start
+        int end = accumulate(weights.begin(), weights.end(), 0); // assign the total sum of the array to end
+        int res = 0;
+
+        // Now, Apply Binary Search
+        while(start <= end){
+            int mid = start + (end - start)/2;
+
+            // Now, using the isValid() function, check if our mid value is valid or not
+            if(isValid(weights, days, mid) == true){
+                // If we can divide the weights using isValid() in given no. of days, we got a ans. So store it
+                res = mid;  // store the mid value
+                // Now, we got a ans, we are not sure if it is the least weight. So, check on the left of mid to minimize
+                end = mid - 1;
+            }
+            else{
+                // If our thresold (mid) is not valid, we move to the right of mid to increase the thresold
+                start = mid + 1;
+            }
+        }
+        return res;
+    }
+
+    // Create a isValid() function to check if the current mid (thresold) is valid or not
+    bool isValid(vector<int>& weights, int days, int mid){
+        int n = weights.size();
+        int d = 1; // Initially, we try to send all the packages in single day. If it exceeds the thresold, we create a 
+        // new day
+        int sum = 0;
+
+        for(int i=0; i<n; i++){
+            sum += weights[i]; // sum = sum + weights[i]; 
+            
+            // If weight becomes greater than thresold(mid), we send it on next day by creating a new day by doing d++
+            if(sum > mid){  
+                d++;  // create a new day
+                // Now, check if the total no. of days created by us exceeded the given no. of days 'days'.
+                // If YES, return false
+                if(d > days || weights[i] > mid){
+                    return false;
+                }
+                // elseif the days created by us < given no. of days, we assign the current package to newly created day
+                sum = weights[i];
+            }
+        }
+        return true;
+    }
+};
