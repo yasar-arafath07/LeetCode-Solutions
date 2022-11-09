@@ -1,0 +1,34 @@
+class Solution{
+public:
+    bool judgeSquareSum(int c){
+        // Approach: BINARY SEARCH
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+
+        // EDGE CASE:
+        if(c < 0) return false;
+
+        long long int a = 0; // low (pointer 1)
+        long long int b = sqrt(c); // high (pointer 2)
+
+        while(a <= b){
+            // start comparing
+            // If the sum of the squares of a and b is equal to c, return true
+            if(a*a + b*b == c){
+                return true;
+            }
+            // If the sum of the squares of a and b is too small, it only makes sense to increment the a-pointer because
+            // incrementing the b-pointer would immediately put the sum of squares greater than c
+            else if(a*a + b*b < c){
+                a++; 
+            }
+            // If the sum of the squares of a and b is too large, it only makes sense to decrement the b-pointer because
+            // the only way for the sum to exceed c is if we got here by incrementing the a-pointer.
+            else if(a*a + b*b > c){
+                b--; 
+            }
+        }
+        return false;
+    }
+};
