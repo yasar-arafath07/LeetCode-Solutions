@@ -1,0 +1,49 @@
+class Solution{
+public:
+    bool isPerfectSquare(int num){
+        // Approach 2: BINARY SEARCH
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+
+        // EDGE CASE:
+        if(num == 1) return true;
+
+        // Note that the square root of any number 'num' will lie between 1 to num/2. So, low = 1 and high = num/2
+        int low = 1;
+        int high = num/2;
+
+        // Apply BINARY SEARCH
+        while(low <= high){
+            long long int mid = low + (high - low)/2;
+
+            // find the square of the mid element
+            long long int sqr = mid * mid;
+
+            // start comparing sqr with num
+            if(sqr == num){
+                // we found the perfect square
+                return true;
+            }
+            else if(sqr > num){
+                // we crossed our limit num, so move to the left of mid
+                high = mid - 1;
+            }
+            else if(sqr < num){
+                // search on the right of mid
+                low = mid + 1;
+            }
+        }
+        return false;
+
+
+
+        /*
+        // Approach 1: BRUTE FORCE
+        // CODE:
+        long long i;
+        for(i=1; i*i<num; i++);
+        return i*i == num;
+        */
+    }
+};
