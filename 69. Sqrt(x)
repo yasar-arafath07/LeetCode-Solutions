@@ -1,11 +1,63 @@
-class Solution {
+class Solution{
 public:
-    int mySqrt(int x) {
+    long long mySqrt(int x){
+        // Approach 2: BINARY SEARCH (KP)
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+
+        // EDGE CASE: If x=1, then high = x/2 = 1/2 = 0
+        if(x == 1) return 1;
+
+        if(x == 0) return 0;
+
+        // Note that the Square Root of any number 'x' will lie between 1 to x/2. So, low = 1 and high = x/2
+        long long low = 1;
+        long long high = x/2;
+        long long ans;
+
+        // Apply BINARY SEARCH
+        while(low <= high){
+            // calculate mid
+            long long mid = low + (high - low)/2;
+
+            // Now, find the Square of mid value
+            long long sqr = mid * mid;
+
+            // Now, check if the square of mid i.e, 'sqr' is equal to 'x', or greater than 'x', or less than 'x'.
+            // If square of mid is equal to 'x', then 'mid' is the answer. So, we rteturn mid
+            if(sqr == x){
+                // we found the square root of x, so return it
+                return mid;
+            }
+            else if(sqr < x){
+                // If 'x' is not a perfect square, we need to return the floor of square root of x
+                // So, square of mid is less than x, which means we found a floor value for 'x'. So, we save it in ans
+                ans = mid;
+                // Now, we are not sure if mid is the actual floor, there might be some better floor lying to the right
+                // of mid, so we check on the right of mid by doing low = mid + 1
+                low = mid + 1;
+            }
+            else if(sqr > x){
+                // we crossed our limit which is x, so search on the left of mid by doing high = mid - 1
+                high = mid - 1;
+            }
+        }  // close of while loop
+        return ans;
+
+
+
+        /*
+        // Approach 1: BRUTE FORCE
+        // TC : root of x
+        // SC : O(1)
+        // CODE:
         long long i=0;
         while(i*i <= x){
             i++;
         }
         return i-1;  //solve in pen & paper to know why we return i-1
+        */
     }
 };
 
