@@ -1,0 +1,41 @@
+class Solution{
+public:
+    int maxProduct(vector<int>& nums){
+        // Approach: (AS)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int prod = 1;  // Initial product
+        int maxp = INT_MIN;  // to store the maximum product of the subarray
+
+        // Traverse from start to end
+        for(int i=0; i<nums.size(); i++){
+            // Calculate the current product
+            prod *= nums[i];  // prod = prod * nums[i];
+            maxp = max(maxp, prod); // Update the maximum product
+            // If in any case product becomes 0, we update the current product to 1 so that it wont affect the incoming
+            // elements
+            if(prod == 0){
+                prod = 1;
+            }
+        }
+
+        // Now, consider the testcase where nums = [-8, 5, 3, 1, 6]. Here according to our above code, -8 will be the 
+        // maximum product. But the actual maximum product of the subarray is 90 (5*3*1*6)
+        // So, because of that -ve sign on that 1st element, the whole answer has changed. So, to avoid this, what can
+        // we do is we can again traverse from the end till the start of the array and find max prod of subarray
+        prod = 1;  // Update the product to 1
+        for(int i=nums.size()-1; i>=0; i--){
+            // find the current product
+            prod *= nums[i];
+            maxp = max(maxp, prod);  // update the max product
+            // If prod becomes 0, update it to 1
+            if(prod == 0){
+                prod = 1;
+            }
+        }
+        return maxp;
+    }
+};
+
+// Whenever Product becomes 0, we make the current product as 1 so that it wont effect the incoming elements
