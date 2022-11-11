@@ -1,0 +1,45 @@
+class Solution{
+public:
+    string frequencySort(string s){
+        // Approach: Using HASHTABLE
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        string res; // to store the resultant string
+        unordered_map<char,int> mpp; // to store the frequency of each character
+
+        // Store the frequency of characters inside the map
+        for(auto x : s){
+            mpp[x]++;
+        }
+
+        // Now, create a priority queue and store the character along with its frequency as pair in the priority queue
+        priority_queue<pair<int,char>> pq;
+
+        // Now, iterate through the map and store the character along with it's frequency inside the priority queue
+        for(auto it : mpp){
+            pq.push({it.second, it.first});
+        }
+        
+        int freq;
+        char ch;
+        // Now, insert the character in the resultant string from the priority queue
+        while(!pq.empty()){
+            freq = pq.top().first;
+            ch = pq.top().second;
+            pq.pop();
+            res = res + string(freq, ch);  // adding to resultant string
+        }
+        return res;
+    }
+};
+
+/*
+// EXPLANATION: 
+- We Initially find the frequency of each characterin the given string
+- Now, one way is that we can sort the frequency in descending order
+- But, a better way to approach this problem is by using a priority queue
+- We can push our character and it's frequency in the priority queue
+- and finally, iterate through the priority queue till it becomes empty, pushing the characters in the empty res string
+- In the end, return the resultant string
+*/
