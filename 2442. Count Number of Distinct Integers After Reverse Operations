@@ -1,0 +1,33 @@
+class Solution{
+public:
+    int countDistinctIntegers(vector<int>& nums){
+        // Approach: Using UNORDERED SET
+        // TC : O(N)
+        // SC : O(N), for creating the set
+        // CODE:
+        unordered_set<int> s(nums.begin(), nums.end()); // create a set and copy all the elements of nums array into it
+
+        // for each element of nums array, find it's reverse and insert the reversed integer into the set
+        for(auto i : nums){
+            int n = 0;
+            while(i){
+                int r = i % 10; // find the remainder
+                n = n * 10 + r;
+                i = i / 10;  // i /= 10
+            }
+            // Insert the reversed integer into the set
+            s.insert(n);
+        }
+        return s.size(); // return the size of the set which has the total no. of unique integers after reverse
+    }
+};
+
+
+/*
+// EXPLANATION:
+- The Idea here is to use a unordered_set
+- Copy all the elements of the given array in the unordered_set
+- Then for each element of the nums array, reverse it and insert it into the set
+- So, the set will store only the unique elements
+- Finally, return the size of the set to know the total no. of distinct integers after reverse operations
+*/
