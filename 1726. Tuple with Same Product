@@ -1,0 +1,45 @@
+class Solution{
+public:
+    int tupleSameProduct(vector<int>& nums){
+        // Approach: Using HASHMAP
+        // TC : O(N^2)
+        // SC : O(N^2)
+        // CODE:
+        int n = nums.size();
+        unordered_map<int,int> mpp;  // to store the product of each pair
+        int res = 0;  // to store the total number of tuples
+
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                // calculate the product of the each pair nums[i] & nums[j]
+                int prod = nums[i] * nums[j];
+                mpp[prod]++; // Store the product of each possible pair in the Hashmap
+            }
+        }
+
+        // Now, iterate throught the map
+        for(auto& it : mpp){
+            int f = it.second; 
+            if(f == 1) continue;  // i.e, if the frequency of any product is 1, means we have only a & b but not c & d
+            res = res + (f*(f-1))/2;  // no. of tuples
+        }
+        res = res * 8;  // since every tuple has 8 permutations
+        return res;  // return res*8;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- Create a map to store the product of each pair of elements of the array
+- Iterate through the Array and find the product of all the pairs of elements of the Array
+- Store the product in the map
+- Now, Iterate through the map and if the frequency of any product is 1, just skip it since we have only 2 +ve integers
+- else find the total no.of tuples total no. of ways to pick 2 pairs i.e (fC2) = (f*(f-1)/2) and keep storing it in a 
+  resultant variable
+- and finally, multiply the result by 8 since every tuple has 8 permutations  
+  (i.e, total no. of ways to form tuples with 2 pairs)
+*/
+
+
+
