@@ -1,0 +1,50 @@
+class Solution{
+public:
+    int findPairs(vector<int>& nums, int k){
+        // Approach: Using HASHMAPS (Use TWO POINTERS for Space Optimization)
+        // TC : O(N)
+        // SC : O(N), for creating the map 
+        // CODE:
+        unordered_map<int,int> mpp; // to store the frequency of each element
+        int ans = 0; // to store the total no. of pairs that satisfies the given condition
+
+        // Store the frequency of each element of the Array in the map
+        for(auto it : nums){
+            mpp[it]++;
+        }
+
+        // Now, traverse on the map and check for each element 'x', if 'x+k' is present or not
+        for(auto x : mpp){
+            // EDGE CASE: if k==0, check if the frequency of x>1
+            if(k == 0){
+                if(x.second > 1){
+                    // we found a pair, so increment ans
+                    ans++;
+                }
+            }
+            // else check if 'x+k' is present in the map for each 'x'
+            else if(mpp.find(x.first + k) != mpp.end()){
+                // we found a pair
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- We are aware of the fact that for a pair to be counted as a answer, both the elements i.e, 'X' and 'X+K' need to be
+  present in the Array
+- So, we create a map and store the frequency of each element in the map
+- Now, we traverse the map and for each element 'x' in the map, we check if 'X+K' exists in the map.
+- If it does, then it means a unique pair can be formed and hence we increment the answer.
+
+// EDGE CASE:
+- The only Edge Case is the situation when k=0.
+- If k=0, instead of finding 'X+K' for each element, we check if the frequency of X>1.
+- If the frequency is greater than 1, we increment the answer (eg: 3)
+- Else, we don't increment the answer, as the frequency of X=1 and hence it can't form a pair with itself.
+*/
