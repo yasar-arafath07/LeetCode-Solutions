@@ -1,0 +1,29 @@
+class Solution{
+public:
+    long long interchangeableRectangles(vector<vector<int>>& rectangles){
+        // Approach: Using HashMap
+        // TC : O(N), for iterating over all the rectangles and finding the ratio
+        // SC : O(N), in the worst case when all the ratios are unique and are stored in the map
+        // CODE:
+        long long res = 0; // to store the total no.of pairs of Interchangeable rectangles
+        unordered_map<double,int> map;
+
+        for(int i=0; i<rectangles.size(); i++){
+            // calculate the ratio of width/height
+            double ratio = (double) rectangles[i][0] / rectangles[i][1];  //  4/8 
+            res += map[ratio];
+            map[ratio]++;
+        }
+        return res;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- The Idea here is to find the ratio of width and height for each rectangle in the vector
+- Now, traverse on the vector and find the ratio of each rectangle 
+- Now, if we have seen that ratio already in the map earlier, simply add the count of ratio to the result
+- Also, Increment the count of current ratio in the map as it denotes the number of rectangles with current ratio 
+*/
