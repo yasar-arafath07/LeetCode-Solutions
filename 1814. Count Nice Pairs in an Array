@@ -1,0 +1,37 @@
+class Solution{
+public:
+    int countNicePairs(vector<int>& nums){
+        // Approach: Using HASHMAP
+        // TC : O(Nlog(a)), O(N) for traversing and O(log(a)) for reverse() function
+        // SC : O(N), for creating the map
+        // CODE:
+        int ans = 0; // to store the count of nice pairs
+        int mod = 1e9 + 7;  // 10^9 + 7
+        int n = nums.size();
+        unordered_map<int,int> map;
+
+        for(int i=0; i<n; i++){
+            ans = (ans + map[nums[i] - reverse(nums[i])]) % mod; // taking mod as stated in question
+            map[nums[i] - reverse(nums[i])]++;  // or increment above directly
+        }
+        return ans;
+    }
+
+    // function to reverse the integer 'x'
+    int reverse(int x){
+        int rev = 0;
+        while(x > 0){
+            rev = rev*10 + x%10;
+            x /= 10;  // x = x/10
+        }
+        return rev;
+    }
+};
+
+
+
+/*
+//EXPLANATION:
+- Given condition is: nums[i] + rev(nums[j]) == nums[j] + rev(nums[i])
+- The above equation can be rewritten as: nums[i] - rev(nums[i]) == nums[j] - rev(nums[j])
+*/
