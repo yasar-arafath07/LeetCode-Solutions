@@ -1,0 +1,31 @@
+class Solution{
+public:
+    int subarrayLCM(vector<int>& nums, int k){
+        // Aproach: Using STL
+        // TC : O(N^2 * log(N))
+        // SC : O(1)
+        // CODE:
+        int n = nums.size();
+        int count = 0; // to store the count of subarrays with LCM equal to k
+
+        for(int i=0; i<n; i++){
+            int current_lcm = 1;
+            for(int j=i; j<n; j++){
+                current_lcm = lcm(current_lcm, nums[j]);
+                if(current_lcm == k){
+                    count++;
+                }
+                if(current_lcm > k) break;
+            }
+        }
+        return count;
+    }
+};
+
+
+
+/*
+NOTE:
+- gcd(a,b) * lcm(a,b) = a*b
+- lcm(a,b) = (a*b) / gcd(a,b)
+*/
