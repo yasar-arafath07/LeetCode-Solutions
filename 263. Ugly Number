@@ -1,0 +1,36 @@
+class Solution{
+public:
+    bool isUgly(int n){
+        /*
+        // Approach 1:
+        // Explanation: just keep dividing 'n' by 2, 3 and 5 as often as possible and then check whether we arrived at 1.
+        // TC : O(logN), since there are atmost logN divisions
+        // SC : O(1)
+        // CODE:
+        if(n <= 0) return false;  // since n needs to be positive
+        
+        for(int i=2; i<6 && n; i++){  // n>0
+            while(n%i == 0){
+                n /= i; // n = n/i;
+            }
+        }
+        return n == 1;  // if(n == 1) return true, else return false
+        */
+
+
+
+
+        // Approach 2:
+        // TC : O(logN)
+        // SC : O(1)
+        // CODE:
+        if(n <= 0) return false; // since 'n' needs to be a positive integer
+        if(n == 1) return true; 
+
+        while(n%2 == 0) n /= 2;   // n = n/2;
+        while(n%3 == 0) n /= 3;   // n = n/3;
+        while(n%5 == 0) n /= 5;   // n = n/5;
+
+        return n == 1;  // if n==1, return true. else, return false
+    }
+};
