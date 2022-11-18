@@ -1,0 +1,20 @@
+class Solution{
+public:
+    int nthUglyNumber(int n){
+        // Approach 1: Using SET
+        // Use DP for Optimization
+        // CODE:
+        long ans = 1;
+        set<long> st = {1,2,3,4,5,6}; // ugly numbers
+
+        while(n--){
+            ans = *st.begin();  // 1st element of set 's'
+            st.erase(st.begin()); // remove the first element
+            // since we are removing elements from set, we need to add corresponding next ugly numbers in the back also
+            for(int i=2; i<=6; i++){
+                st.insert(ans*i);
+            }
+        }
+        return ans;
+    }
+};
