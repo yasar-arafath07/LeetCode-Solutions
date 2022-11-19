@@ -1,0 +1,81 @@
+class Solution{
+public:
+    int subarraySum(vector<int>& nums, int k){
+        // Approach 2: PREFIX SUM - Using HASHMAP (AS)
+        // TC : O(N)
+        // SC : O(N), for creating the map from our side
+        // CODE:
+        unordered_map<int,int> mpp; //create a hashMap to store the total sum at an index as key and 1 as value 
+        int sum = 0;
+        int count = 0;
+
+        // traverse the entire array
+        for(int i=0; i<nums.size(); i++){
+            // calculate the sum
+            sum += nums[i];  // sum = sum + nums[i]
+
+            // check if sum met the condition 'k'
+            if(sum == k){
+                count++; // we found a subarray
+            }
+
+            // else if sum is not equal to k, check if (sum-k) is present in the map
+            // If (sum-k) is present in the hashMap, then we found a subarray
+            if(mpp.find(sum-k) != mpp.end()){
+                // we found a subarray. So, increment count
+                count = count + mpp[sum-k];  // consider the TestCase, nums = [0,0,0,0,0,0,0,0,0,0], k=0 
+            }
+
+            // else if sum is not equal to k and also sum is not present in the map, simply put sum in the map as key
+            // and corresponding index or 1 as value
+            if(mpp.find(sum) != mpp.end()){
+                // if sum is found in the map, increment it's value
+                mpp[sum]++;
+            }
+            else{
+                // if sum is not present, set it's value to 1
+                mpp[sum] = 1;
+            }
+        }
+        return count;
+
+
+
+
+        /*
+        // Approach 1: Sliding Window Approach (AV)
+        // Only 15/92 TCestCases Passed
+        int count = 0; // this will store the total number of subarrays whose sum equals to k
+        int sum = 0;
+        int i = 0; // starting of the window
+        int j= 0; // end or tail of the window
+
+        while(j < nums.size()){
+            // Calculation Part
+            sum = sum + nums[j];
+
+            // If the condition k is not yet hit, we simply increase the tail of the window by doing j++
+            if(sum < k){
+                j++;
+            }
+
+            // If the condition, i.e k ismet
+            else if(sum == k){
+                count++;
+                j++;
+            }
+
+            // If the given condition is crossed
+            else if(sum > k){
+                while(sum > k){
+                    sum = sum - nums[i];
+                    i++;
+                }
+                j++;
+            }
+        }
+        return count;
+        */
+
+    }
+};
