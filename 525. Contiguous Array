@@ -1,0 +1,88 @@
+class Solution{
+public:
+    int findMaxLength(vector<int>& nums){
+        // Approach: Using HASHMAP (AS)
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        int maxLength = 0; // INT_MIN will give error 
+        int sum = 0;
+        unordered_map<int,int> mpp; // to store the total sum at every index as key and corresponding index as value
+
+        // change all the zeroes of the array to -1 so that if the sum of a subarray is 0 then we found equal number of
+        // 0's and 1's
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] == 0){
+                nums[i] = -1;
+            }
+        }
+
+        // Now, traverse through the array and calculate the sum
+        for(int i=0; i<nums.size(); i++){
+            sum += nums[i];  // sum = sum + nums[i];
+            
+            // If sum becomes 0, means there are equal no. of zeroes and ones in the subarray, so find the length of 
+            // the subarray
+            if(sum == 0){
+                // find the length of the subarray from starting index
+                maxLength = max(maxLength, i+1); // i+1 is the length of the subarray
+            }
+
+            // else we will check if the sum is in the hashMap
+            if(mpp.find(sum) != mpp.end()){
+                // if the sum is in the hashMap, then also we found a subarray with equal zeroes and ones
+                maxLength = max(maxLength, i-mpp[sum]); // here, the length of the subarray is 'i-mpp[sum]' which has 
+                                                       // equal no. of 0's and 1's
+            }
+
+            // else, we will add the sum in the hashMap
+            else{
+                mpp[sum] = i;  // add sum as key and corresponding index as value
+            }
+        }
+        return maxLength;
+    }
+};
+
+
+
+/*
+// Explanation to O(N) Approach:
+- Replace all the zeroes with -1 so that if a subarray has equal number of 0's (i.e -1's) and 1's, then the total 
+  sum of all the elements of the subarray will be 0.
+- Now, traverse through the array and parallelly calculate the sum, whenever sum becomes 0 which means we found a 
+  subarray which has equal number of 0's and 1's. So, update the length of the subarray if it is maxLength
+- else check if the sum exists in the hashMap, if it exists then there is equal no. of 0's and 1's in the subarray 
+  because, if we recently encountered the same sum value before in the map at a index, then the total no. of 0's and 1's
+  between those 2 indexes (previous index where same sum occured and current index where same sum occured) will be equal
+  So, 'i-mpp[sum]' will give the length of the subarray where 'i' is the current index and 'mpp[sum]' is the previous
+  index where we encountered the same subarray sum
+- else i.e if sum is neither equal to 0 nor present in the map, simply add the sum in the map along with it's index  
+- Finally, return the maxLength
+*/
+
+
+
+/*
+// BRUTE FORCE:
+- Use Nested loops
+- Gives TLE
+// CODE
+int n = nums.szie();
+int maxi = INT_MIN;
+for(int i=0; i<n; i++){
+    int zeroes = 0, ones = 0;
+    for(int j=i; j<n; j++){
+        if(nums[j] == 0) zeroes++;
+        else if(nums[j] == 1) ones++;
+        // find the maximum length
+        if(zeroes == ones){
+            maxi = max(maxi, j-i+1);  // j-i+1 is the length of the subarray
+        }
+    }
+}
+return maxi;
+
+// TC : O(N^2)
+// SC : O(1)
+*/
