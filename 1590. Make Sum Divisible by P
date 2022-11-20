@@ -1,0 +1,56 @@
+class Solution{
+public:
+    int minSubarray(vector<int>& nums, int p){
+        // Approach: Using HashMap & Prefix Sum (Code Explainer)
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        int n = nums.size();
+        int need_to_remove = 0;
+        for(auto x : nums){
+            need_to_remove = (need_to_remove + x) % p; // basically total sum % p
+        }
+        // so, if the whole sum of the array is divisible by p, then we don't need to remove anything. So, we end
+        if(need_to_remove == 0) return 0;
+        
+        // else, there is some remainder left in the array which makes the sum of whole array not divisible by 'p'
+        // so, in that case, create a map
+        unordered_map<int,int> mpp; // to store the remainder of sum%p of every index as key and the index as value
+        mpp[0] = -1;
+        int ans = 1e9; // 10^9
+        int other = 0; // to store the current sum % p
+        for(int i=0; i<n; i++){
+            other = (other + nums[i]) % p; 
+            int need = (other - need_to_remove) % p; // calculating the compliment of the number till now which is the 
+            // element we are looking for [we can directly add 'p' to handle -ve cases, or write it as below]
+            if(need < 0){
+                need += p; //this is to handle -ve cases. OR 
+            } // OR instead of above 2 lines, directly write as "int need = (other - need_to_remove + p) % p;"
+            // Now, check in the map if 'need' is present, if yes, then the current 'i' index minus that previous index
+            // where 'need' occured will give the length of subarray which we need to remove
+            if(mpp.find(need) != mpp.end()){
+                ans = min(ans, i-mpp[need]);
+            }
+            // Update the index of newly calculated 'other' value in the map
+            mpp[other] = i; // hashing the current occurence as the latest occurence of other%p
+        }
+        return ans >=n ? -1 : ans;
+        // if(ans >= n) return -1, else return ans
+    }
+};
+
+
+/*
+// OBSERVATION:
+- If there are 2 numbers which gives the same remainder (after calculating the mod), then the number in between them is 
+  actually a number which is divisible by let's say 'k' or 'p'
+*/
+
+
+/*
+// EXPLANATION of ALGORITHM:
+- Refer 'nithish_kannen' solution in the Solutions tab
+  (https://leetcode.com/problems/make-sum-divisible-by-p/solutions/1287057/c-prefix-sum-simple-logic-must-know-for-sde-interviews-easy-to-understand/?orderBy=most_votes)
+- OR also refer to 'YehudisK' in the Solution tab 
+  (https://leetcode.com/problems/make-sum-divisible-by-p/solutions/1458060/c-simple-and-short-solution-with-explanation/?orderBy=most_votes)
+*/
