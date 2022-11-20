@@ -1,0 +1,62 @@
+class Solution{
+public:
+    int subarraysDivByK(vector<int>& nums, int k){
+        // Approach: Using HASHMAP (PREFIX SUM)
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        int count = 0; // to store the count of subarrays with sum divisible by k 
+        int sum = 0;
+        int rem;  // remainder 
+        unordered_map<int,int> mpp; // to store the mod value (remainder) of sum%k at every index as key and it's 
+        // frequency as value
+        mpp[0] = 1; // this is done because the initial cumulative sum (prefix sum) will be 0 and that sum%k = 0 always.
+        // so, to avoid that, we initialize mpp[0] = 1
+
+        // traverse through the array and calculate the sum
+        for(int i=0; i<nums.size(); i++){
+            // calculate the prefix sum
+            sum += nums[i]; // sum = sum + nums[i];
+
+            // calculate the mod i.e, remainder
+            rem = sum % k ;
+
+            // since there are negative elements in the array, mod might become less than 0 also
+            // eg TestCase: nums = [-3,-2,0,5,4,1], k = 5
+            if(rem < 0){
+                rem += k;  // sum = sum+k;
+            }
+
+            // if this remainder is present in the map, then there is a subarray between that 'rem' index and current
+            // 'rem' index whose sum is divisible by k 
+            if(mpp.find(rem) != mpp.end()){
+                count = count + mpp[rem];
+            }
+            // increment the frequency of newly calculated remainder in the map
+            mpp[rem]++;
+        }
+        return count; 
+    }
+};
+
+
+
+/*
+// BRUTE FORCE:
+// CODE:
+int n = nums.size();
+int count = 0;
+for(int i=0; i<n; i++){
+    int sum = 0;
+    for(int j=i; j<n; j++){
+        sum += nums[j];
+
+        if(sum%k == 0) count++; 
+    }
+}
+return count;
+
+// TC : O(N^2)
+// SC : O(1)
+
+*/
