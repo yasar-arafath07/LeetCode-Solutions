@@ -1,0 +1,32 @@
+class Solution{
+public:
+    vector<int> getAverages(vector<int>& nums, int k){
+        // Approach: SLIDING WINDOW
+        // TC : O(N)
+        // SC : O(N), as we are creating a new vector of size 'n' to store the result
+        // CODE:
+        int n = nums.size();
+        vector<int> res(n,-1); // create a resultant vector of same size n and initialize all of it's elements with -1
+        long long sum = 0;
+        int i = 0; // left pointer
+        int j = 0; // right pointer
+        int window_size = 2*k+1; // from eg test cases
+
+        // traverse the Array
+        // while(j < n)
+        for(int j=0; j<n; j++){
+            sum += nums[j]; // sum = sum + nums[j];
+
+            // Now, if the condition is met, i.e, if the window size i.e 'j-i+1' is equal to the actual 'window_size',
+            // then calculate the Average sum of the Subarray and insert it into the resultant vector
+            if(j-i+1 == window_size){
+                res[i+k] = sum / window_size; // store the average sum of the subarray in the resultant vector
+                // Slide the window, but before that, remove the calculation for i
+                sum -= nums[i]; // sum = sum - nums[i];  // removing the calculation for i
+                i++; // sliding the window
+                // 'j' will be anyways incremented inside the loop. So, we don't need to increment it here again
+            }
+        }
+        return res;
+    }
+};
