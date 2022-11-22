@@ -1,0 +1,37 @@
+class Solution{
+public:
+    int minimumAverageDifference(vector<int>& nums){
+        // Approach: PREFIX SUM
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int n = nums.size();
+        int minAverageDifference = INT_MAX;
+        int index;
+        long long left_sum = 0;
+        long long right_sum = 0;
+
+        // calculate the total sum of the Array and store it in right_sum
+        for(int i=0; i<n; i++){
+            right_sum += nums[i];  // right_sum = right_sum + nums[i];
+        }
+        
+        // Now, again traverse through nums from start & add nums[i] to 'left_sum' & subtract nums[i] from 'right_sum'
+        for(int i=0; i<n; i++){
+            left_sum += nums[i];  // add nums[i] to 'left_sum'
+            right_sum -= nums[i]; // subtract nums[i] from 'right_sum'
+
+            // calculate the Average sum as per question
+            int a = left_sum / (i+1);  // a is the average of the 1st 'i+1' elements
+            int b = (i == n-1) ? 0 : right_sum / (n-i-1); // average of the last 'n-i-1' elements
+            // i.e, if 'i' is at last index, then average is 0. else it is 'right_sum / (n-i-1)'
+            
+            // caculate the Minimum Average Difference
+            if(abs(a-b) < minAverageDifference){
+                minAverageDifference = abs(a-b);
+                index = i;  // save the index
+            }
+        }
+        return index; // return the index
+    }
+};
