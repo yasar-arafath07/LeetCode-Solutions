@@ -1,0 +1,49 @@
+class Solution{
+public:
+    int numOfSubarrays(vector<int>& arr, int k, int threshold){
+        // Approach: SLIDING WINDOW
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int n = arr.size();
+        int count = 0; // to store the count of Sub-Arrays of size k with Average >= Threshold
+        int window_sum = 0;
+        
+        // run a loop to form a required window size of k
+        // and then form window_sum for the 1st window of size k
+        for(int i=0; i<k; i++){
+            // calculate the sum of the 1st window of size 'k'
+            window_sum += arr[i]; // window_sum = window_sum + arr[i];
+        }
+        
+        // traverse through arr and find the Average of each window of size k
+        for(int i=0; i<n-k+1; i++){
+            if(i != 0){
+                // remove the calculation for previous element from window_sum
+                window_sum -= arr[i-1];  // removing 1st element from previous window
+                window_sum += arr[i+k-1];  // add the next element to the window
+            }
+            // calculate the Average
+            int window_Average = window_sum / k;
+
+            // compare window_Average with threshold
+            if(window_Average >= threshold){
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- Form the Average Sum of each window and check if it satisfies the given condition (Average_sum >= threshold)
+- So, to start with, Initially form the 1st window of size k 
+- loop through 'arr'
+- then form each window
+- Calculate the Average of each window
+- if(window_Average >= thresold), then increment the counter
+- return the count variable
+*/
