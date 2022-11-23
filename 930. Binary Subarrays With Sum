@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int numSubarraysWithSum(vector<int>& nums, int goal){
+        // Approach 1: Using HASHMAP (Can be solved by using SLIDING WINDOW also)
+        // TC : O(N)
+        // SC : O(N), for the HashMap
+        // Better Approach: Use SLIDING WINDOW for O(1) SC
+        // CODE:
+        int prefixSum = 0;
+        int count = 0;
+        unordered_map<int,int> mpp; // to store the prefixSum as key and frequency as it's value
+        mpp[0] = 1;  // eg TestCase: nums = [0,0,0,0,0], goal = 0 
+
+        // loop through the Array & calculate the prefixSum
+        for(int i=0; i<nums.size(); i++){
+            prefixSum += nums[i];  // prefixSum = prefixSum + nums[i];
+
+            count += mpp[prefixSum - goal];
+            mpp[prefixSum]++; // store the prefixSum frequency in the map
+        }
+        return count;
+    }
+};
