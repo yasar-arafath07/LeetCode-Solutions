@@ -1,0 +1,61 @@
+class Solution{
+public:
+    bool checkSubarraySum(vector<int>& nums, int k){
+        // Approach: Using HASHMAP & PREFIX SUM
+        // TC : O(N)
+        // SC : O(N)
+        // CODE:
+        // Edge Case:
+        if(nums.size() < 2) return false;
+
+        // else create a map to store the remainder (mod) of running sum with k as 'key' and current index as 'value'
+        unordered_map<int,int> mpp;
+        mpp[0] = -1; // case where 1st number is a multiple of k
+        int prefixSum = 0;
+
+        for(int i=0; i<nums.size(); i++){
+            // calculate the prefix sum (running sum)
+            prefixSum += nums[i]; // prefixSum = prefixSum + nums[i];
+            // check if it's divisible by k
+            if(k != 0){
+                prefixSum = prefixSum % k;  // prefixSum %= k;
+
+                // now, check in the map if prefixSum already exists in the HashMap or not
+                if(mpp.find(prefixSum) != mpp.end()){
+                    // if it exists, then current index minus previous index where the same remainder (mod) occured > 1
+                    // i.e, the sum of elements in between these 2 indexes will be a multiple of k 
+                    if(i - mpp[prefixSum] > 1){
+                        return true;
+                    }
+                }
+                else{
+                    // if remainder (prefixSum%k) is not present in the map, insert in the map with remainser as key 
+                    // and insex as value
+                    mpp[prefixSum] = i;
+                }
+            }
+        }
+        return false;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- create a map and initially store key as 0 and -1 as value
+- loop throught the array and find the prefixSum 
+- also, find if prefixSum is divisible by k by doing prefixSum%k
+- Now, check if the remainder of prefixSum%k is presentin the map
+- If it is present, then we have a solution if the current index minus previous index where that remainder is present
+  is greater than 1 so that atleast 2 elements condition is also satisfied
+  Because the if we get same remainder at 2 different indexes, then sum of elements between them will be divisible by k
+  That's why we check if there is atleast 2 elements by doing (i - mpp[prefixSum] > 1)
+- If the remainder is not present in the map, then insert the remainder as key and the current location i as value
+
+
+Q: Why to Insert <0,-1> in the map initially?
+ans: because, <0,-1> can allow it to return true when the prefixSum%k = 0.
+    In Addition, it also avoids the 1st elemetn of the Array is the multiple of k, since i-mpp[prefixSum] = 0-mpp[0] = 
+    i.e, 0-(-1) =  1 which is not greater than 1
+*/
