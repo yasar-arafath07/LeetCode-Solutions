@@ -9,26 +9,40 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+ 
+ 
+class Solution{
 public:
-    int maxDepth(TreeNode* root) {
-        if(root == NULL)
+    int maxDepth(TreeNode* root){
+        // Approach: RECURSION (AV)
+        // TC : O(N), where 'N' is the total no. of nodes
+        // SC : O(N)
+        // CODE:
+        // BASE CASE: Smallest Valid Input i.e, if there is no root only, then height is 0. So, we return 0
+        if(root == NULL){
             return 0;
-        else{
-            int maxDepth_Left = maxDepth(root->left);
-            int maxDepth_Right = maxDepth(root->right);
-            return (max(maxDepth_Left, maxDepth_Right)) + 1; //
         }
+        // Design the hypothesis on how the recursive function should work
+        int left_height = maxDepth(root->left); // find the height of left subtree
+        int right_height = maxDepth(root->right); // find the height of right subtree
+
+        // form the Induction step
+        int ans = max(left_height, right_height) + 1;  // the total height will be the maximum of left and right leg
         
+        // return the ans
+        return ans;
     }
 };
 
-//So to find the maximum depth of the given binary tree, we will have to take out the maximum of the 2 depths(left and right) given to us by recursion, and add 1 to that to consider the current level i.e. root's level into our depth.
+
 
 /*
+// EXPLANATION:
+- So to find the maximum depth of the given binary tree, we will have to take out the maximum height (depth) of the 2
+  subtrees (left & right subtree) by using recursion and then add 1 to it to consider the current level where we are 
+  standing at i.e, adding root's level into our depth (height).
 
-COMPLEXITY:
+//COMPLEXITY:
 Time Complexity: O(no of nodes)  //because we are traversing all the nodes of the tree.
 Space Complexity: O(max depth of tree)
-
 */
