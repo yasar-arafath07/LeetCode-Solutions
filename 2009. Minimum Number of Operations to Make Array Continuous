@@ -1,0 +1,33 @@
+class Solution{
+public:
+    int minOperations(vector<int>& nums){
+        // Approach: SLIDING WINDOW
+        // TC : O(NlogN), since traversal takes O(N) & sorting takes O(NlogN)
+        // SC : O(1)
+        // CODE:
+        int N = nums.size();  // original size/length of the nums Array
+        int ans = 0;
+        int i = 0; // window start
+        int j = 0; // window end
+        
+        // sort the Array so that we only tarverse the entire Array only once. So, we can use SLIDING WINDOW
+        sort(nums.begin(), nums.end()); 
+        
+        // Now, let's remove all the duplicates from the Array using C++ STL 'erase()' & 'unique()' function
+        nums.erase(unique(nums.begin(), nums.end()), nums.end());
+        int M = nums.size(); // size of the array with only unique elements
+
+        for(int j=0; j<M; j++){
+            // the given condition is: maxElement - minElement = N - 1
+            // So, N + minElement = maxElement + 1
+            // So, if nums[j] i.e if maxElement (considering nums[j] as max) becomes greater or equal to sum of N 
+            // and minElement (considering nums[i] as min), then slide the window since we are encountering a larger val
+            //  So, if nums[j] becomes >= sum of N+nums[i], we slide the window
+            while(nums[j] >= nums[i]+N){
+                i++; // slide the window
+            }
+            ans = max(ans, j-i+1);  // updating the maximum window size
+        }
+        return N - ans;  // original size of the Array minus the maximum window size will give the min no. of operations
+    }
+};
