@@ -1,0 +1,38 @@
+class Solution{
+public:
+    int countHomogenous(string s){
+        // Approach: 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int res = 0; 
+        int count = 0;
+        int mod = 1e9 + 7;
+
+        // loop through 's'
+        // Increment count if previous character is same. else, reset it to 1
+        // then add count to result
+        for(int i=0; i<s.size(); i++){
+            // check for the condition
+            if(i > 0 && s[i] == s[i-1]){
+                count++;
+            }
+            else{
+                // else, set count to 1 
+                count = 1;
+            }
+
+            // find the answer
+            res = (res + count) % mod;
+        }
+        return res;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- For "a" : 1
+- For "aa" : 3 (2 a's + aa) i.e 1 + 2
+- For "aaa" : 6 (3 a's + 2 aa's + 1 aaa) i.e, 1 + 2 + 3
+*/
