@@ -1,0 +1,50 @@
+class Solution{
+public:
+    int maxPower(string s){
+        // Approach 2: SINGLE-PASS
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int ans = 1; // If all the characters of 's' are unique, then we can form only substring of length 1 with only
+        // single unique character in the substring
+        int streak = 1; // counts the no. of duplicates streak
+
+        // traverse through the string 
+        for(int i=1; i<s.size(); i++){
+            // check for the condition
+            if(s[i] == s[i-1]){
+                streak++; // if same character, then increment streak and update answer
+                ans = max(ans, streak); // update the answer
+            }
+            // else, if (s[i] != s[i-1]), i.e, if different character then update the streak back to 1
+            else{
+                streak = 1;
+            }
+        }
+        return ans; 
+
+
+
+
+        /*
+        // Approach 1: TWO POINTERS (SLIDING WINDOW)
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        int ans = 1;//If all characters of 's' are unique, then we can form only substring of length 1 with unique char
+        
+        // loop through 's'
+        for(int i=0; i<s.size(); ){
+            int j = i + 1;
+            while(j<s.size() && s[j] == s[j-1]){
+                // till then we keep incrementing j
+                j++;
+            }
+            ans = max(ans, j-i);
+            // If s[j] != s[j-1], then point i to where j is currrently pointing to
+            i = j;  // this ensures we don't repeat iteration over same element again
+        }
+        return ans;
+        */
+    }
+};
