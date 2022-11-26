@@ -1,0 +1,42 @@
+class Solution{
+public:
+    int longestBeautifulSubstring(string word){
+        // Approach: 
+        // TC : O(N)
+        // SC : O(1)
+        // CODE:
+        const int n = word.size();
+        int max_len = 0; // since we need to return 0 if no substring exists, we take max_len as 0
+        int len = 1;
+        int count = 1;
+
+        for(int i=1; i<n; i++){
+            if(word[i] == word[i-1]){ // here we won't increment count since characters will be same as previous
+                len++;
+            }
+            else if(word[i-1] < word[i]){
+                len++;
+                count++;  // increment count to keep track of the vowels present
+            }
+            else{
+                // update len and count to 1
+                len = 1;
+                count = 1;
+            }
+            // If the condition is satisfied, i.e, if all the vowels are present, then find the length
+            if(count == 5){
+                // record the maximum length
+                max_len = max(max_len, len);
+            }
+        }
+        return max_len;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- The Basic Idea is: 'a' < 'e' < 'i' < 'o' < 'u'
+- So, we need to find the longest non-decresing substring that has all the vowels in sorted order in it. 
+*/
