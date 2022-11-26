@@ -1,0 +1,25 @@
+class Solution{
+public:
+    int numSub(string s){
+        // Approach: BRUTE FORCE (Optimized)
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int res = 0;
+        int count = 0;
+        int mod = 1e9 + 7; // as per question
+
+        for(int i=0; i<s.size(); i++){
+            // check the condition
+            if(s[i] == '1'){
+                count++;
+            }
+            else{
+                // set count to 0
+                count = 0;
+            }
+            res = (res + count) % mod; // taking mod as stated according to the problem
+        }
+        return res;
+    }
+};
