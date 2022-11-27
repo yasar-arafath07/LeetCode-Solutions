@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int arrayPairSum(vector<int>& nums){
+        // Approach: Using SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int sum = 0;
+        sort(nums.begin(), nums.end()); // sort the Input Array
+        
+        // loop through the Array and find the sum of 1st, 3rd, 5th..... which is the Answer
+        for(int i=0; i<nums.size(); i+=2){
+            sum += nums[i];
+        }
+        return sum;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- So, here we want to maximize the sum of groups of 2 numbers in the Array. So, the difference between the 2 numbers in
+  the group should be minimum and the best way to do that is to pair the numbers that are next to each other in a 
+  sorted Array.
+- So, here the Algorithm is:
+  ---> Sort the Array
+  ---> The sum of 1st, 3rd, 5th.... elements is the Answer
+*/
