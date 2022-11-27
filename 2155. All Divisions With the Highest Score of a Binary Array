@@ -1,0 +1,55 @@
+class Solution {
+public:
+    vector<int> maxScoreIndices(vector<int>& nums) {
+        // Approach: 
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        vector<int> res; // to store the distinct indices thta have the highest possible division score
+        int leftZero = 0; // initially when i=0
+        int rightOne = accumulate(nums.begin(), nums.end(), 0); // since the Array is binary, this will find the total
+        // sum of the Array which will be the total no. of '1' in the Array
+        int maxScore = 0; // stores the maximum division score
+        // Division Score of index 'i' = leftZero + rightone
+
+        // traverse the array 
+        for(int i=0; i<=nums.size(); i++){
+            // check if the condition i.e, leftZero + rightOne > maxScore. If yes, then update the index in the res 
+            if(leftZero + rightOne > maxScore){
+                // We found a new maxScore. So, update the maxScore
+                maxScore = leftZero + rightOne;
+                // update the res vector
+                res.clear();  // remove all the older indices
+                res.push_back(i); // push the new index
+            }
+
+            else if(leftZero + rightOne == maxScore){
+                // add this index also to the res since there may be multiple indices
+                res.push_back(i);
+            }
+
+            // Now, update the count of leftZero and rightOne
+            if(i < nums.size()){
+                // if(i != nums.size())
+                if(nums[i] == 0){
+                    leftZero++;
+                }
+                if(nums[i] == 1){
+                    rightOne--;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+
+
+
+/*
+// EXPLANATION:
+- Initially, when i=0, the total no. of ones in the right of i is Total '1' present in the Array 
+  i.e, rightOne = Total '1' present in the Array
+- and leftZero = 0 (since we are at the left most corner of the Array)
+- Now, keep traversing and update leftZero and rightOne on the go.
+*/
