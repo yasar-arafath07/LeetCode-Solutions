@@ -1,0 +1,25 @@
+class Solution{
+public:
+    bool digitCount(string num){
+        // Approach: HASHMAP
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        unordered_map<int,int> mpp;
+
+        for(auto& it : num){
+            int x = it - '0'; // since 'num' is a string
+            mpp[x]++;  // store the frequency of the character which is now converted to a int  
+        }
+
+        for(int i=0; i<num.size(); i++){
+            int ele = num[i] - '0';  // get the char as an int
+
+            // compare
+            if(mpp[i] != ele){ 
+                return false;  // if the number 'ele' is not equal to it's frequency, we return false
+            }
+        }
+        return true;
+    }
+};
