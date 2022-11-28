@@ -1,0 +1,58 @@
+class Solution{
+public:
+    bool isPossibleDivide(vector<int>& nums, int k){
+        // Approach 2: HASHMAP
+        // TC : O(NlogM)
+        // SC : O(N)
+        // C++ CODE:
+        map<int,int> mpp; // to store the frequency of elements of nums
+        // Gives wrong output if unordered_map is used
+
+        // traverse the array and store the frequency in the map
+        for(auto& x : nums){
+            mpp[x]++;
+        }
+        
+        // traverse the map 'mpp'
+        auto it = mpp.begin();  // initially the iterator points to the starting of the map
+        
+        // OR use "for(auto it = mpp.begin(); it != mpp.end(); it++)"
+        while(it != mpp.end()){
+            // if the frequency of the element is not 0, then store the frequency inside freq
+            if(it->second != 0){
+                int freq = it->second;
+
+                // run a loop for 'k' no. of times since we need 'k' consecutive elements in each set/division
+                for(int i=0; i<k; i++){
+                    if(mpp[it->first + i] < freq){
+                        return false;
+                    }
+                    else{
+                        // decrement the frequency
+                        mpp[it->first + i] -= freq;
+                    }
+                }
+            }
+            // increment the iterator
+            it++;
+        }
+        return true;
+
+
+
+        /*
+        // Approach 1: Some Random BRUTE FORCE (ofc doesn't passes all Testcases)
+        if(nums.size() == k) return false;
+        else if(nums.size() % k == 0) return true;
+        return false;
+        */
+    }
+};
+
+
+
+/*
+// DRY RUN for better understanding of how it works:
+- eg1: nums = [1,2,3,3,4,4,5,6], k=4
+- eg2: nums = [2,5,6,8,9,10], k=3 
+*/
