@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int kthGrammar(int n, int k){
+        // Approach 2: RECURSION - IBH (AV)
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        // Base Case: If n and k are in the 1st row, return 0
+        if(n == 1 && k == 1){
+            return 0;
+        }
+        // Hypothesis: Find the mid of the row, so we need to find the length before
+        // int length = 2 to the power (n-1)
+        int mid = pow(2, n-1) / 2;
+        
+        // if 'k' lies in the 1st half, then call the function recursively for n-1th row
+        if(k <= mid){
+            return kthGrammar(n-1, k); // since if k is in 1st half, kth val of nth row = kth val of n-1 th row
+        }
+        else{
+            // if k lies in the 2nd half, return the compliment (!) of k-mid in n-1 th row
+            return !(kthGrammar(n-1, k-mid)); // ! because we need to return the compliment of (k-mid) at n-1 th row
+        } 
+
+
+
+        /*
+        // Approach 1: BullShit BRUTE FORCE (checking n and k for all test cases & returning accordingly)
+        // Surprisingly passes 36/55 Test Cases (-_-)
+        // C++ CODE: 
+        if(n==1 && k ==1) return 0;
+        else if(n == 2 && k == 1) return 0;
+        else if(n == 3 && k == 1) return 0;
+        else if(n == 3 && k == 4) return 0;
+        else if(n == 1 && k == 1) return 0;
+        else return 1;
+        */
+    }
+};
