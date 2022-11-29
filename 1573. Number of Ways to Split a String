@@ -1,0 +1,42 @@
+class Solution{
+public:
+    int numWays(string s){
+        // Approach: 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        long n = s.size();
+        long mod = 1e9 + 7;
+        long ones = 0; // count of 1's
+        
+        // count of 1's in the string
+        for(int i=0; i<n; i++){
+            ones += s[i] - '0';
+        }
+
+        // if ones = 0, means if all the elemets of the string is 0
+        if(ones == 0){
+            return (int) (((n-1)*(n-2)/2) % mod); // typecast to int since we took long and return type is int
+        }
+
+        if(ones % 3 != 0){
+            // means if there is no equal no. of ones in each group 
+            // can't be frouped equally if the ones are not divisible by 3
+            return 0;
+        }
+
+        long onethird = ones/3; // no. of ones in each group
+        ones = 0;
+        // no .of zeroes which lie on the border
+        long way1 = 0;
+        long way2 = 0;
+
+        for(int i=0; i<n; i++){
+            ones += s[i] - '0';
+            if(ones == onethird) way1++;
+            if(ones == 2*onethird) way2++;
+        }
+        // total no. of ways = way1 * way2. so return it
+        return (int)((way1 * way2) % mod); // typecast to int 
+    }
+};
