@@ -1,0 +1,58 @@
+class Solution{
+public:
+    int subarraysWithKDistinct(vector<int>& nums, int k){
+        // Approach: SLIDING WINDOW 
+        // TC : O(n*k), O(n) for tarversal of array and O(k) for map traversal
+        // SC : O(k)
+        // C++ CODE:
+        unordered_map<int,int> mpp; // we use a map to keep track of last appearence index of a element
+        int ans = 0; // to store the count of subarrays with k different integers
+        int i = 0; // window start
+        int j = 0; // window end
+
+        while(j < nums.size()){
+            mpp[nums[j]] = j; // store the element in the map as key and it's index as value
+
+            // if the size of map i.e, total distinct integers is greater than k, then slide the window from start
+            while(mpp.size() > k){
+                // nums[i] can be removed from the map if 'i' is the last appearance
+                if(mpp[nums[i]] == i){
+                    mpp.erase(nums[i]);
+                }
+                i++; // slide the window
+            }
+
+            // if the condition is met i.e, if there are k-distinct integers, record the answer
+            if(mpp.size() == k){
+                int minIndex = j; // store the current 'j' as minIndex
+
+                // Now, traverse in the map and find the min index
+                for(auto x : mpp){
+                    minIndex = min(minIndex, x.second);
+                }
+                // Now, we have the minIndex after the above step, calculate the answer
+                // Any window with start between [i, minIndex] and end with 'j' is a qualified answer
+                ans += (minIndex - i + 1);
+            }
+            j++; // move j 
+        }
+        return ans;
+    }
+};
+
+
+
+/*
+// Approach 2: Usinh Helper Function
+- refer lee215's solution in solution tab
+- exactly(K) = atMost(K) - atMost(K-1)
+
+Q: What is the meaning of this exactly(K) = atMost(K) - atMost(K-1) ?
+ans: Suppose lets assume there is a room with a bunch of children in it. 
+It turns out that there are 12 children who are 5 years old or under and 8 children who are four years old or under.
+Now presumably we can agree that each one of the "children 4 years old or under" is also one of the "children 5 years old or under," right?
+So suppose if we take the 12 children of 5 years old or younger, and remove the 8 children 4 years old or younger from them, then of course, 12 - 8 = 4 children remain who are exactly 5 years old
+Now, how old is each of these 4 children? (all of the 4 children are exactly 5 years old)
+
+Therefore, exactly(5) = atMost(5) - atMost(5-1)
+*/
