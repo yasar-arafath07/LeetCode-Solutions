@@ -1,0 +1,49 @@
+class Solution{
+public:
+    // create a function to check whether a character is a vowel or not
+    bool isVowel(char c){
+        // it is given that character of string 'word' consists only lower case letters
+        if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'){
+            return true;
+        }
+        // else return false
+        return false;
+    }
+
+    int countVowelSubstrings(string word){
+        // Approach: Using SET
+        // TC : O(N^2)
+        // SC : O(N)
+        // C++ CODE:
+        int n = word.size();
+        set<char> st;
+        int count = 0; // to store the total count of vowel substrings of string
+        
+        // fix the 1st character
+        for(int i=0; i<n; i++){
+            // since we need to find a substring, we start j from i
+            for(int j=i; j<n; j++){
+                // check if the character word[j] is a vowel or not using isVowel() function
+                if(isVowel(word[j]) == false){
+                    // means we encountered a consonent, so there is no point in traversing furhter. So, we break the 
+                    // inner for loop
+                    break;
+                }
+                else{
+                    // if we encounter an vowel, insert it into the set
+                    st.insert(word[j]);
+                }
+
+                // check if we found all the characters of the vowel contiguously by checking the size of the set
+                if(st.size() == 5){
+                    count++; // we found a contiguous vowel
+                }
+            }
+            // Now, we came out of the inner loop, now we increment i in the outer loop for next iteration
+            // So, we need to clear the set
+            st.clear(); // OR we can declare the set after the outer for loop and we can ignore this step
+        }
+        // return the ttoal no. of substrings
+        return count;
+    }
+};
