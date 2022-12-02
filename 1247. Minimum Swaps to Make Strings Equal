@@ -1,0 +1,44 @@
+class Solution{
+public:
+    int minimumSwap(string s1, string s2){
+        // Approach 2: 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int xy = 0; 
+        int yx = 0;
+
+        // since length of both the strings are equal, traverse through the string s1
+        for(int i=0; i<s1.size(); i++){
+            // if character from s1 is 'x' and the caharacter present at the same index in string s2 is 'y', inc xy++
+            if(s1[i] == 'x' && s2[i] == 'y'){
+                xy++;
+            }
+            else if(s1[i] == 'y' && s2[i] == 'x'){
+                yx++;
+            }
+        }
+        if(xy % 2 != yx % 2) return -1; // eg 3
+        return (xy/2 + yx/2 + xy%2 *2); 
+
+
+
+
+        /*
+        // LEGENDARY GRANDMASTER LEVEL Soln (-_-)
+        if(s1 == "xx" && s2 == "yy") return 1;
+        if(s1 == "xy" && s2 == "yx") return 2;
+        else return -1;
+        */
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- The first 2 examples gives the key to the solution
+- Everytime there is a difference it is either an (x,y) pair or an (y,x) pair
+- As in eg1, 2 pairs of (x,y) or 2 pairs of (y,x) can be fixed in a single swap (DRY RUN above code)
+- But 1 pair of (x,y) and 1 pair of (y,x) need 2 swaps to be fixed as in eg2.
+*/
