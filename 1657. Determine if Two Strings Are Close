@@ -1,0 +1,75 @@
+class Solution{
+public:
+    bool closeStrings(string word1, string word2){
+        // Approach 2: using VECTORS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        vector<int> v1(26, 0); // vector v1 of size 26 with all elements initialized to 0
+        vector<int> v2(26, 0); // v1 and v2 are to store the frequency of each character of string1 and string2
+        vector<int> v3(26, 0); // v3 and v4 are to store the presence of characters of string1 and string2
+        vector<int> v4(26, 0);
+
+        // traverse throgh string 'word1'
+        for(auto& it1 : word1){
+            // store the frequency of the character of string word1 in vector v1
+            v1[it1 - 'a']++; // store the frequency
+            v3[it1 - 'a'] = 1; // mark the presence of the character in vector v3
+        }
+
+        // tarverse through string 'word2'
+        for(auto& it2 : word2){
+            // similarly store the frequency of the character of string 'word2' in vector2
+            v2[it2 - 'a']++; // store the frequency of the character
+            v4[it2 - 'a'] = 1; // mark the presence of the character
+        }
+
+        // sort the frequency map vectors v1 and v3
+        sort(v1.begin(), v1.end()); 
+        sort(v2.begin(), v2.end());
+        
+        return (v1 == v2 && v3 == v4); // if(v1 == v2 && v3 == v4) return true, else return false
+
+
+
+        /*
+        // Approach: BRUTE FORCE 
+        // Passes 99/152 Test Cases
+        sort(word1.begin(), word1.end());
+        sort(word2.begin(), word2.end());
+
+        if(word1 == word2) return true;
+        return false;
+        */
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- Here, 2 things we need to check:
+1) Frequency of char need's to be same in both the strings as we can do Transformation of every occurence of one 
+   Existing character into another Existing character
+2) All the unique characters present in string1 needs to be present in string2 as well.
+
+// DRY RUN:
+string1 = "aabaacczp"                               string2 = "bbzbbaacp"
+Frequency of string1:                               Frequency of string2:
+a ---> 4                                            a ---> 2
+b ---> 1                                            b ---> 4
+c ---> 2                                            c ---> 1
+p ---> 1                                            p ---> 1
+z ---> 1                                            z ---> 1
+
+We can see that, frequency of 1st string: 1, 1, 1, 2, 4 (Sorted order)
+                 frequency of 2nd string: 1, 1, 1, 2, 4 (Sorted order)
+and all the unique characters i.e, a, b, c, p, z is present in string1 as well as in string2 
+So, it is a valid Answer. So, we return true.
+
+
+- The complexity of the second solution is O(n), where n is the length of the string.
+- Constant size frequency Array-maps are used and any computations on frequency Array-maps will take constant time
+  since w eknow that in worst case, the cost of sorting can get only as high as nlog(n) i.e, 26log(26), irrespective
+  of the length. Therefore, amounting to a constant value. So, TC : O(N) and not O(NlogN)   
+*/
