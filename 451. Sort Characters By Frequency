@@ -1,7 +1,7 @@
 class Solution{
 public:
     string frequencySort(string s){
-        // Approach: Using HASHTABLE
+        // Approach: Using HASHTABLE & PRIORITY QUEUE (HEAP)
         // TC : O(N)
         // SC : O(N)
         // CODE:
@@ -20,12 +20,13 @@ public:
         for(auto it : mpp){
             pq.push({it.second, it.first});
         }
+        // the most frequent character will appear in the top of the priority queue
         
         int freq;
         char ch;
         // Now, insert the character in the resultant string from the priority queue
         while(!pq.empty()){
-            freq = pq.top().first;
+            freq = pq.top().first; // since we are storing a pair in the priority queue
             ch = pq.top().second;
             pq.pop();
             res = res + string(freq, ch);  // adding to resultant string
@@ -34,9 +35,10 @@ public:
     }
 };
 
+
 /*
 // EXPLANATION: 
-- We Initially find the frequency of each characterin the given string
+- We Initially find the frequency of each character in the given string
 - Now, one way is that we can sort the frequency in descending order
 - But, a better way to approach this problem is by using a priority queue
 - We can push our character and it's frequency in the priority queue
