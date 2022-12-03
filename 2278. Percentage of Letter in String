@@ -1,0 +1,31 @@
+class Solution{
+public:
+    int percentageLetter(string s, char letter){
+        // Approach 2: 1 Liner
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = s.length();
+        return 100 * count(s.begin(), s.end(), letter) / n;
+
+
+
+        /*
+        // Approach 1: BRUTE FORCE
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = s.size();
+        int count = 0; // to keep the count of the occurence of 'letter' in the given string 's'
+
+        for(int i=0; i<n; i++){
+            if(s[i] == letter){
+                count++;
+            }
+        }
+        int ans = (count*100) / n; 
+
+        return ans;
+        */
+    }
+};
