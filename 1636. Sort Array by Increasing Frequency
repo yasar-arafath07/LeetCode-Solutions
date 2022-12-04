@@ -1,0 +1,37 @@
+class Solution{
+public:
+    vector<int> frequencySort(vector<int>& nums){
+        // Approach: Using HASHMAP & PRIORITY QUEUE
+        // TC : O(N^2)
+        // SC : O(N+N), for map and res vector
+        // C++ CODE:
+        unordered_map<int,int> mpp; // to store the frequency of each element of nums
+        
+        // traverse the array and store the frequency in the HashMap
+        for(auto& it : nums){
+            mpp[it]++; 
+        }
+
+        // cretae a priority queue of pairs and insert the HashMap data into the priority queue as pairs
+        priority_queue<pair<int,int>> pq;
+
+        // Traverse through the HashMap and store the data in the priority queue as coded below
+        for(auto it : mpp){
+            pq.push({-it.second, it.first}); // '-' means we are using a max heap here instead of min heap to handle 
+        }                                    // elements with same frequency
+        // we use '-' also because we want the element with less frequency to be printed first
+
+        // create a vector to store the result according to the frequency of the elements of nums
+        vector<int> res;
+
+        while(!pq.empty()){
+            int x = pq.top().first; // x will store the frequency of the element
+            // run a for loop for 'x' no. of times
+            for(int i=0; i<abs(x); i++){
+                res.push_back(pq.top().second);
+            }
+            pq.pop();
+        }
+        return res; 
+    }
+};
