@@ -1,0 +1,62 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution{
+public:
+    int pairSum(ListNode* head){
+        // Approach: TWO POINTERS (FAST & SLOW)
+        // TC : O(N), where 'N' is the total number of nodes
+        // SC : O(1)
+        // C++ CODE:
+        int maxSum = INT_MIN;
+
+        // find the middle of the Linked List using SLOW & FAST POINTERS
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast != NULL && fast->next != NULL){
+            slow = slow->next; // move 'slow' pointer by 1 step
+            fast = fast->next->next; // move 'fast' pointer by 2 steps forward
+        }
+        // after the above step, slow will be pointing to the middle of the Linked List
+
+        // Now since we found the middle, reverse the 2nd half of the Linked List
+        ListNode* prev = NULL;
+        ListNode* nextNode = slow->next;
+
+        while(slow != NULL){
+            nextNode = slow->next;
+            slow->next = prev;
+            prev = slow;
+            slow = nextNode;
+        }
+        
+        // After the above step, 'prev' will be pointing to the starting of the Reversed LL of 2nd half
+        // Now, we can find the sum of twins
+        while(prev != NULL){
+            maxSum = max(maxSum, head->val + prev->val);
+            head = head->next;
+            prev = prev->next;
+        }
+        return maxSum;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- Given that the number of nodes in the LL is even
+- First, find the middle of the Linked List
+- Then, reverse the Linked List from the middle i.e, reverse the 2nd half
+- Now, we have a pointer 'head' pointing to the starting of the LL and a pointer 'prev' pointing to the starting of
+  reversed 2nd half of the LL
+- Find the sum of twins and record the maximum sum
+*/
