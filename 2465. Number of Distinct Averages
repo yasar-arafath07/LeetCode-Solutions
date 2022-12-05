@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int distinctAverages(vector<int>& nums){
+        // Approach: Using SET
+        // TC : O(N*logN), for sorting
+        // SC : O(N), for set
+        // C++ CODE:
+        int n = nums.size();
+        unordered_set<double> set; // since average of 2 numbers can result in double, consider set of double data type
+
+        // sort the Array so that all the minimum and maximum elements appear at the extreme corners 
+        sort(nums.begin(), nums.end());
+
+        // traverse till half of the Array
+        for(int i=0; i<n/2; i++){
+            // find the average of minimum and maximum of the array and insert the result into the set
+            set.insert((nums[i] + nums[n-1-i]) / 2.0);
+        }
+        // size of the set will return the total number of distinct averages
+        // int ans = set.size(); 
+        return set.size();
+    }
+};
