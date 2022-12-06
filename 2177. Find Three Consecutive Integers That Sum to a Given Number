@@ -1,0 +1,37 @@
+class Solution{
+public:
+    vector<long long> sumOfThree(long long num){
+        // Approach: 
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        // vector<long long> ans; // to store the triplets
+
+        // If the number is not divisible by 3, return an empty Array
+        if(num % 3 != 0){
+            return {}; // return empty array
+        }
+
+        // if num is divisible by 3, find the mid element of the triplet which is num/3
+        long long mid = num/3;
+
+        // return the triplets
+        return {mid-1, mid, mid+1};
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- We need to find consecutive integers. So, let's say our 3 Integers are: x-1, x, x+1 (Think it as an AP Sum formula)
+- Mathematically, (x-1)+x+(x+1) = n.
+- So, 3x = n i.e, x = n/3
+- Thus, we can say that If the given number 'num' is divisible by 3, then only answer exists
+- So, if the number 'num' is divisible by 3, then the answer array would consist of 3 elements: [num/3, num/3+1, nums/3-1]
+- eg1: For num = 2, no triplet can be possible.
+- eg2: For num = 3, our answer Array will be: [0,1,2]
+- eg3: For num = 4, no triplet can be possible.
+- eg4: For num = 6, our answer Array will be: [1,2,3]
+- eg5: For num = 9, our answer Array will be: [2,3,4]. 
+*/
