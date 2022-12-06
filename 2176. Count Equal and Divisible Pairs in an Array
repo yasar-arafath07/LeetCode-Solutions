@@ -1,0 +1,50 @@
+class Solution{
+public:
+    int countPairs(vector<int>& nums, int k){
+        // Approach 2: Using HASHMAP
+        // TC : O(N^2), but more efficient than Brute Force
+        // SC : O(N)
+        // C++ CODE:
+        int n = nums.size();
+        int count = 0;
+        unordered_map<int, vector<int>> mpp; // map of int and vector<int> to store the element nums[i] and the indices 
+                                             // of same elements in a vector
+        for(int i=0; i<n; i++){
+            // if the element nums[i] is already present in the map
+            if(mpp.find(nums[i]) != mpp.end()){
+                // traverse for all the indices of the element in the vector inside the map
+                for(auto& x : mpp[nums[i]]){
+                    // if the remainder of product of indices is 0, count++
+                    if((i*x)%k == 0){
+                        count++;
+                    }
+                }
+            }
+            // insert the index of the element inside the vector in the map
+            mpp[nums[i]].push_back(i);
+        }
+        return count;
+
+
+
+
+        /*
+        // Approach 1: BRUTE FORCE
+        // TC : O(N^2)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+        int count = 0;
+
+        // loop through the array
+        for(int i=0; i<n-1; i++){
+            for(int j=i+1; j<n; j++){
+                if(nums[i] == nums[j] && (i*j)%k == 0){
+                    count++;
+                }
+            }
+        }
+        return count; 
+        */
+    }
+};
