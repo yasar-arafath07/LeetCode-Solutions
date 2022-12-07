@@ -1,0 +1,60 @@
+class Solution{
+public:
+    vector<int> numberOfPairs(vector<int>& nums){
+        // Approach 2: COUNTING
+        // TC : O(100 + 100), Worst case
+        // SC : O(101), worst case
+        // C++ CODE:
+        int n = nums.size();
+        int count[101] = {}; // create an empty array count of size 101 (since index starts from 0, we take size 101)
+        int pair = 0;
+        int leftover = 0;
+        
+        // trverse the array and store the frequency of the elements in the count array 
+        for(int i=0; i<n; i++){
+            count[nums[i]]++; // store the frequency of the elements of nums in the count array
+        }
+
+        // traverse the count array which has the frequency of elements
+        for(auto& it : count){
+            pair += it/2; // pair = pair + it/2
+            leftover += it % 2; // remaining elements
+        }
+        return {pair, leftover};
+
+
+
+
+        /*
+        // Approach 1: Using SORTING
+        // TC : O(NlogN), since we are also performing sort operation
+        // TC can be optimized 
+        // SC : O(1)
+        // C++ CODE:
+        //vector<int> res(2); // vector of size 2 to store the answer
+        int n = nums.size();
+        int ans = 0; // to keep count of the pairs which have equal elements
+
+        // sort the array
+        sort(nums.begin(), nums.end());
+
+        // now if there is any duplicates in the array, it will appear next to each other so that we can form a pair
+        // and remove them
+
+        // loop through nums
+        for(int i=1; i<nums.size(); ){
+            if(nums[i-1] == nums[i]){
+                ans++; // we found a pair
+                i += 2; // increment by 2 steps since we sre deleting the elements if we found a equal pair
+            }
+            else{
+                // if the adjacent numbers are not equal, just increment i
+                i++;
+            }
+        }
+        // return the vector
+        return {ans, n - (ans*2)}; // ans is the total number of pairs with equal numbers and (n - (ans*2)) is the
+        // remaining element in the array in the end
+        */
+    }
+};
