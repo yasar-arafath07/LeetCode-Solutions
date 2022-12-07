@@ -1,0 +1,31 @@
+class Solution{
+public:
+    int mostFrequent(vector<int>& nums, int key){
+        // Approach: Using HASHMAP
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        unordered_map<int,int> mpp; // to store the frequency of target
+        // whenever, nums[i] == key, then our target will be nums[i+1] i.e, the next element of nums[i]
+
+        // loop through nums and store the frequency of target in the map
+        for(int i=0; i<nums.size()-1; i++){
+            // if nums[i] == key, store nums[i+1] in the map
+            if(nums[i] == key){
+                mpp[nums[i+1]]++;
+            }
+        }
+
+        int maxi = INT_MIN;
+        int ans = 0;
+
+        // traverse the map and find the maximum frequency element
+        for(auto& it : mpp){
+            if(it.second > maxi){
+                maxi = it.second; // record the maximum frequency
+                ans = it.first; // store the answer
+            }
+        }
+        return ans;
+    }
+};
