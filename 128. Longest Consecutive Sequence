@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        // Approach: Using SORTING
+        // TC : O(NlogN), for sorting
+        // TC can be optimized by using HASHMAP
+        // SC : O(1)
+        // C++ CODE:
+        // Edge Case:
+        if(nums.size() == 0) return 0;
+
+        int maxi = INT_MIN; // to store the maximum consecutive subsequence
+        int curLongest = 1; // since there will be atleast one longest consecutive element which is the element itself
+
+        // sort the array
+        sort(nums.begin(), nums.end());
+
+        // loop through nums
+        for(int i=1; i<nums.size(); i++){
+            // Case 1: If adjacent elements are equal, continue (i.e skip current iteration and go for next iteration)
+            if(nums[i] == nums[i-1]){
+                continue;
+            }
+            // Case 2: If adjacent elements are consecutive, then increment the count of longest consecutive sequence
+            // and update the longest sequence
+            else if(nums[i] == nums[i-1] + 1){
+                curLongest++;
+                maxi = max(maxi, curLongest);
+            }
+            // Case 3: If adjacent elements are not equal and also if they are not consecutive, set the current longest
+            // to 1
+            else{
+                curLongest = 1;
+            } 
+        }
+        return max(maxi, curLongest);
+    }
+};
