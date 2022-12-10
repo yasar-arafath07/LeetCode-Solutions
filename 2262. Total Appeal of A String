@@ -1,0 +1,21 @@
+class Solution{
+public:
+    long long appealSum(string s){
+        // Approach:
+        // TC : O(N)
+        // SC : O(26), for the array
+        // C++ CODE:
+        long long res = 0;
+        vector<int> arr(26); // array of size 26
+
+        // loop through the string s
+        for(int i=0; i<s.length(); i++){
+            arr[s[i] - 'a'] = i+1; 
+            // traverse the array 'arr' and record the count of sum of substring i.e, res
+            for(int j : arr){
+                res += j; // res = res + j
+            }
+        }
+        return res;
+    }
+};
