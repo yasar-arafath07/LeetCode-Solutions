@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int maxConsecutive(int bottom, int top, vector<int>& special){
+        // Approach: SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = special.size();
+
+        // sort the array 'special'
+        sort(special.begin(), special.end());
+        
+        // find the maximum consecutive between the bottom and the 1st special floor (special[0]) and between top and 
+        // the last special floor (special[n-1])
+        int maxi = max(special[0] - bottom, top - special[n-1]);
+
+        // loop through the array to find the maximum consecutive floors in the array
+        for(int i=1; i<n; i++){
+            maxi = max(maxi, special[i] - special[i-1]-1);
+        }
+        return maxi;
+    }
+};
