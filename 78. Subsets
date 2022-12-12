@@ -1,0 +1,75 @@
+class Solution{
+public:
+    vector<vector<int>> subsets(vector<int>& nums){
+        // Approach 2: RECURSION (AV)
+        // Refer the Recursive Tree in notes for better understanding
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        vector<vector<int>> ans; // this we need to return
+        vector<int> op; // output vector
+
+        // call the solve() function which will generate all the subsets of the input vector recursively
+        solve(ans, nums, op);
+
+        sort(ans.begin(), ans.end()); // optional since they asked to return in any order
+        
+        // return the ans vector
+        return ans;
+    }
+
+    // solve() function which will generate all the subsets of the given input array
+    void solve(vector<vector<int>>& ans, vector<int> nums, vector<int> op){
+        // BASE CASE: If the input array 'nums' is empty, then we have a subset. So, push the 'op' vector into the 'ans'
+        // vector and return
+        if(nums.size() == 0){
+            ans.push_back(op);
+            return; // stop the recursive call furthermore
+        }
+
+        // else create 2 more output vectors 'op1' and 'op2' and initialize it to original output vector 'op'
+        vector<int> op1 = op;
+        vector<int> op2 = op;
+        // 'op1' will remain same as 'op'. since we are not including the element while taking the decision
+        // and for 'op2', we push the 1st element of the nums
+        op2.push_back(nums[0]);
+
+        // Now, reduce the size of the input. Now, we processed for the 1st element of the input vector, we remove the 
+        // 1st element (0th index) since it is processed
+        nums.erase(nums.begin() + 0); // removes 0th index element
+
+        // Now, call the solve() function recursively for left ans right node of the recursive tree
+        solve(ans, nums, op1); // for left node, 'op1' will be the new output vector
+        solve(ans, nums, op2); // for right node, 'op2' will be the new output vector
+        return;
+        
+
+
+
+        /*
+        // Approach 1: ITERATIVE Approach
+        // TC : O(N*(2^N))
+        // SC : O(N*(2^N))
+        // C++ CODE:
+        vector<vector<int>> ans;
+        int n = nums.size();
+
+        // push an empty vector into the ans vector 
+        ans.push_back({});
+
+        // loop through nums
+        for(int i=0; i<nums.size(); i++){
+            int m = ans.size(); // current size of the ans vector
+            for(int j=0; j<m; j++){
+                vector<int> temp = ans[j];
+                temp.push_back(nums[i]);
+                ans.push_back(temp);
+            }
+        }
+        return ans;
+        */
+    }
+};
+
+
+
