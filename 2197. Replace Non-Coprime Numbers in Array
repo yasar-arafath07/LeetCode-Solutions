@@ -1,0 +1,38 @@
+class Solution{
+public:
+    vector<int> replaceNonCoprimes(vector<int>& nums){
+        // Approach: 
+        // TC : O(NlogN)
+        // SC : O(N)
+        // C++ CODE:
+        vector<int> res; // to store the result
+
+        for(auto a : nums){
+            while(true){
+                // find the gcd. If 'res' is empty, find the gcd between 1 and 'it'. else find the gcd between last 
+                // element of 'res' and current 'it'
+                int x = gcd(res.empty() ? 1 : res.back(), a); // find the gcd of adjacent numbers
+                if(x == 1) break; // if gcd i.e x==1, it is a coprime. So, break i.e, come out of while loop and insert 
+                // the current element 'it' in the 'res' vector
+                
+                // else, calculate the LCM between current element 'it' and last element of 'res' vector
+                a *= res.back() / x; // calculating the LCM since, lcm(m,n) = (m*n)/gcd(m,n)
+                res.pop_back(); // remove the last element of res since we are replacing it with the LCM of those 2 no's 
+            }
+            res.push_back(a); 
+        }
+        return res;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- For each element 'a' in nums, check if it is co-prime with the last element of 'res' which is 'b'
+- If it is not co-prime, which means that they are Non-coprime. So, we can merge them by calculating their LCM and
+  replacing them by their LCM value. LCM = (a*b)/gcd(a,b)
+- and then check if we can continue to do the above process with the next element of nums.
+- Until it is coprime with the last element of 'res', we append 'a' at the end of 'res'
+- Finally, return the 'res' vector.
+*/
