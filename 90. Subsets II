@@ -1,0 +1,45 @@
+class Solution{
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums){
+        // Approach: RECURSION (AV)
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        vector<vector<int>> ans;
+        vector<int> op;
+        set<vector<int>> s;
+
+        sort(nums.begin(), nums.end());
+        
+        solve(nums, s, op); // call the solve() function
+
+        // traverse the set 's'
+        for(auto it : s){
+            ans.push_back(it);
+        }
+
+        return ans;
+    }
+
+    // solve() function which will generate all the unique subsets of the given input array
+    void solve(vector<int> nums, set<vector<int>> &s, vector<int> op){
+        // BASE CASE:
+        if(nums.size() == 0){
+            sort(op.begin(), op.end()); // sort the output vector if we want sorted subsets while printing
+            s.insert(op);
+            return;
+        }
+        
+        // create 2 more output vector 'op1' and 'op2' and initialize it to 'op'
+        vector<int> op1 = op;
+        vector<int> op2 = op;
+
+        op2.push_back(nums[0]); // push the 1st element of the input array to 'op2' vector
+        nums.erase(nums.begin() + 0); // reduce the input size by removing the 1st element of the input array 
+         
+        // Now, call the solve() function recursively for left and right node of the recursive tree
+        solve(nums, s, op1); // for left node of recursive tree
+        solve(nums, s, op2); // for right node of the recursive tree
+        return;
+    }
+};
