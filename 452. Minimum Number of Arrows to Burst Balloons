@@ -1,0 +1,42 @@
+// comparator function for sorting based on 2nd element of each balloon (end point)
+bool comp(vector<int> &a, vector<int> &b){
+    return (a[1] < b[1]); 
+}
+
+class Solution{
+public:
+    int findMinArrowShots(vector<vector<int>>& points){
+        // Approach: (AS)
+        // TC : O(NlogN), for sorting
+        // SC : O(1)
+        // C++ CODE:
+        // EDGE CASE:
+        if(points.size() == 0) return 0;
+
+        // sort the Array with respect to the end point (i.e, 2nd element of each balloon) using comparator function
+        sort(points.begin(), points.end(), comp);
+
+        int arrows = 1; // 1 arrow is needed for sure
+        int end = points[0][1]; // 1st balloons 2nd element
+
+        // traverse the array
+        for(int i=1; i<points.size(); i++){
+            if(points[i][0] > end){
+                // we need a new arrow to burst. So, increment arrows
+                arrows++;
+                end = points[i][1]; // update the new end
+            }
+        }
+        return arrows;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- Here we are sorting the Array using the end points.
+  eg: if Array is points = [[10,16], [2,8], [1,6], [7,12]]
+  then after sorting the array using end points, we get points = [[1,6], [2,8], [7,12], [10,16]].
+  So, here we can see that the end points are sorted. i.e, 6, 8, 12, 16 are in ascending order.
+- After sorting, We simply check how many arrows we need
+*/
