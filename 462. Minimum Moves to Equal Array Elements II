@@ -1,0 +1,49 @@
+class Solution{
+public:
+    int minMoves2(vector<int>& nums){
+        // Approach: Using SORTING and MEDIAN
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size(); // size of the Array
+        int moves = 0; // total moves that are required to make array eleemts equal
+
+        // Sort the Array
+        sort(nums.begin(), nums.end()); 
+
+        int mid = n/2; // find the mid Index
+
+        // Traverse the Array
+        for(int i=0; i<nums.size(); i++){
+            moves += abs(nums[i] - nums[mid]);
+        }
+        return moves;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+---> If we observe, once all the elements of the Array are sorted, the minimum moves required to make all the Array
+elements equal is by moving up i.e, incresing the number from the left end and moving down i.e, decreasing the numbers
+from the right end until all the numbers become equal.
+---> We can notice that all the numbers become equal mid-way.
+---> Hence, the Intuition is that we must make all numbers equal to the middle number in the Sorted Array for the minimum
+number of moves.
+---> Hence, the Absolute Difference of the current element and the middle element is the no of moves required for that
+particular element.
+---> So, the Answer is the Sum of the absolute difference between the middle element and all the elements of the Array.  
+
+
+// STEPS:
+- Sort the Array nums.
+- Find the middle element of nums.
+- Then the Answer will be the sum of absolute difference between the middle element and the Array elements.
+
+eg: If nums = [1,10,2,9]
+After Sorting nums = [1,2,9,10], and n=4
+So, mid = n/2 = 4/2 = 2. i.e, nums[2] = 9 (So mid element is 9)
+Now, the sum of absolute difference b/w mid element and Array elements are: abs(1-9) + abs(2-9) + abs(9-9) + abs(10-9)
+i.e, [abs(-8) + abs(-7) + abs(0) + abs(1)] = 8 + 7 + 0 + 1 = 16 
+*/
