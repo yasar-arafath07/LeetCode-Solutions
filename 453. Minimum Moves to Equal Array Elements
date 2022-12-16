@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int minMoves(vector<int>& nums){
+        // Approach: 
+        // TC : O(2N) ~ O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int mini = INT_MAX;
+
+        // find the minimum element of the Array
+        for(auto x : nums){
+            mini = min(mini, x);
+        }
+
+        // calculate the sum of minimum number and the array element and then return it
+        int ans = 0;
+        for(auto it : nums){
+            ans += (it - mini);
+        }
+        return ans;
+    }
+};
+
+
+/*
+// EXPLANATION: 
+- Given that in one move we can increment (n-1) elements of the Array by 1.
+- So, which means that in 1 move, we can decrement 1 element of the Array by 1.
+- So, we can consider the given problem to be equal to decrementing all the elements by 1 in each move until they are 
+  equal to the minimum element in the Array.
+// STEPS:
+- Find the minimum element of the Array.
+- Subtract the minimum number from all the elements in the Array.
+- Then the final Answer is the Sum of the difference between the minimum number and the integer values in the Array.
+eg: If nums = [5,6,7,8] 
+Here the minimum value is 5.
+So, the sum of difference b/w minimum no and the array elements is: (5-5) + (6-5) + (7-5) + (8-5) = 0 + 1 + 2 + 3 = 6.
+Therefore the Answer is 6 i.e, minimum 6 moves are required to make the Array elements equal
+*/
