@@ -1,0 +1,33 @@
+// comparator function 'comp' for sorting the Array in ascending order based on the 2nd element of each intervals[i]
+bool comp(vector<int> &a, vector<int> &b){
+    return a[1] < b[1];
+}
+
+class Solution{
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals){
+        // Approach: GREEDY (SORTING)
+        // TC : O(NlogN), since we sort the Array
+        // SC : O(1)
+        // C++ CODE:
+        // EDGE CASE:
+        if(intervals.size() == 0) return 0;
+
+        // sort the Array based on the 2nd element of each intervals[i] using custom comparator
+        sort(intervals.begin(), intervals.end(), comp);
+
+        int ans = -1;
+        vector<int> prev = intervals[0];
+
+        // Traverse the Array
+        for(auto it : intervals){
+            if(prev[1] > it[0]){
+                ans++;
+            }
+            else{
+                prev = it; // we want the end point (2nd element) to be minimum
+            }
+        }
+        return ans; // 'ans' was initially assigned to -1 because our 'prev' and intervals[0] will always match
+    }
+};
