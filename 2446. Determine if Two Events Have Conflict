@@ -1,0 +1,29 @@
+class Solution{
+public:
+    bool haveConflict(vector<string>& event1, vector<string>& event2){
+        // Approach 1: 
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        return (event1[0] <= event2[1] && event2[0] <= event1[1]);
+
+
+        // Approach 2: 
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        return max(event1[0], event2[0]) <= min(event1[1], event2[1]); //just check if max of startTime <= min of endTime
+    }
+};
+
+
+
+
+/*
+// EXPLANATION:
+- Given 2 segments: [left1, right1] & [left2, right2], how can we check whether they overlap?
+- So, if these 2 intervals overlap, there should exist some value 'x' such that
+  left1 <= x <= right1 && left2 <= x <= right2
+- So that, max(left1, left2) <= x <= min(right1, right2)
+- So that, left1 <= right2 && left2 <= right1 i.e, startTime1 <= endTime2 && startTime2 <= endTime1.
+*/
