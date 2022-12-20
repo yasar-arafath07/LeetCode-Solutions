@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int countConsistentStrings(string allowed, vector<string>& words){
+        // Approach:
+        // TC : O(N*W), where 'N' is the length of the string 'allowed' and 'W' is the length of the Array 'words'
+        // SC : O(26) = O(1)
+        // C++ CODE:
+        int res = words.size();
+        bool hash[26] = {}; // empty array of size 26 to store the presence of characters of string 'allowed'
+
+        // mark the presence of characters in the 'hash' Array
+        for(auto& ch : allowed){
+            hash[ch - 'a'] = true; // eg: allowed = "ab", then hash = [1,1,0,0,0,0,0,0,0,0,0,0,0,....till 26th element]
+        }
+
+        // Now, traverse the Array 'words' and then traverse the single word/element of the Array
+        for(auto& word : words){
+            // traversing the element of the Array
+            for(auto& ch : word){
+                // check if the characters of 'word' is present in the 'hash'
+                if(!hash[ch - 'a']){
+                    res--; // decrement the count
+                    break; // stop the current word and treverse the next word
+                }
+            }
+        }
+        return res; 
+    }
+};
