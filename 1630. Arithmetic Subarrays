@@ -1,0 +1,44 @@
+class Solution{
+public:
+    vector<bool> checkArithmeticSubarrays(vector<int>& nums, vector<int>& l, vector<int>& r){
+        // Approach: BRUTE FORCE (SORTING)
+        // Explanation: Just form and Sort the Subarray and then check whether each subarray nums[l[i],....,r[i]] is 
+                        // Arithmetic
+        // TC : O(N^2 * logN), where O(N) for loop, and O(NlogN) for Sorting the Array.
+        // SC : O(N)
+        // C++ CODE:
+        vector<bool> res; // to store the result;
+
+        // Traverse for the no. of elements in 'l' or 'm' times to form the Subarray
+        for(int i=0; i<l.size(); i++){
+            // form the Subarray
+            vector<int> arr(nums.begin() + l[i], nums.begin() + r[i] + 1); // forming a new Subarray of 'nums'.
+
+            // sort the Subarray
+            sort(arr.begin(), arr.end());
+            
+            /*
+            // EDGE CASE: Size of the Subarray 'arr' should be atleast 2
+            if(arr.size() == 1){
+                res.push_back(false);
+                continue;
+            }
+            */
+
+            // Now, check if the Subarray is a Arithmetic Sequence
+            // So, find the commom difference
+            int diff = arr[1] - arr[0];
+            bool valid = true;
+
+            // traverse the Subarray 'arr' to check if all the adjacent elements have same common difference
+            for(int j=1; j<arr.size(); j++){
+                if(arr[j] - arr[j-1] != diff){
+                    valid = false;
+                    break;
+                }
+            }
+            res.push_back(valid);
+        }
+        return res;
+    }
+};
