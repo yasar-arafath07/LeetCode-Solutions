@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int countEven(int num){
+        // Approach: 
+        // TC : O(logN)
+        // SC : O(1)
+        // C++ CODE:
+        int temp = num;
+        int sum = 0; // sum of the digits of given input 'num'
+
+        while(num > 0){
+            sum += num%10; // sum = sum + (num%10);
+            num /= 10; // num = num/10;
+        }
+        return sum%2 == 0 ? (temp/2) : (temp - 1)/2;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- First, we calculate the sum of the digits, and then apply formula (we just need to check if sum is EVEN or ODD) to
+  calculate the final Answer.
+- DRY RUN for the examples given in the description.
+- Also, DRY RUN for num = 10, num = 20, num = 30, num = 40 etc for better understanding
+- num = 10, We have 2,4,6,8 (4)
+- num = 20, We have 2,4,6,8,11,13,15,17,19,20 (10)
+- num = 30, we have 2,4,6,8,11,13,15,17,19,20,22,24,26,28 (14)
+*/
