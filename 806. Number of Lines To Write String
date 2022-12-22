@@ -1,0 +1,22 @@
+class Solution{
+public:
+    vector<int> numberOfLines(vector<int>& widths, string s){
+        // Approach:
+        // Explanation: We simply keep counting the current sum of pixels, and as soon as it exceeds 100, we increment
+        // the lines required by 1 by doing count++.
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int count = 1; // 'count' is the total no. of lines
+        int currSum = 0; // 'currSum' is the width of the last line in pixels
+
+        for(int i=0; i<s.size(); i++){
+            currSum += widths[s[i] - 'a'];
+            if(currSum > 100){
+                count++; // add a new line. So, count++
+                currSum = widths[s[i] - 'a']; // update the 'currSum'
+            }
+        }
+        return {count, currSum};
+    }
+};
