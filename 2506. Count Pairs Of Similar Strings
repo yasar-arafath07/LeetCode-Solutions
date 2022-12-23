@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int similarPairs(vector<string>& words){
+        // Approach: Using SET
+        // TC : O(N*N*26)
+        // SC : O(26)
+        // C++ CODE:
+        int ans = 0;
+        vector<string> v;
+
+        // traverse the input string 'words'
+        for(auto& word : words){
+            set<char> s;
+            // Now, traverse each word of 'words' and insert the character in the set
+            for(auto& w : word){
+                s.insert(w);
+            }
+
+            // create an empty string
+            string str = "";
+            // Traverse the set 's' and form a string and insert the string into the vector
+            for(auto i : s){
+                str += i; // str = str + i;
+            }
+            v.push_back(str); // push the string into the vector
+        }
+
+        // At last, traverse the vector string and count the no. of Similar string
+        for(int i=0; i<v.size()-1; i++){
+            for(int j=i+1; j<v.size(); j++){
+                // compare
+                if(v[i] == v[j]){
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+};
