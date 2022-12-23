@@ -1,0 +1,49 @@
+class Solution{
+public:
+    string longestCommonPrefix(vector<string>& strs){
+        // Approach: SORTING
+        // TC : O(Nlog(N)M), where Nlog(N) is for sorting and 'M' is the size of the each individual string
+        // SC : O(26) = O(1)
+        // Optimization: We can directly find the minimum and maximum string without sorting and then compare them using  
+        // which the TC will remain O(N) 
+        // C++ CODE:
+        int n = strs.size();
+
+        // EDGE CASE:
+        if(n == 0){
+            // return an empty string
+            return ""; 
+        }
+
+        sort(strs.begin(), strs.end()); // sort the input Array
+
+        string res = "";
+        string first = strs[0]; // 1st element/string/word of the sorted Array 'strs'
+        string last = strs[n-1]; // last element/string/word of the sorted Array 'strs'
+
+        // traverse the 1st or the last element/word
+        for(int i=0; i<first.length(); i++){
+            // compare the characters
+            if(first[i] == last[i]){
+                res += first[i];
+            }
+            else{
+                break; // break the complete loop and come out
+            }
+        }
+        return res;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- Sort the given input Array 'strs'
+  eg1: If strs = ["flower","flow","flight"], then after sorting we will get strs = ["flight","flow","flower"]
+  eg2: If strs = ["abc","aba","abab"], then after sorting, strs = ["aba","abab","abc"]
+- Then Select the first and the last element/string of the sorted Array since these two elements are supposed to be the
+  most different among all pairs of elements/strings of the sorted Array.
+- Then iterate either the first or the last element and check how many characters match from the starting index and add
+  the character to the res string if it matches in both first and last string and in the end, return the res string.
+*/
