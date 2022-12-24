@@ -1,0 +1,65 @@
+class Solution{
+public:
+    int minPatches(vector<int>& nums, int n){
+        // Approach: 
+        // TC : O(|nums| + log(n)), where '|nums|' is the length of the Array and 'n' is the input integer.
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0; // to store the total number of elements we need to add 
+        int i = 0; // for traversing
+        long long maxNum = 0; // maxNum actually stores the number till which we can form all numbers from 1 to 'maxNum'.
+
+        while(maxNum < n){
+            if(i < nums.size() && nums[i] <= maxNum + 1){
+                maxNum += nums[i]; // calculate the maxNum
+                i++;
+            }
+            else{
+                // add an element. So increment count
+                count++;
+                maxNum += maxNum + 1; // maxNum = maxNum + (maxNum + 1);  (update the new maxNum)
+            }
+        } 
+        return count;      
+    }
+};
+
+
+
+/*
+// ALGORITHM EXPLANATION with an eg:
+- So, here 'n' will be given and we need to find how many extra elements we need to add into the Array so that all the 
+  elements from 1 to n i.e, [1,n] can be formed by the sum of some of the elements in the Array (Note: Array is Sorted).
+- Let's take nums = [1,2,5,6,20], n = 50.
+- Let's create a variable 'maxNum' which will be 0 initially.
+- Now, we need to get 1 and since nums[0] = 1, We can get 1 from there. Now the maxNum is 1. So, "maxNum = 1".
+  (Actually, we can get all numbers not greater than 'maxNum').
+  SUM UP: Elements Used: [1], Elements Added = [], maxNum = 1.
+  We can Achieve from 1 to 1 till now. (1 ~ 1)
+- Now, we need to get 2 (i.e, maxNum+1). Since nums[1] = 2, we can get 2 from there. So, Now we can get all the numbers
+  between 1 to 3 (3 = previous maxNum + the new number) and 3 is the current maximum we can get. So "maxNum = 3".
+  SUM UP: Elements used: [1,2], Elements Added = [], maxNum = 3.
+  We can Achieve from 1 to 3 till now. (1 ~ 3)
+- Now we need to get 4 (3+1 i.e, maxNum+1). Since nums[2] = 5 > 4, we need to add a new number to get 4. The optimal 
+  Solution is to add 4 directly. In this case we could achieve a maximum of 7 using [1,2,4]
+  SUM UP: Elements used: [1,2], Elements Added = [4], maxNum = 7.
+  We can Achieve from 1 to 7 till now. (1 ~ 7)
+- Now, we need to get 8 (7+1). Since nums[2] = 5 < 8, We can first try to use 5. Now the maximum number we can get is 
+  7+5 = 12. Since 12 > 8, we can successfully get 8.
+  SUM UP: Elements used: [1,2,5], Elements Added = [4], maxNum = 12.
+  We can achieve from 1 to 12 till now. (1 ~ 12)
+- Now, we need to get 13 (12+1). Since nums[3] = 6 < 13, We can first try to use 6. Now the maximum number we can get 
+  is 12+6 = 18. Since 18 > 13, We can easily get 13.
+  SUM UP: Elements used: [1,2,5,6], Elements Added = [4], maxNum = 18.
+  We can Achieve from 1 to 18 till now. (1 ~ 18)
+- Now, we need to get 19 (18+1). Since nums[4] = 20 > 19, we need to add a new number to get 19. The optimal solution 
+  is to add 19 directly. So, in this case, we could achieve a maximum of 37 (18+19).
+  SUM UP: Elements used: [1,2,5,6], ELements Addded = [4,19], maxNum = 37.
+  We can Achieve from 1 to 37 till now. (1 ~ 37)
+- Now, we need to get 38 (37+1). Since nums[4] = 20 < 38, we can first try to use 20. Now the maximum number we can get
+  is 37 + 20 = 57. Since 57 > 38, We can easily get 38.
+  SUM UP: Elements used: [1,2,5,6,20], Elements Added = [4,19], maxNum = 57.
+  We can Achieve from 1 to 57 till now. (1 ~ 57)
+- Since 57 > 50 i.e maxNum > n, We can get all the numbers not greater than 50.
+- So the extra elements we added are [4,19]. So we return 2.
+*/
