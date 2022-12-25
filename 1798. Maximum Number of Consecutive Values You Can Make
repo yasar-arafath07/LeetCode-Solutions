@@ -1,0 +1,26 @@
+class Solution{
+public:
+    int getMaximumConsecutive(vector<int>& coins){
+        // Approach: SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int res = 1; // since we can always have x as 0, we initially take res as 1
+
+        // sort the Array since we need consecutive integres
+        sort(coins.begin(), coins.end());
+
+        // traverse the Array'coins'
+        for(auto& it : coins){
+            if(it > res){
+                // If current 'it' > res, then all the coming elements will also be greater than res, so break the loop.
+                break; // 'res' actually means the next value we want to make
+            }
+            else{
+                // record the maximum number of consecutive integer
+                res += it; // res = res + it;
+            }
+        }
+        return res;
+    }
+};
