@@ -1,0 +1,41 @@
+class Solution{
+public:
+    vector<int> answerQueries(vector<int>& nums, vector<int>& queries){
+        // Approach: SORTING + BINARY SEARCH (upper_bound())
+        // TC : O(n + mlogn), where n - length of 'nums' & m - length of 'queries'. Since O(n) for traversing 'nums' + 
+        // O(nlogn) for Sorting 'nums' + O(m) for traversing 'queries'
+        // SC : O(N)
+        // C++ CODE:
+        vector<int> res; // to store the result
+
+        // sort the input Array 'nums' since we care about the sum and doesn't care the order
+        sort(nums.begin(), nums.end());
+
+        // Find the total sum at each index of the Array i.e, Calculate the Prefix Sum of nums since we want to know 
+        // the acccumulate sum.
+        for(int i=1; i<nums.size(); i++){
+            nums[i] += nums[i-1]; // nums[i] = nums[i] + nums[i-1];
+        }
+
+        // Now, Binary Search the each query 'q' in 'queries' and the index is the result
+        for(auto& q : queries){
+            int ans = upper_bound(nums.begin(), nums.end(), q) - nums.begin(); // since we don't want the iterator but
+            // we want the actual index, we subtract nums.begin() from the upper_bound() to get the index.
+            res.push_back(ans);
+        }
+        return res;
+    }
+};
+
+
+
+/*
+Q : What does 'upper_bound()' return ? 
+Ans: upper_bound() is a standard library function in C++ defined in the header. It returns an iterator pointing to the 
+     first element in the range [first,last) that is greater than value, or last if no such element is found. 
+     The elements in the range shall already be sorted or atleast partitioned with respect to val.
+eg: If nums = [10, 20, 30, 30, 40, 50]
+- upper_bound() for element 30 is at index 4. i.e, upper_bound(nums.begin(), nums.end(), 30) is 4.
+- upper_bound() for element 45 is at index 5.
+- upper_bound() for element 60 is at index 6.
+*/
