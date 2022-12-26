@@ -1,0 +1,67 @@
+class Solution{
+public:
+    // solve() function which will produce all the Possible Letter Case Permutation
+    void solve(string ip, string op, vector<string> &res){
+        // BASE CASE: Whenever the i/p string becomes empty, we have an answer in the 'op' string. So, push the 'op' 
+        // string into resultant vector 'res'
+        if(ip.length() == 0){
+            res.push_back(op);
+            return; // stop the recursion furthermore
+        }
+
+        // Start processing the elements of i/p string 'ip' one by one
+        // Now, starting from the 1st element of 'ip', if it is a alphabet/character/letter, then we have 2 choices i.e,
+        // one to include ip[0] in lowercase and other choice is to include the element in uppercase.
+        if(isalpha(ip[0])){
+            // If the 1st element is an alphabet (either lowercase OR uppercase), we have 2 choices.
+            // So, create 2 output strings 'op1' and 'op2' and initialize them to original output string 'op'.
+            string op1 = op;
+            string op2 = op;
+
+            // Now, for 'op1', we take a decision of including ip[0] in it's lowercase (Refer Recursive tree in notes)
+            op1.push_back(tolower(ip[0]));
+            // and in 'op2', we decide to include ip[0] in it's uppercase
+            op2.push_back(toupper(ip[0]));
+
+            // Now, reduce the size of the i/p string by deleting the 1st element since we finished processing it.
+            ip.erase(ip.begin() + 0); // 0 is the index position we want to delete
+
+            // Now, since we created 'op1' and 'op2' for left and right node, call the solve() function recursively
+            // for left and right node of the recursive tree 
+            solve(ip, op1, res); // for left node
+            solve(ip, op2, res); // for right node
+        }
+
+        // else, if the input element is a digit, then we have only 1 choice which is to include it as it is.
+        else if(isdigit(ip[0])){
+            // If the element is a digit, then we have only 1 choice. So, we create only 1 o/p string i.e, 'op1' and 
+            // initialize 'op1' to previous output string 'op'.
+            string op1 = op;
+
+            // and then we include the element (digit here) as it is in the 'op1' string.
+            op1.push_back(ip[0]);
+
+            // Now, reduce the i/p size
+            ip.erase(ip.begin() + 0);
+
+            // Now, we have only 1 node with input 'ip' and o/p string 'op1', so call the solve() function recursively 
+            // for that node.
+            solve(ip, op1, res);
+        }
+    }
+
+    vector<string> letterCasePermutation(string s){
+        // Approach: RECURSION (AV)
+        // TC : O(2^n), because in the Recursive tree, at each level the no. of nodes are increasing by power of 2.
+        // SC : O(n), which is the maximum depth of Recursive tree.
+        // C++ CODE:
+        vector<string> res; // to store the output strings 'op' 
+        string ip = s; // input string
+        string op = ""; // empty output string
+
+        // call the solve() or helper() function which will perform the letter case permutation
+        solve(ip, op, res);
+
+        return res; // we can sort the 'res' vector before returning if we want.
+    }
+};
