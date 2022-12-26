@@ -1,0 +1,42 @@
+class Solution{
+public:
+    // custom sort based on the 2nd element of each element of input Array 'boxTypes'
+    // It sorts in the decreasing order of 2nd element
+    // This is done bec we want to select maximum units. So we pick the boxes first that has the maximum units per box
+    static bool comp(vector<int> &a, vector<int> &b){
+        return a[1] > b[1]; // sorts the 2nd element in the decreasing order.
+    }
+
+    int maximumUnits(vector<vector<int>>& boxTypes, int truckSize){
+        // Approach: GREEDY (SORTING)
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the total maximum number of units that can be put on the truck 
+
+        // sort the given Array in the decreasing order of 2nd element of each boxTypes[i]
+        sort(boxTypes.begin(), boxTypes.end(), comp); // custom sort
+
+        // Traverse the Array
+        for(auto& it : boxTypes){
+            // choose the minimum between the no. of boxes and truck size to avoid overflow of boxes in the truck
+            int x = min(it[0], truckSize); 
+
+            // Add the units into the ans
+            ans += (x * it[1]);
+            truckSize -= x; // update the new truckSize
+
+            // If the truck size becomes 0 or less than 0, then we can't fill anything. So break the loop and come out
+            if(truckSize <= 0) break; // OR we can also write it as: 'if(!truckSize) break;'
+        }
+        return ans;
+    }
+};
+
+
+
+/*
+Q: How does the sorting works here?
+Ans: Lets take an eg: If boxTypes = [[5,10], [2,5], [4,7], [3,9]], then the new Array after custom sort will be:
+     boxTypes = [[5,10], [3,9], [4,7], [2,5]].
+*/
