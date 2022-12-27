@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int countVowelStrings(int n){
+        // Approach: 
+        // TC : O(n)
+        // SC : O(1)
+        // C++ CODE:
+        int a = 1; // OR 'int a(1);'
+        int e = 1;
+        int i = 1;
+        int o = 1;
+        int u = 1;
+
+        while(--n){
+            o += u; // o = o + u;
+            i += o;
+            e += i;
+            a += e;
+        }
+        return (a + e + i + o + u);
+    }
+};
+
+
+
+/*
+// Explanation: 
+- Here we can observe a Pattern to the problem
+
+            a   e   i   o   u
+for n = 1:  1   1   1   1   1   // a, e, i, o, u
+for n = 2:  5   4   3   2   1   // a -> aa,ae,ai,ao,au  |  e -> ee,ei,eo,eu  |  i -> ii,io,iu  |  o -> oo,ou  |  u -> uu
+for n = 3:  15  10  6   3   1
+
+- So, if we observe from the last of the count, there will always be 1 string which starts with 'u'.
+- Ans every other element will have the count of previous count + count of next element.
+- For eg: if n = 2, 'i' will be previous 'i' (1) + count of next element 'o' (2) i.e 1+ 2 = 3.
+- For n = 3, 'e' will be previous e(4) + count of next element 'i'(6) = 4 + 6 = 10.
+*/
