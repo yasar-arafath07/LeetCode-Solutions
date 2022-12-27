@@ -1,0 +1,34 @@
+class Solution{
+public:
+    bool canFormArray(vector<int>& arr, vector<vector<int>>& pieces){
+        // Approach: HASHMAP
+        // TC : O(N+M), where 'N' is the size of 'arr' and 'M' is the size of 'pieces'
+        // SC : O(M), for storing the elements in the map.
+        // C++ CODE:
+        unordered_map<int, vector<int>> mpp;
+
+        // Traverse the 'pieces' Array and map the 1st element in each 'pieces[i]' to 'pieces[i]'
+        for(auto& p : pieces){
+            mpp[p[0]] = p; // 1st element of pieces[i] ---> entire pieces[i] Array  (Note that each element of pieces is 
+            // an Array)
+        }
+
+        vector<int> res; // to form the new Array
+
+        // Now, Iterate the 'arr' Array and check if current element of arr is present in the map
+        for(auto& it : arr){
+            if(mpp.find(it) != mpp.end()){
+                // If the current element is found in the map, insert the corresponding mapped elements of 'it' into res
+                res.insert(res.end(), mpp[it].begin(), mpp[it].end()); // res.end() is the position where we want to
+            }   // insert the elements from the starting of the vector till the end of the vector 
+        }
+        return arr == res;
+    }
+};
+
+
+/*
+Q: What is insert() function in C++ STL?
+Ans: It is used to insert the elements at any position of the list. This function takes 3 elements: position of insertion,
+     number of elements to insert & the value to insert. If not mentioned, no. of elements is default set to 1.
+*/
