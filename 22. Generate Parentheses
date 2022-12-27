@@ -1,0 +1,49 @@
+class Solution{
+public:
+    // create a solve() function which will generate all the Balanced Parentheses
+    void solve(int open, int close, string op, vector<string>& res){
+        // BASE CASE: Whenever the i/p becomes 0 i.e, whenever open = close = 0, we have an answer in the 'op' string, 
+        // so we push the 'op' string into the resultant vector 'res' (Refer the recursive tree leaf node in notes)
+        if(open == 0 && close == 0){
+            res.push_back(op);
+            return; // stop any further Recursive calls
+        }
+
+        // else, look at the Choices we have
+        // For 'open' bracket, we always have choices to include it till the count of 'open' reaches 0
+        if(open != 0){
+            // create a string 'op1' and initialize it to previous 'op' string
+            string op1 = op;
+            op1.push_back('('); // push the open bracket since we are selecting/choosing it
+            // Now, call the solve() function for new node with 'op1' as o/p string Recursively
+            solve(open-1, close, op1, res); // since we used a 'open' above, decrement the count of it
+        }
+        
+        // And the 2nd Choice we have is for the closing bracket.
+        // We have choice to include closing bracket only when (close > open)
+        if(close > open){
+            // create a new o/p string 'op2' and initialize it to previous o/p string 'op'
+            string op2 = op;
+            op2.push_back(')'); // since we are selecting a 'close' bracket, push it into the new 'op2' string
+            // Now, call the solve() function for the new node Recursively with 'op2' as o/p string
+            solve(open, close-1, op2, res); // update the count of 'close'
+        }
+        return;
+    }
+
+    vector<string> generateParenthesis(int n){
+        // Approach: RECURSION (AV)
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        vector<string> res; // whenever we get an answer i.e 'op' string, we push it into this 'res' resultant vector
+        int open = n; // total no. of 'open' brackets 
+        int close = n; // total no. of 'close' brackets
+        string op = ""; // empty output string 'op'
+
+        // call the Recursive solve() function which will generate all the Balanced Parentheses
+        solve(open, close, op, res); // 'open' and 'close' are inputs
+
+        return res; 
+    }
+};
