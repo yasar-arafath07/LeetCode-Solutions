@@ -1,0 +1,40 @@
+class Solution{
+public:
+    int minStoneSum(vector<int>& piles, int k){
+        // Approach: PRIORITY QUEUE (MAX HEAP)
+        // Explanation: The idea here is to apply the given operation on the Largest pile of stones to get the minimum 
+        // no. of stones in the end. So, to always get the largest element, we use priority queues.
+        // TC : O((n+k)logn), explained below
+        // SC : O(n), for the priority queue.
+        // C++ CODE:
+        priority_queue<int> pq(piles.begin(), piles.end()); // copy the 'piles' Array into the priority queue 'pq'
+        int res = 0;
+
+        // Traverse the Aray for 'k' times and remove the half from the largest element
+        for(int i=0; i<k; i++){
+            int maxi = pq.top(); // found the maximum value of the Array
+            pq.pop(); // remove the largest from the Array/pq
+            maxi -= (maxi/2); // find the new value
+            pq.push(maxi); // insert the new value to the Array/pq
+        }
+        // After applying the above operation for 'k' times, now find the total stones reamining in the Array which is
+        // the sum of the priority queue
+        while(!pq.empty()){
+            res += pq.top(); // adding the left stones after 'k' operations
+            pq.pop();
+        }
+        return res;
+    }
+};
+
+
+
+/*
+// TIME COMPLEXITY:
+- Creation of priority queue takes O(n) time.
+- i) The for loop runs for 'k' no. of times i.e, O(k)
+  ii) Insertion and deletion in priority queue takes O(logn) time.
+- Traversing the priority queue to get the Answer and deleting the topmost element is taking O(nlogn) time.
+Hence, the total TIME COMPLEXITY is O(n) + O(k.logn) + O(n.logn)
+i.e, O((n+k).logn)
+*/
