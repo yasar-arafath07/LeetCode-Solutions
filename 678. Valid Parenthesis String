@@ -1,0 +1,60 @@
+class Solution{
+public:
+    bool checkValidString(string s){
+        /*
+        // Approach 1: 
+        // Passes 62/83 Test Cases
+        // Explanation: Check valid Parenthesis of a string containing only 2 types of characters: '(' and ')'
+        // TC : O(n)
+        // SC : O(1)
+        // C++ CODE:
+        int openCount = 0;
+
+        for(auto& c : s){
+            if(c == '('){
+                openCount++;
+            }
+            else if(c == ')'){
+                openCount--;
+            }
+
+            if(openCount < 0) return false;
+        }
+        return openCount == 0;
+        */
+
+
+
+        
+        // Approach 2:
+        // Explanation: Check valid Parenthesis of a string containing only 3 types of characters: '(', ')' and '*'
+        // TC : O(n)
+        // SC : O(1)
+        // C++ CODE:
+        int cmax = 0; // counts the maximum open brackets
+        int cmin = 0; // minimum number of open brackets
+
+        for(auto& c : s){
+            if(c == '('){
+                cmax++;
+                cmin++;
+            }
+            else if(c == ')'){
+                cmax--;
+                cmin--;
+            }
+            else if(c == '*'){
+                // Increment the count of cmax since we can assume '*' as open bracket
+                // Decrement the count of cmin since we can assume '*' as closed bracket
+                cmax++; // If '*' is '(', then openCount++ i.e, cmax++.
+                cmin--; // If '*' is ')', then openCount-- i.e, cmin--.
+            }
+
+            if(cmax < 0) return false; // currently don't have enough open parenthesis to match closed parenthesis.
+            // eg: "())("
+
+            cmin = max(cmin, 0); // avoid negative 
+        }
+        return cmin == 0;
+    }
+};
