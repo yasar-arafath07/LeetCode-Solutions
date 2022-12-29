@@ -1,0 +1,28 @@
+class Solution{
+public:
+    int minimumCost(vector<int>& cost){
+        // Approach: REVERSE SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        sort(cost.begin(), cost.end(), greater<int>()); // Sort the input Array in descending order
+
+        int total = 0; // minimum cost for buying all the candies
+
+        // Traverse the Array and skip every 3rd element and find the total cost for remaining elements
+        for(int i=0; i<cost.size(); i++){
+            if((i+1) % 3 == 0) continue; // If it is the 3rd element, skip it
+            // else, calculate the cost
+            total += cost[i]; // total = total + cost[i];
+        }
+        return total;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- Sort the Array in Reverse Order i.e, in Descending order.
+- Then Traverse the Array and skip every 3rd element since it is a free candy for every 2 candies we buy.
+- and calculate the cost for remaining candies and return it.
+*/
