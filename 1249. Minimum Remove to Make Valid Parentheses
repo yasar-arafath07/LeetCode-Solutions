@@ -1,0 +1,77 @@
+class Solution{
+public:
+    string minRemoveToMakeValid(string s){
+        // Approach:
+        // TC : O(N+N+N) = O(N), since each step takes O(N) time.
+        // SC : O(1), no extra space used except for 'res'.
+        // C++ CODE:
+        int count = 0; // In step1, 'count' is to store the no. of 'open' brackets
+
+        // STEP1: Traverse the string 's' from the start
+        for(int i=0; i<s.length(); i++){
+            if(s[i] == '('){
+                count++; // If 'open' bracket found, Increment 'count'.
+            }
+            else if(s[i] == ')'){
+                if(count == 0){  // If no. of 'close' bracket > no. of 'open' brackets
+                    s[i] = '#'; // replace s[i] by '#' since we found an extra useless 'close' bracket
+                }
+                else{
+                    count--; // If matching parenthesis found, decrement count.
+                }
+            }
+        }
+
+        // STEP2: Initialize 'count' to 0 and Iterate the string 's' from the end
+        count = 0; // here, in step2, 'count' is to store the no. of 'closed' brackets
+
+        for(int i=s.length()-1; i>=0; i--){
+            if(s[i] == ')'){
+                count++; // If 'close' bracket found, Increment count.
+            }
+            else if(s[i] == '('){
+                if(count == 0){  // If no .of 'open' brackets > no. of 'close' brackets
+                    s[i] = '#'; // replace 's[i]' by '#' since that 'open' bracket will be of useless 
+                }
+                else{
+                    count--; // If matching parenthesis found, decrement count.
+                }
+            }
+        }
+
+        // STEP3: Traverse the string 's' and push all the characters except '#' to the 'res' string
+        string res = "";
+
+        for(int i=0; i<s.length(); i++){
+            if(s[i] != '#'){
+                res.push_back(s[i]);
+            }
+        }
+        return res;
+    }
+};
+
+
+
+/*
+// EXPLANATION: 
+- First create a 'count' variable for storing the no. of 'opening' or 'closing' bracket as per our need.
+// STEP1:
+- Initialize count = 0. In this step we will use 'count' to store the no. of 'opening' brackets.
+- The, Iterate the string 's' from Start to End. and in each iteration:
+  a) If 'open' bracket found, then Increment 'count'.
+  b) If 'close' bracket found, then check if no. of 'close' brackets > no. of 'open' brackets, If YES, then mark that
+     character in 's' by replacing it by '#'. else decrement 'count' as matching parenthesis found.
+
+// STEP2: Reverse of Step1
+- Here again Initialize count = 0. In this step, we will use 'count' to store the no. of 'closing' brackets.
+- Then, Iterate the string 's' from the end and in each Iteration:
+  a) If 'close' bracket found, then Increment count.
+  b) If 'open' bracket found, then check if no. of 'open' brackets > no. of 'close' brackets. If YES, then mark that 
+     character in 's' by replacing it by '#'. else, decrement count as matching parentheses found.
+
+// STEP3:
+- Now, Create a 'res' string which stores the Answer.
+- Now, Iterate the string 's' and append each non-marked character ('#') to 'res' string
+- Finally, return the 'res' string.
+*/
