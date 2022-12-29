@@ -1,0 +1,20 @@
+class Solution{
+public:
+    vector<bool> prefixesDivBy5(vector<int>& nums){
+        // Approach: 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        vector<bool> res; // to store the result
+        int num = 0;
+
+        // Iterate the 'nums' Array
+        for(int i=0; i<nums.size(); i++){
+            // Find the value of nums[i] from the binary numbers and add nums[i] to it and then check if it is
+            // divisible by 5
+            num = ((num * 2) + nums[i]) % 5;
+            res.push_back(num == 0);
+        }
+        return res;
+    }
+};
