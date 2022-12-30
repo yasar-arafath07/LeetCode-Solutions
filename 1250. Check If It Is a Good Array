@@ -1,0 +1,56 @@
+class Solution{
+public:
+    bool isGoodArray(vector<int>& nums){
+        // Approach 2: BEZOUT's IDENTITY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        // EDGE CASE: If only 1 element is present in nums, check if it is equal to 1. If YES, return true, else return 
+        // false
+        if(nums.size() == 1){
+            return nums[0] == 1;
+        }
+
+        int a = nums[0];
+
+        // Traverse the Array
+        for(int i=1; i<nums.size(); i++){
+            // If the gcd() of a subset is 1, return true.
+            if(gcd(a, nums[i]) == 1) return true;
+            a = gcd(a, nums[i]);
+        }
+        return false;
+
+
+
+        /*
+        // Approach 1: CHINESE REMAINDER THEOREM (also well known as HANSON COUNTING)
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int res = nums[0];
+
+        // Iterate through the Array
+        for(auto& a : nums){
+            res = gcd(res, a);
+        }
+        return res == 1;
+        */
+    }
+};
+
+
+
+/*
+// EXPLANATION: Approach 1 (CHINESE REMAINDER THEOREM)
+- Just find the gcd() for all the numbers in the i/p Array and then check if it is equal to 1.
+- If YES, return true, else return false.
+
+
+// EXPLANATION: Approach 2 (BEZOUT's IDENTITY)
+- Here, the Basic Idea is that for Integers 'a' & 'b', if gcd(a,b) = d, then there exists 'x' and 'y' such that
+  (a*x) + (b*y) = d.
+- This can be generalized for (n >= 2). For eg: If gcd(a,b,c) = d, then there exists Integers 'x', 'y' and 'z' such that
+  (a*x) + (b*y) + (c*z) = d.
+- Now, this problem is just asking if the gcd of the given Array i.e, if gcd(x1, x2, x3, ...xn) = 1.
+*/
