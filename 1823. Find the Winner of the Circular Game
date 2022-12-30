@@ -1,0 +1,60 @@
+class Solution{
+public:
+    // Create a solve() function which will find the Winner of the game/Safe position for Josephus Recursively
+    void solve(vector<int> arr, int k, int index, int &ans){
+        // BASE CASE: If only one person/element is left in the Array, then store that element in the 'ans' and stop
+        // the Recursion.
+        if(arr.size() == 1){
+            ans = arr[0]; // since only 1 person/element is left.
+            return; // avoid furthermore Recursive calls
+        }
+
+        // Design HYPOTHESIS for smaller i/p. So, to get a smaller i/p, we need to leave a friend/kill a person/delete 
+        // an element from the Array
+        // So, to delete an Element, we want the Position/Index of the element which we need to delete.
+        index = (index + k) % (arr.size()); // use 'modulo' since we are killing/ignoring the persons in a circular 
+        // manner. So, once we reach the end of the Array by skipping (k-1) elements, we again want to come back to the
+        // start of the Array since we skipped some elements in b/w. So, we use 'mod' with the current size of the Array.
+        arr.erase(arr.begin() + index); // remove/leave/kill the person/friend/element from the Array
+        
+        // Since we killed/removed a person/element, Now call the same solve() function Recursively for smaller i/p size.
+        solve(arr, k, index, ans);
+
+        // Since the solve() function is void, just return nothing.
+        return;
+    }
+ 
+    int findTheWinner(int n, int k){
+        // Approach: RECURSION (AV)
+        // JOSEPHUS PROBLEM - Game of Death in a Circle
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        // Represent the 'n' friends in the form of an Array. So, create an Array 'arr'.
+        vector<int> arr; 
+        
+        // Now, we have an Array 'arr', Iterate the Array and insert the numbers for each friend starting from 1.
+        // for eg: Friend1 is numbered as '1' at position 1 (index 0), friend2 is numbered 2 at position 2 (index 1) etc
+        for(int i=1; i<=n; i++){
+            arr.push_back(i);
+        }
+        // Now, with respect to 'k', we actually want 'k-1' and not 'k', because for eg: If k=2, then we are ignoring/
+        // deleting the (k-1)th i.e, 2-1 = 1st element from the starting point. So, update k to 'k-1'
+        k = k - 1;
+        int index = 0; // we start the game from the 1st position of Array. So, initially we will be standing at index 0
+        int ans; // to store the winner of the game
+        
+        // call the Recursive solve() function which will find the winner of the Circular game
+        solve(arr, k, index, ans); // here 'k' is actually original 'k'-1.
+
+        return ans;
+    }
+};
+
+
+
+/*
+- Instead of doing 'k = k - 1' in the main() function (findTheWinner()), we can skip this step and we can subtract 1 
+  from 'k' in the solve() function while finding the index i.e, "index = (index + k - 1) % (arr.size());"
+- Both method will also work
+*/
