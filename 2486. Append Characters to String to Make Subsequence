@@ -1,0 +1,20 @@
+class Solution{
+public:
+    int appendCharacters(string s, string t){
+        // Approach: TWO POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int i = 0; // pointer 1 to traverse string 's'
+        int j = 0; // pointer 2 to traverse string 't'
+
+        // Traverse the strings and compare characters
+        for(int i=0; i<s.size() && j<t.size(); i++){
+            // j += s[i] == t[j];
+            if(s[i] == t[j]){
+                j++; 
+            }
+        }
+        return t.size() - j; // 'j' records the no. of matching characters in both string 's' and 't' from the start 
+    }
+};
