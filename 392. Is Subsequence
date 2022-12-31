@@ -1,0 +1,21 @@
+class Solution{
+public:
+    bool isSubsequence(string s, string t){
+        // Approach: TWO POINTERS
+        // TC : O(N), where 'N' is the size of string 't'
+        // SC : O(1)
+        // C++ CODE:
+        int i = 0; // to traverse string 's'
+        int j = 0; // to traverse string 't'
+
+        // Traverse both of the strings
+        for(int j=0; j<t.size() && i<s.size(); j++){
+            // compare the characters from 's' and 't'
+            if(s[i] == t[j]){
+                i++; // move the 'j' pointer
+            }
+        }
+        // If all characters of 's' were found in 't', return true.
+        return (i == s.size()); 
+    }
+};
