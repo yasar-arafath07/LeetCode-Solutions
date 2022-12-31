@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int timeRequiredToBuy(vector<int>& tickets, int k){
+        // Approach: BRUTE FORCE
+        // TC : O(Sum(tickets))
+        // SC : O(1)
+        // C++ CODE:
+        int time = 0;
+        
+        // The below line creates a while loop that will continue inifinitely until it is broken out from with a 'break'
+        // or a 'return' statement
+        while(true){ // because we might traverse the Array multiple times till tickets[k] becomes 0
+            // Iterate the i/p Array
+            for(int i=0; i<tickets.size(); i++){
+                // If any of the element is 0, we don't need to increment the time, just move to next element
+                if(tickets[i] == 0){
+                    continue;
+                }
+                // else decrement the count of tickets[i] and increment the count of 'time'
+                tickets[i]--;
+                time++;
+
+                // Now, check if tickets[k] which is our required element becomes 0
+                if(tickets[k] == 0) return time;
+            }
+        }
+        return 0;
+    }
+};
