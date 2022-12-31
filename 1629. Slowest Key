@@ -1,0 +1,29 @@
+class Solution{
+public:
+    char slowestKey(vector<int>& releaseTimes, string keysPressed){
+        // Approach:
+        // TC : O(N), where 'N' is the length of the i/p Array 'releaseTimes'
+        // SC : O(1)
+        // C++ CODE:
+        int time = releaseTimes[0];
+        int newTime = 0;
+        char key = keysPressed[0];
+
+        // Traverse the i/p Array 'releaseTimes'
+        for(int i=1; i<releaseTimes.size(); i++){
+            // Calculate the newTime
+            newTime = releaseTimes[i] - releaseTimes[i-1];
+
+            // If newTime and previous time are same, update the key to lexicographically largest key
+            if(newTime == time){
+                key = keysPressed[i] > key ? keysPressed[i] : key;
+            } 
+
+            else if(newTime > time){
+                time = newTime; // update the time
+                key = keysPressed[i]; // update the key
+            }
+        }
+        return key;
+    }
+};
