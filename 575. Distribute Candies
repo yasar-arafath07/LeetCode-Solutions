@@ -1,0 +1,19 @@
+class Solution{
+public:
+    int distributeCandies(vector<int>& candyType){
+        // Approach: SET
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        unordered_set<int> st;
+
+        // Iterate the Array and insert the elements in the set
+        // OR directly insert while declaring set above as: "unordered_set<int> st(candyType.begin(), candyType.end());"
+        for(auto& ele : candyType){
+            st.insert(ele);
+        }
+        // Now, set 'st' will only have all the unique candies available
+
+        return min(st.size(), candyType.size()/2);
+    }
+};
