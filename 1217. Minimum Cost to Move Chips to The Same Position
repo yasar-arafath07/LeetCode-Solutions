@@ -1,0 +1,33 @@
+class Solution{
+public:
+    int minCostToMoveChips(vector<int>& position){
+        // Approach: COUNTING (GREEDY)
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int even = 0;
+        int odd = 0;
+
+        // Iterate the i/p Array and count the number of even and odd positions and return the minimum of 2
+        for(auto& ele : position){
+            if(ele % 2 == 0){
+                even++;
+            }
+            else{
+                odd++;
+            }
+        }
+        return min(even, odd);
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- There's no cost to move numbers by a difference of 2.
+- Hence, we can move all even numbers to position 0 and odd numbers to position 1 with cost 1.
+- So, we need to bring the number to 0 or 1.
+- So, count the chips in the even and odd position.
+- Return the minimum of 2.
+*/
