@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int longestSubsequence(vector<int>& arr, int difference){
+        // Approach: HASHMAP (2 - Pass)
+        // Can be done in single pass also. In the first pass only, calculate the res parallelly
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int res = 1; // since there is always a single element itself as an answer, we take res as 1 initially
+        unordered_map<int,int> mpp; // key is Array element and value is longest length based on difference
+
+        // Traverse the i/p Array 'arr' and store the longest length for each element based on difference in the map
+        for(int i=0; i<arr.size(); i++){
+            mpp[arr[i]] = mpp[arr[i] - difference] + 1;
+        }
+
+        // Traverse the map 'mpp' and record the maximum length 
+        for(auto& it : mpp){
+            res = max(res, it.second);
+        }
+        return res;
+    }
+};
