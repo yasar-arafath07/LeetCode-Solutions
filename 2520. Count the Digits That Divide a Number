@@ -1,0 +1,22 @@
+class Solution{
+public:
+    int countDigits(int num){
+        // Approach: COUNTING (BRUTE FORCE)
+        // TC : O(log(num))
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0; // to store the no. of digits that Divide the number 'num'
+        int temp = num;
+
+        while(num > 0){
+            // take out the last digit of 'num' and store it in 'x'
+            int x = num % 10;
+            // Check if 'x' divides the number 'temp'
+            if(temp % x == 0){
+                count++;
+            }
+            num /= 10; // update num
+        }
+        return count;
+    }
+};
