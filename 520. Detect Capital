@@ -1,8 +1,39 @@
-class Solution {
+class Solution{
 public:
-    bool detectCapitalUse(string word) {
+    bool detectCapitalUse(string word){
+        // Approach 3: Using COUNT
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = word.length();
+        int count = 0; // to count the no. of Capital Letters
+
+        // Traverse the string 'word'
+        for(int i=0; i<word.length(); i++){
+            // If the character is in uppercase, Increment count
+            if(isupper(word[i])){
+                count++;
+            }
+        }
+
+        // If count is equal to size of the string, means all the characters are in uppercase. So, return true
+        if(count == n) return true;
+
+        // If count is 0, means all the characters are in Lower Case. So, return true
+        if(count == 0) return true;
+
+        // else if count is 1 and the first character is in uppercase, return true
+        if(count == 1 && isupper(word[0])) return true;
+
+        return false; // return false in any other case
+
+
+
+
+        /*
         // Approach 2 : Using C++ STL
-        return all_of(word.begin(), word.end(), :: isupper) || all_of(next(word.begin()), word.end(), :: islower); 
+        return all_of(word.begin(), word.end(), :: isupper) || all_of(next(word.begin()), word.end(), :: islower);
+        */ 
         
         
         
