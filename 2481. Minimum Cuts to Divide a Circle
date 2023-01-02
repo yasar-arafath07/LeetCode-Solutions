@@ -1,0 +1,21 @@
+class Solution{
+public:
+    int numberOfCuts(int n){
+        // Approach: BRUTE FORCE
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        // EDGE CASE: If n is 1, just return 0.
+        if(n == 1) return 0;
+
+        // If 'n' is even, return n/2
+        if(n % 2 == 0){
+            return n/2;
+        }
+        else{
+            // else if 'n' is odd, return n as it is
+            return n;
+        }
+        return 0;
+    }
+};
