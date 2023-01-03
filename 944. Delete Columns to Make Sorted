@@ -1,0 +1,26 @@
+class Solution{
+public:
+    int minDeletionSize(vector<string>& strs){
+        // Approach: BRUTE FORCE
+        // TC : O(rowSize * colSize), since we traverse each letter of the each word of the string 'strs'
+        // SC : O(1)
+        // C++ CODE:
+        int delete_count = 0; // the no. of columns we need to delete
+        int rowSize = strs.size(); // size of the row
+        int colSize = strs[0].size();  // size of column
+
+        // We are comparing the columns, so iterate on the columns
+        for(int j=0; j<colSize; j++){
+            // Iterate on the rows
+            for(int i=0; i<rowSize - 1; i++){
+                // Compare
+                if(strs[i][j] > strs[i+1][j]){
+                    // If it is greater, then we need to delete that column. So increment the count
+                    delete_count++;
+                    break; // break, since we do not want to check that column anymore
+                }
+            }
+        }
+        return delete_count;
+    }
+};
