@@ -1,0 +1,24 @@
+class Solution{
+public:
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped){
+        // Approach: Using STACK
+        // TC : O(N)
+        // SC : O(N), for creating the stack.
+        // Can be solved with Constant Space [O(1)] without using a Stack.
+        // C++ CODE:
+        stack<int> st; // Create an empty Stack Initially
+        int j = 0; // Initialize a pointer pointing to the 'popped' Array (Initially 'j' points to 1st element)
+
+        // Traverse the i/p 'pushed' Array
+        for(auto& val : pushed){
+            st.push(val); // Insert the element in the stack
+            // If the stack is not empty and the top of stack is equal to popped[j], then we pop the element from stack
+            while(st.size() > 0 && st.top() == popped[j]){
+                st.pop(); // pop the topmost element
+                j++; // move 'j' forward
+            }
+        }
+        // In the end, return TRUE if stack is empty or else return FALSE
+        return (st.size() == 0);
+    }
+};
