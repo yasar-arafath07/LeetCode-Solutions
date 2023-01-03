@@ -1,0 +1,22 @@
+class Solution{
+public:
+    int minIncrementForUnique(vector<int>& nums){
+        // Approach: SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int moves = 0;
+
+        sort(nums.begin(), nums.end()); // sort the i/p Array
+
+        // Traverse the i/p Array
+        for(int i=1; i<nums.size(); i++){
+            // compare current element with previous element
+            if(nums[i] <= nums[i-1]){
+                moves += nums[i-1] + 1 - nums[i];
+                nums[i] = nums[i-1] + 1; // update current element by adding 1
+            }
+        }
+        return moves;
+    }
+};
