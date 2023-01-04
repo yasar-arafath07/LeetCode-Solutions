@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int pivotInteger(int n){
+        // Approach: PREFIX SUM (Linear Search)
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int totalSum = 0;
+
+        // Iterate for 'n' number of times and calculate the total sum from 1 till 'n'
+        for(int i=1; i<=n; i++){
+            totalSum += i; // totalSum = totalSum + i;
+        }
+
+        // Create a Prefix Sum variable and initialize it to 0
+        int preSum = 0;
+
+        // Again Iterate for 'n' no. of times
+        for(int i=1; i<=n; i++){
+            preSum += i; // calculate the prefix sum
+            // Check the condition given in the problem 
+            // add 'i' since they mentioned sum from 1 to 'i' and from 'i' to n inclusive of 'i'
+            if(totalSum - preSum + i == preSum){ 
+                return i;
+            }
+        }
+        return -1;
+    }
+};
