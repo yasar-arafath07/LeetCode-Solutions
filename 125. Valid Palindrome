@@ -1,0 +1,45 @@
+class Solution{
+public:
+    bool isPalindrome(string s){
+        // Approach: TWO POINTERS
+        // TC : O(N/2) i.e, O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int l = 0; // pointer 1
+        int r = s.length()-1; // pointer 2
+
+        // Traverse the i/p string till 'l' and 'r' meet 
+        while(l <= r){
+            // If the character s[l] is not a letter or a number 
+            if(!isalnum(s[l])){
+                l++; // move 'l' forward
+            }
+            // If the character s[r] is not a letter or a number, decrement 'r'
+            else if(!isalnum(s[r])){
+                r--; // move 'r' backward
+            }
+            // convert the character into lowercase and compare s[l] and s[r]
+            else if(tolower(s[l]) != tolower(s[r])){
+                // if characters are not equal, directly return false from here
+                return false;
+            }
+            else{
+                // if both s[l] and s[r] are equal, just increment left pointer and decrement right pointer
+                l++;
+                r--;
+            }
+        }
+        return true; 
+    }
+};
+
+
+
+/*
+Q) What is isalnum() function in C++?
+Ans: 'isalnum()' function in C++ checks whether the given character is alphanumeric or not.
+Alphanumeric is a character that is either a letter or a number.
+
+--> tolower() : If a character passed inside this is an uppercase alphabet, this function converts it into a lowercase
+                alphabet and return.
+*/
