@@ -1,0 +1,44 @@
+class Solution{
+public:
+    // Create a function 'isPalindrome()' which will check if the 'word' is a plaindrome or not
+    bool isPalindrome(string s){
+        // Use 2 Pointers to check 
+        int l = 0;
+        int r = s.length() - 1;
+
+        // Traverse till the 2 pointers meet
+        while(l <= r){
+            // Compare 
+            // If the characters at 'l' and 'r' are different, firectly return false
+            if(s[l] != s[r]){
+                return false;
+            }
+            else{
+                // move the pointers
+                l++; // move 'l' forward
+                r--; // move 'r' backwards
+            }
+        }
+        // If the controller comes out of the above while lop and reaches here, it means the string 's' is a palindrome.
+        // So, we return true.
+        return true;
+    }
+
+    string firstPalindrome(vector<string>& words){
+        // Approach: TWO POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = words.size();
+
+        // Traverse the i/p Array 'words'
+        for(int i=0; i<words.size(); i++){
+            // Check if each word of the i/p Array is a palindrome using 'isPalindrome()' fucntion
+            if(isPalindrome(words[i])){
+                // If the word is a palindrome, return it.
+                return words[i];
+            }
+        }
+        return ""; // If no plaindrome found, return an empty string
+    }
+};
