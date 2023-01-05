@@ -1,0 +1,28 @@
+class Solution{
+public:
+    int bulbSwitch(int n){
+        /*
+        // Approach 1: MATH
+        // DRY RUN for Better Understanding
+        // TC : O(log(n))
+        // SC : O(1)
+        // C++ CODE:
+        return sqrt(n);
+        */
+
+
+
+        // Approach 2: MATH (Using loop)
+        // TC : O(log(n))
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0; // records total no. of perfect squares from 1 till n
+        
+        // Traverse till 'n'
+        for(int i=1; i*i<=n; i++){
+            count++;
+        }
+
+        return count;
+    }
+};
