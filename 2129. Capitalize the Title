@@ -1,0 +1,30 @@
+class Solution{
+public:
+    string capitalizeTitle(string title){
+        // Approach: 
+        // TC : O(N), where 'N' is the length of the i/p string
+        // SC : O(1)
+        // C++ CODE:
+        int n = title.length();
+
+        // Traverse the i/p string 'title'
+        for(int i=0; i<title.length(); i++){
+            // Remember the first index of each word
+            int firstIndex = i;
+
+            // Now, traverse the each word of i/p string 'title' till we find a space
+            while(i < title.length() && title[i] != ' '){
+                // Convert all the charcaters into lowercase using 'tolower()' function
+                title[i] = tolower(title[i]);
+                i++; // move i
+            }
+
+            // Now, check the length of the word, If it is greater than 2, make the first letter to uppercase
+            if(i - firstIndex > 2){
+                // convert the 1st charcater to uppercase using 'toupper()' function
+                title[firstIndex] = toupper(title[firstIndex]);
+            }
+        }
+        return title; // return the Modified i/p string
+    }
+};
