@@ -6,12 +6,12 @@ bool comp(vector<int> &a, vector<int> &b){
 class Solution{
 public:
     int findMinArrowShots(vector<vector<int>>& points){
-        // Approach: (AS)
+        // Approach: SORTING (AS)
         // TC : O(NlogN), for sorting
         // SC : O(1)
         // C++ CODE:
         // EDGE CASE:
-        if(points.size() == 0) return 0;
+       // if(points.size() == 0) return 0;
 
         // sort the Array with respect to the end point (i.e, 2nd element of each balloon) using comparator function
         sort(points.begin(), points.end(), comp);
@@ -30,6 +30,7 @@ public:
         return arrows;
     }
 };
+
 
 
 /*
