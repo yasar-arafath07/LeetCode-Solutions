@@ -1,0 +1,26 @@
+class Solution{
+public:
+    int maxIceCream(vector<int>& costs, int coins){
+        // Approach: SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // Explanation: To buy the maximum no. of icecreams, we should start by buying the cheapest ones. So, use sort
+        // C++ CODE:
+        int count = 0; // to record the maximum icecream the boy can buy
+
+        // sort the input Array 'costs'
+        sort(costs.begin(), costs.end());
+
+        // Traverse the i/p Array
+        for(int i=0; i<costs.size(); i++){
+            // compare the current element with the remaining 'coins' we have left
+            if(costs[i] > coins){
+                break;
+            }
+            // else, we can buy ice cream.So, increment 'count'
+            count++;
+            coins -= costs[i]; // update 'coins' remaining
+        }
+        return count;
+    }
+};
