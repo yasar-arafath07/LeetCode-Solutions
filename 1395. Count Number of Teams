@@ -1,0 +1,100 @@
+/*
+class Solution{
+public:
+    int numTeams(vector<int>& rating){
+        // Approach 1: BRUTE FORCE 
+        // Gives TLE (62/72 Test Cases are Passing) 
+        // TC : O(N*N*N) i.e, o(N^3)
+        // SC : O(1)
+        // C++ CODE:
+        int n = rating.size();
+        int res = 0;
+
+        // Traverse the i/p Array 'rating'
+        for(int i=0; i<n-2; i++){
+            // traverse from 'i' till 2nd last
+            for(int j=i; j<n-1; j++){
+                // traverse from 'j' till last element
+                for(int k=j; k<n; k++){
+                    // Now, check the condition given in the problem
+                    if(rating[i] < rating[j] && rating[j] < rating[k] || rating[i]>rating[j] && rating[j]>rating[k]){
+                        res++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}; 
+*/
+
+
+
+class Solution{
+public:
+    int numTeams(vector<int>& rating){
+        // Approach 2: OPTIMAL 
+        // TC : O(N^2)
+        // SC : O(1)
+        // C++ CODE:
+        int n = rating.size();
+        int res = 0; // to count the total no. of teams
+
+        // Traverse the i/p Array
+        for(int i=1; i<n-1; i++){
+            // Declare all the support variables
+            int leftSmall =0, leftLarge = 0;
+            int rightSmall = 0, rightLarge = 0;
+
+            // Checking for the left part of 'arr[i]' using a for loop
+            for(int j=0; j<i; j++){
+                // If smaller element than arr[i] is found, leftSmall++
+                if(rating[j] < rating[i]){
+                    leftSmall++;
+                }
+                // If greater element than arr[i] is found in the left, leftLarge++
+                if(rating[j] > rating[i]){
+                    leftLarge++;
+                }
+            }
+
+            // Checking for the right part of 'arr[i]' using another for loop
+            for(int j=i+1; j<n; j++){
+                // If smaller element than arr[i] is found in the right, rightSmall++
+                if(rating[j] < rating[i]){
+                    rightSmall++;
+                }
+                // If greater element tahn arr[i] is found in the right side, rightLarge++
+                if(rating[j] > rating[i]){
+                    rightLarge++;
+                }
+            }
+
+            // Now, calculate the result for each element i.e, the total no. of triplets that can be formed for each
+            // element arr[i]
+            res += (leftSmall * rightLarge + leftLarge * rightSmall); 
+        }
+        return res;
+    }
+};
+
+
+
+
+/*
+// EXPLANATION:
+- Declare all the 4 Supportive Variables.
+  a) leftSmall : No.of elements in the left of arr[i] samller than it.
+  b) leftLarge : No. of elements in the left of arr[i] which are greater than arr[i]
+  c) rightSmall : No. of elements in the right of arr[i] which are smaller than arr[i].
+  d) rightLarge : No. of elements in the right of arr[i] whcih are greater than arr[i].
+- Traverse the i/p Array one by one and for an element at index i, make a count of no. of elements lesser than that
+  in the left and greater than that in the left.
+- Similarly, for the same element at index i, count the no. of smaller element to it and greater element than that
+  in the right side of current element.
+- And, the total no. of triplets that can be formed will be ((leftSmall * rightLarge) + (leftLarge * rightSmall))
+- Now, add this total no. of triplets we can from in the res for each element at index i.
+- Finally, return res.
+*/
+
+
