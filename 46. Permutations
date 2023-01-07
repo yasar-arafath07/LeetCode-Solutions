@@ -1,0 +1,52 @@
+class Solution{
+public:
+    // Create a 'helper()' function which will return the permutations of the i/p Array and this function takes the 
+    // input Array 'nums', a Position 'pos' which represents the current position and an 'ans' vector to store the 
+    // permutations which we are creating
+    void helper(vector<int> &nums, int pos, vector<vector<int>> &ans){
+        // BASE CASE: Since we keep incrementing 'pos' in every Recursive calls, and when the position 'pos' exceeds
+        // the limit, i.e, when pos >= nums.size(), which means we are done with permuting the i/p Array 'nums' and 
+        // now we need to save this formed permutation in a 'ans' vector. So, push the permutations into 'ans'. 
+        if(pos >= nums.size()){
+            ans.push_back(nums);
+            return; // stop further Recursive calls since we are already at the leaf node.
+        }
+
+        // else, do the small task by ourself which is to bring all the remaining elements from 'i' till the last to 
+        // the current position 'pos' one by one.
+        // So, we run a for loop on all the remaining elements i.e, from i=pos till the last element.
+        for(int i=pos; i<nums.size(); i++){
+            // Now, bring all the remaining elements to the position 'pos' one by one and send whatever is present at
+            // the 'pos' to that place from where we bring the element. i.e, Basically we are swapping the element 
+            // at 'pos' and 'i'.
+            swap(nums[pos], nums[i]); // Bring the 'i'th element to 'pos'.
+
+            // And, now We will ask RECURSION to do the Remaining task which is to form the permutation from 'pos+1' 
+            // till the last element.
+            helper(nums, pos+1, ans);
+            // But here, we modified the i/p Array 'nums' above by swapping 2 elements at 'pos' and 'i'.
+            // Now, swap the elements back to their original positions i.e, undo the above swap to get back the 
+            // original i/p Array so that we can perform 'Permutation' for remaining elements.
+            swap(nums[pos], nums[i]); // BACKTRACKING step
+            // i.e, whatever modification we did to the i/p Array in the current Iteration, we need to correct it 
+            // before going to the next Iteration.
+        }
+    }
+
+    vector<vector<int>> permute(vector<int>& nums){
+        // Approach: RECURSION 
+        // TC : O(n * n!), from the Recursive Tree
+        // SC : O(n), which is the height of the Recursive Tree
+        // C++ CODE:
+        vector<vector<int>> ans; // crete a 'ans' vector to store the different formed permutations.
+        int pos = 0; // Initially, position will be 0 since we start forming permutations from the 0th index.
+        
+        // call the Recursive helper() function which will return all the possible Permutations of 'nums'
+        helper(nums, pos, ans);
+        
+        // If they ask to return the permutations in the Sorted order, sort() the 'ans' vector before returnong.
+        sort(ans.begin(), ans.end());
+
+        return ans;
+    }
+};
