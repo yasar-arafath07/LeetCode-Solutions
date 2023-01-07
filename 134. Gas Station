@@ -1,0 +1,37 @@
+class Solution{
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int totalSurplus = 0; // total difference b/w the gas and the cost which tells us the total gas left from 
+                              // start till the end
+        int surPlus = 0; // records current gas in the tank 
+        int start = 0; // Index of the gas station where we can start to travel
+
+        // Traverse the i/p Array 'gas'
+        for(int i=0; i<gas.size(); i++){
+            totalSurplus += (gas[i] - cost[i]); 
+            surPlus += (gas[i] - cost[i]);
+            
+            // If the tank goes to -ve i.e, below 0, then reset the tank to 0
+            if(surPlus < 0){
+                surPlus = 0; // reset the tank to 0
+                start = i + 1; // update the start gas station since tank is in -ve currrently. So, we start from
+            }                  // a new index
+        }
+        return totalSurplus < 0 ? -1 : start; // If any gas is left in the total, return the index since we can travel.
+        // else return -1 if the gas is below 0.
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- 'surPlus' is the remaining or the extra left over thing
+- So, in total if the sum of difference b/w gas[i]-cost[i] is greater than 0, then we have a solution i.e, a starting
+  Index. i.e, if [(gas[i]-cost[i]) + (gas[i+1]-cost[i+1]) + (gas[i+2]-cost[i+2]) ....till last element] > 0, then we 
+  can travel around the circuit once in the clockwise direction. 
+*/
