@@ -1,0 +1,63 @@
+class Solution{
+public:
+    // Create a helper() function which will return the unique permutations of the i/p Array and this function takes 
+    // the i/p Array 'nums', a position 'pos' which represents the current position and an 'ans' vector to store the 
+    // permutations which we are creating.
+    void helper(vector<int> &nums, int pos, vector<vector<int>> &ans){
+        // BASE CASE: Since we keep Incrementing 'pos' in every Recursive calls, and when the position 'pos' exceeds
+        // the limit, i.e, when pos >= nums.size(), which means we are done with permuting the i/p Array 'nums' and 
+        // now we need to save this formed permutation in a 'ans' vector. So, push the permutations into 'ans'.
+        if(pos >= nums.size()){
+            ans.push_back(nums);
+            return; // stop further Recursive calls by simply returning since we are already at the leaf node.
+        }
+
+        unordered_set<int> st; // create a set to store the elements that we already bought to the 'pos' so that
+        // we can avoid duplicates elements coming back to 'pos' again.
+        // Now, do the small task by ourself which is to bring all the remaining elements from 'i' till last to the 
+        // current position 'pos' one by one.
+        // So, we run a for loop on all the remaining elements i.e, from i=pos till the last element.
+        for(int i=pos; i<nums.size(); i++){
+            // Now, for position 'i' i.e, for nums[i], check if it has already occured before at 'pos' by checking
+            // it's occurence in the set.
+            if(st.find(nums[i]) != st.end()){
+                // If nums[i] is present in set, which means we bought nums[i] at 'pos' before. So now again we dont
+                // want to bring it back so that we can avoid duplicate permutations. So we skip the current iteration.
+                continue; // skip the current iteration and go for next iteration
+            }
+            // else, if nums[i] is a unique element, insert it to the set so that we can avoid duplicates if we find
+            // nums[i] in further iterations
+            st.insert(nums[i]);
+            // Now, bring all the remaining elements to the position 'pos' one by one and send whatever is present at
+            // the 'pos' to that place from where we bring the element i.e, Basically we are swapping the element at
+            // 'pos' and 'i'.
+            swap(nums[pos], nums[i]); // Bring the 'i'th element to 'pos'.
+            // And now we will ask RECURSION to do the Remaining task which is to form the permutation from 'pos+1' 
+            // till the last element.
+            helper(nums, pos+1, ans);
+            // But here, we modified the i/p Array 'nums' above by swapping 2 elements at 'pos' and 'i'.
+            // Now, swap the elements back to their original positions, i.e, undo the above swap to get back the 
+            // original i/p Array so that we can perform 'Permutation' for Remaining elements.
+            swap(nums[pos], nums[i]); // BACKTRACKING step
+            // i.e, whatever modification we did to the i/p Array in the current Iteration, we need to correct it
+            // before going to the next Iteration.
+        }
+    }
+
+    vector<vector<int>> permuteUnique(vector<int>& nums){
+        // Approach: RECURSION 
+        // TC : O(n * n!), refer the Recursive tree.
+        // SC : O(n), which is the height of the Recursive tree.
+        // C++ CODE:
+        vector<vector<int>> ans; // create a 'ans' vector to store the different formed Permutations.
+        int pos = 0; // Initially, position will be 0 since we start forming permutations from the 0th Index.
+        
+        // call the Recursive helper() function which will return all the possible unique permutations of 'nums'
+        helper(nums, pos, ans); 
+
+        // We can sort the 'ans' vector if they ask to print the permutation in sorted order
+        sort(ans.begin(), ans.end());
+
+        return ans;
+    }
+};
