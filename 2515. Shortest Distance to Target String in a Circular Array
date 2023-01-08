@@ -1,0 +1,25 @@
+class Solution{
+public:
+    int closetTarget(vector<string>& words, string target, int startIndex){
+        // Approach: ITERATIVE 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = words.size();
+        int mini = INT_MAX;
+
+        // Traverse the i/p Array
+        for(int i=0; i<words.size(); i++){
+            // Check if current word i.e, words[i] matches with target
+            if(words[i] == target){
+                // calculate the Shortest distance
+                mini = min(mini, min(abs(startIndex - i), abs(n - abs(startIndex - i))));
+            }
+            // abs(startIndex - i) : Distance from startIndex to target
+            // abs(n - abs(startIndex - i)) : Distance from the startIndex to target from the end of the Array i.e, 
+            // on moving from right to left direction
+            // Note that Array is Circular
+        }
+        return mini == INT_MAX ? -1 : mini;
+    }
+};
