@@ -1,0 +1,76 @@
+class Solution{
+public:
+    int maxPoints(vector<vector<int>>& points){
+        // Approach: BRUTE FORCE
+        // Explanation: Make a straight line using every 2 points and then find how many of the points lie on it.
+        // TC : O(N^3)
+        // SC : O(1)
+        // C++ CODE:
+        int n = points.size();
+
+        // EDGE CASE:
+        if(n <= 2) return n; // because we can always form a straight line however we want using 2 points.
+
+        int maxi = 2; // So, if we are making a straight line using every 2 points, then there will be a minimum 
+        // of 2 points initially and then we will find the maximum points lieng on this line .
+
+        // Now, form a straight line using 2 points which used 2 for loops
+        for(int i=0; i<n; i++){
+            for(int j=i+1; j<n; j++){
+                int total = 2; //so, 2 points are always present in the straight line which we create from above 2 loop
+                // Now, check for all the other points which will lie on the straight line we formed using another loop
+                // So, Iterate over all the points again except the above 2 points i.e, 'i' and 'j' because we have 
+                // already considered then above. and find if any point lie on the above line using the slope formula
+                // except the above 2 points
+                for(int k=0; k<n; k++){
+                    if(k != i && k != j){
+                        // use the Slope formula and in the slope fromula instead of dividing we just do cross multiply
+                        // to avoid decimal which we may face if we divide
+                        // Slope formula should satisfy: (y2-y1)*(x3-x1) = (y3-y1)*(x2-x1)
+                        // ('i'th point)--------------------('k'th point)------------------('j'th point) i.e,
+                        // (i1,i2)-------------------------(k1,k2)-----------------------(j1,j2) i.e,
+                        // (x1,y1)-------------------------(x3,y3)-----------------------(x2,y2)
+                        // so, write the below condition looking at above slope formula 
+                        // eg's: x1 is points[i][0], y1 is points[i][1], y2 is points[j][1], x3 is points[k][1] etc.
+                        if((points[j][1]-points[i][1])*(points[k][0]-points[i][0]) == (points[k][1]-points[i][1]) *(points[j][0]-points[i][0])){
+                            // If slope condition satisfies, then we have a point lying in the line
+                            total++; // which means this particular 'k'th point is also lying in the line which we made
+                        }            // above 
+                    }
+                }
+                maxi = max(maxi, total); // record the maximum points on a line
+            }
+        }
+        return maxi; 
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- Prerequisite required here: Slope of a line.
+- So, to find out the Slope of the below line, 
+
+     (x1,y1)-------------------------------(x2,y2)
+
+-The Slope of the above line is: Slope = (y2-y1)/(x2-x1)
+- And also to find out if any other point (x3,y3) lie on this particular line, the slope will be same if that point 
+  lie on this line.
+- So, if we say that a new point (x3,y3) lie of the above line, then the slope will be same. i.e, 
+
+    (x1,y1)-------------------------(x3,y3)-----------------------(x2,y2)
+
+    ('i'th point)---------------('k'th point)----------------('j'th point)
+
+- So, if the point (x3,y3) lies on the above line, then Slope of (x1,y1) & (x2,y2) will be same as (x3,y3) & (x1,y1)
+i.e, (y2-y1)/(x2-x1) = (y3-y1)/(x3-x1)
+So, by cross multiplying, we get: (y2-y1)*(x3-x1) = (y3-y1)*(x2-x1)
+So, this is the logic now.
+- So, we can take any 2 points and say that we want to pass a line using these 2 points only and then check that how
+  many points lie on the line which is passing through that particular 2 points which we have chosen. 
+- So, we have to choose every 2 possible points because to form a line, atleast we need to choose 2 lines.
+- And if we have chosen 2 points  we have know that this is a particular line and then check that how many total
+  number of points lie on this particular line. and then we just have to maximize total no. of points. Because, 
+  taking any random line is not beneficial. Taking a line which is consisting of some points is beneficial.
+*/
