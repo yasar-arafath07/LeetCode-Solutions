@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int numberOfSteps(int num){
+        // Approach: BRUTE FORCE
+        // TC : O(log(n))
+        // SC : O(1)
+        // C++ CODE:
+        int res = 0; // to record the total steps needed to reduce 'num' to 0
+
+        while(num > 0){
+            // If nums is divisible by 2, divide 'num' by 2 and increment steps
+            if(num %2 == 0){
+                num /= 2;
+                res++; // since we divided num by 2, we increment our step
+            }
+            else{
+                num--;
+                res++; // since we subtract 1 from num, we increment our step
+            }
+        }
+        return res;
+    }
+};
