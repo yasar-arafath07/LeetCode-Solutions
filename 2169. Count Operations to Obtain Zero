@@ -1,0 +1,25 @@
+class Solution{
+public:
+    int countOperations(int num1, int num2){
+        // Approach: BRUTE FORCE
+        // TC : O(max(num1,num2))
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0; // to record the no. of operations required to reduce either 'num1' or 'num2' to 0.
+
+        while(num1 > 0 && num2 > 0){
+            // Case1: If 'num1 >= num2', subtract 'num2' from 'num1' 
+            if(num1 >= num2){
+                // Subtract 'num2' from 'num1'
+                num1 -= num2; // num1 = num1 - num2;
+                count++; // since we performed an operation above, increment count
+            }
+            else{
+                // Case2: If 'num1 < num2', subtract 'num1' from 'num2'
+                num2 -= num1; // num2 = num2 - num1;
+                count++; // since we are performing an operation, increment count
+            }
+        }
+        return count;
+    }
+};
