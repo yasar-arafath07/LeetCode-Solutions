@@ -1,0 +1,43 @@
+class Solution{
+public:
+    int halveArray(vector<int>& nums){
+        // Approach: PRIORITY QUEUE (MAX HEAP)
+        // Since we need minimum no. of operations, we use priority queue
+        // TC : O(Nlog(N))
+        // SC : O(N), for the Priority Queue
+        // C++ CODE:
+        int count = 0; // to record the no. of operations
+        double sum = 0; // or directly calculate by using accumulate(nums.begin(), nums.end(), 0.0) function
+        priority_queue<double> pq; // priority_queue<double> pq(nums.begin(), nums.end()); 
+
+        // Find the sum of Array elements and parallelly push the elements into the priority queue
+        for(auto& ele : nums){
+            sum += ele;
+            pq.push(ele); // max element of nums will lie on the top of the priority queue since it is a max heap
+        }
+
+        double ans = sum;
+
+        while(sum > ans/2.0){
+            count++; // we perform an operation
+            double top = pq.top();
+            pq.pop();
+            sum -= top/2.0; // reduce the number into half and remove the half value from the sum
+            top = top/2.0; // reduce the number into half
+            pq.push(top); // push the reduced no. back to the priority queue
+        }
+        return count; // return the total no. of minimum operations
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- Find the sum of the Array
+- Create a Priority Queue and insert the Array elements into it such that popping the queue gives us the max element
+- Then, while the sum of the Array is greater than half of the sum, we increment count since we perform an operation
+  and then we pop the top element of the priority queue and then add half of the top element back to the priority
+  queue. (Pushing and Popping from the priority queue takes O(logN))
+- In the end, return the total no. of operations which is recorded by count. 
+*/
