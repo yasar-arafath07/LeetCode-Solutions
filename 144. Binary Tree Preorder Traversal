@@ -9,19 +9,36 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution{
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> v;
-        preTraversal(root, v);
-        return v;
+    // Create a void function 'preTraversal()' which will return the preorder traversal of it's node's values
+    void preTraversal(TreeNode* root, vector<int>& nodes){
+        // BASE CASE:
+        if(root == NULL){
+            return; // Stop the Recursion
+        }
+        // else, insert the value of the root into the 'nodes' vector
+        nodes.push_back(root->val);
+        preTraversal(root->left, nodes); // Now, call the same Recursive function to the left subtree of root
+        preTraversal(root->right, nodes); // Similarly, call the same Recursive function in the right subtree of root
     }
-    
-    void preTraversal(TreeNode* root, vector<int>& v){
-        if(root == NULL)
-            return;
-        v.push_back(root->val);
-        preTraversal(root->left, v);
-        preTraversal(root->right, v);
+
+    vector<int> preorderTraversal(TreeNode* root){
+        // Approach: RECURSION
+        // TC : O(N), where 'N' is the no. of nodes in the Recursive tree.
+        // SC : O(H), if we consider the size of the stack for the recursive function calls where H is height of tree.
+        // If we don't consider size of stack then, Space Complexity = O(1)
+        // C++ CODE:
+        vector<int> nodes; // create a 'nodes' vector to insert the values present at the root
+        preTraversal(root, nodes); // call the helper Recursive 'preTraversal()' function
+        return nodes;
     }
 };
+
+
+/*
+// ALGORITHM EXPLANATION:
+1) Visit the Root (Here, push the value present at the root into the vector)
+2) Traverse the Left Subtree i.e, call the Recursive function 'PreOrder(left->subtree);'
+3) Traverse the Right subtree i.e, call the Recursive function 'PreOrder(right->subtree);'
+*/
