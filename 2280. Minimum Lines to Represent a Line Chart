@@ -1,0 +1,63 @@
+class Solution{
+public:
+    int minimumLines(vector<vector<int>>& stockPrices){
+        // Approach: SORTING and Compare SLOPES
+        // TC : O(Nlog(N)), for Sorting
+        // SC : O(1)
+        // C++ CODE:
+        int count = 1; // since we anyways need 1 line to represent 2 points i.e, to join 2 points
+
+        // EDGE CASE:
+        if(stockPrices.size() == 1) return 0;
+
+        // sort the i/p Array because days are given in mixed order. We need to put it in sorted order(a.k.a 1,2,3...)
+        sort(stockPrices.begin(), stockPrices.end());
+
+        // traverse the i/p Array
+        for(int i=0; i<stockPrices.size()-2; i++){
+            // declare the coordinates: (x1,y1), (x2,y2) and (x3,y3)
+            long long x1 = stockPrices[i][0];
+            long long x2 = stockPrices[i+1][0];
+            long long x3 = stockPrices[i+2][0];
+            long long  y1 = stockPrices[i][1];
+            long long y2 = stockPrices[i+1][1];
+            long long y3 = stockPrices[i+2][1];
+
+            long long diff1 = (y2-y1) * (x3-x1);
+            long long diff2 = (y3-y1) * (x2-x1);
+
+            // check their slope
+            // Slope Condition: (y2-y1)/(x2-x1) = (y3-y1)/(x3-x1) OR (y3-y2)/(x3-x2) = (y2-y1)/(x2-x1)
+            // By Cross multiplying, we get: (y2-y1)*(x3-x1) = (y3-y1)*(x2-x1) OR (y3-y2)*(x2-x1) = (y2-y1)*(x3-x2)
+            if(diff1 != diff2){
+                // i.e, if their slope is not equal, increment count since we need a new line to represent
+                count++;
+            }
+        }
+        return count;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- Prerequisite required here: Slope of a line.
+- So, to find out the Slope of the below line, 
+
+     (x1,y1)-------------------------------(x2,y2)
+
+-The Slope of the above line is: Slope = (y2-y1)/(x2-x1)
+
+- So, Basically if the slope of 2 different lines are not equal, we need a new line. So, we increment count.
+- So, we will check if the slope of 3 points at a time are equal or not
+  Consider the 3 points (x1,y1), (x2,y2) and (x3,y3)
+  Let's represent them in the line as:
+
+  (x1,y1)-------------------------(x2,y2)-----------------------(x3,y3)
+
+- So, if the point (x3,y3) lies on the above line, then Slope of (x1,y1) & (x2,y2) will be same as (x3,y3) & (x1,y1)
+i.e, (y3-y1)/(x3-x1) = (y2-y1)/(x2-x1) OR (y3-y2)/(x3-x2) = (y2-y1)/(x2-x1)
+So, By Cross multiplying, we get: (y3-y1)*(x2-x1) = (y2-y1)*(x3-x1) OR (y3-y2)*(x2-x1) = (y2-y1)*(x3-x2)
+- So, if the slopes are not equal, we need a new line to represent. So, count++.
+*/
