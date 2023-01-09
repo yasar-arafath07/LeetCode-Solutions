@@ -1,0 +1,40 @@
+class Solution{
+public:
+    int minimumNumbers(int num, int k){
+        // Approach: GREEDY
+        // TC : 
+        // SC : O(1)
+        // C++ CODE:
+        // EDGE CASE:
+        if(num == 0) return 0;
+
+        for(int i=1; i<=10; i++){
+            if((i*k)%10 == num%10 && i*k <= num){
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+
+
+
+/*
+Q) Why we run the loop only till 10?
+Ans: It is Because the unit place starts repeating itself after 10.
+    for eg: If num is 0, we directly return 0. 
+    else, let's take num = 9. So, 
+    9 * 1 = 9 and  
+    9 * 11 = 99 
+    (here, both for i=1 and i=11, unit place is 1 and for num=9 and num=99, unit place is 9)
+
+    9 * 2 = 18 and 
+    9 * 12 = 108
+
+    9 * 3 = 27 and 
+    9 * 13 = 117
+
+    9 * 4 = 36 and 
+    9 * 14 = 126 
+    .....and so on
+*/
