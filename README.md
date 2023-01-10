@@ -1,2 +1,2 @@
 # LeetCode-Solutions
-This Repo contains the code written using C++ (mostly) for the Leetcode Problems that are solved till date. 
+This Repo contains the C++ code for the Leetcode Problems 
