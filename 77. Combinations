@@ -1,0 +1,68 @@
+class Solution{
+public:
+    // Create a 'helper()' function which will return the subset of size 'k' for the i/p from 1 till 'n'
+    void helper(int n, int k, int i, vector<int> &subset, vector<vector<int>> &ans){
+        // BASE CASES: 'i' will keep incrementing and it will traverse all the elements from 1 to n, and once it
+        // crosses 'n', which means we are done with constructing the subset. and now we want to save this subset 
+        // somewhere. So, push the subset into the 'ans' vector.
+        if(i > n){ // Base Case #1
+            // If k is 0, which means we have achieved a subset of size 'k', then only push subset into the 'ans'   
+            if(k == 0){ // Base case #2
+                ans.push_back(subset);
+            }
+            return;
+        }
+
+        // else, do our own task first for which we have 2 choices for the 'i'th element: Include OR Don't Include
+        // Choice 1: Include the 'i'th element in the subset. So, push 'i' in the subset (since it is not an Array)
+        subset.push_back(i);
+        // and for the rest of the elements of subset of size k-1, RECURSION is going to handle from element 'i+1' by
+        // calling the same Recursive function. ('k' is the size of the subset we need to generate)
+        helper(n, k-1, i+1, subset, ans); // 'k' is 'k-1' because 1 element we already added above to the subset
+
+        // Choice 2: To ignore/skip the 'i'th element and not to include it in the subSet. But, we have already
+        // included it in the subset above in choice 1, So remove it.
+        subset.pop_back();
+        // and for the elements from 'i+1', Recursion will do the task of forming the subset of size k
+        helper(n, k, i+1, subset, ans); // here we pass 'k' as 'k' only since we didn't include anything in the subset
+    }
+
+    vector<vector<int>> combine(int n, int k){
+        // Approach: RECURSION 
+        // Explanation: Basically, this problem reduces to generating all the subsets of size 'k'
+        // TC : O(2^n), the total no. of nodes in the Recursive tree in worst case where 'n' is the input integer
+        // SC : O(n), the height of the Recursive tree
+        // C++ CODE:
+        vector<vector<int>> ans; // 'ans' vector to save the subsets of size 'k'
+        vector<int> subset; // to create a subset of size 'k'
+
+        int i = 1; // Initially we start generating subset from the 0th position/index which has element i=1
+
+        // call the helper() function which will return all the subsets of size 'k'
+        helper(n, k, i, subset, ans);
+
+        return ans;
+    }
+};
+
+
+
+/*
+// For Optimization, Base Case can be written as: (Refer Notes)
+
+// Base Case #2: If k is 0, which means we have achieved a subset of size 'k', then only push subset into the 'ans'
+if(k == 0){
+    ans.push_back(subset);
+    return;
+}
+
+// Base Case #3: If our Remaining elements from the range 1 to 'n' i.e, if the Remaining elements 'n-i+1' are lesser
+   than the Required no. of elements 'k', then just return.
+if(n-i+1 < k){
+    return;
+}
+
+// Base Case #1: If 'i' crosses 'n' which means we have completed all the element, so just return 
+if(i > n) return;
+
+*/
