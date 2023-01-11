@@ -1,0 +1,63 @@
+class Solution{
+public:
+    // Create a 'helper()' function which will return all the possible subsets whose Sum is equal to given sum target
+    void helper(vector<int> &candidates, int target, int i, int sum, vector<int> &subset, vector<vector<int>> &ans){
+        // BASE CASE: So, basically there are 3 Base Conditions:
+        // Base Case #1: When current sum 'sum' is exactly equal to the target, which means we have achieved a subset
+        // whose sum is equal to 'target'. So, push the subset into the 'ans' vector
+        if(sum == target){
+            ans.push_back(subset);
+            return;
+        } 
+        // Base Case #2: If the current sum exceeds the 'target', then there is no point in going further because it 
+        // will lead to larger sum. So, just return in that case
+        if(sum > target) return;
+        // Base Case #3: If the position pointer 'i' traverses all the elements of the Array, then also simply return.
+        if(i >= candidates.size()) return;
+
+        // else, do our own task by ourself for which we have 2 choices for the 'i'the element: Include it in the 
+        // subset OR don't include it in the subset.
+        // Choice1: To Ignore the 'i'th element i.e, don't Include the 'i'th element in the subset
+        // So, we ask Recursion to do the same Remaining task from 'i+1'th element.
+        helper(candidates, target, i+1, sum, subset, ans); // here we pass 'i' as 'i+1' since we ignored 'i'th element
+        // and it is sure that we must go to the next element if we ignore current element. So, we increment 'i'. 
+
+        
+        // Choice2: Include the 'i'th element in the subset. So, we push the 'i'th element into subset
+        // Before that, calculate the current sum till now
+        sum += candidates[i];
+        // Now, push the 'i'th element in the subset
+        subset.push_back(candidates[i]);
+        // and rest of the things RECURSION will handle by calling the same Recursive function.
+        helper(candidates, target, i, sum, subset, ans); // But here, 'i' will remain same since we might use it in
+        // the future again i.e, there might be a case in the future where we use this 'i'th element again.
+
+        // BACKTRACKING STEP: Remove/undo the changes that we made above for 'sum' and 'subset'
+        sum -= candidates[i]; // Since we added the 'i'th element above, undo that by removing the 'i'the element 
+        // from the sum
+        subset.pop_back(); // since we added the 'i'th element into the subset above, undo that step by popping it.  
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target){
+        // Approach: RECURSION
+        // Explanation: Basically, here we need to generate all the subsets of the given i/p Array 'candidates' whose
+        // subset sum equals to the given sum 'target'.
+        // TC : O(2^N), i.e, the total no. of nodes in the Recursive Tree where 'N' is the size of the i/p Array
+        // SC : O(N), the height of the Recursive Tree. where 'N' is the size of the i/p Array (Refer Recursive tree)
+        // C++ CODE:
+        vector<vector<int>> ans; // to store the subsets whose sum is equal to target 
+        vector<int> subset; // to create a subset whose sum equals to target
+
+        int i = 0; // Initially we start from the 0th index
+        int sum = 0; // This is the current sum of the subset till now. Initially it will be 0.
+
+        // If they ask to return the ans where each subset of the ans is sorted, then sort the i/p Array before 
+        // calling the helper function
+        sort(candidates.begin(), candidates.end());
+
+        // call the helper() function which will generate all the possible subsets whose sum is equal to target
+        helper(candidates, target, i, sum, subset, ans);
+
+        return ans;
+    }
+};
