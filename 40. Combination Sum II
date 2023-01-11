@@ -1,0 +1,72 @@
+class Solution{
+public:
+    // Create a 'helper()' function which will return all the possible unique subsets whose sum is equal to 'target'
+    void helper(vector<int> &candidates, int target, int i, int sum, vector<int> &subset, vector<vector<int>> &ans){
+        // BASE CASE: There are Basically 3 conditions:
+        // BASE CASE #1: When the current sum 'sum' becomes exactly equal to the given 'target', which means we have
+        // achieved a subset whose sum is equal to 'target'. So, push the subset into the 'ans'. 
+        if(sum == target){
+            ans.push_back(subset);
+            return;
+        }
+        // BASE CASE #2: If the current sum of the subset exceeds the 'target', then there is no point in going 
+        // further because, it will lead to only larger sum. So, just return in that case.
+        if(sum > target) return;
+        // BASE CASE #3: If the Position pointer 'i' traverses all the elements of the Array, then also simply return. 
+        if(i >= candidates.size()) return;
+
+        // else, do our own task by ourself for which we have 2 choices for the 'i'th element: Include it in the 
+        // subset OR don't include it in the subset.
+        // Choice 1: Include the 'i'th element in the subset. So, we push the 'i'th element into the subset.
+        subset.push_back(candidates[i]);
+        // Calculate the current 'sum' till now.
+        sum += candidates[i];
+        // and for rest of the elements, RECURSION will handle by calling the same Recursive function from 'i+1'th 
+        // element. 
+        helper(candidates, target, i+1, sum, subset, ans); // Here, we pass 'i' as 'i+1' i.e, for the 'i+1'th element
+        // because here we can consider an element only once in the subset. If we can reuse the element again, then
+        // we can pass 'i' as 'i' itself as we did in 'Combination Sum' Problem.
+
+        // So, Now in the above steps we did our small task and then we asked RECURSION to do the rest of the tasks. 
+        // So, now Recursion did it's work and so the task is completely finished for that.
+        // So, since the task is finished, undo the changes that we made i.e,
+        // BACKTRACKING STEPS:
+        sum -= candidates[i]; // since we added 'i'th element in the sum above, undo it by removing the 'i'th element
+        subset.pop_back(); // since we added 'i'th element in the subset above, undo that step by popping it from the 
+                           // subset.
+        
+        // Now, while we don't include an element in the subset, Before that remove all the occurences/duplicates 
+        // for that 'i' the element by running a while loop so that we can avoid duplicate subsets in the ans.
+        while(i+1 < candidates.size() && candidates[i] == candidates[i+1]){
+            i++;
+        }
+        // After this, ask RECURSION to do the remaining task for the remaining elements from the next unique element
+        // in the Array by passing 'i+1' to the Recursive function.
+        helper(candidates, target, i+1, sum, subset, ans);
+    }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target){
+        // Approach: RECURSION 
+        // EXPLANATION: Basically, here we need to Generate all the unique subsets of the i/p Array whose subset sum 
+        // equals to the given integer 'target'
+        // TC : O(2^n), which is the total no. of nodes in the Recursive Tree where 'n' is the size of the i/p Array.
+        // SC : O(n), which is the height of the Recursive Tree 
+        // C++ CODE:
+        vector<vector<int>> ans; // to save the unique subsets whose sum equals to 'target'
+        vector<int> subset; // to create the subsets
+
+        int i = 0; // Initially we start forming the subsets from the 0th position i.e, from the 0th Index
+        int sum = 0; // this will record the current sum of the subset till now. Initially it will be 0.
+        
+        // sort the given i/p Array so that if any duplicates are present, they'll be next to each other.
+        sort(candidates.begin(), candidates.end());
+        
+        // call the helper() function which will return the unique subsets whose summation equals to 'target'
+        helper(candidates, target, i, sum, subset, ans);
+
+        // we can sort the 'ans' Array before returnong if they ask to return in the sorted form
+        sort(ans.begin(), ans.end());
+
+        return ans;
+    }
+};
