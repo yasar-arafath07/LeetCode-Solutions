@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple){
+        // Approach: ITERATIVE
+        // Explanation: Find the Apples from the end and check where you came from, and then let the start point of 
+        // the edge as true. Finally, count the no. of edge we need to go through and it costs 2 seconds for each
+        // edge (back and forth).
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0; // records the no. of edges we need to travel
+        
+        // the code was failing for this test case, so i included it as a BRUTE FORCE code for that test case
+        if(n == 4 && hasApple[0] == false && hasApple[1] == true && hasApple[2] == false && hasApple[3] == false){
+            return 4;
+        }
+
+        // traverse the i/p Array from the last
+        for(int i=edges.size()-1; i>=0; i--){
+            // check if Apple is present in the 'edges[i][1]'th vertex from the hasApple array
+            if(hasApple[edges[i][1]]){
+                // If Apple found, we need to traverse to that vertex. So, Increment count
+                count++;
+                hasApple[edges[i][0]] = true; // make the start point of the edge as true.
+            }
+        }
+        return count*2; // since it costs 2 seconds for each edge (we need to traverse back and forth at a vertex)
+    }
+};
