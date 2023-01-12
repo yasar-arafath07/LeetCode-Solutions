@@ -1,0 +1,65 @@
+class Solution{
+public:
+    // Create a 'helper()' function which will return all the possible subsets of size 'k' and whose summation is 
+    // equal to 'n'.
+    void helper(int k, int n, int i, int sum, vector<int> &subset, vector<vector<int>> &ans){
+        // BASE CASE: Basically there are 3 Conditions (Stopping Conditions) in total.
+        // BASE CASE #1: If current sum exceeds the required sum 'n' for lesser no of 'k' in subset, then simply return
+        if(sum > n) return;
+        // BASE CASE #2: If we have exact 'k' elements in our subset currently, then 'k' will become 0. In that case,
+        // check if the sum of the subset has become equal to given sum 'n' or not.  
+        if(k == 0){
+            // If sum of the subset is equal to 'n', then save the subset in the 'ans' vector
+            if(sum == n){
+                ans.push_back(subset);
+                return;
+            }
+            // else, if (k == 0) and we didn't get our sum, then simply return
+            return; // i.e, don't go further down in the Recursive tree
+        }
+        // BASE CASE #3: If 'i' crosses all the elements and reaches to 10, simply return
+        if(i == 10) return; // We start 'i' with 1 and if it reaches 10 which is not allowed, then stop and return.
+
+        // else, do our own task by ourself for which we have 2 choices for the 'i'th element: Include OR Don't Include
+        // the 'i'th element in the subset
+        // CHOICE #1: Include the 'i'th element in the subset. So, we will push 'i' in the subset
+        subset.push_back(i); 
+        sum += i; // Calculate the current sum of the subset till now
+        // and for the rest of the elements, RECURSION will handle by calling the same Recursive function from 'i+1' 
+        // and since we alreay added an element in the subset above, 'k' will reduce by 1 i.e pass 'k-1' in place of 'k'
+        helper(k-1, n, i+1, sum, subset, ans); 
+        // we can also do 'k-1' outside the above function, but if we do that then undo that change in the BACKTRACKING
+        // Step. Since we are disturbing 'k' inside the function, we don't need to do anything.
+
+        // So, now in the above steps we did our small task and then we asked RECURSION to do the rest of the tasks.
+        // So, now RECURSION finished it's work above and so the task is completed for that.
+        // So, since the task is finished, undo the changes that we made i.e, 
+        // BACKTRACKING STEPS:
+        subset.pop_back(); // since we added an element in subset, undo that by popping that element from the subset
+        sum -= i; // since we added the 'i'th element to the sum, undo it by removing the 'i'th element from 'sum'.
+
+        // CHOICE #2: To Ignore the 'i'th element i.e, don't include the 'i'th element in the subset
+        // So, we ask RECURSION to do the task from the 'i+1'th element
+        helper(k, n, i+1, sum, subset, ans); // here, 'k' will remain as it is since we didn't include anything in 
+        // the subset
+    }
+
+    vector<vector<int>> combinationSum3(int k, int n){
+        // Approach: RECURSION 
+        // EXPLANATION: Basically, here we need to generate all the possible subsets of size 'k' by selecting numbers
+        // from 1 till 9 and the summation of the subset should be equal to 'n'.
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        vector<vector<int>> ans; // to save the subsets of size 'k' and whose summation equals to 'n'
+        vector<int> subset; // to create the subset
+
+        int i = 1; // since we need to select elements from 1 till 9, initially we start from 1.
+        int sum = 0; // the current sum of the subset will be 0 initially
+
+        // call the helper() function which will return all the subsets of size 'k' whose summation is 'n'
+        helper(k, n, i, sum, subset, ans);
+
+        return ans;
+    }
+};
