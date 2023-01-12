@@ -1,0 +1,57 @@
+class Solution{
+public:
+    // Create a function sortNum() which will take an integer and convert that integer into a string and then it 
+    // will sort the string and return;
+    string sortNum(int n){
+        string s = to_string(n); // convert the integer 'n' to a string and store it in string 's'
+        sort(s.begin(), s.end()); // sort the string 's'
+        return s;
+    }
+
+    bool reorderedPowerOf2(int n){
+        // Approach: SORTING & BITWISE
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        string n_str = sortNum(n); // this is the original input 'n' stored in the form of a sorted string
+
+        // since there are only 32 powers of 2 in the given range, we run a for loop till 32
+        for(int i=0; i<32; i++){
+            // Now, check if there are any integer which is a power of 2 by using the bitwise left shift and which
+            // when sorted will become equal to the input 'n'. If YES, return true, else return false.
+            if(n_str == sortNum(1<<i)){
+                return true;
+            }
+        }
+        return false; 
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- Basically we are converting the input 'n' to a string and we are sorting that string.
+- Then, we are calculating all the powers of 2 using this (1<<i) Bitwise Technique. THen we are sorting that power of
+  2 at the same time since we have already sorted the input 'n'. 
+- So, at this point of time, we just need to check whether the input 'n' and the power of 2 are same or not after 
+  sorting. If they are same means it is possible to get power of 2 using the given number. So, return true.
+  - else, we return false;
+*/
+
+
+
+/*
+// BITWISE LEFT SHIFT:
+- Represented as: "N<<i", where 'N' is the first operand and 'i' is the second operand.
+Q) So, what Left Shift does?
+Ans: It takes 2 numbers, left shifts the bits of the first operand, the second operand decides the number of places 
+    to shift. OR in other words, left shifting an integer 'x' with an integer 'y' denoted as (x<<y) is equivalent
+    to multiplying 'x' with '2^y' (2 raised to power 'y').
+Eg: Let's take N = 22. 
+- Now, if 'N' is left shifyed by 2, i.e, N = N<<2, then 'N' will become N = N * (2^2).
+Thus N = 22 * (2^2) = 22 * 4 = 88.
+
+NOTE: For right shift, we divide 'x' with 2^y
+
+*/
