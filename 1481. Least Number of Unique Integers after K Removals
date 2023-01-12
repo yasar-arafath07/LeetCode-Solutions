@@ -1,0 +1,52 @@
+class Solution{
+public:
+    int findLeastNumOfUniqueInts(vector<int>& arr, int k){
+        // Approch: HASHMAP + PRIORITY QUEUE i.e priority queue as MIN HEAP
+        // EXPLANATION: Here since we need the least number of unique elements, we can use a priority queue
+        // TC : 
+        // SC : O(M), for the HashMap and Heap where 'M' is the number of unique elements.
+        // C++ CODE:
+        unordered_map<int,int> mpp; // to store the frequqncy of the i/p Array
+        priority_queue<int, vector<int>, greater<int>> pq; // create a MIN HEAP to store the frequency of Array elements
+
+        // store the frequency of elements in the map
+        for(auto &ele : arr){
+            mpp[ele]++;
+        }
+
+        // Now, traverse the map and store the frequency of each element in the MIN HEAP (min element will be on top)
+        for(auto& it : mpp){
+            pq.push(it.second); // push the frequency in the priority queue
+        }
+
+        // Now, apply the condition given in the problem
+        while(k > 0){
+            k -= pq.top(); // remove the topmost frequency in the heap from 'k'
+            // If 'k' is greater than 0, pop the top element from the priority queue
+            if(k >= 0){
+                pq.pop(); // pop the topmost element
+            }
+        }
+        // return the total remaining elements in the priority queue which will tell us the number of unique integers
+        // after removing 'k' elements
+        return pq.size(); 
+    }
+};
+
+
+
+/*
+// PRIORITY QUEUES:
+--> A C++ Priority Queue is a type of 'contsiner adapter', specifically designed such that the first element of the queue
+is either the greatest or the smallest of all the elements in the queue, and elements are in non-increasing or 
+non-decreasing order (hence we can see that each element of the queue has a priority {fixed order}).
+--> In C++ STL, the top element is always the greatest by default. We can also change it to the smallest element at 
+the top. Priority Queues are built on the top of the max heap and use an array or vector as an internal structure. In simple terms, 'STL Priority Queue' is the implementation of 'Heap Data Structure'.
+---> SYNTAX: priority_queue<int> pq; // MAX HEAP by default i., the top element will be the greatest/max always.
+--> In C++, a Priority Queue is Implemented as a MAX HEAP by default.
+
+Q: So, how to Create a MIN HEAP for the Priority Queue?
+Ans: As we saw earlier, a priority queue is implemented as max heap by default in C++ but, it also provides us an 
+    option to cahnge it to min heap by passing another parameter while creating a priority queue.
+--> SYNTAX for MIN HEAP: priority_queue<int, vector<int>, greater<int>> pq; // min element will be on top always 
+*/
