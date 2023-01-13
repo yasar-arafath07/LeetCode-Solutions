@@ -1,0 +1,44 @@
+class Solution{
+public:
+    // Create a helper() function which will find the total number of triplets of given condition
+    long long find(vector<int>& nums1, vector<int>& nums2){
+        long long count = 0; // to record the total no.of ways
+        unordered_map<long long, long long> mpp; // to store the product of 2 elements of 'nums2' Array
+
+        // Traverse the 'nums2' Array and record the product of all the 2 elements of nums2 array in the HashMap
+        // fix the posiiton 'i' from start till 2nd last of the Array
+        for(int i=0; i<nums2.size()-1; i++){
+            // fix the position j from 'i+1' till the end
+            for(int j=i+1; j<nums2.size(); j++){
+                // Calculate the product of 2 elements at 'i' and 'j'
+                long long prod = (long long) nums2[i] * nums2[j];
+                mpp[prod]++; // store the product in the HashMap
+            }
+        }
+
+        // Now, traverse the 'nums1' Array and calculate the Square of each number
+        for(int i=0; i<nums1.size(); i++){
+            long long square = (long long) nums1[i] * nums1[i];
+
+            // Now, check if this square of the current element is present in the map, If YES, then we have 2 pairs
+            // in the nums2 Array whose product is same as the current elements square. So, we record it in our count
+            if(mpp.find(square) != mpp.end()){
+                // If the current elements square is found in the map, update the count
+                count += mpp[square];
+            }
+        }
+        return count;
+    }
+
+    int numTriplets(vector<int>& nums1, vector<int>& nums2){
+        // Approach: HASHMAP
+        // TC : O(M*N)
+        // SC : O(N), for storing the product of 2 elements of nums2 Array whose size is 'N'
+        // C++ CODE:
+        long long type1 = find(nums1, nums2); // type1 triplets
+        long long type2 = find(nums2, nums1); // type2 triplets
+        long long ans = type1 + type2; // total number of triplets
+        
+        return (int) ans;
+    }
+};
