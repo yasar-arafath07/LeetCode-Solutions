@@ -1,0 +1,63 @@
+class Solution{
+public:
+    // Create a Recursive 'helper()' function which will return all the possible letter combinations of a phone number
+    void helper(string &digits, int i, string &temp, vector<string> &ans, unordered_map<char,string> &mpp){
+        // BASE CASE: If 'i' traverses all the digits of the i/p String and reach to the last digit/element, then we 
+        // save the combination i.e, push the 'temp' string in the 'ans' vector
+        if(i == digits.size()){
+            ans.push_back(temp);
+            return; 
+        } 
+
+        // else, do our own task for the 1st element of the i/p String which is to replace it with all the possible
+        // options that digit is having
+        string str = mpp[digits[i]]; // string 'str' will contain all the characters of 'i'th digit
+        // Now, Traverse every element of this string str
+        for(int j=0; j<str.length(); j++){
+            // Our Task: Push the current character to the 'temp' string because we want to generate the answer
+            temp.push_back(str[j]);
+            // Now, ask RECURSION to do rest of the task from 'i+1'
+            helper(digits, i+1, temp, ans, mpp);
+            // Now, Recursion is done completing the rest of the task, so undo the steps
+
+            // BACKTRACKING STEP: Undo the change we made in the temp above. So, remove the 'j'th element from 'temp'
+            temp.pop_back();
+        }
+    }
+
+    vector<string> letterCombinations(string digits){
+        // Approach: RECURSION
+        // TC : O(3^N), since most of the digits in the button has 3 characters. (Total no. of nodes in Recursive tree)
+        // SC : O(N), the height of the Recursion tree where 'N' is the size of i/p string
+        // C++ CODE:
+        // EDGE CASE: If the i/p String is empty, return an empty vector
+        if(digits.length() == 0){
+            return {};
+        }
+
+        vector<string> ans; // to store the answer/combinations 
+        string temp; // this is to generate the answer
+
+        // Create an unordered map initially to store the characters/alphabets present at each digit in the telephone
+        // button
+        unordered_map<char,string> mpp; // here the digits are represented as characters and corresponding to each of
+        // those digits, we store several characters present at that digit which will be a string
+        
+        // Now, Insert the Data into the Map
+        mpp['2'] = "abc";
+        mpp['3'] = "def";
+        mpp['4'] = "ghi";
+        mpp['5'] = "jkl";
+        mpp['6'] = "mno";
+        mpp['7'] = "pqrs";
+        mpp['8'] = "tuv";
+        mpp['9'] = "wxyz";
+        
+        int i = 0; // 'i' is used to traverse the i/p string one by one. Initially we start from the 0th Index.
+
+        // call the Recursive helper() function which will return the Letter combinations of a Phone Number
+        helper(digits, i, temp, ans, mpp);
+
+        return ans; 
+    }
+};
