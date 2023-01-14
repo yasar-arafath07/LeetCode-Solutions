@@ -1,0 +1,21 @@
+class Solution{
+public:
+    int maximumElementAfterDecrementingAndRearranging(vector<int>& arr){
+        // Approach : SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        sort(arr.begin(), arr.end()); // sort the i/p Array
+
+        arr[0] = 1; // the value of the 1st element in 'arr' must be 1 as said
+
+        // Traverse the Array from index 1 till the end
+        for(int i=1; i<arr.size(); i++){
+            if(arr[i] > arr[i-1]){
+                // Since the absolute difference between adjacent elements must be 1, we replace arr[i] with 1 greater
+                arr[i] = arr[i-1] + 1; // i.e, Decreasing the value of element of 'arr' to a smallest positive integer.
+            }
+        }
+        return arr[arr.size() - 1]; // return the largest element
+    }
+};
