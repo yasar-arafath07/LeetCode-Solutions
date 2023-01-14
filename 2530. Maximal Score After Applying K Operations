@@ -1,0 +1,30 @@
+class Solution{
+public:
+    long long maxKelements(vector<int>& nums, int k){
+        // Approach: PRIORITY QUEUE (MAX HEAP)
+        // EXPLANATION: TO get the Maximal Score, we have to select maximum element from 'nums' in every operation.
+        // So, to keep track of the max element at every step, we use a MAX HEAP.
+        // TC : O(NlogN)
+        // SC : O(N)
+        // C++ CODE:
+        int n = nums.size();
+        long long score = 0;
+        priority_queue<int> pq(nums.begin(), nums.end()); // MAX HEAP - Max ELement will be on the top
+
+        while(k--){
+            long long ele = pq.top(); // MAX element 
+            pq.pop(); // Pop from the priority queue
+            score += ele; // Increasing our score by nums[i] which is stored in 'ele'
+
+            // If the current 'top' element i.e, if 'ele' is divisible by 3, push ele/3 into the priority queue.
+            // else, we push 'ele/3 + 1'
+            if(ele % 3 == 0){
+                pq.push(ele / 3);
+            }
+            else{
+                pq.push(ele/3 + 1);
+            }
+        }
+        return score;
+    }
+};
