@@ -1,0 +1,38 @@
+class Solution{
+public:
+    // Create a void helper() function which will find the Prime Factors of 'n' and add it to ans
+    int getSumOfFactors(int n){
+        long long ans = 0;
+        int divisor = 2; // smallest prime
+
+        // keep performing operation on 'n' till it reaches to 1
+        while(n > 1){
+            if(n % divisor == 0){
+                ans += divisor;
+                n = n / divisor; // n = n / divisor
+            }
+            else{
+                divisor++;
+            }
+        }
+        return ans;
+    }
+
+    int smallestValue(int n){
+        // Approach: PRIME FACTORIZATION
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        // till the break condition is executed, we will perform the operations inside the while loop
+        while(true){
+            long long sumOfFactors = getSumOfFactors(n);
+
+            if(n == sumOfFactors){
+                // i.e, we found the smallest value 
+                break;
+            }
+            n = sumOfFactors; // replace 'n' with sum of it's prime factors which is stored in the sumOfFactors
+        }
+        return n;
+    }
+};
