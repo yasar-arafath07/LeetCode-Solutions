@@ -1,0 +1,36 @@
+class Solution{
+public:
+    // Create a helper() function which will add prime factors of product of Array into the set 'st'
+    void addPrimeFactors(set<int> &st, int n){
+        int divisor = 2;
+
+        // keep performing operations on 'n' till it becomes 1
+        while(n > 1){
+            if(n % divisor == 0){
+                st.insert(divisor); // Save the Prime Factor in the set
+                n = n / divisor; // update 'n'
+            }
+            else{
+                // if 'n' is not divisible, increment divisor
+                divisor++;
+            }
+        }
+    }
+
+    int distinctPrimeFactors(vector<int>& nums){
+        // Approach: Using SET
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        //int n = nums.size();
+        set<int> st; // to stroe the distinct prime factors
+
+        // Traverse the i/p Array
+        for(int ele : nums){
+            // call the prime function for each element of the i/p Array
+            addPrimeFactors(st, ele);
+        }
+        // return the total number of prime Factors which is the size of the set
+        return st.size();
+    }
+};
