@@ -1,0 +1,55 @@
+class Solution{
+public:
+    vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success){
+        // Approach: SORTING + lower_bound()
+        // TC : O(mlogm + nlogm), where 'n' is size of 'spells' and 'm' is the size of 'potions'
+        // SC : O(n), where 'n' is the size of 'spells'
+        // C++ CODE:
+        vector<int> res; // to store the no .of potions that will form a successful pair with the 'i'th spell
+        long long need = 0;
+
+        // sort the 'potions' Array
+        sort(potions.begin(), potions.end());
+
+        // traverse the 'spell' Array
+        for(int i=0; i<spells.size(); i++){
+            // Direct Formula to find need: "long long need = (success + spells[i] - 1) / spells[i];" 
+            // spells[i] * potions[i...n] >= success
+            if(success % spells[i] != 0){
+                need = 1 + (success/spells[i]); 
+            }
+            else{
+                need = success / spells[i];
+            }
+            auto it = lower_bound(potions.begin(), potions.end(), need);
+            res.push_back(potions.end() - it);
+        }
+        return res;
+    }
+};
+
+
+
+/*
+// Lower bound : The lower_bound() method in C++ is used to return an iterator pointing to the first element in the 
+range [first, last) which has a value not less than val. This means that the function returns an iterator pointing to the next smallest number just greater than or equal to that number. If there are multiple values that are equal 
+to val, lower_bound() returns the iterator of the first such value.
+The elements in the range shall already be sorted or at least partitioned with respect to val.
+
+Examples:
+eg1:
+Input: 10 20 30 40 50
+Output: lower_bound for element 30 at index 2
+
+eg2:
+Input: 10 20 30 40 50
+Output: lower_bound for element 35 at index 3
+
+eg3:
+Input: 10 20 30 40 50
+Output: lower_bound for element 55 at index 5 (Basically, 55 is not present, so it returns end() iterator)
+
+eg4:
+Input: 10 20 30 30 30 40 50
+Output: lower_bound for element 30 at index 2
+*/ 
