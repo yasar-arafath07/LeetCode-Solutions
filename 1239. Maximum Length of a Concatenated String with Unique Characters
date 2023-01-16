@@ -3,24 +3,23 @@ public:
     // Create a boolean secondary function which will check if the current string has repeating characters OR if it
     // contains characters which are used in the past 
     bool compare(string &currentString, vector<int> &flag){
-        vector<int> selfCheck(27, 0); // THis vector is to check for currentString itself. Initially all are marked 0
+        vector<int> selfCheck(26, 0); // This vector is to check for currentString itself. Initially all are marked 0
 
         // traverse the current string
         // This is to check if the current string itself has repeating characters
         for(int i=0; i<currentString.size(); i++){
-            // Check if the character is already used/marked in the past, if YES, return false
+            // Check if the current character is already used/marked in the past, if YES, return false
             if(selfCheck[currentString[i] - 'a'] == 1) return false;
             // else, mark the character as 1 
             selfCheck[currentString[i] - 'a'] = 1;
         }
 
-        // Now, we need to make the comparison of currentString with the past i.e, if we have aused any characters of
+        // Now, we need to make the comparison of currentString with the past i.e, if we have used any characters of
         // currentString in the past or not which is using 'flag' vector
         for(int i=0; i<currentString.size(); i++){
-            // Similarly, here also check if the character is already used in the past, If YES, return false
+            // Similarly, here also check if current character is already used in the past, If YES, return false
             if(flag[currentString[i] - 'a'] == 1) return false;
-            // else, mark it as 1
-            //flag[currentString[i] - 'a'] = 1;
+            // else, mark it as 1 in the helper() function below
         }
         return true; // i.e, if currentString has no repeating characters and also if it has characters which are not
         // used in the past, then we return true.
@@ -33,7 +32,7 @@ public:
             return len;
         }
 
-        // else, Initially check in the current string whether there are any repeating characters or in the current
+        // else, Initially check in the 'currentString' whether there are any repeating characters or in the current
         // string if there are any characters which are used in the past, then we skip the current string
         // So, first of all, make sure that there are no repeating characters in the current string
         // So, to check this, we call the 'compare()' function whcih will do the task for us 
@@ -45,7 +44,7 @@ public:
         }
         else{
             // else, if there is no repeating characters at all b/w currentString and past as well as there are only 
-            // unique charcters in the current string, then we have 2 choices: either include it OR dont include
+            // unique characters in the current string, then we have 2 choices: either include it OR dont include
             // Choice #1: Include the currentString for the concatinating string and then ask Recursion to do the 
             // rest of the task
             // So, traverse the curretString since we are including it and mark the characters in 'flag' as present so
@@ -67,27 +66,27 @@ public:
             } 
             // also, undo the length we added
             len -= currentString.size();
-            // Now, we can call the Recursive function and ask it tom do the rest of the task from 'i+1'
+            // Now, we can call the Recursive function and ask it to do the rest of the task from 'i+1'
             int choice2 = helper(arr, i+1, len, flag);
 
-            // So, Recursion will do it's task first time Including the currentString and we will save the answer in 
+            // So,Recursion will do its task 1st time where we Included the currentString and we will save the answer in 
             // 'choice1' and in the 2nd time also when we dont include the element Recursion will save the answer in
-            // 'choice2' and in the end we compare both of then and return the maximum since we need the maximum length
+            // 'choice2' and in the end we compare both of them and return the maximum length
             return max(choice1, choice2);
         }
-        //return 0;
     }
 
     int maxLength(vector<string>& arr){
-        // Approach: RECURSION (M Fraz)
-        // TC : O(K * 2^N)
-        // SC : O(N)
+        // Approach: RECURSION + BACKTRACKING
+        // TC : O(K * 2^N), the total no. of Nodes in the Recursive Tree where 'N' is the size of the i/p Array i.e, 
+        // the total no. of strings in the i/p Array and 'K' is the average size of each string.
+        // SC : O(N), the height of the i/p Array 'arr' where 'N' is the size of the i/p Array
         // C++ CODE:
         int n = arr.size();
 
         int i = 0; // Initially we start with the 1st string i.e, at index 0
         int len = 0; // this will be the length of the current string
-        vector<int> flag(27, 0); // this is to keep track of what all characters we have used till now
+        vector<int> flag(26, 0); // this is to keep track of what all characters we have used till now
 
         // call the helper() function which will return us the Maximum length of a concatenated string with unique 
         // characters
