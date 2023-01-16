@@ -1,0 +1,33 @@
+class Solution{
+public:
+    int matchPlayersAndTrainers(vector<int>& players, vector<int>& trainers){
+        // Approach: SORTING + TWO POINTRES
+        // TC : O(N), where 'N' is the average size of both of the Arrays
+        // SC : O(1)
+        // C++ CODE:
+        int i = 0; // pointer 1
+        int j = 0; // pointer 2
+        int res = 0; // to record the matching b/w palyers and trainers
+
+        // sort the both i/p Arrays
+        sort(players.begin(), players.end());
+        sort(trainers.begin(), trainers.end());
+
+        // Traverse both of the i/p Array till the end
+        while(i < players.size() && j < trainers.size()){
+            // If we can't match i.e, if players[i] > trainers[j], then keep on moving 'j' till trainers[j] becomes 
+            // greater than palyers[i]
+            if(players[i] > trainers[j]){
+                while(j < trainers.size() && players[i] > trainers[j]){
+                    j++; // keep moving 'j' forard
+                }
+            }
+            else{
+                res++; // we have a matching
+                i++; // move 'i' forward
+                j++; // move 'j' forward
+            }
+        }
+        return res;
+    }
+};
