@@ -1,0 +1,38 @@
+class Solution{
+public:
+    int maximumGroups(vector<int>& grades){
+        // Approach: GREEDY
+        // TC : O(sqrt(n))
+        // SC : O(1)
+        // C++ CODE:
+        int n = grades.size();
+        int k = 0; // no. of groups we can form
+        int total = 0; // total no. of students
+
+        while(total + k + 1 <= n){
+            k++; // add a new group
+            total += k; // update the total
+        }
+        return k; // return the total no. of groups we can form 
+    }
+};
+
+
+
+/*
+// EXPLANATION: 
+- Sort all grades i.e, sort the given i/p Array
+- Assign 1 student to the 1st group
+- Assign 2 student to the 2nd group and so on.
+- So, thsi can satisfy the condition that 'i'th group < 'i+1'th group for both size and sum.
+
+- So, we need to find out the maximum group o. i.e, the 'k'th group such that,
+  1 + 2 + 3 + .... + k <= n , where 'n' - Size of the i/p Array
+
+// PROOF:
+- Sort groups by size.
+- So, the 1st group has size atleast 1.
+- 2nd group has size atleast 2.
+- And 'k'th group has size atleast 'k'
+- So, we proved the upper bound of 'k' and we have a solution above to achieve it.
+*/
