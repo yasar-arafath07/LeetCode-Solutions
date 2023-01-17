@@ -1,0 +1,25 @@
+class Solution{
+public:
+    int minFlipsMonoIncr(string s){
+        // Approach: DYNAMIC PROGRAMMING
+        // TC : O(n)
+        // SC : O(1)
+        // C++ CODE:
+        int counterOnes = 0;
+        int counterFlips = 0;
+
+        // traverse the i/p String 's'
+        for(auto& ch : s){
+            // If the character is 1, increment 'ones'
+            if(ch == '1'){
+                counterOnes++;
+            }
+            else{
+                counterFlips++;
+            }
+            // update 'counterFlip' to the minimum of both
+            counterFlips = min(counterOnes, counterFlips);
+        }
+        return counterFlips;
+    }
+};
