@@ -1,0 +1,76 @@
+class Solution{
+public:
+    // Create a helper function 'search()' which will search for the letters from word[1] till the last letter using
+    // Recursion
+    bool search(vector<vector<char>> &board, string word, int i, int j, int k, int n, int m){
+        // BASE CASE #1: If the pointer 'k' which tells which character of 'word' it is currently pointing to.
+        // So, if 'k' reaches the end of 'word', whcih means we traversed the entire 'word' and we matched all the 
+        // characters of 'word' in the grid. So, return true
+        if(k == word.size()) return true;
+
+        // BASE CASE #2: So, while Traversing using 'i' and 'j', if we go out of the boundary, then we can't search for
+        // anything. So, return false
+        // Also, if the current cell's character is not equal to the required character, then also we return false.
+        if(i < 0 || j < 0 || i == n || j == m || board[i][j] != word[k]){
+            return false;
+        } 
+
+        // else, we are at the correct cell. save the current cell's character in a variable 'ch' so that after visiting 
+        // this current cell, we can mark the cell as '#' so that we don't reuse the characters again later. 
+        char ch = board[i][j]; 
+        board[i][j] = '#'; // mark the visited grid as '#' so that we don't reuse the grid again.
+        // Now, call the search() function Recursively to all the 4 directions of the current cell to explore in the 
+        // all of the 4 directions and store the result in some variable
+        bool option1 = search(board, word, i+1, j, k+1, n, m); // search in the Downward direction. So, we pass 'i' as 
+        // 'i+1' and pass 'k' as 'k+1' because till 'k', we have already matched above 
+        bool option2 = search(board, word, i, j+1, k+1, n, m); // search in the Right direction
+        bool option3 = search(board, word, i-1, j, k+1, n, m); // search in the Upward direction
+        bool option4 = search(board, word, i, j-1, k+1, n, m); // search in the Left direction
+
+        // undo the changes we made above i.e, replace the '#" with the original character
+        board[i][j] = ch;
+
+        // And now, if any of the above 4 Recursive calls is able to find the next character of the 'word', we return 
+        // true
+        return option1 || option2 || option3 || option4; // If anyone out of 4 is true, return true.
+        // i.e, if we found the next character is any of the 4 directions, we return true and then keep on searching
+        // for it's next character.
+    }
+
+    bool exist(vector<vector<char>>& board, string word){
+        // Approach: RECURSION 
+        // EXPLANATION: Here, the first character of the i/p 'word' we will only find by ourself and then we ask 
+        // RECURSION to handle rest of the task. i.e, we ask RECURSION to go in all the 4 directions of current cell 
+        // and try to find out the remaining matching characters.
+        // TC : O(m*n * 4^K), since each node in the Recursive tree will have 4 nodes and we are calling the search 
+        // function inside 2 'for' loops i.e, we are calling the Recursive function m*n no .of times. and 4^K is the no.
+        // of nodes in the Recursive tree where 'K' is the height of the tree. i.e, 'K' is the size of 'word'
+        // So, size of 'word' will be the size of the Recursive tree
+        // SC : O(K), where 'K' is the height of the Recursive tree i.e, the size of the i/p string 'word'
+        // C++ CODE:
+        int n = board.size();
+        int m = board[0].size();
+        
+        // To traverse
+        int i = 0;
+        int j = 0;
+        int k = 0; // this is used to denote the Required character from 'word' while searching in the grid.
+        // Initially we start by searching for the 1st character i.e, from the 0th index
+        
+        // Now, our task is to find the starting character of word i.e, word[0] in the grid and rest of the task 
+        // Recursion will handle
+        // So, Traverse the i/p grid till we find the starting character of the i/p 'word'
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                // check for word[0] in each of the cell 
+                if(board[i][j] == word[0]){
+                    // From this point i.e, from word[0] in the grid we need to start our search for the remaining
+                    // characters using Recursion
+                    // So, call the helper function i.e, 'search()' which will find for the Remaining characters
+                    if(search(board, word, i, j, k, n, m)) return true;
+                }
+            }
+        }
+        return false;
+    }
+};
