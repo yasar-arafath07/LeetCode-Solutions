@@ -1,0 +1,51 @@
+class Solution{
+public:
+    // Create a Recursive 'helper()' function i.e, 'floodFill()' which will color the pixels 
+    void floodFill(vector<vector<int>> &image, int color, int i, int j, int oldColor, int n, int m){
+        // BASE CASE: We will start coloring and first of all, to color a cell/pixel, it should not be a wrong cell 
+        // i.e, it should not be the boundary. If it is a boundary, then it is a wrong cell 
+        // So, if we cross the boundary, then we can't color. So, if we are trying to cross the boundary, just return.
+        // also, if the current cell's color is not same as the old Color, then we can't color it. So, return.
+        if(i < 0 || j < 0 || i == n || j == m || image[i][j] != oldColor){
+            return;
+        }
+        // So, we want to change the color of those cells whose color is same as the old color starting from (sr,sc)
+        // So, if the controller comes to this line which means we are standing at the correct cell for which we need
+        // to change the color i.e, we are standing at image[i][j] which has a color 'oldColor'
+        // So, we change the color of that cell to new color which is 'color'
+        image[i][j] = color; // color the cell/pixel
+        // After this we take the help of Recursion to do the same coloring on the Top, Left, Bottom and Right by
+        // calling the same 'floodFill()' function Recursively for all the 4 directions of the current cell
+        floodFill(image, color, i+1, j, oldColor, n, m); // for the Downside i.e, Bottom of the current cell
+        floodFill(image, color, i-1, j, oldColor, n, m); //for the Upside i.e, Top of the currentCell
+        floodFill(image, color, i, j+1, oldColor, n, m); // for the Right Side of the current cell
+        floodFill(image, color, i, j-1, oldColor, n, m); // for the Left Side of current cell    
+    }
+
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color){
+        // Approach: RECURSION
+        // TC : O(n*m), because in the worst case we might be asked to color the entire grid. So for that we need to 
+        // Traverse the entire grid of size 'n' cross 'm'
+        // SC : O(n*m), which is the space required for the Recursion stack
+        // C++ CODE:
+        
+        // 'n' and 'm' denotes the Boundaries i.e, formally sizes of the grid
+        int n = image.size();
+        int m = image[0].size();
+        
+        // 'i' and 'j' denotes the current cell/pixel on which we are standing 
+        int i = sr; 
+        int j = sc;
+        int oldColor = image[i][j]; // take the old color from where we start coloring using newColor i.e, using 'color' 
+
+        // EDGE CASE: If the 'oldColor' is same as the 'newColor', then we dont need to make any change. So, simply
+        // return the image as it is so that we can avoid Infinite Recursive calls which otherwise lead to Runtime Error
+        if(oldColor == color) return image;
+
+        // call the Recursive helper function which is 'floodFill()'
+        floodFill(image, color, i, j, oldColor, n, m);
+
+        // finally return the colored image
+        return image;
+    }
+};
