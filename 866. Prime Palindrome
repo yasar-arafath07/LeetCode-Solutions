@@ -1,0 +1,57 @@
+class Solution{
+public:
+    // Create a function to check if 'n' is a Prime no. or not.
+    bool isPrime(int n){
+        // EDGE CASE: 1 is not a Prime
+        if(n == 1) return false;
+
+        // Traverse from 2 and check if any of the element 'i' less than 'n' divides it except itself
+        for(int i=2; i*i<=n; i++){
+            if(n % i == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Create a function to check if 'n' is Palindrome or not.
+    bool isPalindrome(int n){
+        // save the value of 'n' somewhere initially so that we can check with the reverse of 'n' after
+        int temp = n;
+        int rev = 0; // to form the reverse of 'n' or 'temp'
+
+        while(temp > 0){
+            int rem = temp%10;
+            rev = (rev*10) + rem; 
+            temp /= 10; // temp = temp / 10;
+        }
+        // Now, check if the Reverse of 'n' is equal to original 'n' or not
+        if(n == rev) return true;
+        return false;
+    }
+
+    // Create a function which will return the smallest prime palindrome of 'n'
+    int smallestPrimePalindrome(int n){
+        // Check if 'n' is a Palindrome or Not, If yes, proceed forward 
+        if(isPalindrome(n)){
+            // Again check if 'n' is prime or not. If YES, then Proceed to find the smallest prime palindroem
+            if(isPrime(n)){
+                return n;
+            }
+        }
+        // else, return the next greater element to 'n' after checking prime and palindrome
+        return smallestPrimePalindrome(n+1);
+    }
+
+    int primePalindrome(int n){
+        // Approach: MATH
+        // TC : O(logN), not sure tho
+        // SC : O(1)
+        // C++ CODE:
+        if(n >= 1e7 && n <= 1e8){
+            return 100030001; // this is the only smallest prime palindrome no. in the range 1e7 to 1e8
+        }
+        int ans = smallestPrimePalindrome(n);
+        return ans;
+    }
+};
