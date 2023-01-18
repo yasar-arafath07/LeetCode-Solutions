@@ -1,0 +1,35 @@
+class Solution{
+public:
+    vector<int> getStrongest(vector<int>& arr, int k){
+        // Approach: TWO POINTERS + SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = arr.size();
+        int i = 0; // pointer 1
+        int j = n-1; // pointer 2
+
+        // sort the i/p Array
+        sort(arr.begin(), arr.end());
+
+        // calculate the median
+        int median = arr[(n-1)/2];
+
+        // perform the operations for 'k' no .of times
+        while(k-- > 0){
+            if(median - arr[i] > arr[j] - median){
+                // then we have a strongest value
+                i++;
+            }
+            else{
+                // then we have a strongest value from the end
+                j--;
+            }
+        }
+        // erase the remaining elements from the i/p ARray except the strongest elements
+        arr.erase(arr.begin() + i, arr.begin() + j + 1);
+
+        // return the modified Array
+        return arr;
+    }
+};
