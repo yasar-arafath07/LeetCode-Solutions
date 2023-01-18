@@ -1,0 +1,27 @@
+class Solution{
+public:
+    // Create a comparator function 'cmp()' which will sort the string in Ascending/Increasing order
+    // Since we are writing the comparator function inside the 'Solution' class, we include 'static' before functn name
+    static bool cmp(string &a, string &b){
+        // If both strings are of same size, sort based on the value they hold
+        if(a.length() == b.length()){
+            return a < b;
+        }
+        // else, we sort based on their size
+        return a.size() < b.size();
+    }
+
+    string kthLargestNumber(vector<string>& nums, int k){
+        // Approach: SORTING using 'COMPARATOR' FUNCTION
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+
+        // sort the i/p Array using Comparator function 'cmp'
+        sort(nums.begin(), nums.end(), cmp);
+
+        // return the 'k'th largest integer
+        return nums[n-k];
+    }
+};
