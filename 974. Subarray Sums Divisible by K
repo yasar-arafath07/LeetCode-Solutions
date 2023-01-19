@@ -1,7 +1,7 @@
 class Solution{
 public:
     int subarraysDivByK(vector<int>& nums, int k){
-        // Approach: Using HASHMAP (PREFIX SUM)
+        // Approach: HASHMAP + PREFIX SUM
         // TC : O(N)
         // SC : O(N), for creating the map
         // CODE:
@@ -23,10 +23,10 @@ public:
             // since there are negative elements in the array, mod might become less than 0 also
             // eg TestCase: nums = [-3,-2,0,5,4,1], k = 5
             if(rem < 0){
-                rem += k;  // sum = sum+k;
+                rem += k;  // rem = rem + k; 
             }
 
-            // if this remainder is present in the map, then there is a subarray between that 'rem' index and current
+            // If this remainder is present in the map, then there is a subarray between that 'rem' index and current
             // 'rem' index whose sum is divisible by k 
             if(mpp.find(rem) != mpp.end()){
                 count = count + mpp[rem];
@@ -40,10 +40,11 @@ public:
 
 
 
-
 /*
 // BRUTE FORCE:
-// CODE:
+// TC : O(N^2)
+// SC : O(1)
+// C++ CODE:
 int n = nums.size();
 int count = 0;
 for(int i=0; i<n; i++){
@@ -55,8 +56,4 @@ for(int i=0; i<n; i++){
     }
 }
 return count;
-
-// TC : O(N^2)
-// SC : O(1)
-
 */
