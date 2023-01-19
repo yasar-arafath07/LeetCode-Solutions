@@ -1,0 +1,38 @@
+class Solution{
+public:
+    int lastStoneWeight(vector<int>& stones){
+        // Approach: PRIORITY QUEUE (MAX HEAP)
+        // EXPLANATION: Since we need to choose 2 Heaviest stones at a time, we use a Max Heap i.e, a Priority QUEUE
+        // TC : O(NlogN)
+        // SC : O(N)
+        // C++ CODE:
+        priority_queue<int> pq; // OR "priority_queue<int> pq(stones.begin(), stones.end());"
+
+        // Insert the Array elements into the Priority Queue by using 'push()' function OR insert directly while 
+        // declaring the priority queue as commented above
+        for(auto& ele : stones){
+            pq.push(ele);
+        }
+
+        while(!pq.empty()){
+            // Pich the 1st heaviest stone
+            int stone1 = pq.top();
+            pq.pop();
+
+            // Now, after picking the 1st heaviest stone, if the priority queue becomes empty, we return that stone
+            if(pq.empty()){
+                return stone1;
+            }
+
+            // else, pick the 2nd heaviest stone
+            int stone2 = pq.top();
+            pq.pop();
+
+            if(stone1 != stone2){
+                // we push it's differene
+                pq.push(stone1 - stone2); // since stone1 is largest, we subtract stone2 from stone1
+            }
+        }
+        return 0;
+    }
+};
