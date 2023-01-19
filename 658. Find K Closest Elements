@@ -1,0 +1,24 @@
+class Solution{
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x){
+        // Approach: SORTING
+        // TC : O(NlogN + KlogK), because first we choose all the 'N' elements of the i/p Array and sort them which 
+        // takes O(NlogN) and then after the custom sort we select only the 'K' elements and we sort them again which 
+        // takes O(KlogK) which results in a Total TC of: O(NlogN + KlogK) 
+        // SC : O(1)
+        // C++ CODE:
+        // sort the i/p Array using comparator function which sorts the elements based on the Distance from 'x'
+        // Custom Sort
+        stable_sort(arr.begin(), arr.end(), [x](int a, int b){
+            return abs(a-x) < abs(b-x); // sort by distance from 'x'
+        });
+
+        // After sorting the Array based on the distance from 'x', Now select only the 1st 'k' elements
+        arr.resize(k);
+
+        // Sort the Array after selecting 'k' elements
+        sort(arr.begin(), arr.end());
+
+        return arr;
+    }
+};
