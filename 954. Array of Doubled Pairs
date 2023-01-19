@@ -1,0 +1,42 @@
+class Solution{
+public:
+    // Create a comparator function for sorting the integers based on absolute values
+    // Eg1: If arr = [4, 8, -2, -4], then after sorting using comparator function, it'll be: arr = [-2, -4, 4, 8].
+    // Eg2: If arr = [4, -2, 2, -4], then after sorting using comparator function, it'll be: arr = [-2, 2, -4, 4].
+    static bool compare(int a, int b){
+        return abs(a) < abs(b);
+    }
+
+    bool canReorderDoubled(vector<int>& arr){
+        // Approach: HASHMAP
+        // TC : O(NlogN)
+        // SC : O(N)
+        // C++ CODE:
+        unordered_map<int, int> mpp; // to stroe the frequency of the elements
+
+        // sort the i/p Array using comparator function i.e, sort the Array based on absolute values so that we can make 
+        // pairs with the double of the element
+        sort(arr.begin(), arr.end(), compare);
+
+        // Store the Frequency of the Array elements in the map
+        for(int i=0; i<arr.size(); i++){
+            mpp[arr[i]]++;
+        }
+
+        for(int i=0; i<arr.size(); i++){
+            if(mpp[arr[i]] == 0){
+                // i.e, If we have already used the element by a samller element, we continue i.e, i++
+                continue;
+            }
+            if(mpp[2*arr[i]] == 0){
+                // i.e, If we are not able to get the pair, we return false
+                return false; 
+            }
+            // else, we use the element and it's pair which is the double of the element
+            // So, decrement their frequencies
+            mpp[arr[i]]--;
+            mpp[2*arr[i]]--;
+        }
+        return true;
+    }
+};
