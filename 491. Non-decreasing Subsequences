@@ -1,0 +1,49 @@
+class Solution{
+public:
+    // Create a Recursive 'helper()' function which will return all the possible non-decreasing subsequences of the
+    // given i/p Array
+    void helper(vector<int> &nums, int pos, vector<int> &seq, vector<vector<int>> &ans){
+        // BASE CASE: If the size of the sequence becomes greater than 1, which means we got an answer.
+        // So, push the sequence into the 'ans' vector
+        if(seq.size() > 1){
+            ans.push_back(seq);
+        }
+
+        unordered_set<int> st; // Maintain a set so that we can keep track of the Duplicates
+        
+        // Traverse the i/p Array
+        for(int i=pos; i<nums.size(); i++){
+            // Now, if the 'seq' is empty and the current element is unique, then we can directly push the current 
+            // element into the 'seq' OR if the 'seq' is not empty, then we can only push those elements which are
+            // unique and larger than the last element of 'seq'
+            if((seq.empty() || nums[i] >= seq.back()) && st.find(nums[i]) == st.end()){
+                seq.push_back(nums[i]);
+                st.insert(nums[i]); // also insert the element into the set so that we can avoid duplicates in future
+                
+                // Now, ask the same Recursive function to do the rest of the task i.e, to generate Non-decreasing
+                // Subsequences from 'i+1'th element
+                helper(nums, i+1, seq, ans);
+
+                // Since we are  pushing the element into the sequence 'seq', undo it after everything
+                // BACKTRACKING STEP:
+                seq.pop_back();
+            }
+        }
+    }
+
+    vector<vector<int>> findSubsequences(vector<int>& nums){
+        // Approach: RECURSION + BACKTRACKING
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        vector<vector<int>> ans; // to store the Subsequences
+        vector<int> seq; // to Generate the Subsequences
+
+        int pos = 0; // This is to traverse the i/p Array. Initially we start fro Index 0 
+        
+        // call the Recursive helper() function which will return all the possible Non-decreasing Subsequences
+        helper(nums, pos, seq, ans);
+
+        return ans;
+    }
+};
