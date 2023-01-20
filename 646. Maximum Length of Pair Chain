@@ -1,0 +1,30 @@
+class Solution{
+public:
+    // Create a comparator function 'comp()' which will sort the i/p Array based on the second value of each pairs[i]
+    static bool comp(vector<int> &a, vector<int> &b){
+        return a[1] < b[1] || a[1] == b[1] && a[0] < b[0]; // i.e sort the Array based on the 2nd value of each pairs[i]
+        // and if the 2nd values of both the arrays are same, then sort it based on the 1st value
+    }
+
+    int findLongestChain(vector<vector<int>>& pairs){
+        // Approach: SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0;
+
+        // sort using the comparator function which will sort based on the 2nd value of each pairs[i]
+        sort(pairs.begin(), pairs.end(), comp);
+
+        vector<int> curr = pairs[0]; 
+
+        // Traverse the i/p Array 'pairs'
+        for(int i=0; i<pairs.size(); i++){
+            if(i == 0 || curr[1] < pairs[i][0]){
+                curr = pairs[i]; // update the /pairs/tail
+                count++;
+            }
+        }
+        return count;
+    }
+};
