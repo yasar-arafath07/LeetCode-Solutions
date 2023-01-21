@@ -1,0 +1,24 @@
+class Solution{
+public:
+    double average(vector<int>& salary){
+        // Approach: SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        double ans = 0; // to store the average salary
+        double sum = 0; 
+
+        // sort the Input Array
+        sort(salary.begin(), salary.end());
+        
+        // Traverse the Input Array and calculate the sum except the minimum and maximum Value 
+        for(int i=1; i<salary.size()-1; i++){
+            sum += salary[i];
+        }
+        
+        // calculate the Average 
+        ans = sum / (salary.size() - 2); // Remove 2 elements from the ttoal size of the Array i.e, the min and the max
+
+        return ans; 
+    }
+};
