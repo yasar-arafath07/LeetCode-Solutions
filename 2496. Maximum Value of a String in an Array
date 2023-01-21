@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int maximumValue(vector<string>& strs){
+        // Approach: C++ STL
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the maximum value
+        
+        // traverse on the i/p Array
+        for(auto& s : strs){
+            // If each element of the i/p Array is a digit, then convert that string digit into digit and record the max
+            if(all_of(s.begin(), s.end(), ::isdigit)){
+                ans = max(ans, stoi(s));
+            }
+            else{
+                // else, If the element of i/p Array is a string, find it's length and record the maximum 'ans'
+                ans = max(ans, (int)s.size());
+            }
+        }
+        return ans;
+    }
+};
