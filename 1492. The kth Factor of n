@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int kthFactor(int n, int k){
+        // Approach: Using VECTOR
+        // TC : O(N)
+        // SC : O(N), for creating the vector
+        // C++ CODE:
+        vector<int> v; // to store all the factors from 1 to 'n'
+        
+        // Traverse from 1 till 'n' and Insert all the factors of 'n' in the vector 'v'
+        for(int i=1; i<=n; i++){
+            if(n % i == 0){
+                v.push_back(i);
+            }
+        }
+
+        // EDGE CASE: If k is larger than the no. of factors we have, return -1.
+        if(k > v.size()) return -1;
+
+        // else, return the 'k'th factor
+        return v[k-1];
+    }
+};
