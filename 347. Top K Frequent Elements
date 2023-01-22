@@ -1,0 +1,31 @@
+class Solution{
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k){
+        // Approach: HASHTABLE + PRIORITY QUEUE (MAX HEAP)
+        // TC : O(Nlog(N-K))
+        // SC : 
+        // C++ CODE:
+        vector<int> res; // to store the Top 'K' Frequent Elements
+        unordered_map<int,int> mpp; // to store the frequency of the Array elements
+        priority_queue<pair<int,int>> pq; // pair<firt, second> : first is frequency and second is the element
+
+        // Traverse the i/p Array and store the Frequency of the elements in the map
+        for(int ele : nums){
+            mpp[ele]++;
+        }
+
+        // Now, traverse the map and make a pair with the element and it's frequency using "make_pair()" function and 
+        // insert that pair into the Priority Queue so that the element which has higher frequency appears on the top 
+        // of the Priority Queue since it is a MAX HEAP.
+        for(auto it = mpp.begin(); it != mpp.end(); it++){
+            pq.push(make_pair(it->second, it->first));
+        }
+
+        // Now, traverse the priority Queue for 'k' times and insert the top 'K' frequent elements into the res vector.
+        for(int i=0; i<k; i++){
+            res.push_back(pq.top().second); // Priority Queue has elements in the form of pair. So, we push the
+            pq.pop();                       // pq.top().second into 'res' which will be the current most frequent ele.
+        }
+        return res;
+    }
+};
