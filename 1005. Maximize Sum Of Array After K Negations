@@ -1,0 +1,30 @@
+class Solution{
+public:
+    int largestSumAfterKNegations(vector<int>& nums, int k){
+        // Approach: PRIORITY QUEUE (MIN HEAP)
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        // Inititalize a Priority Queue i.e, as a MIN HEAP and copy all the elements of i/p Array into it so that the 
+        // smallest elements appear on the top of the priority queue 
+        priority_queue<int, vector<int>, greater<int>> pq(nums.begin(), nums.end());
+
+        // perform the given operation 'k' no. of times
+        while(k--){
+            int val = pq.top();
+            pq.pop();
+
+            // Now, push '-nums[i]' into the priority queue
+            pq.push(-1 * val);
+        }
+
+        // Now, find the total sum of the elements of the Priority Queue after 'k' operations
+        int res = 0;
+
+        while(!pq.empty()){
+            res += pq.top();
+            pq.pop();
+        }
+        return res;
+    }
+};
