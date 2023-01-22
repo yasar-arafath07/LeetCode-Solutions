@@ -1,0 +1,62 @@
+class Solution{
+public:
+    // Create a function to check if the current substring of the i/p string 's' is a palindrome or not
+    bool isPalindrome(string s, int startIndex, int endIndex){
+        // We use 2 Pointers Algorithm to check if a string is a Palindrome OR Not
+        // One Pointer at the Starting of the string and one at the end and then we check/compare the elements 
+        while(startIndex < endIndex){
+            if(s[startIndex] != s[endIndex]){
+                return false;
+            }
+            // else, simply move both of the Pointers
+            startIndex++;
+            endIndex--;
+        }
+        // If all the elements matches from 'start' and 'end' till the 'mid', then we return true.
+        return true;
+    }
+
+    // Create a Recursive 'helper()' function which will generate all the partitions of the i/p string 's' such that
+    // every substring of the Partition is a Plaindrome
+    void helper(string s, int startIndex, vector<string> &partition, vector<vector<string>> &ans){
+        // BASE CASE: If we Traverse all the elements of the i/p string 's', then we push the current 'partition' into
+        // then 'ans' string.
+        if(startIndex == s.length()){
+            ans.push_back(partition);
+            return; // stop furthermore Recursive calls
+        }
+
+        // Traverse the i/p string 's' till the end
+        for(int i=startIndex; i<s.length(); i++){
+            // check if the current substring from Index 'startIndex' till index 'i' is a palindrome OR not.
+            if(isPalindrome(s, startIndex, i)){
+                // If the substring is a Palindrome, then we got our required substring, so we push it into the partition
+                partition.push_back(s.substr(startIndex, i-startIndex+1));
+
+                // Now ask RECURSION to do rest of the task from 'i+1' as 'startIndex' by calling the same helper functn
+                helper(s, i+1, partition, ans); // here 'startIndex' will be from 'i+1'
+
+                // After all, undo the changes we made to the 'partition' i.e, pop whatever we pushed into it. i.e, 
+                // BACKTRACKING STEP: Undo the changes / Don't keep anything in Disturbed mode
+                partition.pop_back();
+            }
+        }
+    }
+
+    vector<vector<string>> partition(string s){
+        // Approach: RECURSION + BACKTRACKING
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        vector<vector<string>> ans; // to store all the partitions whose substring is a Palindrome
+        vector<string> partition; // to generate the Partition
+
+        int startIndex = 0; // Initially we start forming the Partion from the 0th Index i.e, from 1st element
+
+        // call the Recursive helper() function which will generate all the Partitions such that every substring of 
+        // the Partition is a Palindrome.
+        helper(s, startIndex, partition, ans);
+
+        return ans; // return the 'ans' vector
+    }
+};
