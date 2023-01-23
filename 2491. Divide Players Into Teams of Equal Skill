@@ -1,0 +1,35 @@
+class Solution{
+public:
+    long long dividePlayers(vector<int>& skill){
+        // Approach: SORTING + 2 POINTERS
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        long long ans = 0; // to hold the chemistry of all the teams
+        int start = 0; // Pointer 1
+        int end = skill.size()-1; // Pointer 2
+
+        // sort the i/p Array 'skill'
+        sort(skill.begin(), skill.end());
+
+        // calculate the skill of a team which should be equal for all the teams we form.
+        // So, we select the smallest element from start and a largest element from end to form a team
+        int teamSkill = skill[0] + skill[skill.size()-1]; 
+
+        // Traverse the Array using 2 Pointers
+        while(start < end){
+            int currentSkill = skill[start] + skill[end];
+
+            // check if this current Skill is equal to the 'teamSkill' or not. If not, directly return -1.
+            if(currentSkill != teamSkill) return -1;
+
+            // else, keep a Recordof the chemistry of the teams we formed till now
+            ans += skill[start] * skill[end];
+
+            // and move the pointers
+            start++;
+            end--;
+        }
+        return ans;
+    }
+};
