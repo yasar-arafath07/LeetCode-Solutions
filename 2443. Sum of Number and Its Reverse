@@ -1,0 +1,23 @@
+class Solution{
+public:
+    bool sumOfNumberAndReverse(int num){
+        // Approach: BRUTE FORCE
+        // TC : O(N^2), where 'N' is the given i/p Integer
+        // SC : O(1)
+        // C++ CODE:
+        // Traverse from 0 till 'n' and check
+        for(int i=0; i<=num; i++){
+            int n = i;
+            int rev = 0;
+
+            // Find the Reverse of the current number 'i'
+            while(n > 0){
+                rev = (rev * 10) + (n % 10);
+                n /= 10; // update 'n' i.e, n = n / 10;
+            }
+            // Now, check if the Current number 'i' and it's reverse is equal to the given number 'nums' or not
+            if(i + rev == num) return true; 
+        }
+        return false;
+    }
+};
