@@ -1,0 +1,42 @@
+class Solution{
+public:
+    // Create a function which will check if the current substrings are Palindrome OR Not.
+    bool isPalindrome(string &s, int i, int j){
+        // We use 2 Pointers to check if a string is Palindrome OR Not.
+        // 1st Pointer is placed at the starting Index and the 2nd pointer is Placed at the last Index and then we 
+        // compare the character at these 2 Indexex till the mid and check if it is a Palindrome or not
+        while(i < j){
+            if(s[i] != s[j]){
+                return false;
+            }
+            // else, move the Pointers
+            i++;
+            j--;
+        }
+        // If we reach here, means all the characters are matching from start and end till the mid. So, return true
+        return true;
+    }
+
+    bool checkPartitioning(string s){
+        // Approach: BRUTE FORCE
+        // TC : 
+        // SC : O(1)
+        // C++ CODE:
+        // Traverse the string from 2nd Index and find the last set of Palindrome if it exists in the string 's'
+        // i.e, we start by finding largest 3rd Palindrome and then shrink it
+        for(int i=2; i<s.size(); i++){
+            // Now, check if the substring is a palindrome or not
+            if(isPalindrome(s, i, s.size()-1)){
+                // Means, we got 1 set of Palindrome, Now search for the other 2 sets of Palindrome before this set
+                // So, run a for loop from Index 1 till 'i'
+                for(int j=1; j<i; j++){
+                    // Now, check if the substrings from 0 till 'j-1' and from 'j' till 'i-1' is a palindrome or not.
+                    if(isPalindrome(s, j, i-1) && isPalindrome(s, 0, j-1)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+};
