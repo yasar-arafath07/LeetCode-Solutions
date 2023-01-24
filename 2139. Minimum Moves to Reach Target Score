@@ -1,0 +1,43 @@
+class Solution{
+public:
+    int minMoves(int target, int maxDoubles){
+        // Approach: MATH
+        // EXPLANATION: Instead of going from 1 till 'target', we perform the Reverse i.e, we go from 'target' till 1.
+        // TC : O(N), because in the worst case, if 'maxDoubles' are 0, then we need to decrement 'N' by 1 each time.
+        // So, it is O(N) where 'N' is the given i/p 'target'
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0; 
+
+        // Perform the operations till 'target' is greater than 1 and 'maxDoubles' is greater than 0
+        while(target > 1 && maxDoubles > 0){
+            // If target is EVEN, we decrement 'maxDoubles' and update 'target' to half of it
+            if(target % 2 == 0){
+                count++; // Increment moves
+                target /= 2; // target = target / 2;
+                maxDoubles--; // Since we are making 'target' half, we decrement 'maxDoubles'
+            }
+            else{
+                // if 'target' is odd, we decrement it by 1
+                target--; // Decrement 'target' by 1
+                count++; // Increment moves since we decremented 'target' by 1
+            }
+        }
+        // Once the 'maxDoubles' becomes 0, we come out of the above while loop and we decrement 'target' by 1 each 
+        // time. That's why we add (target-1) to the count and return.
+        return count + (target - 1); 
+    }
+};
+
+
+/*
+// EXPLANATION:
+- We solve the Problem in Reverse manner.
+- Instead of moving from 1 to 'target', we move from 'target' to 1. Because, in this way, we can get more utilization
+  of 'maxDoubles', and as a result, we can minimize the moves.
+- So, when 'target' is an EVEN number, we can make use of 'maxDoubles' and we can decrease the 'target' by half if
+  'maxDoubles' are Available.
+- and when the 'target' is ODD we just decrement it by 1.
+- And once the 'maxDoubles' are finished, we just keep decreasing the 'target' by 1 till it reaches to 1. That's why 
+  we add (target-1) to the 'count' in the end while we are returning.
+*/
