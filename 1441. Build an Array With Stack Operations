@@ -1,0 +1,28 @@
+class Solution{
+public:
+    vector<string> buildArray(vector<int>& target, int n){
+        // Approach: ITERATIVE Approach
+        // TC : O(N)
+        // SC : O(1), not considering the space required to store the o/p
+        // C++ CODE:
+        vector<string> ans; // to store the operations: "push" OR "pop"
+
+        int currElement = 1; // This is the current Element we need to add in the stack. initially it will be 1
+
+        // Traverse on the i/p Array 'target'
+        for(int i=0; i<target.size() && i<=n; i++){
+            while(currElement != target[i]){
+                // i.e, If the current ELement is not equal to the target we need, we simply 'Push' and then 'Pop' it 
+                // from the stack since it is not present in the given i/p 'target' Array and then we Increment the 
+                // current Element
+                ans.push_back("Push");
+                ans.push_back("Pop");
+                currElement++;
+            }
+            // else, if the current Element is same as the element in the 'target' Array, we 'Push' it into the stack
+            ans.push_back("Push"); // Pushing the target element in the stack
+            currElement++; // Increment the current Element
+        }
+        return ans;
+    }
+};
