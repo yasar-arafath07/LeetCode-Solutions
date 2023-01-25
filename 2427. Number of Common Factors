@@ -1,0 +1,20 @@
+class Solution{
+public:
+    int commonFactors(int a, int b){
+        // Approach: ITERATIVE APPROACH
+        // TC : O(min(a,b)), since we are Traversing from 1 till min of 'a' and 'b'
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0;
+
+        // Traverse till the min of 'a' and 'b' because the value which is greater than the min of 'a' and 'b' won't 
+        // divide minimum of 'a' and 'b'. So, there is no point in Traversing after the min of 'a' and 'b'.
+        for(int i=1; i<=min(a,b); i++){
+            // If 'i' divides both 'a' and 'b', Increment the count
+            if(a % i == 0 && b % i == 0){
+                count++;
+            } 
+        }
+        return count;
+    }
+};
