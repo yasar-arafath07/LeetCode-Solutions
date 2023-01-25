@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int findClosestNumber(vector<int>& nums){
+        // Approach: ITERATIVE APPROACH
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = INT_MAX; 
+
+        // Traverse the i/p Array 'nums'
+        for(auto &ele : nums){
+            // Find the minimum in the Array and record it in the 'ans'
+            if(abs(ele) < abs(ans)){
+                ans = ele;
+            }
+            else if(abs(ele) == abs(ans)){
+                // i.e, If there are multiple values close to 0, then we return the maximum of both
+                ans = max(ele, ans);
+            }
+        }
+        return ans;
+    }
+};
