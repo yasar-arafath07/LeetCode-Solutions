@@ -1,0 +1,58 @@
+class Solution{
+public:
+    // Create a Recursive 'helper()' function 
+    void helper(int n, int i, vector<vector<char>> &chessBoard, vector<int> &col, vector<int> &upwardRight, 
+    vector<int> &upwardLeft, vector<vector<string>> &ans){
+        // BASE CASE:
+        if(i == n){
+            vector<string> temp;
+
+            for(int j=0; j<n; j++){
+                string currRow = "";
+                for(int k=0; k<n; k++){
+                    currRow.push_back(chessBoard[j][k]);
+                }
+                temp.push_back(currRow);
+            }
+            ans.push_back(temp);
+            return;
+        }
+
+        // Traverse all the columns form '0' till 'n-1'
+        for(int j=0; j<n; j++){
+            if(col[j] == 0 && upwardRight[i+j] == 0 && upwardLeft[i-j+n-1] == 0){
+                // we can Place a Queen at (i,j) in the 'chessBoard'
+                chessBoard[i][j] = 'Q';
+
+                // mark it's presence in the 3 vectors
+                col[j] = upwardRight[i+j] = upwardLeft[i-j+n-1] = 1;
+
+                // ask RECURSION to do rest of the task from the next row i.e, from 'i+1'
+                helper(n, i+1, chessBoard, col, upwardRight, upwardLeft, ans);
+
+                // BACKTRACKING: 
+                chessBoard[i][j] = '.';
+                col[j] = upwardRight[i+j] = upwardLeft[i-j+n-1] = 0;
+            }
+        }
+    }
+
+    vector<vector<string>> solveNQueens(int n){
+        // Approach: RECURSION + BACKTRACKING (M Fraz)
+        // TC : O(n!), which is the ttoal no.of nodes in the Recursive tree
+        // SC : O(n) for the Recursive Stack (Height of the Recursive tree) and O(n^2) for the 'ans' vector i.e, ans[][]
+        // C++ CODE:
+        vector<vector<string>> ans;
+        vector<vector<char>> chessBoard(n, vector<char> (n, '.'));
+        vector<int> col(n, 0);
+        vector<int> upwardRight(2*n, 0);
+        vector<int> upwardLeft(2*n, 0);
+
+        int i = 0;
+
+        // call the Recursive helper() function
+        helper(n, i, chessBoard, col, upwardRight, upwardLeft, ans);
+
+        return ans;
+    }
+};
