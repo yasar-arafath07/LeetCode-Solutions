@@ -1,0 +1,26 @@
+class Solution{
+public:
+    int findLengthOfLCIS(vector<int>& nums){
+        // Approach: ITERATIVE
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 1; // to keep track of maximum length. Initially it'll be 1 because atleast 1 element will be there
+                     // which is the element itself
+        int count = 1; // to keep track of current maximum length till nums[i]. Initially 1 because of the current 
+                       // element itself.
+
+        // Traverse the i/p Array 'nums'
+        for(int i=1; i<nums.size(); i++){
+            // check if the values are strictly increasing
+            if(nums[i] > nums[i-1]){
+                count++; // Increment the count of length
+                ans = max(ans, count); // update the maximum length
+            }
+            else{
+                count = 1; // else, set the count to 1
+            }
+        }
+        return ans;
+    }
+};
