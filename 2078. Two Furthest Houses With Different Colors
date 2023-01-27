@@ -1,0 +1,26 @@
+class Solution{
+public:
+    int maxDistance(vector<int>& colors){
+        // Approach : TWO POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = colors.size();
+
+        int i = 0; // pointer 1
+        int j = n-1; // pointer 2
+        
+        // Find the last house with Different color from the 1st house
+        while(colors[0] == colors[j]){
+            j--;
+        }
+        // Find the 1st house with different color from the last house
+        while(colors[n-1] == colors[i]){
+            i++;
+        }
+        // Find the maximum distance of these two
+        int ans = max(j, n-i-1);
+
+        return ans;
+    }
+};
