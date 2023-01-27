@@ -1,58 +1,246 @@
+// NOTE: Below (Approach 2) is the Optimized code without the use of 'isSafe()' function and by using 3 Vectors 
+// separately to check for the safe positions in 3 Directions: UP, UPWARD RIGHT DIAGONAL and UPWARD LEFT DIAGONAL .
+// 'isSafe()' function takes O(N) extra TC. So, we use 3 vectors instead of 'isSafe()' function to check for safe 
+// Positions which takes Constant time.
+
 class Solution{
 public:
-    // Create a Recursive 'helper()' function 
+    // Create a Recursive 'helper()' function which will return all the possible configurations/solutions of placing 
+    // 'n' Queens in 'n' rows.
     void helper(int n, int i, vector<vector<char>> &chessBoard, vector<int> &col, vector<int> &upwardRight, 
     vector<int> &upwardLeft, vector<vector<string>> &ans){
-        // BASE CASE:
+        // BASE CASE: If 'i' becomes equal to 'n', whcih means we have filled the chessBoard, so we save the 
+        // configuration present in 'chessBoard' in the 'ans' vector.
+        // But before doing that, the configuration in the 'chessBoard' is in the form of a 2D vector. but, we need to 
+        // output the ans in the flattened form of vector of strings where each string represents each Row of the 
+        // 'chessBoard'. 
+        // So, for that we take a vector of string 'temp' and insert each row of the 'chessBoard' as a string into 
+        // the 'temp' and once we insert all the rows into 'temp', then our 'temp' is ready and we insert it into 'ans'
         if(i == n){
-            vector<string> temp;
-
+            vector<string> temp; // to hold each row of the 'chessBoard' as string 
+            
+            // Traverse the 'chessBoard'
             for(int j=0; j<n; j++){
-                string currRow = "";
+                string currRow = ""; // Initialize an empty string at each Row's beginning
                 for(int k=0; k<n; k++){
-                    currRow.push_back(chessBoard[j][k]);
+                    currRow.push_back(chessBoard[j][k]); // Insert all the elements of that row into the string
                 }
-                temp.push_back(currRow);
+                temp.push_back(currRow); // After forming a string of each row, insert the string into the 'temp
             }
-            ans.push_back(temp);
+            ans.push_back(temp); // once we have all the rows as strings in the 'temp', save the 'temp' in the 'ans'
             return;
         }
 
-        // Traverse all the columns form '0' till 'n-1'
+        // First, find a safe position to place the Queen by going to each and every column
         for(int j=0; j<n; j++){
+            // Check if the Position (i,j) is safe OR not using the 3 Vectors which will tell if (i,j) is a safe
+            // position or not. If the cell is already marked as 1 in any of the 3 vectors, then (i,j) is not a safe
+            // position. else, it is a safe psoiton and we can place a Queen at that position by placing 'Q' and after
+            // placing the Queen, we mark the cell in all 3 vectors as 1 so that we won't place any Queen in the future
+            // that will attack the current Queen.
+            // 'upwardRight[i+j]' and 'upwardleft[i-j+n-1]' will denote a particular Upward Right Diagonal cell and 
+            // Upward Left Diagonal Cell Respectively.
             if(col[j] == 0 && upwardRight[i+j] == 0 && upwardLeft[i-j+n-1] == 0){
-                // we can Place a Queen at (i,j) in the 'chessBoard'
-                chessBoard[i][j] = 'Q';
+                // So, if (i,j) is a safe position then we can place a queen at that position by marking as 'Q' at (i,j)
+                // in the 'chessBoard'.
+                chessBoard[i][j] = 'Q'; // 'Q' denotes placing a Queen 
 
-                // mark it's presence in the 3 vectors
+                // And Now, since we placed a Queen at (i,j), mark '1' in the vectors so that we don't place any Queen
+                // in the same Column OR in the Same Right Diagonal OR in the same Left Diagonal in the future.
                 col[j] = upwardRight[i+j] = upwardLeft[i-j+n-1] = 1;
 
-                // ask RECURSION to do rest of the task from the next row i.e, from 'i+1'
+                // And after this we ask RECURSION to do rest of the task from the next ROW by calling the same helper()
+                // function and passing 'i+1' in place of 'i' i.e, from the next Row.
                 helper(n, i+1, chessBoard, col, upwardRight, upwardLeft, ans);
 
-                // BACKTRACKING: 
-                chessBoard[i][j] = '.';
+                // After that, Undo the changes we made above. i.e, remove the Queen from (i,j) and mark as '.'
+                // BACKTRACKING STEP: Undo the change
+                chessBoard[i][j] = '.'; // Remove the Queen from (i,j) in 'chessBoard' by marking as '.' which means 
+                // an empty space.
+                // Since we Removed the Queen, also mark it's Occurence in the 3 Array's as 0.
                 col[j] = upwardRight[i+j] = upwardLeft[i-j+n-1] = 0;
             }
         }
     }
 
     vector<vector<string>> solveNQueens(int n){
-        // Approach: RECURSION + BACKTRACKING (M Fraz)
-        // TC : O(n!), which is the ttoal no.of nodes in the Recursive tree
-        // SC : O(n) for the Recursive Stack (Height of the Recursive tree) and O(n^2) for the 'ans' vector i.e, ans[][]
+        // Approach 2: "RECURSION + BACKTRACKING (M Fraz)" without 'isSafe()' function.
+        // This is OPTIMIZED SOLUTION without 'isSafe()' function.
+        // TC : O(n!), which is the total no.of nodes in the Recursive tree
+        // SC : O(n) for the Recursive Stack (Height of the Recursive tree) and O(n^2) for the 'ans' vector i.e ans[][]
         // C++ CODE:
-        vector<vector<string>> ans;
-        vector<vector<char>> chessBoard(n, vector<char> (n, '.'));
-        vector<int> col(n, 0);
-        vector<int> upwardRight(2*n, 0);
-        vector<int> upwardLeft(2*n, 0);
+        vector<vector<string>> ans; // to store the valid configurations of the chessboard in flattened form as a 
+        // vector of strings as shown in the output of eg1.
+        
+        // Also, maintain a 2D vector 'ChessBoard' to hold the configuration in the form of a 2D matrix 
+        // So, 'chessBoard' will be of size 'n*n' and all elements will be initialized with empty space i.e, '.'
+        // Since we are storing 'characters' in the 'chessBoard's each cell, the vector will be of type 'char'
+        vector<vector<char>> chessBoard(n, vector<char> (n, '.')); 
 
-        int i = 0;
+        vector<int> col(n, 0); // this is to check for safe position in the UPWARD Direction 
+        // This will denote what are all the Cells above the current cell that are already filled (placed) before. 
+        // It'll be of size 'n' with all elements initialized with 0 initially.
+        // So, each Cell/Index of this Array will denote 1 Particular column from 0 till n-1.
 
-        // call the Recursive helper() function
+        vector<int> upwardRight(2*n, 0); // this is used to check for the safe position in the Upward Right Diagonal 
+        // and this vector will be of size 2*n with all elements initialized with 0.
+        // The Equation for UPPER RIGHT DIAGONAL is: (Row no. + Col no.) i.e, (i+j) [REFER NOTES]
+        // So, each Cell/Index of this Array will denote a Particular Diagonal in the Upward Right Diagonal
+
+        vector<int> upwardLeft(2*n, 0); // this is used to check for the safe position in the Upward Left Diagonal
+        // and this vector will also be of size 2*n with all of it's elements initialized with 0.
+        // The Equation for UPPER LEFT DIAGONAL is: [(Row no - Col no) + n - 1] (REFER NOTES)
+        // So, each Cell/Index of this Array will denote a particular Diagonal in the Upward Left Diagonal
+
+        int i = 0; // 'i' denotes the Current Row on which we are standing. Initially we start from 0th Row
+
+        // call the Recursive helper() function which will return all possible confirgurations of Placing 'n' Queens
         helper(n, i, chessBoard, col, upwardRight, upwardLeft, ans);
 
-        return ans;
+        return ans; // return the configurations stored in the 'ans' vector
     }
 };
+
+
+
+///////////////////////////**************************///////////////////////////////
+
+
+
+/*
+// Below code is without optimized in the 'isSafe()' function but still it's working
+
+class Solution{
+public:
+    // Create a boolean 'isSafe()' function which will check if the position (i,j) is a safe position to place the 
+    // Queen OR not.
+    // So, in the 'isSafe()' function, we check for the safe Positions in 3 Directions: UPWARD, UPWARD RIGHT DIAGONAL
+    // and UPWARD LEFT DIAGONAL
+    bool isSafe(int i, int j, int n, vector<vector<char>> &chessBoard){
+        // CASE #1: Check in the 'UPWARD' Direction i.e, in the above all cells of current cell
+        // First of all, let us check in the UPWARD direction if any Queen is already present in the same column OR not
+        int tempi = i; // use a 'temp' variable for 'i' so that we don't disturb the original 'i' so that we can use
+        // the 'i' to check for 'UPWARD RIGHT DIAGONAL' and 'UPWARD LEFT DIAGONAL' also
+        while(tempi >= 0){
+            // Till 'tempi' becomes greater than OR equal to 0, till then we can keep checking i.e, we can keep on 
+            // checking in all the above cells of current cell (i,j).
+            // So, if there is a Queen in any of the cells above i.e, 'UP', return false.
+            if(chessBoard[tempi][j] == 'Q'){
+                return false;
+            }
+            tempi--; // After checking for safe position in the current row, go to the upper row
+        }
+
+        // CASE #2: Check in the 'UPWARD RIGHT DIAGONAL' i.e, check if any Queen is already present in the same Right
+        // Diagonal of current cell (i,j).
+        // So, if we want to go 'UPWARD RIGHT DIAGONAL', we should do 'i--' because we are moving 'UP' and also we 
+        // should do 'j++' because we are moving 'RIGHT'
+        tempi = i; // Again initialising 'tempi' and 'tempj' with 'i' and 'j' respectively
+        int tempj = j; 
+        // So, we move 'tempi' till 1st Row (0th index) and 'tempj' till the last column
+        while(tempi >= 0 && tempj <= n-1){
+            // Keep checking if there is any Queen placed in the Right Upward Diagonal of the current cell
+            if(chessBoard[tempi][tempj] == 'Q'){
+                return false;
+            }
+            // Now, go 'UPWARD' (tempi--) and Check in the 'RIGHT' (tempj++)
+            tempi--; // Move to Upward 
+            tempj++; // Move to Right
+        }
+
+        // CASE #3: Check for safe Position in the 'UPWARD LEFT DIAGONAL' i.e, check if any Queen is already present 
+        // in the same Left Diagonal of current (i,j).
+        // So, If we want to go 'UPWARD LEFT DIAGONAL', we should do 'i--' since we are going Upward & we should
+        // do 'j--' since we are moving to the 'LEFT'
+        // Again initialising 'tempi' and 'tempj' with 'i' and 'j' respectively
+        tempi = i;
+        tempj = j;
+        // So, we can move 'tempi' till the 1st Row (0 index) and 'tempj' till the 1st column (0 index)
+        while(tempi >= 0 && tempj >= 0){
+            // Keep checking if there is any Queen placed in the Left Upward Diagonal of the current cell
+            if(chessBoard[tempi][tempj] == 'Q'){
+                return false;
+            }
+            // Now, go 'UPWARD' (tempi--) and Check in the 'LEFT' (tempj--)
+            tempi--; // Move to Upward 
+            tempj--; // Move to Left
+        }
+
+        // After coming out of all of the above 3 conditions, return true which means the current position (i,j) is a 
+        // safe position to place the queen
+        return true;
+    }
+
+    // Create a Recursive 'helper()' function which will return all the possible configurations/solutions of placing 
+    // 'n' Queens in 'n' rows.
+    void helper(int n, int i, vector<vector<char>> &chessBoard, vector<vector<string>> &ans){
+        // BASE CASE: If 'i' becomes equal to 'n', whcih means we have filled the chessBoard, so we save the 
+        // configuration present in 'chessBoard' in the 'ans' vector.
+        // But before doing that, the configuration in the 'chessBoard' is in the form of a 2D vector. but, we need to 
+        // output the ans in the flattened form of vector of strings where each string represents each Row of the 
+        // 'chessBoard'. 
+        // So, for that we take a vector of string 'temp' and insert each row of the 'chessBoard' as a string into 
+        // the 'temp' and once we insert all the rows into 'temp', then our 'temp' is ready and we insert it into 'ans'
+        if(i == n){
+            vector<string> temp; // to hold each row of the 'chessBoard' as string 
+            
+            // Traverse the 'chessBoard'
+            for(int j=0; j<n; j++){
+                string currRow = ""; // Initialize an empty string at each Row's beginning
+                for(int k=0; k<n; k++){
+                    currRow.push_back(chessBoard[j][k]); // Insert all the elements of that row into the string
+                }
+                // After traversing one Row, we push our 'currRow' inside the 'temp' vector.
+                temp.push_back(currRow); // After forming a string of each row, insert the string into the 'temp
+            }
+            ans.push_back(temp); // once we have all the rows as strings in the 'temp', save the 'temp' in the 'ans'
+            return; // we push our 'temp' to 'ans' and simply return back to explore other possible configurations.
+        }
+
+        // First find a Safe Position to place the Queen by going to each and every column
+        for(int j=0; j<n; j++){
+            // Check if the Position (i,j) is safe OR not using the 'isSafe()' function which will return true if (i,j)
+            // is a safe position. else it will return false.
+            // We also pass 'chessBoard' in the 'isSafe()' function because few Rows of the 'chessBoard' is already  
+            // filled. So we can tell whether the current position is safe or not only if we look at the previously 
+            // filled rows.
+            if(isSafe(i, j, n, chessBoard)){
+                // So, if (i,j) is a safe position then we can place a queen at that position.
+                // So, we will place the Queen at this position by marking the character 'Q' at (i,j).
+                chessBoard[i][j] = 'Q'; // 'Q' denotes placing the Queen at position (i,j)
+
+                // and after this we ask RECURSION to do rest of the task from the next ROW by calling the same
+                // 'helper()' function and passing 'i+1' in place of 'i' i.e, from the next Row.
+                helper(n, i+1, chessBoard, ans);
+
+                // After that, Undo the changes we made above. i.e, remove the Queen from (i,j) and mark the position
+                // as an empty space denoted by '.'
+                // BACKTRACKING STEP: Undo the change
+                chessBoard[i][j] = '.'; // Remove the Queen from (i,j) by marking as '.'
+            }
+        }
+    }
+     
+    vector<vector<string>> solveNQueens(int n){
+        // Approach 1: "RECURSION + BACKTRACKING (M Fraz)" with 'isSafe()' function.
+        // This is NOT a OPTIMIZED SOLUTION since the 'isSafe()' function takes extra O(n) TC.
+        // TC : O(n!), which is the total no.of nodes in the Recursive tree
+        // SC : O(n) for the Recursive Stack (Height of the Recursive tree) and O(n^2) for the 'ans' vector i.e ans[][]
+        // C++ CODE:
+        vector<vector<string>> ans; // to store the valid configurations of the chessboard in flattened form as a 
+        // vector of strings as shown in the output of eg1.
+        
+        // Also, maintain a 2D vector 'ChessBoard' to hold the configuration in the form of a 2D matrix 
+        // So, 'chessBoard' will be of size 'n*n' and all elements will be initialized with empty space i.e, '.'
+        // Since we are storing 'characters' in the 'chessBoard's each cell, the vector will be of type 'char'
+        vector<vector<char>> chessBoard(n, vector<char> (n, '.'));
+
+        int i = 0; // 'i' denotes the Current Row on which we are standing. Initially we start from 0th Row
+        
+        // call the Recursive helper() function which will return all possible confirgurations of Placing 'n' Queens
+        helper(n, i, chessBoard, ans);
+
+        return ans; // return the configurations stored in the 'ans' vector
+    }
+};
+*/
