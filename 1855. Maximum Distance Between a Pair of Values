@@ -1,0 +1,28 @@
+class Solution{
+public:
+    int maxDistance(vector<int>& nums1, vector<int>& nums2){
+        // Approach: TWO POINTERS
+        // TC : O(M+N), where 'M' is the size of 'nums1' and 'N' is the size of 'nums2'
+        // SC : O(1)
+        // C++ CODE:
+        int res = 0;
+
+        // support variables
+        int i = 0; // to traverse in 'nums1'
+        int j = 0; // to traverse in 'nums2'
+
+        // Traverse on the i/p Array's 'nums1' and 'nums2'
+        while(i < nums1.size() && j < nums2.size()){
+            // If the element in 'nums1' is greater than the element in 'nums2', move 'i'
+            if(nums1[i] > nums2[j]){
+                i++; // we move 'i' forward in 'nums1' since we need 'nums1[i] <= nums2[j]'
+            }
+            else{
+                // else we keep Recording the maximum distance
+                res = max(res, j-i); // 'j-i' is the size of the pair (i,j)
+                j++; // move 'j' forward to see if we can find any max distance
+            }
+        }
+        return res;
+    }
+};
