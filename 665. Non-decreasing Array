@@ -1,0 +1,35 @@
+class Solution{
+public:
+    bool checkPossibility(vector<int>& nums){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        bool modified = 0; // Initially we don't modify anything from the Array.
+        // Once we modify something in the Array, we update 'modified' to '1'.
+
+        // Traverse the i/p Array
+        for(int i=1; i<nums.size(); i++){
+            // If the current element is lesser than the previous element
+            if(nums[i] < nums[i-1]){ // eg: nums = [1, 4, 2, 5] and 'i' pointing to element '2'
+                // If we have already modofied an element from the Array before, then return false since we can atmost
+                // modify a single element only.
+                if(modified == 1){
+                    return false;
+                }
+                // Check the current 'i'th element with 2nd previous element at 'i-2'
+                // eg for 'i-2 < 0' : nums = [3, 1, 5] and 'i' pointing to element '1'
+                if(i-2 < 0 || nums[i-2] <= nums[i]){ // eg: nums = [1, 4, 2, 5] and 'i' pointing to element '2'
+                    nums[i-1] = nums[i];
+                }
+                else{
+                    // eg: nums = [3, 4, 2, 5] and 'i' pointing to element '2'
+                    nums[i] = nums[i-1];
+                }
+                // SInce nums[i] < nums[i-1], we modify an element and mark 'modified' as 1.
+                modified = 1;
+            }
+        }
+        return true;
+    }
+};
