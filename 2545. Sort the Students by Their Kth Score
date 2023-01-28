@@ -1,0 +1,17 @@
+class Solution{
+public:
+    vector<vector<int>> sortTheStudents(vector<vector<int>>& score, int k){
+        // Approach: SORTING 
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        // We use Comparator function to sort the i/p Array 'score' based on how we want to sort the elements
+        sort(score.begin(), score.end(), [&](auto& a, auto& b){
+            // Here 'a' and 'b' will be automatically considered as One Entire Row. So 'a' and 'b' will be vectors.
+            return a[k] > b[k];
+        });
+
+        // After sorting 'score', return it.
+        return score;
+    }
+};
