@@ -1,0 +1,18 @@
+class Solution{
+public:
+    string customSortString(string order, string s){
+        // Approach: SORTING
+        // TC : O(M) + O(NlogN) and if 'M<N' then TC is O(NlogN) where 'M' - size of string 'order' and 'N'-size of 's'
+        // SC : O(M), since 'find()' on 'order' costs O(M) where 'M' is the length of stirng 'order'
+        // C++ CODE:
+        
+        // So, here we use lambda function to sort the strng 's'.
+        // So, the sort() function here takes 3 parameters. the 3rd one being the 'compare' function, where we mention
+        // how we want to sort the items in the string.
+        sort(s.begin(), s.end(), [&](char a, char b){
+            return order.find(a) < order.find(b)
+        });
+
+        return s; // return 's' after sorting it
+    }
+};
