@@ -1,0 +1,27 @@
+class Solution{
+public:
+    int countMatches(vector<vector<string>>& items, string ruleKey, string ruleValue){
+        // Approach: ITERATIVE Approach
+        // TC : O(N), where 'N' is the size of the i/p string 'items'
+        // SC : O(1)
+        // C++ CODE:
+        int res = 0; // to record the no. of items that match
+        int i;
+
+        // CASE #1: If the 'ruleKey' is "type", set 'i' to 0
+        if(ruleKey == "type") i = 0;
+        // CASE #2: If the 'ruleKey' is "color", set 'i' to 1
+        if(ruleKey == "color") i = 1;
+        // CASE #3: If the 'ruleKey' is "name", set 'i' to 2
+        if(ruleKey == "name") i = 2;
+
+        // Now, traverse the string 'items' from j = 0 till n-1 and check every 'i'th value in each 'j' whether it is
+        // equal to 'ruleValue' or not.
+        for(int j=0; j<items.size(); j++){
+            if(items[j][i] == ruleValue){
+                res++;
+            }
+        }
+        return res;
+    }
+};
