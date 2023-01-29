@@ -1,0 +1,23 @@
+class Solution{
+public:
+    vector<int> findKDistantIndices(vector<int>& nums, int key, int k){
+        // Approach: BRUTE FORCE
+        // TC : O(N^2)
+        // SC : O(1), apart from the space required to store the answer in the 'ans' vector
+        // C++ CODE:
+        vector<int> ans; // to store the k-distant indices
+
+        // Fix 'i' and Traverse the Array till the end to find a matching 'j' that satisfies the given condition
+        for(int i=0; i<nums.size(); i++){
+            for(int j=0; j<nums.size(); j++){
+                // check the given conditions
+                if(abs(i-j) <= k && nums[j] == key){
+                    // If we find atleast one Index, then save it and break so that 'i' will go to next iteration
+                    ans.push_back(i);
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+};
