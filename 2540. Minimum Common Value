@@ -1,0 +1,60 @@
+class Solution{
+public:
+    int getCommon(vector<int>& nums1, vector<int>& nums2){
+        // Approach 2: TWO POINTERS
+        // TC : O(M+N), where 'M' is the no. of elements in 'nums1' and 'N' is the no. of elements in 'nums2'.
+        // SC : O(1)
+        // C++ CODE:
+        int i = 0; // pointer 1 for tarversal in 'nums1'
+        int j = 0; // pointer 2 for traversal in 'nums2'
+
+        // Till 'i' reaches to end of 'nums1' and 'j' reaches to end of 'nums2', kepp checking for the common element
+        while(i < nums1.size() && j < nums2.size()){
+            // CASE #1: If the element in 'nums1' and 'nums2' are equal, return the element
+            if(nums1[i] == nums2[j]){
+                return nums1[i];
+            }
+            // CASE #2: If the element in 'nums1' is smaller than the element in 'nums2', move the pointer in 'nums'
+            else if(nums1[i] < nums2[j]){
+                i++;
+            }
+            // CASE #3: If the element in 'nums1' is larger than the element in 'nums2', move the pointer in 'nums2'
+            else{
+                j++;
+            }
+        }
+        // If no common element found b/w these 2 Arrays, return -1.
+        return -1;
+
+
+
+
+        /*
+        // Approach 1: Using SET (HASHING)
+        // EXPLANATION: Just 'HASH' one Array using a Set & traverse the other Array and return the 1st found element 
+        // in 'nums2' since the Arrays are sorted in Non-Decreasing order.
+        // TC : O(M+N), where 'M' is the size of 'nums1' and 'N' is the size of 'nums2'.
+        // SC : O(M), where 'M' is the size of 'nums1' since we are copying all the elements of 'nums1' to the Set.
+        // C++ CODE:
+        unordered_set<int> st(nums1.begin(), nums1.end()); // copy all the elements of nums1 into a set.
+
+        // Traverse each element of 'nums2' and check if it's presence is found in the set.
+        for(auto& ele : nums2){
+            // If the current element 'ele's count is present, then we will return it. else return -1. 
+            if(st.count(ele)){ // OR "if(st.find(ele) != st.end()) return ele;"
+                return ele;
+            }
+        }
+        return -1;
+        */
+    }
+};
+
+
+
+/*
+Q) What is ‘count()’ function in C++ STL?
+Ans: ‘count()’ returns the count of no. of occurences of an element in a given range. 
+    It returns the no. of elements in the range [first, last) that compare equal to ‘val’ which is the target element.
+    If the 'val' is not found in any occurence, then it returns 0 (Integer value).
+*/
