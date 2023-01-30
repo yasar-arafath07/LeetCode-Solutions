@@ -2,7 +2,8 @@ class Solution{
 public:
     bool isReachable(int targetX, int targetY){
         // Approach: MATH + NUMBER THEORY
-        // TC : O()
+        // TC : O(log(targetX) + log(targetY)), because in the worst case we keep dividing both 'targetX' and 'targetY'
+        // till we reach to 1. So it is in log.
         // SC : O(1)
         // C++ CODE:
         // keep dividing both 'targetX' and 'targetY' by 2 until it is no more divisible by 2 and also at the same
