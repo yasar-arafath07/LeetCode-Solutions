@@ -1,0 +1,30 @@
+class Solution{
+public:
+    vector<vector<int>> mergeSimilarItems(vector<vector<int>>& items1, vector<vector<int>>& items2){
+        // Approach: Using HASHMAP
+        // TC : O(M+N), where 'M' is the size of 'items1' and 'N' is the size of 'items2'.
+        // SC : O(M+N)
+        // C++ CODE:
+        vector<vector<int>> res; // to store the result with value being 'val' and weight being sum of weights of all
+                                 // value which are equal.
+        map<int,int> mpp; // to store 'value:weight' pair. (Here, unordered_map gives wrong Answer)
+
+        // Traverse the Array 'items1' and store the 'value' as key and it's value as weight.
+        // So, if the same 'value' encounters in the other Array again, we add it's weight to the weight of current val
+        for(auto& ele : items1){
+            mpp[ele[0]] += ele[1]; 
+        }
+
+        // Traverse the Array 'items2' and store the 'value:weight' pair.
+        for(auto& ele : items2){
+            mpp[ele[0]] += ele[1];
+        }
+        // So, by now, if two of the given Array has same 'value', then it's weights will get added.
+
+        // Traverse the map 'mpp' and push the pairs i.e, {key:value} into the 'res' vector
+        for(auto& it : mpp){
+            res.push_back({it.first, it.second});
+        }
+        return res;
+    }
+};
