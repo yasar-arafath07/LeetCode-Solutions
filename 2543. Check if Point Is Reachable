@@ -1,0 +1,22 @@
+class Solution{
+public:
+    bool isReachable(int targetX, int targetY){
+        // Approach: MATH + NUMBER THEORY
+        // TC : O()
+        // SC : O(1)
+        // C++ CODE:
+        // keep dividing both 'targetX' and 'targetY' by 2 until it is no more divisible by 2 and also at the same
+        // time update both 'targetX' and 'targetY'
+        while(targetX % 2 == 0){
+            targetX /= 2; // targetX = targetX / 2;
+        }
+
+        while(targetY % 2 == 0){
+            targetY /= 2; // targetY = targetY / 2;
+        }
+
+        // Now, find the gcd of 'targetX' and 'targetY' and check if their gcd is equal to 1 or not.
+        // If YES, return true, else return false;
+        return gcd(targetX, targetY) == 1;
+    }
+};
