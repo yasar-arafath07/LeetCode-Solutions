@@ -1,0 +1,46 @@
+class Solution{
+public:
+    int smallestRangeII(vector<int>& nums, int k){
+        // Approach: SORTING + GREEDY
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+
+        // EDGE CASE: If there is only 1 element, then both 'maximum' and 'minimum' is itself. So, we return 0.
+        if(n == 1) return 0;
+
+        sort(nums.begin(), nums.end()); // sort the i/p Array
+
+        int ans = nums[n-1] - nums[0]; // Initial 'score' which is 'maximum' - 'minimum' since we sorted the Array
+        int maxi = INT_MIN;
+        int mini = INT_MAX;
+
+        ans = min(ans, max(nums[0]+k, nums[n-1]-k) - min(nums[0]+k, nums[1]-k)); // ans = min(ans, maxi-mini)
+
+        // Traverse from the 1st Index till 2nd last element
+        for(int i=1; i<nums.size()-1; i++){
+            // find both 'maxi' and 'mini' till 'i' and update the 'ans' 
+            maxi = max(nums[i]+k, nums[n-1]-k); // Increase all the elements by 'k' before nums[i] (Including 'i')
+            mini = min(nums[0]+k, nums[i+1]-k); // Decrease all the elements by 'k' after nums[i]
+
+            ans = min(ans, maxi-mini); // Record the 'ans' 
+        }
+        return ans;
+    }
+};
+
+
+
+/*
+// ALGORITHM EXPLANATION:
+- We either Increase OR decrease all the elements of 'nums' by 'k'.
+- So, we Iterate over all 'i's and increase all elements before 'i' (including it) by 'k' and decrease all elements 
+  after it and find the 'ans' for such a condition.
+- So, the maximum element will be either the current element Increased by 'k' OR the last element decreased by 'k' i.e,
+  maxi = max(curr+k, last-k).
+- Similarly, the minimum element will be either the first element increased by 'k OR the next element(i+1) decreased
+  by 'k' i.e, mini = min(first+k, next-k).
+- So, by using these 2 values, we constantly update our 'ans' which is the minimum of current ans (maxi-mini) and 
+  previous 'ans'.
+*/
