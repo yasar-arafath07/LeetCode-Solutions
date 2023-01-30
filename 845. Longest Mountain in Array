@@ -1,0 +1,46 @@
+class Solution{
+public:
+    int longestMountain(vector<int>& arr){
+        // Approach: TWO POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = arr.size();
+
+        // EDGE CASE (Not Actually Required): If we have less than 3 elements, return 0 since it is not mountain Array 
+        if( n < 3) return 0; 
+
+        // Support Variables
+        int res = 0; // to store the length of the longest subarray
+        int left = 0; // pointer 1
+        int right; // pointer 2
+
+        // Traverse till the 2nd last element using the 'left' pointer
+        while(left < n-2){
+            // Now, try to find a mountain pattern i.e, (small val........peak val.........small val)
+            // Now, traverse using 'left' and skip descending and equal elements since it's not a mountain pattern
+            while(left < n-1 && arr[left] >= arr[left+1]){
+                left++;
+            }
+            // When we reach to this line, 'left' might be basically point to start of the 'mountain' i.e, smallest val
+            // So, assign 'right' to from the next of 'left'
+            right = left + 1;
+
+            // Now, traverse using 'right' till we find the peak element of the mountain
+            while(right < n-1 && arr[right] < arr[right+1]){
+                right++;
+            }
+            // So, if we reach here, 'right' is now basically pointing to the peak element of the mountain
+            // So, we keep traversing from the peak till we find the smallest element and update 'res'
+            while(right < n-1 && arr[right] > arr[right+1]){
+                right++;
+                res = max(res, right-left+1); // record the maximum length of the suabarray
+            }
+            
+            // Now, make 'left' point to 'right' so that we can again start from the beginning if we have some more
+            // subarrays to find the maximum length of the Mountain Array
+            left = right;
+        }
+        return res;
+    }
+};
