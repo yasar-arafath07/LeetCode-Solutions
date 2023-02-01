@@ -1,0 +1,16 @@
+class Solution{
+public:
+    string gcdOfStrings(string str1, string str2){
+        // Approach: 
+        // TC : 
+        // SC : O(1)
+        // C++ CODE:
+        // SInce both the strings are made up of same substring added multiple times, str1+str2 == str2+str1 
+        if(str1 + str2 == str2 + str1){
+            // then 'str1' and 'str2' have a gcd
+            // we return the GCD of both strings from the beginning of 'str1'
+            return str1.substr(0, gcd(str1.size(), str2.size()));
+        }
+        return "";
+    }
+};
