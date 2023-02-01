@@ -1,0 +1,45 @@
+class Solution{
+public:
+    long long maxScore(vector<int>& nums1, vector<int>& nums2, int k){
+        // Approach: PRIORITY QUEUE (MIN HEAP) + SORTING
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        int n = nums1.size();
+        long long sum = 0; // to store the sum of the subsequence/selected elements
+        long long ans = 0; // to store the maximum possible store
+        
+        vector<pair<int,int>> v; // vector of pairs. each pair in this vector contains {nums2[i], nums1[i]}
+        priority_queue<int, vector<int>, greater<int>> pq; // create a MIN HEAP
+
+        // Traverse the 'nums1' Array and create a pair with the element of 'nums1[i]' and 'nums2[i]' and insert this
+        // pair into the vector 'v'
+        for(int i=0; i<nums1.size(); i++){
+            v.push_back({nums2[i], nums1[i]});
+        }
+
+        // Now, sort the vector 'v' containing pairs
+        // Eg: If v = [{1,2}, {6,4}, {3,4}, {6,1}], then after sorting 'v', we get: v = [{1,2}, {3,2}, {6,1}, {6,4}]
+        sort(v.begin(), v.end());
+
+        // Now, traverse from the back/right side of 'v' and insert the element of nums1[i] into the priority_queue
+        for(int i=n-1; i>=0; i--){
+            pq.push(v[i].second); // push the element of nums1[i] i.e, v[i].second into the priority queue
+            sum += v[i].second; // calculate the current sum of the selected elements
+            
+            // If the size of the subsequence crosses 'k', remove the element from the top of the priority queue and 
+            // alse remove it's calculation from the sum
+            if(pq.size() > k){
+                sum -= pq.top();
+                pq.pop();
+            }
+            // If we reach the condition, calculate the answer.
+            if(pq.size() == k){
+                // So, when the size of the subsequence hits 'k', the element from nums2[i] i.e, v[i].first will be
+                // the minimum in that subsequence of length 'k'
+                ans = max(ans, sum * v[i].first); // (sum of subsequence*min element from the suubsequence of nums2)
+            }
+         }
+         return ans;
+    }
+};
