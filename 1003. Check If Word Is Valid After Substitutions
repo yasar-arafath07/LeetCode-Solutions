@@ -1,0 +1,22 @@
+class Solution{
+public:
+    bool isValid(string s){
+        // Approach: SEARCHING
+        // Seach for the substring "abc", then remove it and repeat this same process till the string becomes empty.
+        // TC : O(N*N), where 'N' is the no. of characters in 's'. 'find()' is O(N) and 'erase()' is also O(N)
+        // SC : O(1)
+        // C++ CODE:
+        // Here we do the reverse i.e, search for "abc" and remove it from the i/p string. THe string 's' is valid if
+        // it becomes empty in the end
+        // Keep searching for "abc" till the i/p string becomes empty
+        while(!s.empty()){
+            int i = s.find("abc"); // find the index of starting of "abc"
+            // If 'i' points to the end of the string, which means there is no "abc" in the string, So we return false.
+            if(i == string :: npos){
+                return false;
+            }
+            s.erase(i, 3); // else, remove "abc" from 's'.
+        }
+        return true; // We return true if the string becomes empty in the end
+    }
+};
