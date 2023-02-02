@@ -1,0 +1,25 @@
+class Solution{
+public:
+    bool isAlienSorted(vector<string>& words, string order){
+        // Approach: MAPPING
+        // TC : O(M*N), where 'M' is the size of Array 'words' and 'N' is the average size of each element of 'words'
+        // SC : O(1)
+        // C++ CODE:
+        int map[26]; // Array 'map' of size 26 to store the order of alien language
+        
+        // Traverse the 'order' string and store the order of the alphabets in the 'map'.
+        for(int i=0; i<26; i++){
+            map[order[i] - 'a'] = i;
+        }
+
+        // Traverse the 'words' and then traverse each alphabet of an element
+        for(auto& w : words){
+            for(auto& c : w){
+                // Replace each character of word with it's order stored in the 'map'
+                c = map[c - 'a'];
+            }
+        }
+        // Now, check if the Array 'word' is sorted or not.
+        return is_sorted(words.begin(), words.end());
+    }
+};
