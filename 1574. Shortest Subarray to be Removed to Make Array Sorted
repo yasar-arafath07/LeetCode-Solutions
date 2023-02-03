@@ -1,0 +1,45 @@
+class Solution{
+public:
+    int findLengthOfShortestSubarray(vector<int>& arr){
+        // Approach: TWO POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = arr.size();
+        int ans = INT_MAX;
+
+        int low = 0; // pointer 1
+        int high = n - 1; // pointer 2
+
+        // Find the 1st breaking point/index where the elements are not sorted from the left using 'low' pointer
+        while(low < n-1 && arr[low] <= arr[low+1]){
+            low++;
+        }
+        // If 'low' reaches to the 2nd last element, then all the elements are in sorted order. So, we don't need to 
+        // remove anything. So we return 0.
+        if(low == n-1) return 0;
+
+        // Similarly, find the 1st breaking point from the right using 'high' pointer where elements are not sorted.
+        while(high > low && arr[high] >= arr[high-1]){
+            high--;
+        }
+
+        // Find the answer
+        ans = min(n-low-1, high); // i.e, minimum of 'from the start till j' and 'from the end till i'
+
+        // Now, keep a pointer 'i' at 0 and traverse till 'low' and keep a pointer 'j' at 'high' and traverse till end
+        int i = 0;
+        int j = high;
+
+        while(i <= low && j < n){
+            if(arr[i] <= arr[j]){
+                ans = min(ans, j-i-1); // update the answer
+                i++;
+            }
+            else{
+                j++;
+            }
+        }
+        return ans;
+    }
+};
