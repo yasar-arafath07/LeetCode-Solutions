@@ -1,0 +1,21 @@
+class Solution{
+public:
+    int prefixCount(vector<string>& words, string pref){
+        // Approach: ITERATIVE
+        // TC : O(N), where 'N' is the length of the string 'words'
+        // SC : O(1)
+        // C++ CODE:
+        int prefLen = pref.length(); // find the length of the 'pref' string
+        int count = 0; // to store the count of pefix
+        
+        // Iterate on the i/p String 'words' and for each string of 'words' find the substring from 0 till the length 
+        // of 'pref' string.
+        // If the substring matches the i/p string 'pref', then we have a prefix. So, count++
+        for(auto& w : words){
+            if(w.substr(0, prefLen) == pref){
+                count++;
+            }
+        }
+        return count; // Finally return the count value
+    }
+};
