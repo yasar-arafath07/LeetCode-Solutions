@@ -2,21 +2,21 @@ class Solution {
 public:
     bool checkInclusion(string s1, string s2){
         // Approach : using SLIDING WINDOW (DGs)
-        // TC : O(N+M), where 'N' and 'M' are the no. of characters in the input string and pattern string respctvly.
+        // TC : O(N+M), where 'N' and 'M' are the no. of characters in the input string 's2' and pattern string 's1'
         // SC : O(M), since in the worst case, the whole pattern can have distinct characters that will go into map.
         // CODE:
-        unordered_map<char,int> map; // to store the frequency of characters of the 'pattern' string
+        unordered_map<char,int> map; // to store the frequency of characters of the 'pattern' string i.e, 's1' string
         int matched = 0; // this is to keep track of the matched items from the map in the window
         int i = 0; // windowStart
         int j = 0; // windowEnd
 
-        // Initially, store the frequencies of characyters of 'pattern' string in the map
+        // Initially, store the frequencies of characters of 'pattern' string in the map
         for(auto it : s1){
             map[it]++;
         }
 
-        // Our goal is to match all the characters from the 'map' with the current window
-        // Iterate on the s2 string
+        // Our goal is to match all the characters from the 'map' with the current window in the 's2' string
+        // Iterate on the 's2' string
         for(int j=0; j<s2.size(); j++){
             // CASE 1: if s2[j] is present in the map, then decrement the frequency of it in the map
             if(map.find(s2[j]) != map.end()){ // i.e if s2[j] is present in the map
