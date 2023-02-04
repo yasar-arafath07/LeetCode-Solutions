@@ -1,0 +1,32 @@
+class Solution{
+public:
+    int minSteps(string s, string t){
+        // Approach: HASHMAP
+        // TC : O(M+N), where 'M' is the length of the string 's' and 'N' is the length of the string 't'
+        // SC : O(N), since both the strings are of equal size 
+        // C++ CODE:
+        int ans = 0; // to store the count of no. of steps to make 't' an anagram of 's'
+        unordered_map<char,int> mpp; // to store the frequency (Increment/Decrement) of the strings 's' and 't'.
+        // OR we can just use an Array of size 26 to store the frequency of the characters
+
+        // Traverse the string 's' and store the frequency of the elements in the map 
+        for(int i=0; i<s.length(); i++){
+            mpp[s[i]]++;
+        }
+
+        // Traverse the string 't' and decrement the frequency of the elements in the map
+        for(int i=0; i<t.length(); i++){
+            mpp[t[i]]--;
+        }
+
+        // Traverse the map and check if the frequency of any element is greater than 0, if YES, then we have a
+        // shortage of that element in the string 't' to make 't' as anagram of 's'. So, add the count of that element
+        // in the 'ans'
+        for(auto& it : mpp){
+            if(it.second > 0){
+                ans += it.second;
+            }
+        }
+        return ans;
+    }
+};
