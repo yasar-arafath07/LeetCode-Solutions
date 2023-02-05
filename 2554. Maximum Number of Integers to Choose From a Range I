@@ -1,0 +1,30 @@
+class Solution{
+public:
+    int maxCount(vector<int>& banned, int n, int maxSum){
+        // Approach: MAPPING + 2 PASS 
+        // TC : O(M+N), where 'M' is the size of the i/p Array and 'N' is the given i/p
+        // SC : O(N), where 'N' is the given i/p
+        // C++ CODE:
+        int count = 0; // to store the count of maximum no. of integers we can choose 
+        int currSum = 0; 
+        vector<int> flag(n+1); // to mark the presence of element which are less than 'n' present in i/p Array
+        
+        // If the element in the i/p Array is less than 'n', then mark it as present in the 'flag' Array
+        for(int i=0; i<banned.size(); i++){
+            if(banned[i] <= n){
+                flag[banned[i]]++;
+            }
+        }
+
+        // Now, Traverse the 'flag' Array 
+        for(int i=1; i<=n; i++){
+            // Check if the current sum of the elements of the range from 1 to n is lesser than or equal to 'maxSum'.
+            // and also make sure that the current element is not present in 'flag' Array
+            if(i + currSum <= maxSum && flag[i] == 0){
+                count++; // we found a integer that matches the given conditions
+                currSum += i; // update the current sum
+            }
+        }
+        return count;
+    }
+};
