@@ -1,0 +1,27 @@
+class Solution {
+public:
+    long long pickGifts(vector<int>& gifts, int k) {
+        // Approach: PRIORITY QUEUE (MAX HEAP)
+        // TC : O(N + klogN), where 'N' is the size of the i/p Array.
+        // SC : O(N), where 'N' is the no. of elements in the i/p Array
+        // C++ CODE:
+        long long ans = 0; // to store the no. of gifts remaining after 'k' seconds
+        priority_queue<int> pq(gifts.begin(), gifts.end()); // create a MAX HEAP and store the elements of Array in it
+        
+        // Perform the operations for 'k' seconds
+        while(k--){
+            int ele = pq.top(); // choose the pile with the MAXIMUM no. of gifts
+            pq.pop(); // pop it from the Array
+            int newEle = floor(sqrt(ele)); // Now, find the floor of the square root of the no. of gifts in the pile.
+            pq.push(newEle); // and push it back to the Array/pq
+        }
+        
+        // Calculate the no. of gifts remaining after 'k' seconds which is the sum of the remaining elements in the 
+        // priority queue
+        while(!pq.empty()){
+            ans += pq.top();
+            pq.pop();
+        }
+        return ans;
+    }
+};
