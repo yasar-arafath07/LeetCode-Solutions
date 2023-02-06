@@ -1,0 +1,45 @@
+class Solution{
+public:
+    long long maximumSubarraySum(vector<int>& nums, int k){
+        // Approach: HASHMAP + SLIDING WINDOW
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        long long maxi = 0; // to store the maximum sum of the subArray
+        long long currSum = 0; // to store the current sum of the subArray
+        unordered_map<int,int> mpp; // to store the frequency of the elements of the Array
+        int i = 0; // to traverse the Array
+        
+        // First only traverse the 1st 'k' elements of 'nums' and store it in map
+        while(i < k && i < nums.size()){
+            mpp[nums[i]]++; // store the element in the map
+            currSum += nums[i]; // record the current sum of the subarray
+            i++; // move the pointer
+        }
+        
+        // So, if the size of map is 'k', then there are 3 distinct elements in the map. So, update maxi.
+        if(mpp.size() == k){
+            maxi = currSum;
+        }
+        // Now, traverse the remaining elements of the Array and add the new element nums[i] to the map and remove the 
+        // old element i.e, nums[i-k] from the map since we need sum of only 'k' elements
+        while(i < nums.size()){
+            mpp[nums[i]]++;
+            mpp[nums[i-k]]--; // decrement the frequency of (i-k)th element
+            // If the frequency of (i-k)th element becomes 0, remove that element from the map
+            if(mpp[nums[i-k]] == 0){
+                mpp.erase(nums[i-k]);
+            }
+
+            currSum += nums[i]; // add the 'i'th element to the current sum
+            currSum -= nums[i-k]; // remove the calculation for 'i-k'th element 
+            
+            // So, if the map has 'k' distinct elements, then we update our maximum sum
+            if(mpp.size() == k){
+                maxi = max(maxi, currSum);
+            }
+            i++; // slide the window
+        }
+        return maxi;
+    }
+};
