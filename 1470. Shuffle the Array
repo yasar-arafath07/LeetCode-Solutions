@@ -1,11 +1,16 @@
-class Solution {
+class Solution{
 public:
-    vector<int> shuffle(vector<int>& nums, int n) {
-        vector<int> ans;
+    vector<int> shuffle(vector<int>& nums, int n){
+        // Approach: ITERATIVE
+        // TC : O(n), where 'n' is the given i/p 
+        // SC : O(N), where 'N' is the size of the i/p Array
+        // C++ CODE:
+        vector<int> ans; // to store the shuffled elements
         
+        // Traverse the i/p Array till 'n'
         for(int i=0; i<n; i++){
-            ans.push_back(nums[i]);
-            ans.push_back(nums[i+n]);
+            ans.push_back(nums[i]); // push the 'i'th element into 'ans' vector
+            ans.push_back(nums[i+n]); // then push the 'i+n'th element into the 'ans' vector
         }
         return ans;
     }
