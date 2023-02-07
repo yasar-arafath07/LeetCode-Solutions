@@ -1,0 +1,20 @@
+class Solution{
+public:
+    int maxCoins(vector<int>& piles){
+        // Approach: SORTING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = piles.size();
+        int ans = 0; // to store the maximum no. of coins that we can hqve
+
+        // sort the i/p Array so that we can pick every 2nd maximum element
+        sort(piles.begin(), piles.end());
+
+        // Traverse from i=n/3 till the end because bob will pick the 1st n/3 piles.
+        for(int i=n/3; i<n; i+=2){
+            ans += piles[i];
+        }
+        return ans;
+    }
+};
