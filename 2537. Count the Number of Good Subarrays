@@ -1,0 +1,51 @@
+class Solution{
+public:
+    long long countGood(vector<int>& nums, int k){
+        // Approach: HASHTABLE + SLIDING WINDOW
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int n = nums.size();
+        long long ans = 0; // to store the count of good subarrays
+        long long count = 0; // to store the count of pairs of indices (i,j). 'count' should be atleast 'k'
+        unordered_map<long, long> mpp; // to store the frequency of the elements of the current window only
+        int i = 0; // windowStart
+        int j = 0; // windowEnd
+
+        // Traverse till the end of the i/p Array
+        for(int j=0; j<nums.size(); j++){
+            mpp[nums[j]]++; // Insert the element in the map
+            // If the frequency of any element in the map becomes greater than 1, means we have a pair (i,j) 
+            // such that nums[i] = nums[j]
+            if(mpp[nums[j]] > 1){
+                // then we have a pair (i,j) such that nums[i] = nums[j]. So, update count which keeps track of
+                // no. of such possible pairs.
+                count += mpp[nums[j]] - 1; // -1 because if there are 3 same elements, then possible pairs of 
+            }                              // subsrrays are only 2. 
+
+            // If count becomes greater than OR equal to 'k', then we have 'k' pairs of indices in the current
+            // subarray. So, we update the 'ans' which is (n-j) and then slide the window
+            while(i < j && count >= k){
+                ans += (n-j); // Explanation below for this line.
+                // Before sliding the window, remove the calculations for 'i'th element. So, remove it's freq.
+                mpp[nums[i]]--;
+                // If frequency still remains greater than or equal to 1, then update count. 
+                if(mpp[nums[i]] >= 1){
+                    count -= mpp[nums[i]]; 
+                }
+                i++; // slide the window
+            }
+        }
+        return ans;
+    }
+};
+
+
+/*
+Q) What is (n-j) here?
+Ans: This is adding total no. of good subarrays that have been found so far. When this line is executed, it menas that
+the current subarray starting ffrom index 'i' and ending at index 'j' contains atleast 'k' distinct elements. So, all 
+subarrays that starts at 'i' and end at any index greater than 'j' will also have 'k' distinct elements. So, they are 
+also considered as good subarrays. Therefore, the no. of good subarrays that end at any index greater than 'j' is (n-j).
+and it will be added to 'ans' which is the total count of good subarrays.  
+*/
