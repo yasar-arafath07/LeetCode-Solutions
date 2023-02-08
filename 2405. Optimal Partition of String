@@ -1,0 +1,28 @@
+class Solution{
+public:
+    int partitionString(string s){
+        // Approach: Using SET
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int ans = 1; // becuase minimum we need atleast 1 partition i.e, initially a single set will be there
+        unordered_set<char> st; // to create unique substrings
+
+        // Traverse the string 's'
+        for(int i=0; i<s.length(); i++){
+            // check if the character is not presnt in the set. If YES, insert the current character into the set.
+            if(st.find(s[i]) == st.end()){
+                st.insert(s[i]);
+            }
+            else{
+                // If the current character is already present in the set, then we can insert it there because we need
+                // onlyunique sy=ubstrings. So, create a new set/substring by incrementing 'ans' and then clear the old
+                // set which will act as the current new set and then insert the current charcacter into that set.
+                ans++;
+                st.clear();
+                st.insert(s[i]);
+            }
+        }
+        return ans;
+    }
+};
