@@ -1,0 +1,25 @@
+class Solution{
+public:
+    int partitionDisjoint(vector<int>& nums){
+        // Approach: ITERATIVE
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int mini = nums[0]; 
+        int maxi = nums[0];
+        int index = 0; // the index from where we need to partition. Initially it'll be at 0
+
+        // Traverse the Array till the end
+        for(int i=1; i<nums.size(); i++){
+            // If the current element nums[i] is lesser than the mini, then update the 'index' and store the 
+            // maximum element till now in 'mini'
+            if(nums[i] < mini){
+                // then update the partition point
+                index = i;
+                mini = maxi;
+            }
+            maxi = max(maxi, nums[i]); // keeps track of maximum element till the current element in the Array
+        }
+        return index + 1; // length of the subarray
+    }
+};
