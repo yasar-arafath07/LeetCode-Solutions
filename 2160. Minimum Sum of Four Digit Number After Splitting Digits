@@ -1,0 +1,16 @@
+class Solution{
+public:
+    int minimumSum(int num){
+        // Approach: Using STRING
+        // TC : O(NlogN)
+        // SC : O(1)
+        // C++ CODE:
+        string s = to_string(num); // convert the given integer 'num' to string
+
+        sort(s.begin(), s.end()); // sort the string
+
+        int ans = ((s[0]-'0' + s[1]-'0') * 10) + (s[2]-'0' + s[3]-'0'); // find the answer
+        // return the answer
+        return ans;
+    }
+};
