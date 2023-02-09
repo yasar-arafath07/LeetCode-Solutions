@@ -1,0 +1,38 @@
+class Solution{
+public:
+    int alternateDigitSum(int n){
+        // Approach: Using VECTOR
+        // TC : O(n)
+        // SC : O(n)
+        // C++ CODE:
+        int ans = 0; // to store the sum of all digits with their corresponding sign
+        vector<int> temp; // to store the digits of given input integer 'n'
+        
+        // store each of the digits of the input 'n' in the temp.
+        while(n > 0){
+            int ele = n % 10;
+            temp.push_back(ele);
+            n /= 10;
+        }
+        
+        // reverse the 'temp' vector to get the original order of the input 'n' since while taking out each digits, 
+        // it'll store the digits in temp from the end
+        reverse(temp.begin(), temp.end());
+
+        bool plus = true; // initially 'plus' will be assigned to true
+        
+        // Now, traverse the 'temp' vector and do plus and minus alternatively for the elements and return the ans
+        for(int i=0; i<temp.size(); i++){
+            // 1st element will be assigned 'plus' 
+            if(plus){
+                ans += temp[i];
+                plus = false; // assign minus for the next element
+            }
+            else{
+                ans -= temp[i];
+                plus = true; // assign plus for the next element
+            }
+        }
+        return ans;
+    }
+};
