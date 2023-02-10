@@ -1,0 +1,26 @@
+class Solution{
+public:
+    vector<int> arrayChange(vector<int>& nums, vector<vector<int>>& operations){
+        // Approach: HASHMAP
+        // TC : O(N), since the maximum range of 'n' and 'm' are same, So, TC will be O(N)+O(M) = O(N)+O(N) = O(2N),
+        // which is again equal to simply O(N)
+        // SC : O(N), where 'N' is the total no. of elements of 'nums' which are unique to store in the map
+        // C++ CODE:
+        unordered_map<int,int> mpp; // to store the element with it's index
+
+        // Traverse the Array and store the element in the map as key and it's index as value.
+        for(int i=0; i<nums.size(); i++){
+            mpp[nums[i]] = i;
+        }
+
+        // Now, traverse the 'operations' Array and perform the operations
+        for(int i=0; i<operations.size(); i++){
+            // find the position/index of 'nums' where we need to replace the element
+            int pos = mpp[operations[i][0]];
+            nums[pos] = operations[i][1]; // replace the element in the position 'nums' by the new element 
+            // Now, store the new element which we replaced with the old element in the map with it's index
+            mpp[operations[i][1]] = pos; // update the new replaced element with it's index which is 'pos'
+        }
+        return nums;
+    }
+};
