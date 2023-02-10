@@ -1,0 +1,52 @@
+class Solution{
+public:
+    int differenceOfSum(vector<int>& nums){
+        // Approach 2: ITERATIVE with MATH
+        // TC : O(N), where 'N' is the size of the Array 'nums'
+        // SC : O(1)
+        // C++ CODE:
+        int eSum = 0; // to store the sum of all the elements of 'nums'
+        int dSum = 0; // to store the sum of all the digits present in each element of 'nums'
+
+        // Traverse each and every element of 'nums'
+        for(auto& n : nums){
+            eSum += n; // calculate the sum of elements
+            // Now, clculate the sum of each digits of an element of nums
+            while(n > 0){
+                int r = n % 10;
+                dSum += r;
+                n /= 10;
+            }
+        }
+        // return the absolute difference b/w 'eSum' and 'dSum'
+        return abs(eSum - dSum);
+
+
+
+        /*
+        // Approach 1: ITERATIVE with Conversion to string
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int sum = 0; // to calculate the elements sum of all the elements in the Array
+        int digitSum = 0; // to calculat ehte digit sum of all the digits
+        
+        // Traverse the Array and calculate the total sum of all the elements in the Array
+        for(int i=0; i<nums.size(); i++){
+            sum += nums[i];
+        }
+        
+        // Now, again traverse the Array and calculate total sum of all the digits present in each element of 'nums'
+        for(int i=0; i<nums.size(); i++){
+            // Convert each element of 'nums' to a string since we need to extract each digit of a element
+            string s = to_string(nums[i]);
+            // Now, traverse the string and calculate the sum of all the digits in the string
+            for(int j=0; j<s.length(); j++){
+                digitSum += s[j]-'0';
+            }
+        }
+        // Finally, return the absolute difference between 'sum' and 'digitSum' 
+        return abs(sum - digitSum);
+        */
+    }
+};
