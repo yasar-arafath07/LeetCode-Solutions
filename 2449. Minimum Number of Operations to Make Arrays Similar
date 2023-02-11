@@ -1,0 +1,58 @@
+class Solution{
+public:
+    long long makeSimilar(vector<int>& nums, vector<int>& target){
+        // Approach: SORTING
+        // TC : O(N*logN)
+        // SC : O(N)
+        // C++ CODE:
+        long long evenCount = 0;
+        long long oddCount = 0;
+
+        vector<int> numsEven; // to store the Even elements from 'nums' Array
+        vector<int> numsOdd; // to store the Odd elements from 'nums' Array
+        vector<int> targetEven; // to store the Even elements from 'target' Array
+        vector<int> targetOdd; // to store the Odd elements from 'target' Array
+
+        // Traverse the 'nums' Array and push the Even elements into 'numsEven' and push Odd elements into 'numsOdd'.
+        for(auto& x : nums){
+            if(x % 2 == 0){
+                numsEven.push_back(x);
+            }
+            else{
+                numsOdd.push_back(x);
+            }
+        }
+
+        // Traverse the 'target' Array and push all the Even elements into 'targetEven' and push all Odd elements
+        // into 'targetOdd'.
+        for(auto& x : target){
+            if(x % 2 == 0){
+                targetEven.push_back(x);
+            }
+            else{
+                targetOdd.push_back(x);
+            }
+        }
+
+        // sort all the 4 vectors
+        sort(numsEven.begin(), numsEven.end());
+        sort(numsOdd.begin(), numsOdd.end());
+        sort(targetEven.begin(), targetEven.end());
+        sort(targetOdd.begin(), targetOdd.end());
+
+        // Now, traverse on the 'numsEven' Array and store the difference between the elements at 'i' in 'evenCount'
+        for(int i=0; i<numsEven.size(); i++){
+            evenCount += abs(numsEven[i] - targetEven[i]) / 2;
+        }
+
+        // Similarly traverse on the 'numsOdd' Array and store the difference between elements at 'i' in 'oddCount'
+        for(int i=0; i<numsOdd.size(); i++){
+            oddCount += abs(numsOdd[i] - targetOdd[i]) / 2;
+        }
+        
+        // calculate the Answer
+        long long res = (evenCount + oddCount) / 2; // since we divided the Array into 2, so we divide by 2 to get the answer
+
+        return res;
+    }
+};
