@@ -1,0 +1,19 @@
+class Solution{
+public:
+    int minOperations(int n){
+        // Approach: GREEDY
+        // EXPLANATION: Minimum operations needed to make all the Array elements equal will be to make all the elements equal
+        // to the mid of the Array. So, each element of the Array is (2*i + 1). So, to make this equal to the mid,
+        // we subtract this from the mid 'n' i.e, n - (2*i + 1). i.e, (n - arr[i]) till the mid of the Array.
+        // TC : O(n/2) = O(n)
+        // SC : O(1)
+        // C++ CODE:
+        int res = 0; // to store the minimum no. of operations needed to make all the elements of the Array equal.
+
+        // Traverse till the mid of the Array
+        for(int i=0; i<n/2; i++){
+            res += n - (2*i + 1); // find the operations needed for each element to make it equal to mid of the Array
+        }
+        return res;
+    }
+};
