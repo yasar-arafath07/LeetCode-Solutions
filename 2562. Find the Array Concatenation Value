@@ -1,0 +1,35 @@
+class Solution{
+public:
+    long long findTheArrayConcVal(vector<int>& nums){
+        // Approach: 2 POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+        long long ans = 0; // to store the concatenation value of nums
+        long long temp = 0;
+        int i = 0; // pointer 1
+        int j = n - 1; // pointer 2
+        
+        // Traverse till the mid of the Array
+        while(i <= j){
+            string s1 = to_string(nums[i]); // convert nums[i] to string and store it in 's1'
+            string s2 = to_string(nums[j]); // convert nums[j] into string and store it in 's2'
+            string s = s1 + s2; // add s1 and s2 and store it in 's'
+            temp = stoi(s); // convert the string to integer
+            ans += temp; // add the integer to the 'ans'
+            i++; // move the pointers
+            j--;
+            
+            // EDGE CASE: If 'i' and 'j' are pointing to only 1 element, which is in the mid, then we have only 1 element.
+            // So, we need only 1 string to handle this element
+            if(i == j){
+                string s = to_string(nums[i]);
+                temp = stoi(s);
+                ans += temp;
+                break; // since 'i' and 'j' are pointing to same element, break the loop since there are no further elements
+            }
+        }
+        return ans;
+    }
+};
