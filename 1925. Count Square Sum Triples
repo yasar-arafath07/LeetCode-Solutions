@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int countTriples(int n){
+        // Approach: MATH
+        // TC : O(n^2)
+        // SC : O(1)
+        // C++ CODE:
+        int triplets = 0; // to store the no. of square triplets
+
+        // Traverse from 1 till 'n' and then traverse from 'i' till 'n'
+        for(int i=1; i<=n; i++){
+            for(int j=i+1; j<=n; j++){
+                int square = (i*i) + (j*j); // find the sqaure
+                int root = sqrt(square); // find the root of the square
+                // Cgeck if the condition satisfies
+                if(root * root == square && root <= n){
+                    triplets += 2; // eg: If (3,4,5) is one of the triplet, then (4,3,5) is also valid triplet. So, we add 2
+                }
+            }
+        }
+        return triplets;
+    }
+};
