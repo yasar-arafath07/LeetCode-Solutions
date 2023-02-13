@@ -1,0 +1,34 @@
+class Solution{
+public:
+    int countOdds(int low, int high){
+        // Approach: MATH 
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        int total = high - low + 1; // total numbers in the given range
+
+        if(low%2 != 0 && high%2 != 0){
+            return (total/2 + 1);
+        }
+        else{
+            return total/2;
+        }
+
+
+
+        /*
+        // Approach: BRUTE FORCE (TLE Error)
+        // TC : O(high - low)
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0;
+
+        for(int i=low; i<=high; i+=2){
+            if(i % 2 == 1){
+                count++;
+            }
+        }
+        return count;
+        */
+    }
+};
