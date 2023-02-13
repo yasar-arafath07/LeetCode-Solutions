@@ -1,0 +1,38 @@
+class Solution{
+public:
+    int numOfSubarrays(vector<int>& arr){
+        // Approach: ITERATIVE
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int odd = 0; // to count the no. of odd elements
+        int even = 0; // to count the no. of even elements
+        int mod = 1e9 + 7; 
+        int res = 0; // to store the total no. of subarrays which has odd sum
+
+        // Traverse on the i/p Array
+        for(auto& n : arr){
+            // If the element is even
+            if(n % 2 == 0){
+                even++;
+            }
+            else{
+                // If the element is odd
+                swap(odd, even);
+                odd++;
+            }
+            res = (res + odd) % mod;
+        }
+        return res;
+    }
+};
+
+
+/*
+// EXPLANATION:
+- If we know the no. of even and odd subarrays that end at the previous element, we can figure out how many even and odd
+  subarrays we have for an element 'n'.
+- If current element 'n' is even, we increase the no. of even subarrays (since, even + even = even).
+- If the current element 'n' is odd, then the no. of odd subarrays is the previous no. of even subarrays + 1, and the no. of
+  even subarrays is the previous no. of odd subarrays. (since, odd + odd = even and odd + even = odd)
+*/
