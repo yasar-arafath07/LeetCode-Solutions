@@ -1,0 +1,46 @@
+class Solution{
+public: 
+    string addBinary(string a, string b){
+        // Approach: MATH + BIT MANIPULATION
+        // TC : O(N), where 'N' is the maximum length of string 'a' and string 'b'
+        // SC : O(1)
+        // C++ CODE: 
+        string ans; // to store the answer
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        int carry = 0;
+
+        // Calculate the sum
+        while(i >= 0 || j >= 0 || carry){
+            if(i >= 0){
+                carry += a[i] - '0';
+                i--;
+            }
+            if(j >= 0){
+                carry += b[j] - '0';
+                j--;
+            }
+            ans += (carry%2 + '0'); // '0' because the variable 'ans' is string datatype
+            carry /= 2; // update carry
+        }
+        reverse(ans.begin(), ans.end()); // since we are performing the addition from the beginning
+        return ans;
+    }
+};
+
+
+/*
+// EXPLANATION: Adding 2 Binary bits 
+--> 0 + 0 = 0
+--> 0 + 1 = 1
+--> 1 + 0 = 0
+--> 1 + 1 = 1
+*/
+
+/*
+NOTE this:
+---> a = a + "xy" is O(N) while a += "xy" is O(1) (Amortized)
+---> a = a + "xy" creates a copy of 'a', appends "xy" and then assigns it back to 'a'.
+---> a += "xy" just appends "xy" to 'a'.
+Therefore, the Time Complexity of this Approach is O(N)
+*/
