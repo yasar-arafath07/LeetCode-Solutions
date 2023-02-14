@@ -1,0 +1,32 @@
+class Solution{
+public:
+    int maximumProduct(vector<int>& nums, int k){
+        // Approach: PRIORITY QUEUE (MIN HEAP)
+        // EXPLANATION: Product of Array will be maximum when the smallest element in the Array is maximum (increased by 1)
+        // So, we use Priority Queue (MIN HEAP) to get the smallest element in every iteration and then increase it by 1.
+        // TC : O(N * logN) for inserting 'N' elements into priority_queue + O(K * logN) to increment 'K' elements and pop 
+        // and then push it back to priority_queue + O(N * logN) for removing 'N' elements from the queue.
+        // Therefore, Total TC = O(N * logN) + O(k * logN) + O(N * logN) = 2 * O(N * logN) + O(K * logN) = O(NlogN) + O(KlogN) 
+        // SC : O(N), for the Priority Queue
+        // C++ CODE:
+        long long ans = 1; // to store the product of nums after 'k' operations.
+        int mod = 1e9 + 7;
+        // Initialize a MIN HEAP and copy all the elements of i/p Array 'nums' into the priority_queue
+        priority_queue<int, vector<int>, greater<int>> pq(nums.begin(), nums.end()); // MIN HEAP
+
+        // Perform the operations 'k' no. of times
+        while(k--){
+            int ele = pq.top(); // current minimum element
+            pq.pop();
+            pq.push(ele + 1); // increment the element by 1 and push it back into the priority_queue
+        }
+        
+        // calculate the total product of the priority_queue/Array after 'k' operations
+        while(!pq.empty()){
+            int x = pq.top();
+            pq.pop();
+            ans = (ans * x) % mod;
+        }
+        return ans;
+    }
+};
