@@ -1,0 +1,24 @@
+class Solution{
+public:
+    long long minimalKSum(vector<int>& nums, int k){
+        // Approach: Using SET + MATH
+        // Explanation: What we can do is we can compute the minimal possible sum as (k * (k+1)/2). and then we go through 
+        // all the unique elements of the Array and substitute all numbers less than or equal to 'k' with increasing numbers
+        // greater than 'k'.
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        long long res = (long long) k * (k+1) / 2; // minimal possible sum
+
+        set<int> s(nums.begin(), nums.end()); // Initialize a set and copy the elements of Array into it
+        
+        // Traverse through unique elements of the Array
+        for(auto& ele : s){
+            if(ele <= k){
+                k++;
+                res += (k - ele);
+            }
+        }
+        return res;
+    }
+};
