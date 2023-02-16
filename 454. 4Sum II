@@ -1,0 +1,27 @@
+class Solution{
+public:
+    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4){
+        // Approach: HASHMAP + 2 PASS
+        // TC : O(N^2)
+        // SC : O(N^2)
+        // C++ CODE:
+        int count = 0; // to store the total no. of tuples which satisfies the given condition
+        unordered_map<int,int> mpp; 
+
+        // Traverse the Array 'nums1' and 'nums2' and store the sum of the elements in the map
+        for(auto& x : nums1){
+            for(auto& y : nums2){
+                mpp[x + y]++;
+            }
+        }
+
+        // Now, traverse the Array 'nums3' and 'nums4' and check if their Negative sum is already present in the map or not
+        // Add it to the count if the negative sum is present
+        for(auto& i : nums3){
+            for(auto& j : nums4){
+                count += mpp[-(i+j)];
+            }
+        } 
+        return count;
+    }
+};
