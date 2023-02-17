@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int maxNonOverlapping(vector<int>& nums, int target){
+        // Approach: Using SET
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int res = 0; // to record the count of maximum no. of subarrays
+        int sum = 0; // to maintain the sum of the subarray
+        unordered_set<int> st;
+        st.insert(0);
+
+        // Traverse the Array 'nums'
+        for(auto& x : nums){
+            sum += x; // calculate the sum
+
+            // Check if (sum - target) is present in the set or not
+            if(st.find(sum - target) != st.end()){
+                res++; 
+                st = {0}; // Initialize the set to {0}
+                sum = 0; // make sum = 0
+            }
+            else{
+                st.insert(sum);
+            }
+        }
+        return res;
+    }
+};
