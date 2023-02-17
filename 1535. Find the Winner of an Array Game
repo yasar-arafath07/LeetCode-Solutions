@@ -1,0 +1,26 @@
+class Solution{
+public:
+    int getWinner(vector<int>& arr, int k){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int count = 0; // to keep track of how many elements the current element beats
+        int curr = arr[0]; // current element initially 
+
+        // Traverse the Array
+        for(int i=1; i<arr.size(); i++){
+            // If the element arr[i] beats the current winner 'curr', then make count as 0 and update 'curr'
+            if(arr[i] > curr){
+                count = 0;
+                curr = arr[i];
+            }
+            // else, increment 'count' and check if count is equal to k, if yes, then break and return the 'curr'
+            count++;
+            if(count == k){
+                break;
+            }
+        }
+        return curr;
+    }
+};
