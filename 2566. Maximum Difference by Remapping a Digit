@@ -1,0 +1,56 @@
+class Solution{
+public:
+    int minMaxDifference(int num){
+        // Approach: ITERATIVE
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the difference between maximum and minimum values
+        string s1 = to_string(num); // convert the given integer to a string
+        string s2 = s1; // keep a copy of the original string 
+        bool flag = true;
+        char c;
+        
+        // Traverse the string 's1' and find the maximum value we can get which is by replacing the 1st character to '9'.
+        for(int i=0; i<s1.length(); i++){
+            // If the 1st character is not equal to 9, replace it by 9
+            if(s1[i] != '9' && flag){
+                c = s1[i]; // remember the character which we changed to '9'
+                s1[i] = '9'; // replace the character by '9'
+                flag = false; // make flag as false since we need to replace only 1 digit
+            }
+            else{
+                // make all the elements which are equal to replaced element as '9'
+                if(s1[i] == c){
+                    s1[i] = '9';
+                }
+            }
+        }
+        
+        flag = true;
+        // c = '#';
+        // Traverse the string 's2' and find the minimum value we can get which is by replacing the 1st character by '0'
+        for(int i=0; i<s2.length(); i++){
+            // If the starting characters are not '0', replace it by 0. If the 1st character is already 0, then we
+            // make the next character which is not equal to '0' as '0'
+            if(s2[i] != '0' && flag){
+                c = s2[i]; // remember the character which we made to '0'
+                s2[i] = '0'; // make the current charatcer as '0'
+                flag = false; 
+            }
+            else{
+                // replace all the elements in the string by '0' which is equal to above replaced element
+                if(s2[i] == c){
+                    s2[i] = '0';
+                }
+            }
+        }
+        // Now, convert the strings back to the integer
+        int a = stoi(s1); // Maximum integer
+        int b = stoi(s2); // Minimum integer
+        // cout<<a<<endl;
+        // cout<<b<<endl;
+        ans = a - b; // Find the difference between maximum and minimum
+        return ans;
+    }
+};
