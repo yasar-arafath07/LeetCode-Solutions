@@ -9,15 +9,21 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution{
 public:
-    TreeNode* invertTree(TreeNode* root) {
+    TreeNode* invertTree(TreeNode* root){
+        // Approach: RECURSION
+        // TC : O(N)
+        // SC : O(N), space required for the Recursion Stack
+        // C++ CODE:
+        // BASE CASE:
         if(root == NULL){
             return root;
         }
+        // swap the values at left node and right node
         swap(root->left, root->right);
-        invertTree(root->left);
-        invertTree(root->right);
+        invertTree(root->left); // call the function recursively for the Left node
+        invertTree(root->right); // call the function recursively for the Right node
         return root;
     }
 };
