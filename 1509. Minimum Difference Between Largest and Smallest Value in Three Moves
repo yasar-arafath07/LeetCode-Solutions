@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int minDifference(vector<int>& nums){
+        // Approach: SORTING
+        // TC : O(N*logN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+        int ans = INT_MAX; // to store the minimum difference between largest and smallest element
+        
+        // EDGE CASE: If there are less than 4 elements, then return 0.
+        if(n < 5) return 0;
+
+        // sort the Input Array
+        sort(nums.begin(), nums.end());
+
+        // So, there are 4 possible cases
+        int case1 = nums[n-1] - nums[3]; // difference when we delete the first 3 elements of the Array which are smallest
+        int case2 = nums[n-4] - nums[0]; // difference when we delete the last 3 elements of the Array which are largest
+        int case3 = nums[n-2] - nums[2]; // difference when we delete the first 2 and last 1 element of the Array
+        int case4 = nums[n-3] - nums[1]; // difference when we delete the last 2 and first 1 element of the Array
+        
+        // Find the minimum of all the above 4 cases
+        ans = min({case1, case2, case3, case4});
+
+        return ans;
+    }
+};
+
+
+/*
+// EXPLANATION: 
+// CASE1: Kill/Remove 3 Smallest elements of the Array
+// CASE2: Kill/Remove 3 Largest elements of the Array
+// CASE3: Kill/Remove 2 Smallest and 1 Largest element of the Array
+// CASE4: Kill/Remove 1 Smallest and 2 Largest element of the Array
+// Then find the difference between largest and smallest element in all the above 4 cases
+// And then return the minimum out of all the 4
+*/
