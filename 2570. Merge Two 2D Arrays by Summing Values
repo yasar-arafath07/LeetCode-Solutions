@@ -1,0 +1,81 @@
+class Solution{
+public:
+    vector<vector<int>> mergeArrays(vector<vector<int>>& nums1, vector<vector<int>>& nums2){
+        // Approach: HASHTABLE
+        // TC : O(M+N), since we traverse both the Arrays
+        // SC : O(M+N), since we store the elements of both the Arrays in the map
+        // C++ CODE:
+        vector<vector<int>> ans; // to hold the answer
+        map<int,int> mpp; // to store the 'id' as key and 'val' as value
+
+        // Traverse the i/p Array 'nums1' and insert the elements into the map
+        for(auto& ele1 : nums1){
+            mpp[ele1[0]] += ele1[1];
+        }
+        // Traverse the i/p Array 'nums2' and insert the elements into the map
+        for(auto& ele2: nums2){
+            mpp[ele2[0]] += ele2[1];
+        }
+
+        // Now, traverse the map and insert the elements into the ans (mpp.first is 'id' and mpp.second is the 'val')
+        for(auto& it : mpp){
+            ans.push_back({it.first, it.second});
+        }
+        return ans;
+
+
+
+        /*
+        // Approach 1: TWO POINTERS
+        // TC : O(M+N), where 'M' is the no. of elements in 'nums1' and 'N' is the no. of elements in 'nums2'
+        // SC : O(1)
+        // C++ CODE:
+        vector<vector<int>> ans; // tos tore the result
+        int n = nums1.size();
+        int m = nums2.size();
+        int i = 0; // pointer 1 for 'nums1'
+        int j = 0; // pointer 2 for 'nums2'
+
+        while(i < nums1.size() && j < nums2.size()){
+            // find the 'id'
+            int id1 = nums1[i][0]; // 'id' of 'nums1'
+            int id2 = nums2[j][0]; // 'id' of 'nums2'
+
+            // CASE 1: If both the id's are equal, insert the id along the sum of it's values in the res
+            if(id1 == id2){
+                int sum = nums1[i][1] + nums2[j][1]; // calculate the sum of the values
+                ans.push_back({id1, sum}); 
+                i++; // move 'i'
+                j++; // move 'j'
+            }
+            // CASE 2: If 'id1' is smaller than 'id2', push 'id1' along with it's value into the answer
+            else if(id1 < id2){
+                ans.push_back({id1, nums1[i][1]});
+                i++;
+            }
+            // CASE 3: If 'id2' is smaller than 'id1', push 'id2' along with it's value into the answer
+            else if(id2 < id1){
+                ans.push_back({id2, nums2[j][1]}); // push 'id2' along with it's value which is present in 'nums2'
+                j++; // move 'j'
+            }
+        }
+
+        // Now, if the size of 'nums1' and 'nums2' are not equal, then there might be some elements still remaining to
+        // insert into 'ans'. So, insert them directly into the 'ans'
+        // If elements from 'nums1' are remaining, insert it into 'ans'
+        while(i < nums1.size()){
+            int id1 = nums1[i][0];
+            ans.push_back({id1, nums1[i][1]});
+            i++; // move 'i'
+        }
+
+        // If elements from 'nums2' are remaining, insert them into 'ans'
+        while(j < nums2.size()){
+            int id2 = nums2[j][0];
+            ans.push_back({id2, nums2[j][1]});
+            j++; // move 'j'
+        }
+        return ans;
+        */
+    }
+};
