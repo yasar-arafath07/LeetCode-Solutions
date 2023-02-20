@@ -1,0 +1,31 @@
+class Solution{
+public:
+    vector<string> findRestaurant(vector<string>& list1, vector<string>& list2){
+        // Approach: BRUTE FORCE + TWO POINTERS
+        // TC : O(M*N), where 'M' is the no. of elements in 'list1' and 'N' is the no. of elements in 'list2'
+        // SC : O(1)
+        // C++ CODE:
+        vector<string> ans; // to store the common string 
+        int mini = INT_MAX; // to store the current minimum Index sum
+
+        // Traverse the string 'list1' and check if the current element occurs in the 'list2'
+        for(int i=0; i<list1.size(); i++){
+            // Traverse the 2nd string 'list2'
+            for(int j=0; j<list2.size(); j++){
+                // If the element in both the Arrays are equal, then check the least Index sum
+                if(list1[i] == list2[j]){
+                    if(i + j < mini){
+                        mini = i + j; // update minimum Index
+                        ans.clear(); // since we have a new common string with lesser index sum, we clear the previous 
+                        // common strings which are stored in the 'ans' string
+                        ans.push_back(list1[i]); // save the current common string in the 'ans' vector
+                    }
+                    else if(i + j == mini){
+                        ans.push_back(list1[i]); // save that common string in 'ans' vector as well
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
