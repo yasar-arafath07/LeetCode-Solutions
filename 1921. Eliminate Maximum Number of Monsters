@@ -1,0 +1,50 @@
+class Solution{
+public:
+    int eliminateMaximum(vector<int>& dist, vector<int>& speed){
+        // Approach: GREEDY
+        // EXPLANATION: First, find the time of every monster to reach the city and store this time in a 'time' vector. and
+        // then sort this 'time' in Ascending order. and finally count the no. of monsters we can kill until any monster
+        // reaches the city.
+        // TC : O(N*logN)
+        // SC : O(N), for the 'time' vector
+        // C++ CODE:
+        int n = dist.size();
+        vector<int> time(n); // Create a vector to store the time required for the 'i'th Monster to reach the city
+
+        // Traverse the Arrays 
+        for(int i=0; i<dist.size(); i++){
+            time[i] = ceil((1.0*dist[i]) / speed[i]);
+        }
+
+        // sort the 'time' vector
+        sort(time.begin(), time.end());
+
+        int ans = 0; // this stores the total no. of monsters we can kill
+        int t = 0; // initital time at which we kill the monster 
+
+        for(int i=0; i<time.size(); i++){
+            if(t < time[i]){
+                // then we can kill that monster. So, ans++
+                ans++;
+            }
+            else{
+                // else, break the loop and return the answer which is the no. of monsters we can kill
+                break; 
+            }
+            t++; // Increment time
+        }
+        return ans;
+    }
+};
+
+
+/*
+QUESTION: Why we take 'ceil' here? what is it's purpose?
+Ans: This is to handle scenarios like for eg, if we have a monster coming at time "3.5", and if the current time is "3", 
+    that means we can kill this monster. Now, suppose if the monster came at time "3", that means we cannot kill the
+    monster. If a monster came at time "4", we can kill the monster. So, since we do this processing minute by minute, 
+    something like "3.5" can be considered similar to "4.0". So, when the current time reaches 3, both "3.5" and "4.0"
+    monsters can be killed. So, we equate the "3.5" monster scenario to "4.0" by taking the ceiling value. If we do the 
+    'floor' here, we will get incorrect answer thinking it's "3.0" and we cannot kill a monster who comes at "3.0" at 
+    time 3.
+*/
