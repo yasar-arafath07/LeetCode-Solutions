@@ -1,18 +1,51 @@
-class Solution {
+class Solution{
 public:
-    int singleNonDuplicate(vector<int>& nums) {
-        //Approach : Bitwise Solution
-        //Time Complexity : O(N)
+    int singleNonDuplicate(vector<int>& nums){
+        // Approach 2 : BITWISE 
+        // Time Complexity : O(N)
+        // SC : O(1)
+        // C++ CODE:
         int res = nums[0];
+        
+        // Traverse the Array and calculate the XOR b/w the elements
         for(int i=1; i<nums.size(); i++){
-            res ^= nums[i];   //res = res ^ nums[i]; i.e here we are using logical XOR operator so that it cancels all
-        }                    //similar elements next to each other and in the end only the unique element will be left
-        return res;  // we will return that unique element which is left in the array
+            res ^= nums[i]; // res = res ^ nums[i]; i.e here we are using logical XOR operator so that it cancells all
+        }                   // similar elements next to each other and in the end only the unique element will be left
+        // Return that unique element which is left in the Array
+        return res;  
+
+        
+        
+        /*
+        // Approach 1: HASHTABLE
+        // TC : O(N)
+        // SC : O(N/2) = O(N)
+        // C++ CODE:
+        unordered_map<int,int> mpp; // to store the frequency of each element of the i/p Array
+        
+        // Traverse the i/p Array snd store the frequency of it in the map
+        for(auto& ele : nums){
+            mpp[ele]++;
+        }
+        
+        // Now, traverse the map and check if frequency of any element is 1, then return it's corresponding element
+        for(auto& it : mpp){
+            if(it.second == 1){
+                return it.first;
+            }
+        }
+        return 0;
+        */
     }
 };
 
 
 
-/* If we XOR the Entire Array, all the similar elements will gets cancelled and we will be left with the element that appears only once. Since the XOR of 2 equal 
-   elements is 0 */
-// Use Binary Search for Optimization of Complexity
+/* 
+Q) What Exactly XOR does?
+Ans: If we XOR the Entire Array, all the similar elements will gets cancelled and we will be left with the element that appears only once. Since the XOR of 2 equal elements is 0. i.e, 2 ^ 2 = 0.
+
+// Use Binary Search for Optimization of TC to O(log N)
+*/
+
+
