@@ -1,0 +1,31 @@
+class Solution{
+public:
+    bool isSumEqual(string firstWord, string secondWord, string targetWord){
+        // Approach: BRUTE FORCE
+        // TC : O(L + M + N), where L - size of 'firstWord', M - size of 'secondWord' and N - size of 'targetWord'
+        // Since size of each string is less than or equal to 8 as mentioned in constraints, TC = O(8+8+8) = O(26) = O(1) 
+        // SC : O(1)
+        // C++ CODE:
+        int first = 0; // to store the numerical value of string 'firstWord'
+        int second = 0; // to store the numerical value of string 'secondWord'
+        int third = 0; // to store the numerical value of string 'targetWord'
+
+        // Traverse the 'firstword' string and calculate the numerical value
+        for(int i=0; i<firstWord.size(); i++){
+            first = (first * 10) + (firstWord[i] - 'a'); 
+        }
+
+        // Traverse the 'secondword' string and calculate it's numerical value
+        for(int i=0; i<secondWord.size(); i++){
+            second = (second * 10) + (secondWord[i] - 'a');
+        }
+
+        // Traverse the 'targetWord' string and calculate it's numerical value
+        for(int i=0; i<targetWord.size(); i++){
+            third = (third * 10) + (targetWord[i] - 'a');
+        }
+
+        // check if (first + second == third)
+        return first + second == third;
+    }
+};
