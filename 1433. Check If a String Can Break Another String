@@ -1,0 +1,34 @@
+class Solution{
+public:
+    bool checkIfCanBreak(string s1, string s2){
+        // Approach: SORTING
+        // EXPLANATION: The Solution exists iff and only iff "sorted(s1) >= sorted(s2)" OR "sorted(s2) >= sorted(s1)"
+        // TC : O(N*logN) + O(N*logN) = O(N*logN)
+        // SC : O(1)
+        // C++ CODE:
+        sort(s1.begin(), s1.end()); // sort the string 's1'
+        sort(s2.begin(), s2.end()); // sort the stirng 's2'
+
+        bool flag1 = true; // for string 's1'
+        bool flag2 = true; // for string 's2'
+
+        // Traverse the string and check the characters 
+        for(int i=0; i<s1.length(); i++){
+            // If any of the character of string 's1' is smaller than string 's2', then set the flag of 's1' to false
+            if(s1[i] < s2[i]){
+                flag1 = false;
+            }
+            // Similarly, If any of the character of 's2' is smaller than 's1', then set the flag of 's2' to false
+            if(s1[i] > s2[i]){
+                flag2 = false;
+            }
+        }
+        // Now, check if any of the string is strictly greater than the other string, return true. else return false.
+        if(flag1 || flag2){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+};
