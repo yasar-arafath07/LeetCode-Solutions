@@ -1,0 +1,31 @@
+class Solution{
+public:
+    long long minimumRemoval(vector<int>& beans){
+        // Approach: SORTING
+        // EXPLANATION: So to find the minimum no. of beans to remove, find the maximum no. of beans we can remove and then
+        // subtract the maximum no. of beans from the total beans which will result in minimum no.of beans
+        // DRY RUN the test cases with the help of bar chart drawn from the i/p Array for better understanding
+        // TC : O(N*logN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = beans.size();
+        long long res = INT_MIN; // to store the minimum no. of magic beans that we need to remove 
+        long long sum = 0; // to store the sum of all the magic beans of all bags
+
+        sort(beans.begin(), beans.end()); // sort the input Array
+
+        // Traverse the 'beans' Array and calculate the total no. of magic beans present 
+        // OR directly calculate by using 'accumulate()' function i.e, "sum = accumulate(beans.begin(), beans.end());"
+        for(int i=0; i<beans.size(); i++){
+            sum += beans[i]; 
+        }
+
+        // Now, traverse the i/p Array and calculate the maximum no. of magic beans we can remove 
+        for(int i=0; i<beans.size(); i++){
+            res = max(res, (long long)beans[i]*(n-i));
+        }
+        // since we need the minimum beans to be removed, we subtract the maximum beans we can remove form the total beans
+        // by which we get the minimum beans we can remove 
+        return sum - res;
+    }
+};
