@@ -1,0 +1,17 @@
+class Solution{
+public:
+    int arrangeCoins(int n){
+        // Approach: BRUTE FORCE
+        // TC : O(sqrt(n))
+        // SC : O(1)
+        // C++ CODE:
+        int rows = 1;
+
+        // keep building new rows till we have the total coins left
+        while(n > 0){
+            rows++; // create a new row
+            n -= rows; // fill the current row with coins and then subtract those many no. of coins from availabe coins
+        }
+        return rows - 1;
+    }
+};
