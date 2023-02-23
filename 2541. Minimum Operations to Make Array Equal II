@@ -1,0 +1,54 @@
+class Solution{
+public:
+    long long minOperations(vector<int>& nums1, vector<int>& nums2, int k){
+        // Approach: GREEDY
+        // TC : O(N), where 'N' is the no. of elements in the i/p Array 'nums1'
+        // SC : O(1)
+        // C++ CODE: 
+        // EDGE CASE: If 'k' is 0, then we can't perform any operations. So directly check if 'nums1' and 'nums2' are equal
+        if(k == 0){
+            // then check if both the Arrays are equal or not. If they are equal, then we don't need to perform any
+            // operations. So, return 0. 
+            if(nums1 == nums2){
+                return 0;
+            }
+            else{
+                // If both the Arrays are not equal, return -1.
+                return -1;
+            }
+        }
+
+        long long ans = 0; // minimum no. of operations required to make 'nums1' equal to 'nums2'
+        long long sum = 0; // total sum of the operations
+        long long diff; // to hold the difference b/w current 'i'th element of nums2[i] & nums1[i]
+        // i.e, diff = nums2[i] - nums1[i].
+
+        // Traverse the 'nums1' Array
+        for(int i=0; i<nums1.size(); i++){
+            // calculate the 'diff'
+            diff = nums2[i] - nums1[i];
+            // Check if 'diff' is divisible by 'k'. If it is not divisible, directly return -1.
+            if(diff % k != 0){
+                return -1;
+            }
+
+            diff = diff / k; // total no. of operations required
+            sum += diff; // calculate the sum of the total operations 
+
+            if(diff > 0){
+                // because we don't need to add all the operations since we are performing 2 operations at once for 2 
+                // indices of nums1 and it'll be considered as single operation.
+                ans += diff; // OR "if(diff < 0) ans += abs(diff)". this will also work
+            }
+        }
+
+        // Now, check if 'sum' is equal to 0 or not. If it is not equal to 0, then directly return -1.
+        // because if 'sum != 0', then that left part of 'sum' will never be filled after any no. of operations
+        if(sum != 0){
+            return -1;
+        }
+
+        // else, return the minimum no. of operations which is stored in 'ans'
+        return ans;
+    }
+};
