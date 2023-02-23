@@ -1,0 +1,34 @@
+class Solution{
+public:
+    long long smallestNumber(long long num){
+        // Approach: GREEDY
+        // TC : O(N*logN)
+        // SC : O(1)
+        // C++ CODE:
+        // CASE 1: If the given i/p 'nums' is negative
+        if(num < 0){
+            string s = to_string(-num); // convert the given integer to string
+            sort(s.rbegin(), s.rend()); // then sort the string in Descending/Reverse order
+            return -stoll(s); // convert the string to 'long long' and return it in negative
+        }
+
+        // CASE 2: If the given integer 'nums' is 0, then directly return 0.
+        if(num == 0) return 0;
+
+        // CASE 3: If the given i/p Integer is positive
+        if(num > 0){
+            string s = to_string(num); // convert the given i/p Integer into string
+            sort(s.begin(), s.end()); // sort the string in Ascending order 
+
+            int i = 0; // Initialize a pointer to traverse the string
+            // If we have '0's in our string, move 'i' till '0' are over and once we find a integer, swap that integer with
+            // the 1st position so that the string is smallest/minimized
+            while(s[i] == '0'){
+                i++;
+            }
+            swap(s[0], s[i]); // swap the 1st character with the 'i'th character 
+            return stoll(s); // return the string after converting it to 'long long'
+        }
+        return 0;
+    }
+};
