@@ -1,0 +1,30 @@
+class Solution{
+public:
+    int minimumPartition(string s, int k){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to kepp the count of minimum no. of substrings 
+        long long curr = 0;
+
+        // Traverse the i/p string 's'
+        // And start checking the substring from beginning one by one
+        for(int i=0; i<s.length(); i++){
+            curr = curr * 10 + (s[i] - '0'); // find the current substring
+            // If the current substring is greater than 'k', increment 'ans' and then update the current substring to be
+            // the current element which is : s[i]-'0'.
+            if(curr > k){
+                ans++;
+                curr = s[i] - '0';
+            }
+            // If the current element wich is s[i]-'0' is greater than 'k', then directly return -1. since all elements
+            // of the string should be less than 'k' to be a good string
+            if(curr > k){
+                return -1;
+            }
+        }
+        // return the no. of substrings
+        return ans + 1;
+    }
+};
