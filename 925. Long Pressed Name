@@ -1,0 +1,33 @@
+class Solution{
+public:
+    bool isLongPressedName(string name, string typed){
+        // Approach: TWO POINTERS
+        // TC : O(M+N), where 'M' is the size of string 'name' and 'N' is the size of string 'typed'
+        // SC : O(1)
+        // C++ CODE: 
+        int i = 0; // pointer 1
+        int j = 0; // pointer 2
+
+        // Traverse both the strings 
+        while(i < name.length() || j < typed.length()){
+            char current = name[i]; // current character
+
+            // check the current character 
+            if(name[i] != typed[j]){
+                return false;
+            }
+            // If characters in both the strings are equal, just move the pointers forward 
+            i++;
+            j++;
+            
+
+            if(name[i] != typed[j]){
+                // Keep moving pointer 'j' till the duplicate element/long pressed character is over
+                while(current == typed[j]){
+                    j++;
+                }
+            }
+        }
+        return true;
+    }
+};
