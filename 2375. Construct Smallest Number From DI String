@@ -1,0 +1,26 @@
+class Solution{
+public:
+    string smallestNumber(string pattern){
+        // Approach: GREEDY + STACK
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE: 
+        string ans;
+        stack<int> s;
+
+        // Traverse the string 'patttern'
+        for(int i=0; i<=pattern.length(); i++){
+            s.push(i + 1);
+
+            // If 'i' reaches the length of the string OR if the current character is 'I', then store all the integers 
+            // of the stack in the 'ans' string
+            if(pattern[i] == 'I' || i == pattern.length()){
+                while(!s.empty()){
+                    ans += to_string(s.top()); // add the digit to the 'ans' string
+                    s.pop(); // remove the digit from the stack
+                }
+            }
+        }
+        return ans; // return the 'ans' string
+    }
+};
