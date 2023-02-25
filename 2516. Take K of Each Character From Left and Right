@@ -1,0 +1,44 @@
+class Solution{
+public:
+    int takeCharacters(string s, int k){
+        // Approach: SLIDING WINDOW + HASHTABLE
+        // EXPLANATION: So, here find the Maximum window size of the string 's' such that count of all 'a', 'b', 'c' in 
+        // rest part of the string is atleast 'k'.
+        // We take 'max' because we need to find minimum no. of minutes taking characters from left or right side such all
+        // 'a', 'b' and 'c' char are atleast 'k'.
+        // TC : O(N)
+        // SC : O(1), since the map will have a maximum size of 3 since the string only contains 'a', 'b' and 'c'.
+        // C++ CODE:
+        int n = s.length();
+        int ans = n; // length of the string 's'
+        unordered_map<char,int> mpp; // to store the frequency of the characters of the input string 's'
+        int i = 0;
+        int j = 0;
+        int window = 0; // to store the size of the window
+
+        // Traverse the string 's' and store the frequency of the characters in the map
+        for(auto& c : s){
+            mpp[c]++;
+        }
+
+        // EDGE CASE: If the frequency of any of the character if less than 'k' in the map, then directly return -1.
+        if(mpp['a'] < k || mpp['b'] < k || mpp['c'] < k){
+            return -1;
+        }
+
+        // Now Traverse the string and find the maximum length of the window so that we get the minimum remaining size
+        for(int j=0; j<s.length(); j++){
+            mpp[s[j]]--; // decrement the frequency of the current element in the map
+            window++; // since we are traversing through 'j' forward, 'window' size increases by 1
+            
+            // Till the frequency of current element in the map becomes equal to or greater than 'k', slide the window
+            while(mpp[s[j]] < k){
+                mpp[s[i]]++; // Increment the frequency of 'i'th element in the map
+                i++; // slide the window
+                window--; // since we are moving 'i' towards 'j', window size 'window' will decrement by 1
+            }
+            ans = min(ans, n - window);           
+        }
+        return ans;
+    }
+};
