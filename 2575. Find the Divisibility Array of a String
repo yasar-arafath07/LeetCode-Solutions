@@ -1,0 +1,30 @@
+class Solution{
+public:
+    vector<int> divisibilityArray(string word, int m){
+        // Approach: MATH
+        // TC : O(N)
+        // SC : O(1), excluding the 'ans' Array
+        // C++ CODE:
+        int n = word.length();
+        vector<int> ans; // to store the Answer
+        long long num = 0; 
+        
+        // Traverse the i/p string 'word'
+        for(int i=0; i<word.length(); i++){
+            num = num * 10 + (word[i] - '0'); // Find the current element
+            
+            // If 'rem' divisible by 'm', push 1 into the 'ans' vector
+            if(num % m == 0){
+                ans.push_back(1);
+            }
+            //  else, push 0 into the 'ans' vector
+            else{
+                ans.push_back(0);
+            }
+            // Update the 'rem' to beat the TLE
+            num %= m; // since this is a way to manage the size of the number 
+            // OR directly take the mod of 'num' above while calculating it. i.e, "num = (num * 10 + (word[i] - '0)) % m"
+        }
+        return ans;
+    }
+};
