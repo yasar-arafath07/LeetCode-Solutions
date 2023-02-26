@@ -1,0 +1,36 @@
+class Solution{
+public:
+    vector<int> leftRigthDifference(vector<int>& nums){
+        // Approach: PREFIX and SUFFIX SUM
+        // Weekly Contest 334
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int n = nums.size();
+        vector<int> ans(n); // to store the answer
+        vector<int> leftArr(n); // to store the left sum of the Index 'i'
+        vector<int> rightArr(n); // to store the right sum of the Index 'i'.
+        int left = 0; // to calculate the Left Sum
+        int right = 0; // to calculate the Right sum
+        
+        leftArr[0] = 0; // Since there is no element to the left of 1st element, 1st element of 'leftArr' will be 0.
+        // Traverse the Array from left and store the Left Sum in the 'leftArr'
+        for(int i=1; i<nums.size(); i++){
+            left += nums[i-1];
+            leftArr[i] = left;
+        }
+        
+        rightArr[n-1] = 0; // Since there is no element in the Right of last element, last element of 'rightArr' will be 0
+        // Traverse the Array from right and store the Right Sum in the 'rightArr'
+        for(int i=n-2; i>=0; i--){
+            right += nums[i+1];
+            rightArr[i] = right;
+        }
+        
+        // Calculate the Answer which is |leftArr[i] - rightArr[i]|
+        for(int i=0; i<nums.size(); i++){
+            ans[i] = abs(leftArr[i] - rightArr[i]);
+        }
+        return ans;
+    }
+};
