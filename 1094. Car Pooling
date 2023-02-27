@@ -1,0 +1,31 @@
+class Solution{
+public:
+    bool carPooling(vector<vector<int>>& trips, int capacity){
+        // Approach: SORTING + PAIRS
+        // TC : O(2*N) = O(N)
+        // SC : O(2*N) = O(N)
+        // C++ CODE:
+        vector<pair<int,int>> v; // Initialize a vector of pairs
+
+        // Traverse the i/p Array
+        for(int i=0; i<trips.size(); i++){
+            v.push_back({trips[i][1], trips[i][0]}); // {from, no.of passengers}
+            v.push_back({trips[i][2], -trips[i][0]}); // {to, - no.of passengers}
+        } 
+
+        // sort the vector of pairs
+        sort(v.begin(), v.end());
+
+        int filled = 0; // to record the total no. of persons in the car currently
+
+        // Now, traverse the vector 'v'
+        for(int i=0; i<v.size(); i++){
+            filled += v[i].second;
+            // Check if the current no. of persons in the car exceeds the capacity of the car. If YES, return false
+            if(filled > capacity){
+                return false;
+            }
+        }
+        return true;
+    }
+};
