@@ -1,0 +1,24 @@
+class Solution{
+public:
+    int numTimesAllBlue(vector<int>& flips){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0;
+        int maxi = INT_MIN; // Right most Flipped bit / Lighted bulb
+        int i = 0;
+
+        // Traverse the Array
+        while(i < flips.size()){
+            maxi = max(maxi, flips[i]); // Calculate the maximum i.e, the no. of the Rightmost Flipped bit / Lighted bulb
+            // So, Now at 'i', we have Flipped/Lighted up 'i+1' bits/bulbs. So, check if 'maxi == i+1'.
+            // If YES, means all the previous bits/bulbs to the left are also Flipped/turned on too. So, we Increment ans
+            if(maxi == i+1){
+                ans++;
+            }
+            i++; // Move/increment 'i'
+        }
+        return ans;
+    }
+};
