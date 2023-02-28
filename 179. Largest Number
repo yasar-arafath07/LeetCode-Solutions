@@ -1,0 +1,30 @@
+class Solution{
+public:
+    // Create a comparator function to sort the vector of strings based on largest number
+    static bool comp(string a, string b){
+        return a+b > b+a;
+    }
+
+    string largestNumber(vector<int>& nums){
+        // Approach: SORTING
+        // TC : O(N*logN)
+        // SC : O(1), excluding the space required for the vector of strings 
+        // C++ CODE:
+        string ans;
+        vector<string> v; // to store the Integers by converting them to strings
+
+        // Traverse the i/p Array 'nums' and convert the Integers to string and push it into the vector
+        for(auto& ele : nums){
+            v.push_back(to_string(ele));
+        }
+
+        // sort the vector of strings using comparator function
+        sort(v.begin(), v.end(), comp);
+
+        // Now, traverse the vector of strings and form the answer string
+        for(int i=0; i<v.size(); i++){
+            ans += v[i];
+        }
+        return ans[0] == '0' ? "0" : ans; 
+    }
+};
