@@ -1,0 +1,31 @@
+class Solution{
+public:
+    int removeCoveredIntervals(vector<vector<int>>& intervals){
+        // Approach: SORTING
+        // TC : O(N*logN)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 1; // to store the no. of remaining elements. Atleast 1 will be there Initially
+
+        // sort the I/p Array
+        sort(intervals.begin(), intervals.end());
+
+        int left = intervals[0][0];
+        int right = intervals[0][1];
+
+        // Traverse the Array
+        for(int i=1; i<intervals.size(); i++){
+            // check the elements
+            if(intervals[i][0] > left && intervals[i][1] > right){
+                // then that interval will be present in the remaining intervals. So, increment 'ans'
+                ans++;
+            }
+            // Update the Intervals
+            if(intervals[i][1] > right){
+                left = intervals[i][0];
+                right = intervals[i][1];
+            }
+        }
+        return ans;
+    }
+};
