@@ -1,0 +1,31 @@
+class Solution{
+public:
+    int maxNumOfMarkedIndices(vector<int>& nums){
+        // Approach: SORTING + TWO POINTERS
+        // TC : O(N * logN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+        int ans = 0;
+        int i = 0; // pointer 1
+        int j = n/2; // pointer 2
+
+        // sort the i/p Array
+        sort(nums.begin(), nums.end());
+
+        // Traverse the i/p Array
+        // Traverse 'i' from start till the half and 'j' from half till the end
+        while(i < n/2 && j < n){
+            // Check the condition
+            if(2 * nums[i] <= nums[j]){
+                ans += 2; // 2 Indices will be marked
+                i++; // move 'i' forward
+                j++; // move 'j' forward
+            }
+            else{
+                j++; // simply move 'j' forward until we satisfy the given condition
+            }
+        }
+        return ans;
+    }
+};
