@@ -1,0 +1,26 @@
+class Solution{
+public:
+    long long subArrayRanges(vector<int>& nums){
+        // Approach: BRUTE FORCE 
+        // TC : O(N^2)
+        // SC : O(1)
+        // C++ CODE:
+        long long ans = 0; // to store the sum of the subarrays
+        int mini = 0; // to hold the minimum value of a subarray
+        int maxi = 0; // to hold the maximum value of a subarray
+
+        // Traverse the i/p Array
+        for(int i=0; i<nums.size(); i++){
+            // Asssign minimum and maximum value as nums[i]
+            mini = nums[i];
+            maxi = nums[i];
+            // Now, traverse from 'i' till end
+            for(int j=i; j<nums.size(); j++){
+                mini = min(mini, nums[j]); // find the minimum from each subarray
+                maxi = max(maxi, nums[j]); // find the maximum in each subarray
+                ans += (maxi - mini); // add the difference b/w maximum and minimum into 'ans'
+            }
+        }
+        return ans; // return the answer
+    }
+};
