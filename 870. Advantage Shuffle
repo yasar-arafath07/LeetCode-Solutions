@@ -1,0 +1,40 @@
+class Solution{
+public:
+    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2){
+        // Approach: Using MULTISET
+        // TC : O(N * logN)
+        // SC : O(N)
+        // C++ CODE:
+        vector<int> ans;
+        multiset<int> ms; 
+        // Multiset stores sorted key-value pairs similar to set. But here in multiset, we can store duplicate values also.
+        // Similar to set, multiset also stores values in sorted order.
+
+        // Traverse the 'nums1' Array and insert the elements in the multiset
+        for(int i=0; i<nums1.size(); i++){
+            ms.insert(nums1[i]);
+        }
+
+        // Now, Traverse the 'nums2' Array and find the next Immediate greater element of nums2[i] from the multiset using
+        // upper_bound()
+        for(int i=0; i<nums2.size(); i++){
+            auto it = ms.upper_bound(nums2[i]);
+            // upper_bound(ele) will return the iterator to next greater element than 'ele' in the multiset.
+            
+            // If the element is present in the multiset, push that element into the ans vector and erase it from the 
+            // multiset
+            if(it != ms.end()){
+                ans.push_back(*(it)); // Insert the value present at the location 'it' into the answer vector
+                ms.erase(it); // erase the element from the multiset at the location 'it'
+            }
+            // If the Next Immediate element is not present in the multiset, insert the smallest element from the multiset
+            // which is the starting element of multiset into the answer vector since multiset stores elements in ordered 
+            // remove that element from the multiset 
+            else{
+                ans.push_back(*(ms.begin()));
+                ms.erase(ms.begin());
+            }
+        }
+        return ans;
+    }
+};
