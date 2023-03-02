@@ -1,0 +1,14 @@
+class Solution{
+public:
+    int distinctIntegers(int n){
+        // Approach: MATH 
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        // EDGE CASE: If n is 1, there will be that 1 element present in the board always. So, return 1.
+        if(n == 1) return 1;
+
+        // else, return (n-1)
+        return n-1;
+    }
+};
