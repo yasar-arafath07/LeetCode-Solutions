@@ -1,0 +1,37 @@
+class Solution{
+public:
+    string maxValue(string n, int x){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        // CASE 1: If the string 'n' is a positive Integer. eg: n = "734" and x = 6.
+        if(isdigit(n[0])){ 
+            // means If the 1st digit of the string is a digit which means the string is a positive integer
+            // Traverse the string 'n'
+            for(int i=0; i<n.length(); i++){
+                // Insert the integer 'x' where the current element of the string is smaller than 'x'
+                if(x > n[i] - '0'){
+                    // Convert the integer 'x' to string and Insert it at position 'i' and then return the string
+                    n.insert(i, to_string(x));
+                    return n;
+                }
+            }
+        }
+        // CASE 2: If the string is negative Integer. eg: n = "-13" and x = 2
+        else{
+            // Traverse the string 'n'
+            for(int i=1; i<n.length(); i++){
+                // Insert the integer 'x' where the current element of the string is greater than 'x'
+                if(x < n[i] - '0'){
+                    n.insert(i, to_string(x));
+                    return n;
+                }
+            }
+        }
+        // CASE 3: When the string has same elements as that of 'x'. eg: n = "99" and x = 9
+        // In this case, Insert 'x' at the end of the string and return it
+        n.insert(n.length(), to_string(x));
+        return n;
+    }
+};
