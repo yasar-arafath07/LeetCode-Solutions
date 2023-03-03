@@ -1,0 +1,41 @@
+class Solution{
+public:
+    int minSwaps(string s){
+        // Approach: TWO POINTERS + GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = s.length();
+        int swaps = 0; // to store the minimum no. of swaps required to make the i/p string balanced
+        int balance = 0; // To track if brackets are balanced at any index 'i'
+        // If balance is 0 means all the elements are matched. Initially we take balance as 0.
+        int i = 0; // pointer 1
+        int j = n - 1; // pointer 2
+
+        // Traverse the string 's'
+        for(int i=0; i<s.length()-1; i++){
+            // When we see an Opening bracket, we increment 'balance' by 1.
+            if(s[i] == '['){
+                balance++;
+            }
+            // When we see a closing bracket, we decrement 'balance' by 1.
+            else{
+                balance--;
+            }
+            // Now, if 'balance' is less than 0, means when the no. of closing brackets exceeds already occured opening 
+            // brackets, i.e, if balance < 0 OR if balance == -1, in that case swap the element with the first occuring '['
+            // from the last.
+            if(balance < 0){
+                // Traverse till we find the opening bracket '[' from last.
+                while(i < j && s[j] == ']'){
+                    j--;
+                }
+                // Now, swap the brackets at 'i' and 'j'
+                swap(s[i], s[j]); // swap closing bracket at 'i' with the opening bracket at 'j'
+                swaps++; // Increment the swap count
+                balance = 1; // Set 'balance' to 1 since the current bracket is an opening bracket after we swapped with
+            }                // closing bracket at 'i'. So, after swap 'i' contains opening bracket whcih means balance is 1
+        }                    // and now we need to find a closing bracket for this to make the balance as 0.
+        return swaps;
+    }
+};
