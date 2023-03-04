@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int minAddToMakeValid(string s){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int open = 0; // to keep count of open i.e, '(' Paranthesis and close i.e, ')' Paranthesis
+        int close = 0; // to keep a count of the close Paranthesis we need
+
+        // Traverse the string 's'
+        for(int i=0; i<s.length(); i++){
+            // If s[i] is '(', then increment the count of 'open'
+            if(s[i] == '('){
+                open++;
+            }
+            // If s[i] is ')', then make open balanced by decrementing it if 'open' is greater than 0.
+            else if(s[i] == ')' && open > 0){
+                open--;
+            }
+            // else, we need an extra 'close' Paranthesis to insert
+            else{
+                close++;
+            }
+        }
+        // return the total no. of Paranthesis we require to make 's' valid
+        return open + close;
+    }
+};
