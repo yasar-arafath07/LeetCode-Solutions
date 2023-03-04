@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int splitNum(int num){
+        // Approach: SORTING + GREEDY (OBSERVATIONS)
+        // TC : O(N*logN)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the minimum possible sum of splitted integers
+        string a;
+        string b;
+        
+        string s = to_string(num); // convert the given integer to a string 
+        sort(s.begin(), s.end()); // sort the string 
+        
+        // Traverse the string and add all the Even positions character to string a
+        for(int i=0; i<s.length(); i+=2){
+            a += s[i];
+        }
+        
+        // Traverse the string and add all the Odd positions character to string b
+        for(int i=1; i<s.length(); i+=2){
+            b += s[i];
+        }
+        
+        // Now, convert the string a and b to integer and return it's sum
+        ans = stoi(a) + stoi(b);
+        return ans;
+    }
+};
