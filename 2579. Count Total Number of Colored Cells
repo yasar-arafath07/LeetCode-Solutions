@@ -1,0 +1,26 @@
+class Solution{
+public:
+    long long coloredCells(int n){
+        // Approach: MATH + NUMBER THEORY
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        long long ans = 1 + (long long)n * (n-1) * 2;
+        // OR return 2l * n * (n-1) + 1;
+        return ans;
+    }
+};
+
+
+/*
+// EXPLANATION: 
+- For n = 1, ans = 1 
+- For n = 2, ans = 1 + 4 (5)
+- For n = 3, ans = 1 + 4 + 8 (13)
+- For n = 4, ans = 1 + 4 + 8 + 12 (25)
+
+So, the Pattern for 'n' is: 1 + (4*1) + (4*2) + (4*3) ....... * (4*(n-1)) 
+i.e, 1 + 4 (1 + 2 + 3 + ....... + n-1)
+= 1 + 4 * (n*(n-1)/2)
+= 1 + 2*n * (n-1) (this is the Answer)
+*/
