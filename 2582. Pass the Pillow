@@ -1,0 +1,49 @@
+class Solution{
+public:
+    int passThePillow(int n, int time){
+        // Approach: MATH
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        time = time % (2*n - 2); // It takes (2*n - 2) steps to reach 'n' and come back to 1st Position.
+        // So, one complete loop from starting to end and then from end to start takes n*2-2 steps.
+        // int dist = abs(n - time - 1); // calculate the distance from 'n'
+        // return n - dist;
+        return n - abs(n - time - 1);
+
+
+
+        /*
+        // Approach: GREEDY + MATH
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        int index = 1; // Initial Index
+        bool flag = false; // to indicate whether we are passing the pillow in forward direction or in reverse direction
+
+        // Traverse for 'time' no. of times
+        while(time--){
+            if(flag == false){
+                // Means, we are moving i.e, we are passing the pilllow to next person
+                index++; // Move forward. i.e, pass the pillow to the next person
+            }
+            else{
+                // we are passing the pillow to the previous person
+                index--; // If flag is true, then Pass the pillow to the previous person
+            }
+            // While passing the pillow to the next person, if we reach to the nth person, then set flag to true, which 
+            // means now we need to pass the pillow to the previous person.
+            if(index == n){
+                flag = true;
+            }
+            // While passing the pillow to the previous person, if we reach to the 1st person, set the flag to false, which
+            // means now we need to pass the pillow in the forward direction.
+            else if(index == 1){
+                flag = false;
+            }
+        }
+        // In the end, return the Index which is the index of the person holding the pillow after 'time' seconds
+        return index;
+        */
+    }
+};
