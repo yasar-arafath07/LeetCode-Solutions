@@ -1,0 +1,12 @@
+class Solution{
+public:
+    int numberOfMatches(int n){
+        // Approach: MATH + OBSERVATION
+        // EXPLANATION: Since 'n' teams are there and we will have 1 winner in the end. So, rest (n-1) teams loose. So we
+        // need (n-1) matches
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        return n-1;
+    }
+};
