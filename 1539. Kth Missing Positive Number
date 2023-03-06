@@ -1,0 +1,16 @@
+class Solution{
+public:
+    int findKthPositive(vector<int>& arr, int k){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        // Traverse the i/p Array
+        for(int i=0; i<arr.size(); i++){
+            if(arr[i] <= k){
+                k++;
+            }
+        }
+        return k;
+    }
+};
