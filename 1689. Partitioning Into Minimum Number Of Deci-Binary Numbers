@@ -1,0 +1,13 @@
+class Solution{
+public:
+    int minPartitions(string n){
+        // Approach: GREEDY
+        // TC : O(N), where 'N' is the no. of digits in the i/p string
+        // SC : O(1)
+        // C++ CODE:
+        // Just return the maximum digit of the given input string by converting it to integer
+        int maxi = *max_element(n.begin(), n.end());
+        int ans = maxi - '0'; // conert maxi to integer
+        return ans; // OR return *max_element(n.begin(), n.end()) - '0';
+    }
+};
