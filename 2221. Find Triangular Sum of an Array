@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int triangularSum(vector<int>& nums){
+        // Approach: MATH (OBSERVATION)
+        // EXPLANATION: If we Observe, we need to take the mod of sum of the current element and the next element and then
+        // replace the current element with this newly formed element. So, we will perform this 'n' no. of times.
+        // TC : O(n^2)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+
+        // Do the operations 'n' no. of times
+        while(n--){
+            // Traverse the I/p Array and perform the operations
+            for(int i=0; i<n; i++){
+                // Replace current element with the mod of sum of current element and it's next element
+                nums[i] = (nums[i] + nums[i+1]) % 10;
+            }
+        }
+        // After performing the above operations for 'n' no. of times, return the 1st element of the Array
+        return nums[0];
+    }
+};
