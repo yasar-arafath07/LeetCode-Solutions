@@ -1,0 +1,59 @@
+class Solution{
+public:
+    int chalkReplacer(vector<int>& chalk, int k){
+        // Approach: GREEDY 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        long long sum = 0; // to store the sum of the Array
+
+        // Traverse the Array and calculate the Sum
+        for(auto& val : chalk){
+            sum += val;
+        }
+
+        // Now, Update the value of given 'k' by taking it's mod with 'sum' so that we don't need to Traverse the Array
+        // multiple times
+        k %= sum; // k = k % sum;
+
+        // Now, Traverse the Array and check the Array elements
+        for(int i=0; i<chalk.size(); ++i){
+            // If 'k - chalk[i]' is less than 0, then the Student at index 'i' will replace the chalk. So, return 'i'.
+            if(k - chalk[i] < 0){
+                return i;
+            }
+            // else, keep subtracting chalk[i] from 'k'
+            else{
+                k -= chalk[i];
+            }
+        }
+        return 0;
+
+
+
+        /*
+        // Approach: BRUTE FORCE
+        // Throws TLE Error since we are traversing the Array multiple times.
+        // TC : 
+        // SC : O(1)
+        // C++ CODE:
+        int sum = 0; 
+
+        while(true){
+            // Traverse the Input Array
+            for(int i=0; i<chalk.size(); i++){
+                // calculate the sum
+                sum += chalk[i];
+                // Check if the sum is greater than 'k'. If YES, return that index 'i'
+                // Continue this 'for' loop till we reach to this Index. That's why we included a while(true) statement
+                if(sum > k){
+                    return i;
+                }
+            }
+        }
+        return 0;
+        */
+    }
+};
+
+
