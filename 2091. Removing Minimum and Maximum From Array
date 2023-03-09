@@ -1,0 +1,44 @@
+class Solution{
+public:
+    int minimumDeletions(vector<int>& nums){
+        // Appraoch: GREEDY
+        // TC : O(N), to find the minimum and maximum element
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+        int ans = INT_MAX;
+
+        // Find the Index of the minimum and maximum element from the Array
+        int i = min_element(nums.begin(), nums.end()) - nums.begin(); // Index of minimum element
+        int j = max_element(nums.begin(), nums.end()) - nums.begin(); // Index of maximum element 
+        // Rememebr *min_element() will give the minimum element
+
+        // Swap 'i' and 'j' if i > j because just to make sure that 'j' is pointing to larger Index
+        if(i > j){
+            swap(i, j);
+        }
+
+        // Calculate the answer which is the minimum of all the 3 possible cases
+        ans = min(j+1, min(n-i, i+1+n-j));
+
+        return ans;
+    }
+};
+
+
+
+/*
+// EXPLANATION:
+- So, here we can have 3 Possible cases:
+#CASE1: Delete both 'min' and 'max' from the Left. 
+#CASE2: Delete both 'min' and 'max' from the Right. 
+#CASE3: Delete one from Left and one from Right.
+
+// ALGORITHM:
+- So, we store the Index of min element and max element in the variable 'i' and 'j' respectively.
+- If (i > j), then swap 'i' and 'j' to make sure 'j' points to a lrger Index.
+- For CASE 1: No.of elements to be deleted is 'j+1'.
+- For CASE 2: No.of elements to be deleted is 'n-i'.
+- For CASE 3: No.of elements to be deleted is 'i+1+n-j', ('i+1' from the Left + 'n-j' from the Right).
+- So, we return the minimum of above 3 CASES.
+*/
