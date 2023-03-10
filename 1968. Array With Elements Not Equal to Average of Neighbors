@@ -1,0 +1,19 @@
+class Solution{
+public:
+    vector<int> rearrangeArray(vector<int>& nums){
+        // Approach: SORTING + GREEDY
+        // TC : O(N*logN)
+        // SC : O(1)
+        // C++ CODE:
+        // sort the I/p Array 'nums'
+        sort(nums.begin(), nums.end());
+
+        // Traverse the I/p Array 'nums' from 0th/1st Index till the 2nd last and swap Neighbours/Adjacent elements so 
+        // that the elements will occur in the Pattern of small, large, small, large pattern.
+        // So, we traverse by 2 elements i.e, i = i + 2
+        for(int i=1; i<nums.size()-1; i+=2){
+            swap(nums[i], nums[i+1]);
+        }
+        return nums;
+    }
+};
