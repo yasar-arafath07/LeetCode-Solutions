@@ -1,0 +1,19 @@
+class Solution{
+public:
+    int addRungs(vector<int>& rungs, int dist){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the minimum no.of rungs we need to add to the ladder 
+
+        int prev = 0; // since we Initially start from the floor at height 0
+        // Traverse the 'rungs' ladder and add the required no. of rungs to the 'ans' variable
+        // i.e, divide the gaps present between the rung each time by 'dist' and then save it in the 'ans'
+        for(int i=0; i<rungs.size(); i++){
+            ans += (rungs[i] - prev - 1) / dist;
+            prev = rungs[i]; // set 'prev' to the current rung
+        }
+        return ans;
+    }
+};
