@@ -1,0 +1,33 @@
+class Solution{
+public:
+    // Create a Function to check if the string is a Vowel String or not
+    bool isVowel(string &s){
+        int n = s.length(); // length of the current string
+        
+        // Now, check if the string starts and ends with any vowel. If YES, return true. else, return false.
+        if((s[0] == 'a' || s[0] == 'e' || s[0] == 'i' || s[0] == 'o' || s[0] == 'u') && (s[n-1] == 'a' || s[n-1] == 'e' || 
+        s[n-1] == 'i' || s[n-1] == 'o' || s[n-1] == 'u')){
+            return true;
+        }
+        return false;
+    }
+        
+    int vowelStrings(vector<string>& words, int left, int right){
+        // Approach: GREEDY
+        // TC: O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the count of vowel strings present in 'words' in the ranger [left, right]
+        
+        // Traverse the Array of string 'words' in the Range [left, right] both Inclusive 
+        for(int i=left; i<=right && i<words.size(); i++){
+            string s = words[i]; // consider a string i.e, words[i]
+            // Now, check if the current element i.e, words[i] i.e, the string 's' is a Vowel String or not using
+            // 'isVowel()' function. If YES, increment the Answer
+            if(isVowel(s)){ 
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
