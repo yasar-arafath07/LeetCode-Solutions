@@ -1,0 +1,32 @@
+class Solution{
+public:
+    int monotoneIncreasingDigits(int n){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        string s = to_string(n); // convert the given I/p integer 'n' to a string
+        int index; // this is just to remember the Index from where the Values are not following the monotone increasing
+        // rule as per the question. 
+
+        // Traverse the string 's' from the Back and check if the values are monotone increasing. If not, save the index
+        // of the value in 'index' where it is not monotone increasing and then update the s[i-1]th value 
+        for(int i=s.length()-1; i>=1; i--){
+            if(s[i] < s[i-1]){
+                index = i; // save the Index where it doesn't follow the monotone increasing digits rule
+                s[i-1] = s[i-1] - 1; // update the previous Index element
+                // eg: s = "3475", so index will point to element 5. So, decrease the previous element from 7 to 6 to
+            }   // obtain in 60's and replace 5 with 9 to get the maximum answer as: 3469
+        }
+
+        // Now, Traverse from 'index' till the end of the string 's'
+        for(int i=index; i<s.length(); i++){
+            // replace all the Integers with 9 to get the maximum answer
+            s[i] = '9';
+        }
+
+        // Now convert the string back to integer and return it.
+        int ans = stoi(s);
+        return ans;
+    }
+};
