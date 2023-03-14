@@ -1,0 +1,51 @@
+class Solution{
+public:
+    int reductionOperations(vector<int>& nums){
+        // Approach: HASHMAP
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int res = 0; // to store the total no. of operation
+        int prev = 0;
+        map<int,int> mpp; // to store the frequency of the elements of 'nums'
+
+        // Traverse the Array and store the frequency of the elements in the HashMap
+        for(auto& ele : nums){
+            mpp[ele]++;
+        }
+
+        // Now, Traverse the map from the back since we need largest element and map stores the elements in sorted order
+        for(auto it=mpp.end(); it != mpp.begin(); it--){
+            res += it->second + prev; // total no. of operations
+            prev += it->second; // maintaining the previous frequency count
+        }
+        return res;
+
+
+
+        /*
+        // Approach: SORTING
+        // EXPLANATION: If the current elements is same as the one before it, then we do nothing. and if the element 
+        // before is a different element than the current element, then we need to update all the elements on the right
+        // ie., total (n-i) elements which are on the right of 'i' 
+        // TC : O(N*logN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+        int res = 0; // to store the no. of operations to make all the elements equal
+
+        // Sort the given I/p Array
+        sort(nums.begin(), nums.end());
+
+        // Traverse the Array 'nums' from back since we need the 2 Largest Values
+        for(int i=n-1; i>=1; i--){
+            // Skip if the Adjacent elements are equal
+            // and if the elements are not equal, then we add the no.of operations needed to reduce nnums[i] to nextLargest
+            if(nums[i] != nums[i-1]){
+                res += (n-i); // no. of operations
+            }
+        }
+        return res;
+        */
+    }
+};
