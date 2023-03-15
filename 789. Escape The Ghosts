@@ -1,0 +1,23 @@
+class Solution{
+public:
+    bool escapeGhosts(vector<vector<int>>& ghosts, vector<int>& target){
+        // Approach: Greedy 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int distance = abs(target[0]) + abs(target[1]); // our distance to target point from (0,0)
+        int distanceForGhost; // to store the distance for the 'i'th ghost to the target point
+
+        // Now, Traverse the 'ghosts' Array
+        for(auto g : ghosts){
+            // find the distance for the current ghost to the target point
+            distanceForGhost = abs(g[0] - target[0]) + abs(g[1] - target[1]);
+            // Now, check if the distance for ghost to target is smaller or equal to our distance. If YES, return false.
+            if(distanceForGhost <= distance){
+                return false;
+            }
+        }
+        // else, return true in the end since no ghost has distance smaller than our's to the target point
+        return true;
+    }
+};
