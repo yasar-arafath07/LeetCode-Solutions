@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int maxChunksToSorted(vector<int>& arr){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the largest no.of chunks we can make to sort the Array
+        int sumIndex = 0; // current sum of the indexes of the Array 
+        int currSum = 0; // current sum of the Array elements
+
+        // Traverse the I/p Array 'arr'
+        for(int i=0; i<arr.size(); i++){
+            sumIndex += i; // current Index sum
+            currSum += arr[i]; // current sum of the elements
+            // Now, check if sum of Index is equal to sum of elements. If YES, we need to split. So, ans++.
+            if(sumIndex == currSum){
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
