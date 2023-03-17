@@ -1,0 +1,34 @@
+class Solution{
+public:
+    int numSpecialEquivGroups(vector<string>& words){
+        // Approach: SET + PAIR + SORTING
+        // TC : O(N), where 'N' is the size of the 'words'
+        // SC : O(N), to create the set
+        // C++ CODE:
+        set<pair<string,string>> s; // set stores the unique pairs of strings
+
+        // Traverse the I/p string 'words'
+        for(auto& w : words){
+            string p; // to store the even Index characters
+            string q; // to store the odd Index characters
+
+            // Now, Traverse the current string 'w' and put all the Even Index characters into string 'p' and put all the 
+            // Odd indexed characters into string 'q'
+            for(int i=0; i<w.length(); i++){
+                if(i % 2 == 0){
+                    p += w[i]; // If Index is Even, add the character to string 'p'
+                }
+                else{
+                    q += w[i]; // If Index is Odd, add the character to string 'q'
+                }
+            }
+            // Now, Sort both the substrings 'p' and 'q' because if we can swap on string with one another, then when 
+            // sorted they will equal each other because they must have the same characters.
+            sort(p.begin(), p.end());
+            sort(q.begin(), q.end());
+            s.insert({p, q}); // Insert 'p' and 'q' in the set as a pair of strings
+        }
+        // return the no. of unique such groups
+        return s.size(); 
+    }
+};
