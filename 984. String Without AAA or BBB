@@ -1,0 +1,50 @@
+class Solution{
+public:
+    string strWithout3a3b(int a, int b){
+        // Approach: GREEDY
+        // TC : O(min(a, b))
+        // SC : O(1), excluding the space required for the 'res' string
+        // C++ CODE:
+        string res = ""; // empty string to hold the result
+
+        // Perform the follow operations till both 'a' and 'b' are not 0.
+        while(a != 0 && b != 0){
+            // If a > b, add "aab" to the 'res' string and decrement the count of one 'a' here
+            if(a > b){
+                res += "aab";
+                a--;
+                // a--;
+                // b--;
+            }
+            // If b > a, then add "bba" to the 'res' string and decrement the count of one 'b' here
+            else if(b > a){
+                res += "bba";
+                b--;
+                // b--;
+                // a--;
+            }
+            // If a == b, then add "ab" to the 'res' string 
+            else if(a == b){
+                res += "ab";
+                // a--;
+                // b--;
+            }
+            // Decrement the count of 'a' and 'b'
+            a--;
+            b--;
+        }
+
+        // If any 'a' is still leftover, add it to the end of the resultant string 'res'
+        while(a--){
+            res += "a";
+        }
+
+        // Similarly, If any 'b' is leftover, add it to the end of the 'res' string
+        while(b--){
+            res += "b";
+        }
+
+        // return the 'res' string
+        return res;
+    }
+};
