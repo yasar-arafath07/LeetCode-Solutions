@@ -1,0 +1,43 @@
+class Solution{
+public:
+    int distMoney(int money, int children){
+        // Approach: MATH
+        // EXPLANATION: Kepp on assigning 8 dollars to each children until the remaining money is greater than or equal to
+        // remaining children so that it is always possible to give atleast 1 dollars to each child
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the maximum no.of children who receives exactly 8 dollars
+
+        // EDGE CASE #1: If (money < children), then each child can't get atleast 1 dollar. So there is no way to 
+        // distribute the money according to the given rules. So, return -1.
+        if(money < children) return -1;
+
+        // EDGE CASE #2: If (money > children*8), then all children can get exactly 8 dollars except for 1 child who will 
+        // hold the extra dollars,i.e, he will recieve more than 8 dollars. So, we return 'children-1' excluding that child
+        if(money > children * 8){
+            return children - 1;
+        }
+
+        // EDGE CASE #3: If(money == children*8), then each child can get exactly 8 dollars. So, return the total number
+        // of childrens
+        if(money == children * 8) return children;
+        // if(money == 8 && children > 1) return 0;
+
+        // else, run a while loop and distribute 8 dollars to each child in an iteration.
+        // The condition (money-8 >= children - 1) makes sure that each child can get atleast 1 dollar
+        while(money > 0 && money-8 >= children - 1){
+            ans++; // since we distribute 8 dollars to a children
+            money -= 8; // update the remaining 'money'
+            children--; // update the remaining 'children'
+        }
+
+        // Now, check if any child in the end has got exactly 8 dollars. If YES, ans--. Because, we take a child who has 
+        // got exactly 8 dollars and give one dollar to him from the child who got exactly 4 dollars
+        if(money == 4 && children == 1){
+            ans--;
+        }
+        // Finally, return the no. of childrens who have received exactly 8 dollars
+        return ans;
+    }
+};
