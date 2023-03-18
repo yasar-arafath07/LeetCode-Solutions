@@ -1,0 +1,27 @@
+class Solution{
+public:
+    int maximizeGreatness(vector<int>& nums){
+        // Approach: SORTING + TWO POINTERS
+        // TC : O(N * logN)
+        // SC : O(1)
+        // C++ CODE:
+        int res = 0; // to store the maximum possible greatness we can achieve
+        int i = 0; // pointer 1
+        int j = 0; // pointer 2
+
+        // sort the I/p Array
+        sort(nums.begin(), nums.end());
+
+        // Traverse till the end of the I/p Array 'nums'
+        while(j < nums.size()){
+            // compare the element at 'i' and 'j'
+            if(nums[j] > nums[i]){
+                // OR "if(nums[j] != nums[i])"
+                res++; // since we can achieve a greatness here
+                i++; // move 'i'
+            }
+            j++; // move 'j' forward
+        }
+        return res;
+    }
+};
