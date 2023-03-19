@@ -1,0 +1,47 @@
+class Solution{
+public:
+    long long findScore(vector<int>& nums){
+        // Approach: VECTOR + PAIR
+        // We can also use PRIORITY_QUEUE (MIN_HEAP)
+        // TC : O(N * logN), since we are sorting the vector 'v'
+        // SC : O(N), for creating the vector of pairs
+        // C++ CODE:
+        int n = nums.size();
+        long long score = 0; // to store the score/answer after applying the algorithm
+        vector<pair<int, int>> v; // Vector of pairs to store all the element of 'nums' along with it's index
+        vector<bool> marked(n, false); // To mark the index of the chosen element and it's 2 adjacent elements
+
+        // Traverse the I/p Array 'nums' and push the element along with it's Index as a pair into the vector 'v'
+        for(int i=0; i<nums.size(); i++){
+            v.push_back({nums[i], i});
+        }
+
+        // sort the vector of pairs 'v' so that we can get the smallest/minimum integer first at each step
+        sort(v.begin(), v.end());
+
+        // Now, Tarverse the vector of pairs 'v'
+        for(auto p : v){
+            int ele = p.first; // the element of the Array
+            int index = p.second; // Index of the above element 'ele'
+            // Now, check if we have alrady marked the above 'index' of the element 'ele'.
+            if(!marked[index]){
+                // So, if we didn't mark that 'index' already, we add the value i.e, 'ele' to the 'score' and then mark the 
+                // 'index' as true.
+                score += ele;
+                marked[index] = true;
+                
+                // Marking the Adjacent Elements
+                // So, if the 'index' is greater than 0, then only we can mark the previous index as true
+                if(index > 0){
+                    marked[index - 1] = true;
+                }
+                // Similary, if the 'index' is lesser than 'n-1', then only we can mark the next index as true
+                if(index < n-1){
+                    marked[index + 1] = true;
+                }
+            }
+        }
+        // Return the score in the end.
+        return score;
+    }
+};
