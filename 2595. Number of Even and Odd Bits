@@ -1,0 +1,97 @@
+class Solution{
+public:
+    vector<int> evenOddBit(int n){
+        // Approach: Using BITSET
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        bitset<10> bin(n); // convert the given I/p to Binary representation. So, here the bitset has a size of 10 and it
+        // stores the Binary equivalent of 'n' in the 'bin'
+        int even = 0; // to store the no. of even indices whose value at index is 1 in the binary representaion of 'n'
+        int odd = 0; // to store the no.of odd indices whose value at index is 1 in the bianry representaion of 'n'
+
+        // Now, Traverse the Binary representaion of 'n' which is stored in 'bin' vector
+        for(int i=0; i<bin.size(); i++){
+            // If the value at the Index is 1, then check if it is a even or odd Index
+            if(bin[i] == 1){
+                // If 'i' is an even Index, then even++.
+                if(i % 2 == 0){
+                    even++;
+                }
+                // else, if 'i' is an odd Index, then odd++.
+                else{
+                    odd++;
+                }
+            }
+        }
+        // return the answer
+        return {even, odd};
+
+
+
+
+        /*
+        // Approach 1: Using String  
+        // TC : 
+        // SC : O(1), excluding the space required to create the string
+        // C++ CODE:
+        string s;
+        int even = 0; // to keep track of the no. of even indices in the binary representation with value 1
+        int odd = 0; // to keep track of the no.of odd indices in the binary representation with value 1
+        
+        // First, Convert the given I/p Integer into binary and store it in a string
+        while(n > 0){
+            // If 'n' is even, then add '0' to string 's'
+            if(n % 2 == 0){
+                s += '0';
+            }
+            // If 'n' is odd, then add '1' to string 's'
+            else{
+                s += '1';
+            }
+            n /= 2; // Update 'n'
+        }
+        // Now, we have the reverse of binary representaion of I/p Integer 'n'
+        // no need to reverse to get the original Binary representation
+        // reverse(s.begin(), s.end());
+        
+        // Now, traverse the string 's' and check the index where value is 1
+        for(int i=0; i<s.length(); i++){
+            // If the value is 1 and it is an even index, then even++
+            if(s[i] == '1' && i % 2 == 0){
+                even++;
+            }
+            // If the value is 1 and if it is an odd index, then odd++
+            else if(s[i] == '1' && i % 2 == 1){
+                odd++;
+            }
+        }
+        // return the answer
+        return {even, odd};
+        */
+    }
+};
+
+
+/*
+// C++ CODE to Convert a Integer to Binary Representation:
+int toBinary(int n){
+    // C++ CODE:
+    vector<int> binary; // to store the binary bits 
+
+    while(n > 0){
+        binary.push_back(n % 2);
+        // binary[i] = n % 2;
+        n /= 2;
+        // i++;
+    }
+
+    // Now, the Binary representation of the given 'n' will be the reverse of the above 'binary' Array
+    // So, we print the elements from the end OR we can reverse the 'binary' Array and print the elements from the start
+    int n = v.size();
+    for(int i=n-1; i>=0; i--){
+        cout<<binary[i]; 
+    }
+    cout<<endl;
+}
+*/
