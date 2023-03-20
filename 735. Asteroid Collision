@@ -1,0 +1,34 @@
+class Solution{
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids){
+        // Approach: STACK + GREEDY
+        // TC : O(N)
+        // SC : O(1), excluding the space used for the vector 'st'
+        // C++ CODE:
+        vector<int> st; // Use Vector to simulate Stack OR we can use a Stack 
+
+        // Traverse the I/p Array 'asteroids'
+        for(int i=0; i<asteroids.size(); i++){
+            // If the vector 'st' is empty Initially OR If the current element is greater than 0 OR If the last element of 
+            // the vector 'st' is -ve, then push the current element into the vector 'st'
+            if(st.empty() || asteroids[i] > 0 || st.back() < 0){
+                st.push_back(asteroids[i]);
+            }
+            // If the above 'if' condiition is false, then only execute the below 'if else' statement
+            // else if the last element of the vector 'st' is lesser than or equal to the absolute value of the current 
+            // asteroid, i.e, if asteroid[i] is -ve and top of stack is +ve (last element of vector 'st') 
+            else if(st.back() <= abs(asteroids[i])){
+                // If the top of stack is lesser than absolute value of current asteroid, the top of the stack gets destroyed
+                if(st.back() < abs(asteroids[i])){
+                    i--; // stay on the 'i'th element itself to check on further stack elements
+                }
+                st.pop_back();
+            }
+            else{
+                // +ve on the top of stack is larger and the -ve asteroid gets destroyed
+            }
+        }
+        // Finally, return the asteroids after all collisions
+        return st;
+    }
+};
