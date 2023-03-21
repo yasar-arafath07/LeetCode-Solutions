@@ -1,0 +1,45 @@
+const int MOD = 1e9 + 7;
+#define ll long long int 
+
+class Solution{
+public:
+    int countCollisions(string directions){
+        // Approach: TWO POINTERS
+        // EXPLANATION: Cars in the left side which are moving in the left direction are never going to collide. Similarly,
+        // cars on the right side which are moving in the right direction are never going to collide.
+        // Inbetween them, every car is going to collide. So, cars which are present in b/w 'left' and 'right' will collide. 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = directions.size();
+        int ans = 0; // to count the total no.of collisions that will happen on the road
+        int left = 0; // pointer 1 (left pointer)
+        int right = n - 1; // pointer 2 (right pointer)
+
+        // Keep moving towards right if the leftmost car's direction is 'L' since that car will never collide with any of the 
+        // other cars
+        while(left < n && directions[left] == 'L'){
+            left++;
+        }
+
+        // Similarly, keep moving towards left if the rightmost car's direction is 'R' since that car will never collide 
+        // with any of the other cars since it is moving the the right direction
+        while(right >= 0 && directions[right] == 'R'){
+            right--;
+        }
+
+        // Now, Traverse from 'left' and move till 'right' and count the total no.of collisions present in between them
+        for(int i=left; i<=right; i++){
+            // So, if the current 'i'th car is 'Staying', then there will be no collision. else, there will be a collision.
+            // So, we increment 'ans'
+            if(directions[i] != 'S'){
+                ans++;
+            }
+            else{
+                // if(directions[i] == 'S) continue;
+            }
+        }
+        // return the total no.of collisions
+        return ans;
+    }
+};
