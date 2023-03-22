@@ -1,0 +1,27 @@
+class Solution{
+public:
+    long long getDescentPeriods(vector<int>& prices){
+        // Approach: DYNAMIC PROGRAMMING 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        long long ans = 1; // to store the total no. of smooth descent periods
+        long long dp = 1; // to store the no. of smooth descent periods ended at previous Index
+
+        // Traverse the I/p Array 'prices'
+        for(int i=1; i<prices.size(); i++){
+            // Now, check if the price on the current day is lower than price on the previous day by exactly 1.
+            // If YES, increment 'dp'
+            if(prices[i] == prices[i-1] - 1){
+                dp++;
+            }
+            // else, set 'dp' to 1 since the current element alone will be also a subarray
+            else{
+                dp = 1;
+            }
+            // Calculate/Update the Answer
+            ans += dp;
+        }
+        return ans;
+    }
+};
