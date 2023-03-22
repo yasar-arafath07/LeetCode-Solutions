@@ -1,0 +1,27 @@
+class Solution{
+public:
+    int getLastMoment(int n, vector<int>& left, vector<int>& right){
+        // Approach: GREEDY
+        // EXPLANATION: So, for ants moving towards left which is present in the 'right' Array
+        // TC : O(M+N), where 'M' is the size of 'left' and 'N' is the size of 'right' Array
+        // SC : O(1)
+        // C++ CODE:
+        
+        // The Ant which is farthest from the left end and wants to go in the left direction will be the last one to fall out 
+        // of the plank from the left side.
+        // Find the maximum element in the 'left' Array 
+        // So, if the 'left' Array is empty, then maximum element is 0, else if the Array has some elements, then find the 
+        // maximum from it
+        int maxLeft = left.empty() ? 0 :  *max_element(left.begin(), left.end());
+        
+        // Similarly, the Ant which is farthest from the right end, and wants to go towards the right direction will be the 
+        // last one to fall out of the plank from the right side.
+        // So, Find the minimum element in the 'right' Array
+        // So, if the 'right' Array is empty, then 'n' is the minimum element, else if the Array has some elements, then find
+        // the minimum from it.
+        int minRight = right.empty() ? n : *min_element(right.begin(), right.end());
+        
+        // The maximum one among above 2 will be the last one to fall out of the plank
+        return max(maxLeft, n - minRight);
+    }
+};
