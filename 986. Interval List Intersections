@@ -1,0 +1,35 @@
+class Solution{
+public:
+    vector<vector<int>> intervalIntersection(vector<vector<int>>& firstList, vector<vector<int>>& secondList){
+        // Approach: TWO POINTERS
+        // TC : O(M+N), where 'M' is the size of the 'firstList' and 'N' is the size of the 'secondList' 
+        // SC : O(1), except for the space required for 'ans' vector
+        // C++ CODE:
+        vector<vector<int>> ans; // to store the answer which is the intersection of 2 interval lists
+        int i = 0; // to traverse 'firstList'
+        int j = 0; // to traverse 'secondList'
+
+        // Traverse the lists 'firstList' and 'secondList'
+        while(i < firstList.size() && j < secondList.size()){
+            // 'l' represents the starting point of the intersection
+            int l = max(firstList[i][0], secondList[j][0]);
+            // 'r' represents the ending point of the intersection
+            int r = min(firstList[i][1], secondList[j][1]);
+            
+            // If the intersection points are valid, save it in the 'ans' list
+            if(l <= r){
+                ans.push_back({l, r});
+            }
+
+            // Move 'i' 
+            if(firstList[i][1] < secondList[j][1]){
+                i++;
+            }
+            // Move 'j' 
+            else{
+                j++;
+            }
+        }
+        return ans;
+    }
+};
