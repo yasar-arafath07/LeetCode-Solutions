@@ -1,0 +1,48 @@
+class Solution{
+public:
+    string bestHand(vector<int>& ranks, vector<char>& suits){
+        // Approach: HASHMAP
+        // TC : O(1), since ranks.size() = suits.size() = 5
+        // SC : O(1), since we have only 5 elements in each vector
+        // C++ CODE:
+        string ans = "High Card"; // default answer
+        unordered_map<int,int> mpp1; // create a map to store the frequency of the 'ranks' Array
+        unordered_map<char,int> mpp2; // create a map to store the frequency of the 'suits' Array
+        
+        // Traverse the 'ranks' Array and store the frequency of the elements in the map 'mpp1'
+        for(auto ele : ranks){
+            mpp1[ele]++;
+        }
+        
+        // Traverse the 'suits' Array and store the frequency of the characters in the map 'mpp2'
+        for(auto c : suits){
+            mpp2[c]++;
+        }
+        
+        // Now, Since our first priority is for "Flush", i.e, to check if all 5 cards have same suit, so we traverse the 'mpp2'
+        // map and check the frequency of the character. If the frequency of the character is 5, then our answer is "Flush".
+        for(auto it : mpp2){
+            if(it.second == 5){
+                ans = "Flush";
+                break;
+            }
+        }
+        
+        // If "Flush" is not our answer, then our next priority is "Three of a Kind", i.e, we check if any 3 or more cards 
+        // have same rank or not. If YES, we make our ans as "Three of a Kind". else, we check if any 2 cards have same rank.
+        // So, if any 2 cards have same 2 rank, then our ans will be "Pair".
+        // else, our ans will be default printed as "High Card"
+        for(auto it : mpp1){
+            // If 3 or more cards have same rank, then ans = "Three of a Kind"
+            if(it.second >= 3){
+                ans = "Three of a Kind";
+                break;
+            }
+            // else, if any 2 cards have same rank, then ans = "Pair"
+            else if(it.second == 2){
+                ans = "Pair";
+            }
+        }
+        return ans;
+    }
+};
