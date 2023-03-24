@@ -1,0 +1,48 @@
+class Solution{
+public:
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k){
+        // Approach: PRIORITY QUEUE (MAX HEAP)
+        // We can also use MIN HEAP to store 'k' pairs, but MAX HEAP saves memory as it saves exactly 'k' pairs here.
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        vector<vector<int>> ans; // to store the answer pairs
+        priority_queue<pair<int, pair<int,int>>> pq; // MAX HEAP to store elements as pairs i.e {sum, {nums1[i], nums2[j]}}
+        // where 'sum' is the sum of 2 elements 'nums1[i]' and 'nums2[j]'
+
+        // Traverse the I/p Array 'nums1'
+        for(int i=0; i<nums1.size(); i++){
+            // Traverse the I/p Array 'nums2'
+            for(int j=0; j<nums2.size(); j++){
+                int sum = nums1[i] + nums2[j];
+
+                // Now, if the priority_queue 'pq' has less than 'k' pairs, push the current pair along with it's sum into the 
+                // priority queue
+                if(pq.size() < k){
+                    pq.push({sum, {nums1[i], nums2[j]}});
+                }
+                // else if priority queue has already 'k' elements in it, then check sum of current pair with top pair of 'pq'
+                // If current pair has sum less than the top pair of 'pq', pop the topmost pair and then push the current pair
+                // into the peiority queue
+                else if(sum < pq.top().first){
+                    pq.pop(); // pop thetopmost pair
+                    pq.push({sum, {nums1[i], nums2[j]}}); // push the current pair along with it's sum to 'pq'
+                }
+                else{
+                    break; // So that we can avoid TLE
+                }
+            }
+        }
+
+        // Now, Priority queue will contain only 'k' pairs of elements whose sum is smallest out of all the possible pairs
+        // So, push those pairs inside the 'ans' vector 
+        while(!pq.empty()){
+            ans.push_back({pq.top().second.first, pq.top().second.second}); // i.e, ans.push_back({nums1[i], nums2[j]})
+            pq.pop(); // then remove the topmost pair from the priority queue
+        }
+
+        // reverse(ans.begin(), ans.end()); // not actually required
+
+        return ans;
+    }
+};
