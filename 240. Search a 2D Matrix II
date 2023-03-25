@@ -1,0 +1,60 @@
+class Solution{
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target){
+        // Approach 2: BINARY SEARCH
+        // TC : O(n + m), i.e, O(Row + Column)
+        // SC : O(1)
+        // C++ CODE:
+        int n = matrix.size();
+        int m = matrix[0].size();
+
+        // support variables
+        int i = 0; // 0th row
+        int j = m - 1; // top right corner
+
+        // Traverse the 'matrix' from top right corner
+        while(i >= 0 && i < n && j >= 0 && j < m){
+            // check if the current element is equla to 'target'
+            if(matrix[i][j] == target){
+                return true;
+            }
+            // else if the current element is lesser than target, then we search on the next row's 'j'th cell. 
+            // So, we increment 'i' to go for next row
+            else if(matrix[i][j] < target){
+                i++;
+            }
+            // else if the current element is greater than target, then we search on the current row's previous cell
+            // So, to go to previous cell in the current row, we decrement 'j'
+            else if(matrix[i][j] > target){
+                j--;
+            }
+        }
+        // If the 'target' is not found, return false
+        return false;
+
+
+
+        /*
+        // Approach 1: BRUTE FORCE
+        // Throws TLE error
+        // TC : O(N^M)
+        // SC : O(1)
+        // C++ CODE:
+        int n = matrix.size();
+        int m = matrix[0].size();
+
+        // Traverse the I/p 'matrix' and check if the 'target' is present or not
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                // compare the current element with 'target'
+                // If the current element is equal to 'target', return true
+                if(matrix[i][j] == target){
+                    return true;
+                }
+            }
+        }
+        // If 'target' is not found, return false
+        return false;
+        */
+    }
+};
