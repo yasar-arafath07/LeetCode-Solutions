@@ -1,0 +1,27 @@
+class Solution{
+public:
+    vector<int> majorityElement(vector<int>& nums){
+        // Approach: HASHTABLE
+        // TC : O(N)
+        // SC : O(N), for the HashTable
+        // C++ CODE:
+        int32_t n = nums.size();
+        int32_t need = n / 3;
+        unordered_map<int, int> mpp; // to store the frequency of the Array elements
+        vector<int32_t> res; // to store all the eleemnts which apperar more than n/3 times
+
+        // Traverse the I/p Array 'nums' and store the frequency of the elements in a HashTable
+        for(int i=0; i<nums.size(); i++){
+            mpp[nums[i]]++;
+        }
+
+        // Now, Traverse the HashMap and check the frequency of each element
+        // If the frequency of any element is more than n/3, then save that element in the 'res' vector
+        for(auto& it : mpp){
+            if(it.second > n/3){
+                res.push_back(it.first);
+            }
+        }
+        return res;
+    }
+};
