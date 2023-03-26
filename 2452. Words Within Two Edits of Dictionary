@@ -1,0 +1,46 @@
+class Solution{
+public:
+    // Create a function 'isPossible()' to check if 2 strings can be equal after performing atmost 2 operations
+    int isPossible(string &a, string &b){
+        // CODE here
+        int count = 0; // to count the no.of operations needed to make string 'b' equal to string 'a'
+
+        // Traverse the strings and check if the characters are equal
+        // and count the no. of characters that are not equal
+        for(int i=0; i<a.size(); i++){
+            if(a[i] != b[i]){
+                count++;
+            }
+        }
+        // return the no. of operations required to make string 'b' equal to string 'a'
+        return count;
+    }
+
+    vector<string> twoEditWords(vector<string>& queries, vector<string>& dictionary){
+        // Approach: BRUTE FORCE
+        // TC : O(N * N)
+        // SC : O(1), excluding the space required for the 'ans' string
+        // C++ CODE:
+        int32_t n = queries.size();
+        int32_t m = dictionary.size();
+        vector<string> ans; // to store the answer string 
+
+        // Traverse the I/p String 'queries'
+        for(int i=0; i<queries.size(); i++){
+            string a = queries[i]; // current string 
+            // Now, for each string of 'queries', Traverse the I/p string 'dictionary' and check if any of the string of 
+            // 'dictionary' can be made equal to current string of 'queries' by using isPossible() funtion.
+            for(int j=0; j<dictionary.size(); j++){
+                string b = dictionary[j];
+                if(isPossible(a, b) <= 2){
+                    // If the no. of operations required to make string 'b' equal to string 'a' is less than or equal to 2, 
+                    // then pusht he string 'a' into the 'ans' string
+                    ans.push_back(a);
+                    break;
+                }
+            }
+        }
+        // return the 'ans' string
+        return ans;
+    }
+};
