@@ -1,0 +1,95 @@
+class Solution{
+public:
+    int kItemsWithMaximumSum(int numOnes, int numZeros, int numNegOnes, int k){
+        // Approach: MATH
+        // EXPLANATION: Since we need to maximize our answer, first we add 1, and if any 'k' left then we add 0, and still if
+        // any 'k' left then we add -1 to ans and then finally return the ans.
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the maximum possible sum after picking exactly 'k' items
+
+        // Add '1' to 'ans' till both 'k' is available and 'numOnes' is available
+        while(k){
+            if(numOnes > 0){
+                ans += 1;
+                numOnes--;
+                k--;
+            }
+            // If 'numOnes' becomes 0, then we break and start adding 0 to 'ans
+            else if(numOnes == 0){
+                break;
+            }
+        }
+        // Check if 'k' is available
+        if(k){
+            // If 'k' is available, then we add 0 to 'ans' till both 'k' is available and 'numZeros' is available
+            while(k){
+                if(numZeros > 0){
+                    ans += 0;
+                    numZeros--;
+                    k--;
+                }
+                // If the count of 'numZeros' becomes 0, break and then start adding -1 to 'ans'
+                else if(numZeros == 0){
+                    break;
+                }
+            }
+        }
+        
+        // Again check if 'k' is Available or not
+        if(k){
+            // If 'k' is available, then we add -1 to 'ans' till both 'k' is available and 'numNegOnes' is available
+            while(k){
+                if(numNegOnes > 0){
+                    ans -= 1;
+                    numNegOnes--;
+                    k--;
+                }
+                // If the count of 'numNegOnes' becomes 0, break
+                else if(numNegOnes == 0){
+                    break;
+                }
+            }
+        }
+        // return the final answer
+        return ans;
+
+
+
+        /*
+        //Approach: VECTORS
+        // TC : O(1)
+        // SC : O(numOnes + numZeros + numNegOnes) = O(50) = O(1)
+        // C++ CODE:
+        vector<int> arr;
+        int sum = 0;
+        
+        // Insert '1' into the 'arr' for 'numOnes' no. of times
+        for(int i=0; i<numOnes; i++){
+            arr.push_back(1);
+        }
+        
+        // Insert '0' into 'arr' for 'numZeros' no. of times
+        for(int i=0; i<numZeros; i++){
+            arr.push_back(0);
+        }
+        
+        // Insert '-1' into 'arr' for 'numNegOnes' no. of times
+        for(int i=0; i<numNegOnes; i++){
+            arr.push_back(-1);
+        }
+
+        // Since we need the maximum possible sum after 'k' items, we sort the 'arr' array
+        // OR we can directly traverse from the back of 'arr' and calculate sum till 'k'th element
+        sort(arr.begin(), arr.end(), greater<int>());
+        
+        // Now, after sorting the Array, Traverse for 'k' times, and add all the elements till 'k'
+        for(int i=0; i<k; i++){
+            sum += arr[i];
+        }
+        
+        return sum;
+        */
+    }
+};
