@@ -1,0 +1,56 @@
+class Solution{
+public:
+    bool canTransform(string start, string end){
+        // Approach: TWO POINTERS
+        // Eactly Similar to - 2337. Move Pieces to Obtain a String
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int32_t n = start.size();
+        int32_t i = 0; // to traverse the 'start' string (pointer 1)
+        int32_t j = 0; // to traverse the 'end' string (pointer 2)
+
+        // Traverse both the 'start' and 'end' string
+        while(i <= n && j <= n){
+            // skip all the 'X' in 'start' string till we obtain a charatcter 'L' or 'R'
+            while(i < n && start[i] == 'X'){
+                i++;
+            }
+
+            // Similarly, skip all the character 'X' that are occuring continuously in 'end' string till we obtain 'L' or 'R'
+            while(j < n && end[j] == 'X'){
+                j++;
+            }
+            
+            // EDGE CASES: If either 'i' reaches the end of 'start' string OR if 'j' reaches the end of 'end' string, then
+            // return true if both 'i' and 'j' are pointing to the end of 'start' and 'end' strings respectively 
+            // Not Required
+            //if(i == n || j == n){
+              //  return (i == n && j == n);
+            //}
+
+            // Now, if both the pointers 'i' and 'j' are pointing to some character either 'L' or 'R', compare them.
+            // If they are not equal, we can directly return false 
+            if(start[i] != end[j]){
+                return false;
+            }
+
+            // Now, If the current character in 'end' string is 'L', then check if (i<j). If YES< return false
+            if(end[j] == 'L'){
+                if(i < j){
+                    return false; // if(end[j] == 'L' && i < j) return false;
+                }
+            }
+            else if(end[j] == 'R'){
+                if(i > j){
+                    return false; // if(end[j] == 'R' && i > j) return false;
+                }
+            }
+
+            // move the pointers
+            i++;
+            j++;
+        }
+        return true;
+    }
+};
