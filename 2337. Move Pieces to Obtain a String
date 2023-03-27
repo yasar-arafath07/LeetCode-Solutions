@@ -1,0 +1,57 @@
+class Solution{
+public:
+    bool canChange(string start, string target){
+        // Approach: TWO POINTERS
+        // Exactly Similar to - 777. Swap Adjacent in LR String
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = target.size();
+        int i = 0; // to traverse the 'start' string (pointer 1)
+        int j = 0; // to traverse the 'target' string (pointer 2)
+
+        // Traverse both 'start' and 'target' string 
+        while(i <= n && j <= n){
+            // Initially, skip all the '_' characters in 'start' string till we obtain a character 'L' or 'R'
+            while(i < n && start[i] == '_'){
+                i++;
+            }
+            // Similarly, skip all the '_' character in 'target' string in the beginning till we obtain a character 'L' or 'R'
+            while(j < n && target[j] == '_'){
+                j++;
+            }
+
+            // EDGE CASES: If either 'i' reaches the end of 'start' string OR if 'j' reaches the end of 'target' string, then
+            // return true if both 'i' and 'j' are pointing to the end of 'start' and 'target' strings respectively 
+            // Not Required
+            /*
+            if(i == n || j == n){
+                return (i == n && j == n);
+            }
+            */
+
+            // If the character at 'i'th and 'j'th position are not equal, then return false directly
+            if(start[i] != target[j]){
+                return false;
+            }
+            
+            // If the current character at 'j'th position in 'target' string is 'L', then if i<j, return false.
+            if(target[j] == 'L'){
+                if(i < j){
+                    return false; // if(target[j] == 'L' && i < j) return false;
+                }
+            }
+            // If the current character at 'j'th character in 'target' string is 'R', and if (j < i), return false.
+            else if(target[j] == 'R'){
+                if(i > j){
+                    return false; // if(target[j] == 'R' && i > j) return false;
+                }
+            }
+
+            // move the pointers in both the strings
+            i++;
+            j++;
+        }
+        return true;
+    }
+};
