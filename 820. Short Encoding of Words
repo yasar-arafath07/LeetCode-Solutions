@@ -1,0 +1,28 @@
+class Solution{
+public:
+    int minimumLengthEncoding(vector<string>& words){
+        // Approach: SET
+        // TC : O(NK^2)
+        // SC : O(N*K), where 'N' is the size of the I/p Array 'words' and 'K' is the average size of each string in 'words'
+        // C++ CODE:
+        int32_t ans = 0; // to store the length of the shortest reference string 's' possible of any valid encoding of 'words'
+        unordered_set<string> set(words.begin(), words.end()); // to store the strings present in the I/p Array 'words'
+
+        // Now, Traverse each string present in the set 'set'
+        for(string s : set){
+            // Now, traverse the each string 's' and remove all the substrings of 's' which are present in the set
+            for(int i=1; i<s.size(); i++){
+                // string rem = s.substr(i);
+                set.erase(s.substr(i)); // set.erase(rem);
+            }
+        }
+
+        // Now, after removing the substring of any string which is present in the 'set', now we can calculate the length of 
+        // the shortest reference string 
+        // So, again traverse the set and calculate the length of the string
+        for(auto s : set){
+            ans += s.size() + 1; // add '1' after each string for the '#' character
+        }
+        return ans;
+    }
+};
