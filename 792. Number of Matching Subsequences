@@ -1,0 +1,45 @@
+class Solution{
+public:
+    int numMatchingSubseq(string s, vector<string>& words){
+        // Approach: HASHTABLE + TWO POINTERS
+        // TC : O(M), where 'M' is the size of 'words'
+        // SC : O(M*N), where 'M' is the no.of strings in map and 'N' is the length of the string in the map
+        // C++ CODE:
+        int n = s.size();
+        int ans = 0; // to store the no. of subsequences of 's'
+        unordered_map<string, int> mpp; // to store the frequency of each string present in the Array of string 'words'
+
+        // Traverse the I/p Array 'words' and store the strings present in it in the map to know the frequency of each string
+        for(string str : words){
+            mpp[str]++;
+        }
+
+        // Now, Traverse the each strings we stored in the map 'mpp'
+        for(auto it : mpp){
+            string s2 = it.first; // take out the string 
+            int m = s2.size();
+            int i = 0; // to traverse the I/p string 's' (pointer 1)
+            int j = 0;  // to traverse each string present in 'words' (pointer 2)
+
+            // Now, Traverse the I/p string 's' and compare it with the current string of 'words' i.e, 's2'
+            while(i < s.size() && j < s2.size()){
+                // If the characters in both the strings are equal, just move both the pointers forward
+                if(s[i] == s2[j]){
+                    i++;
+                    j++;
+                }
+                // else, if the characters in both the strings are not equal, then just move the pointer of the 's' string
+                else{
+                    i++;
+                }
+
+                // If 's2' is a subsequence of I/p string 's', then the pointer of 's2' i.e, 'j' will be equal to length of 
+                // the current string 's2' in the end. which means current string 's2' is a subsequence of the I/p string 's'
+                if(j == s2.size()){
+                    ans += it.second; // we found a subsequence. So, instead of just doing ans++, add the frequency of 
+                }                     // current string 's2' also into 'ans' so that duplicate strings in 'words' are handled
+            }
+        }
+        return ans;
+    }
+};
