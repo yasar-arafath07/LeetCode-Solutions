@@ -1,0 +1,31 @@
+class Solution{
+public:
+    int maxSatisfaction(vector<int>& satisfaction){
+        // Approach: SORTING
+        // EXPLANATION: We choose dishes from most satisfied dishes. and every time we add a new dish to the menu list, all 
+        // dishes in the menu table will be cooked 1 unit time later. So, total = total + curr. We will keep doing this as long
+        // as the current total satisfaction level doesnt goes below 0.
+        // TC : O(N * logN)
+        // SC : O(1)
+        // C++ CODE:
+        int curr = 0; // to store the current margin of satisfaction levels
+        int total = 0; // to store the maximum sum of like-time coefficient that the chef can obtain
+        
+        // sort the I/p Array 'satisfaction' in reverse order so that max elements appears first
+        sort(satisfaction.begin(), satisfaction.end(), greater<int>());
+        // sort(satisfaction.rbegin(), satisfaction.rend());
+
+        // Traverse the sorted I/p Array
+        for(int i=0; i<satisfaction.size(); i++){
+            // calculate the current satisfaction level
+            curr += satisfaction[i];
+            // If the satisfaction level goes below 0, i.e, If it is no longer beneficial to serve the next dish, then break.
+            if(curr < 0){
+                break;
+            }
+            // Record the sum of like-time coefficient that the chef can obtain
+            total += curr;
+        }
+        return total;
+    }
+};
