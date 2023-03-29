@@ -1,0 +1,30 @@
+class Solution{
+public:
+    vector<int> partitionLabels(string s){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(26) = O(1)
+        // C++ CODE:
+        vector<int> res; // to store the answer i.e, the size of the parts
+        vector<int> v(26,0); // to store the latest Index of the character in the string (OR we can use a HASHMAP to store it)
+        int maxi = INT_MIN; // stores the index of last appeared position of a letter
+        int idx = 0; // to represent the starting index of the part
+
+        // Traverse the Ip string 's' and store the index of last appearance of each of the character of 's' in the vector 'v'
+        for(int i=0; i<s.size(); i++){
+            v[s[i] - 'a'] = i;
+        }
+
+        // Now, Traverse the string 's'
+        for(int i=0; i<s.size(); i++){
+            maxi = max(maxi, v[s[i] - 'a']); // represents the index of last appearance of a character in the current part
+            // If 'i' becomes equal to 'maxi', meaning all the letters in current partiton [idx, i] do not appear later and 
+            // only appears in current partition. So, we can partition the string from the index 'idx' till 'i'
+            if(i == maxi){
+                res.push_back(i - idx + 1); // save the size of the partition we formed in the 'res' vector
+                idx = i + 1; // save the index of the starting of the next partition in 'idx'
+            }
+        }
+        return res;
+    }
+};
