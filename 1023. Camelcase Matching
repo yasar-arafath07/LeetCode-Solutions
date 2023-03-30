@@ -1,0 +1,41 @@
+class Solution{
+public:
+    // Create a 'isPossible()' function to check if it is possible to convert 'pattern' string to current string 's' from 
+    // the vector of strings 'queries'
+    bool isPossible(string& s, string& pattern){
+        // CODE here
+        int i = 0; // to traverse the 'pattern' string
+        // Traverse each character of the current string 's'
+        for(auto c : s){
+            // If the current character of the string 's' is uppercase and if the current character is pattern is not equal
+            // to current character of string 's', return false since we cannot insert uppercase letter to pattern string
+            if(isupper(c) && c != pattern[i]){
+                return false; 
+            }
+            // else if current character of string 's' is equal to current character of 'pattern' string, just move the 
+            // pointer 'i' of 'pattern' string to find the next matching charatcter
+            else if(c == pattern[i]){
+                i++;
+            }
+        }
+        // If in the end, pointer 'i' of 'pattern' string is equal to the lengthof the 'pattern' which means 'pattern' can 
+        // be converted to string 's' by adding some lowercase letters to it. So, we return true.
+        return i == pattern.size();
+    }
+
+    vector<bool> camelMatch(vector<string>& queries, string pattern){
+        // Approach: BRUTE FORCE
+        // TC : O(M*N), where 'M' is the length of 'queries' and 'N' is the length of 'pattern'
+        // SC : O(1), excluding the space required to store the answer
+        // C++ CODE:
+        vector<bool> ans; // to store the answer
+
+        // Traverse the I/p string 'queries'
+        for(auto& s : queries){
+            // check each string of 'queries' with the 'pattern' string that if it is possible to match 'pattern' with current
+            // string 's'
+            ans.push_back(isPossible(s, pattern));
+        }
+        return ans;
+    }
+};
