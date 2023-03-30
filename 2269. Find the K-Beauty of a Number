@@ -1,0 +1,38 @@
+class Solution{
+public:
+    int divisorSubstrings(int num, int k){
+        // Approach: SLIDING WINDOW + TWO POINTERS 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the k-beauty of given input 'num'
+        int i = 0; // window start (pointer 1)
+        int j = 0; // window end (pointer 2)
+
+        // convertthe given input integer to string
+        string str = to_string(num);
+
+        // Traverse till the end of the string 'str'
+        while(j < str.size()){
+            // If the window size 'k' is not yet hit, just move the pointer 'j'
+            if(j - i + 1 < k){
+                j++;
+            }
+            
+            // Now, if the window size 'k' is hit, take out the integers from the current window and convert it back to integer 
+            if(j - i + 1 == k){ 
+                string s = str.substr(i,k); // so 's' will now contain the elements of the current window
+                // Convert the current window string 's' to integer
+                int curr = stoi(s);
+                // Now, check if this current integer i.e, 'curr' is a divisor of 'num' or not. If YES, then increment 'ans'
+                if(curr != 0 && num % curr == 0){
+                    ans++;
+                }
+                // Now, slide the window forward
+                i++;
+                j++;
+            }
+        }
+        return ans; 
+    }
+};
