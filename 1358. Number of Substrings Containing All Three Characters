@@ -1,0 +1,28 @@
+class Solution{
+public:
+    int numberOfSubstrings(string s){
+        // Approach: SLIDING WINDOW + TWO POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int n = s.size();
+        int ans = 0; // to count the total no. of substrings containing atleast one occurence of all 3 characters
+        unordered_map<char,int> mpp; // map to store the frequency of the characters of the string
+        int i = 0; // window start (pointer 1)
+        int j = 0; // window end (pointer 2)
+
+        // Traverse till the end of the I/p string 's'
+        while(j < s.size()){
+            mpp[s[j]]++; // store the current element in the map
+
+            // Continue doing till the window is good i.e, till the window has atleast 1 occurence of all 3 characters
+            while(mpp['a'] && mpp['b'] && mpp['c']){
+                ans += (n - j); // add the no. of substrings possible to 'ans'
+                mpp[s[i]]--; // before shrinking the window, decrement the frequency of the 'i'th character in the map
+                i++; // shrink the window
+            }
+            j++; // increase the size of the window if the window is not good
+        }
+        return ans;
+    }
+};
