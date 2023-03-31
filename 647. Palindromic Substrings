@@ -1,0 +1,32 @@
+class Solution{
+public:
+    int ans = 0;
+    // Create a function 'extractPalindrome()' which will extract all possible new palindromes
+    void extractPalindrome(string s, int i, int j){
+        // Till 'i' is greater than or equal to 0 'and' 'j' is less than size of string 's' and also if the characters at 'i'
+        // and 'j' are matching, we got a new palindrome. So ans++.
+        // and then try to extract new plaindrome by moving 'i' to left and 'j' forward
+        while(i >= 0 && j < s.size() && s[i] == s[j]){
+            ans++; 
+            i--;
+            j++;
+        }
+    }
+
+    int countSubstrings(string s){
+        // Approach: TWO POINTERS
+        // EXPLANATION: The Idea is to start from each Index and try to extend the palindrome for both odd and even length 
+        // using the 'extractPalindrome()' function. 
+        // TC : O(N^2), in the wrst case (eg: If s = "aaa")
+        // SC : O(1)
+        // C++ CODE:
+        // int ans = 0; // to store the total no. of palindromic substrings
+
+        // Traverse the string 's'
+        for(int i=0; i<s.size(); i++){
+            extractPalindrome(s, i, i); // for odd length
+            extractPalindrome(s, i, i + 1); // for even length
+        }
+        return ans;
+    }
+};
