@@ -1,0 +1,41 @@
+class Solution{
+public:
+    int minNumber(vector<int>& nums1, vector<int>& nums2){
+        // Approach: GREEDY + MATH
+        // TC : O(N * logN)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the answer which is the smallest number that contains at least one digit from each Array
+        
+        // sort both the I/p Array 'nums1' and 'nums2' so that smallest element appears in the starting Index
+        sort(nums1.begin(), nums1.end());
+        sort(nums2.begin(), nums2.end());
+        
+        // Traverse the I/p Array 'nums1'
+        for(int i=0; i<nums1.size(); i++){
+            // For each element of 'nums1[i]', traverse the 'nums2' Array and compare the elements of nums1[i] and nums2[j]
+            for(int j=0; j<nums2.size(); j++){
+                // If there is a common single element in both 'nums1' and 'nums2', return that element since it will be 
+                // the smallest
+                if(nums1[i] == nums2[j]){
+                    return nums1[i];
+                }
+            }
+        }
+        
+        // else, If there is no common element b/w nums1 and nums2, the smallest will be the combination of nums1[0] & nums2[0]
+        // because they both are the 1st element which will be the smallest from each Array after sorting
+        int mini = min(nums1[0], nums2[0]); // minimum b/w nums1[0] and nums2[0]
+        int maxi = max(nums1[0], nums2[0]); // maximum b/w nums1[0] and nums2[0]
+
+        // calculate the answer which will be smallest and contains atleast one digit from each Array 
+        ans = (mini * 10) + maxi; // writing 'mini' on  
+        // OR convert to string and calculate the Answer
+        // string s1 = to_string(mini);
+        // string s2 = to_string(maxi);
+        // string s = s1 + s2;
+        // ans = stoi(s);
+
+        return ans; // return the Answer
+    }
+};
