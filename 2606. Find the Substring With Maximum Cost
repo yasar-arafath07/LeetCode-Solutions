@@ -1,0 +1,35 @@
+class Solution{
+public:
+    int maximumCostSubstring(string s, string chars, vector<int>& vals){
+        // Apprroach: HASHTABLE + KADANE's ALGORITHM
+        // TC : O(N)
+        // SC : O(26) = O(1)
+        // C++ CODE:
+        int ans = 0; // to store the maximum cost/sum among all substrings of string 's'
+        int curr = 0; // to store the current score/sum of the substring 
+        vector<int> v(26, 0); // to store the value of each character, create a vector of size 26 for 26 alphabets
+
+        // Traverse the vector 'v' and store the default value for each character
+        // i.e, a:1, b:2, c:3, d:4, e:5, ...........etc
+        for(int i=0; i<26; i++){
+            v[i] = i+1;
+        }
+
+        // Traverse the string 'chars' and update the default value of character 'chars[i]' to the value given in 'vals[i]'
+        for(int i=0; i<chars.size(); i++){
+            v[chars[i] - 'a'] = vals[i]; // update the value of the character in the vector 'v'
+        }
+
+        // Now, Traverse the string 's' and calculate the maximum score/sum
+        for(int i=0; i<s.size(); i++){ 
+            curr += v[s[i] - 'a']; // calculate the current sum by adding the value of current character present in 'v' to curr
+            // If the current sum is negative, set current sum to 0 (Kadane's Algorithm)
+            if(curr < 0){
+                curr = 0;
+            }
+            ans = max(ans, curr); // calculate the Answer, which is the maximum of Previous Answer and current sum
+        }
+        // return the Answer
+        return ans;
+    }
+};
