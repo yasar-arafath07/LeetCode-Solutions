@@ -1,0 +1,33 @@
+class Solution{
+public:
+    int findTheLongestBalancedSubstring(string s){
+        // Approach: MATH + GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the length of the longest balanced substring of 's'
+        // int zeroCount = 0;
+        // int oneCount = 0; 
+
+        // Traverse the I/p string 's'
+        for(int i=0; i<s.size(); ){
+            int zeroCnt = 0; // to count the no. of occurences of continuous zero's
+            int oneCnt = 0; // to count the no. of occurences of continuous one's 
+
+            // Traverse till the zeros disappear
+            while(i < s.size() && s[i] == '0'){
+                zeroCnt++; // count the no. of zeros
+                i++; // move the pointer
+            }
+
+            // Traverse and count the ones till either we find a zero or till the end of I/p string
+            while(i < s.size() && s[i] == '1'){
+                oneCnt++; // count the no. of ones
+                i++; // move the pointer
+            }
+            // calculate the Answer
+            ans = max(ans, 2 * min(zeroCnt, oneCnt)); 
+        }
+        return ans; 
+    }
+};
