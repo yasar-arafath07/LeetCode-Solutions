@@ -1,0 +1,31 @@
+class Solution{
+public:
+    vector<vector<int>> findMatrix(vector<int>& nums){
+        // Approach: HASHTABLE
+        // TC : O(N * average frequency)
+        // SC : O(N), for the HashTable
+        // C++ CODE:
+        unordered_map<int,int> mpp; // to store the frequency of the Array elements
+        int maxi = INT_MIN; // to store the maximum frequency of any element
+        
+        // Traverse the I/p Array and store the frequency of the elements in the HashMap
+        for(int i=0; i<nums.size(); i++){
+            mpp[nums[i]]++;
+            maxi = max(maxi, mpp[nums[i]]); // Record the maximum frequency
+        }
+
+        vector<vector<int>> ans(maxi, vector<int>()); // to store the resulting 2D Array 
+        // So, in the 'ans' Array, the no. of rows present will be the maximum frequency of any element we have in the I/p
+        // ARraty 'nums'. So, we take 'ans' vector of size 'maxi' i.e, there will be totally 'maxi' no. of rows in the 'ans'
+
+        // Now, Traverse the map and fill the 2D Array accordingly
+        for(auto& it : mpp){
+            // For each element in the map, traverse for that elements 'frequency' no. of times and push that element into 
+            // 'ans' for it 'frequency' no. of times
+            for(int i=0; i<it.second; i++){
+                ans[i].push_back(it.first); // push the element into the 'ans'
+            }
+        }
+        return ans;
+    }
+};
