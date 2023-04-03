@@ -1,0 +1,28 @@
+class Solution{
+public:
+    int miceAndCheese(vector<int>& reward1, vector<int>& reward2, int k){
+        // Approach: SORTING + GREEDY
+        // EXPLANATION: We can't select from both Arrays with same index 'i'. From 1st Array we select 'k' types and from 2nd 
+        // Array we select remaining (n-k).
+        // TC : O(N * logN)
+        // SC : O(1), excluding the space required to create 'diff' vector
+        // C++ CODE:
+        int n = reward1.size();
+        int ans = 0; // to store the maximum points the mice can achieve
+        vector<int> diff(n); // OR use Priority Queue (MAX HEAP)
+
+        // Traverse the I/p Array 'reward1'
+        for(int i=0; i<reward1.size(); i++){
+            ans += reward2[i];
+            diff[i] = reward1[i] - reward2[i];
+        }
+        // Now, sort the 'diff' vector in Descending order
+        sort(diff.begin(), diff.end(), greater<int>());
+
+        // Now, Traverse the 'diff' vecotor for 'k' times and update 'ans'
+        for(int i=0; i<k; i++){
+            ans += diff[i];
+        }
+        return ans;
+    }
+};
