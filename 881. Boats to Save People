@@ -1,0 +1,43 @@
+class Solution{
+public:
+    int numRescueBoats(vector<int>& people, int limit){
+        // Approach: SORTING + TWO POINTERS
+        // EXPLANATION: Here we can sort the people and then we can use 2 pointer. one for lightest person (at position i) 
+        // and other for the heaviest person (at position 'j'). Now, we can make the lightest and heaviest person to go 
+        // together in the boat. If their weight is less than the limit, then they both will go together and only 1 boat will
+        // be sufficient to carry them. and then update both 'i' and 'j'.else, if their weight crosses the limit, then the
+        // heaviest person will travel alone. So, update only 'j' in that case and then update 'ans'.  
+        // TC : O(N * logN)
+        // SC : O(1)
+        // C++ CODE:
+        int n = people.size();
+        int ans = 0; // to store the minimum no.of boats required to carry every given person
+        int i = 0; // left pointer (pointer 1) i.e, the lightest weighted person
+        int j = n - 1; // right pointer (pointer 2) i.e, the heaviest person
+        int curr = 0; // current weight of all people in the boat
+
+        // sort the I/p Array 'people'
+        sort(people.begin(), people.end());
+
+        // Traverse till (i <= j) i.e, till all the persons travel in the boat
+        while(i <= j){
+            // calculate the current weight of the 2 people at 'i' and 'j'
+            curr = people[i] + people[j]; // weight of the lightest person and the heaviest person
+
+            // If current weight of 2 people's are less than the 'limit', then 1 boat is sufficient to carry both the people
+            // So, we increase 'ans'. and after that we move to the next persons
+            if(curr <= limit){
+                ans++; 
+                i++; // move 'i' forward
+                j--; // move 'j' backward
+            }
+            // If the current weight of 2 people is greater than the 'limit', then only the 'j'th person will travel.
+            // So, we will only update the 'j'
+            else if(curr > limit){
+                ans++;
+                j--; // move only 'j' to the backward
+            }
+        }
+        return ans;
+    }
+};
