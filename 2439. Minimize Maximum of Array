@@ -1,0 +1,23 @@
+class Solution{
+public:
+    int minimizeArrayValue(vector<int>& nums){
+        // Approach: PREFIX SUM + AVERAGE 
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 0; // to store the minimum possible value of the maximum integer
+        long long sum = 0; // to store the sum till the current index 
+        int currAvg = 0; // to store the current Average sum till the current index
+
+        // Traverse the I/p Array 'nums'
+        for(int i=0; i<nums.size(); i++){
+            sum += nums[i]; // calculate the current sum
+            currAvg = ceil((double)sum / (i+1)); // calculate the current average of sum
+            // The 'ceil()' function in C++ will return the smallest possible integer value which is greater than or equal to
+            // the given argument. eg1: ceil(2.33) = 3, eg2: ceil(2) = 2
+            ans = max(ans, currAvg); // record the 'ans' 
+        }
+        // return the 'ans'
+        return ans;
+    }
+};
