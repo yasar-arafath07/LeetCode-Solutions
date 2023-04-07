@@ -1,0 +1,62 @@
+class Solution{
+public:
+    // Create a 'dfs()' function which will check for the lands which are connected to the boundary lands recursively and 
+    // make all those lands to 0.
+    void dfs(vector<vector<int>>& grid, int i, int j){
+        // If we are out of the Boundary, OR if the current cell is already a water, then just return.
+        if(i < 0 || j < 0 || i == grid.size() || j == grid[0].size() || grid[i][j] == 0){
+            return;
+        }
+        // Now, make the current cell as visited by replacing the value from 1 to 0 so that we don't visit the same cell again
+        // and again and then get stuck in a recursive loop
+        // i.e, if the current cell at indices 'i' and 'j' is 1 (representing land), the function changes the value of the 
+        // cell to 0 and then recursively calls the dfs() function on it's adjacent land cells.
+        grid[i][j] = 0;
+
+        // Now, call the dfs() function to all the 4 directions of the current cell to check if any other land cell is 
+        // connected to current cell and if it is a land, then we can walk off the boundary. So make all those cells from 
+        // which we can walk off the boundary as 0.
+        dfs(grid, i, j-1); // check to the left of current cell
+        dfs(grid, i, j+1); // check to the right of current cell
+        dfs(grid, i-1, j); // check on the above of current cell
+        dfs(grid, i+1, j); // check the below cell of cuurent cell
+    }
+
+    int numEnclaves(vector<vector<int>>& grid){
+        // Approach: DFS + RECURSION
+        // TC : O(n * m), where 'n' is the no. of rown and 'm' is the no. of columns
+        // SC : O(n * m), since we are using RECURSION
+        // C++ CODE:
+        int n = grid.size();
+        int m = grid[0].size(); 
+        int ans = 0; // to count the no.of land cells in grid for which we cannot walk off the boundary of the grid
+
+        // Traverse the entire grid and if a land cell is on the boundary of the grid (represented as 1), then dfs() function
+        // is called on that cell
+        for(int i=0; i<grid.size(); i++){
+            for(int j=0; j<grid[0].size(); j++){
+                // Check if we have any land cell in the Boundary Area
+                // So, check if we are at the Boundary cell and if it is also a land (represented by 1)
+                if((i == 0 || j == 0 || i == n-1 || j == m-1) && grid[i][j] == 1){
+                    // then call the dfs() function recursively to check for it's connected land cells
+                    dfs(grid, i, j);
+                }
+            }
+        }
+        // So, after the dfs() function is called for all the lands present in the boundary, then the connected lands to the 
+        // boundary land are also made 0 since we need only those lands which are surrounded by water/0.
+
+        // So Now traverse the grid and count the no.of lands that are surrounded by water OR from where we can't walk off 
+        // the boundary.
+        for(int i=0; i<grid.size(); i++){
+            for(int j=0; j<grid[0].size(); j++){
+                // If the current cell is a land, then incrmeent 'ans' since we can't walk out of that land because it is 
+                // surrounded by water 
+                if(grid[i][j] == 1){
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+};
