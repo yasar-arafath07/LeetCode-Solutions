@@ -1,0 +1,25 @@
+class Solution{
+public:
+    int partitionArray(vector<int>& nums, int k){
+        // Approach: SORTING + GREEDY
+        // TC : O(N * logN)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = 1; 
+        int idx = 0; // 'idx' will point to that index where have recently partitioned the Array
+
+        // sort the I/p Array 'nums'
+        sort(nums.begin(), nums.end());
+
+        // Traverse the I/p Array
+        for(int i=1; i<nums.size(); i++){
+            // If the difference between current element and the starting of new partiton is greater than 'k', then we need 
+            // to make a new partition of the Array. So, we increment 'ans' and record the index of partition in 'idx'
+            if(nums[i] - nums[idx] > k){
+                ans++; 
+                idx = i;
+            }
+        }
+        return ans;
+    }
+};
