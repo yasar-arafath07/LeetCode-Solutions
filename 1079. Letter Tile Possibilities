@@ -1,0 +1,45 @@
+class Solution{
+public:
+    // Create a Recursive 'helper()' function which will calculate the total no. of possible non-empty sequences of the given
+    // I/p string 'tiles'. Pass the 'ans' variable inside the helper() function by reference
+    void helper(vector<int>& count, int &ans){
+        // CODE here
+        // Traverse the 'count' Array 
+        for(int i=0; i<26; i++){
+            // If the current character count[i] is present
+            if(count[i]){
+                count[i]--; // decrement the frequency of the current character
+                ans++; 
+                // call the 'helper()' function recursively 
+                helper(count, ans);
+                // BACKTRACKING Step: Undo the changes we made above to count[i]
+                count[i]++; // BACKTRACKING STEP
+            }
+        }
+    }
+    
+    int numTilePossibilities(string tiles){
+        // Approach: HASHTABLE + RECURSION + BACKTRACKING
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int ans = 0; // to store the count of no.of possible non-empty sequences of letters we can make 
+        vector<int> count(26); // to store the frequency of each letter
+        // count[0] is the no.of occurences of the character 'A'
+        // count[1] is the no.of occurences of the character 'B'
+        // ....
+        // count[25] is the no. of occurences of the character 'Z'
+
+        // Traverse the I/p string 'tiles' and store the count of each letter in the 'count' Array
+        for(const auto& c : tiles){
+            count[c - 'A']++; // given all the characters in the I/p string are uppercase letters
+        }
+
+        // Now, call the 'helper()' function which will calculate the total no.of possible non-empty sequences of given 
+        // I/p string 'tiles'
+        helper(count, ans); 
+
+        // return the answer
+        return ans;
+    }
+};
