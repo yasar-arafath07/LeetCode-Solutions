@@ -1,0 +1,62 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> neighbors;
+    Node() {
+        val = 0;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val) {
+        val = _val;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val, vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+*/
+
+class Solution{
+public:
+    unordered_map<Node*, Node*> copies; // declare a map to check whether we have a copy of node or not and the map is 
+    // also used to store the copy we made 
+
+    Node* cloneGraph(Node* node){
+        // Approach: DFS + RECURSION
+        // TC : O(E * V), where 'E' is the no.of edges and 'V' is the no.of vertices since we are iterating on every edge
+        // SC : O(E*V + 2*V + V), where O(E * V) is to clone the graph itself + O(2 * V) is to create the map and store the 
+        // vertices->copies + O(V) is for the internal Recursive stack of DFS
+        // C++ CODE:
+        // BASE CASE:
+        if(node == NULL) return NULL;
+        
+        // For a node, we check whether we have already made a copy of it or not. So, if that node is present in the map, then
+        // we have already created a copy of it. else if the node is not present in the map, then we will create a copy of it.
+        // So, If the given node is not already cloned/copied, then make a clone of it
+        if(copies.find(node) == copies.end()){
+            // create a clone/copy of it
+            copies[node] = new Node(node->val, {});
+            // and then Traverse the neighbours of the Actual original node to mark clone neighbors of cloned node.
+            for(Node* adj : node->neighbors){
+                copies[node] -> neighbors.push_back(cloneGraph(adj)); // add the copy RECURSIVEly
+            }
+        }
+        // and at last, return mpp[node] which is the graph we have cloned till now.
+        return copies[node]; // return mpp[node];
+    }
+};
+
+
+/*
+// EXPLANATION:
+- So, we need to clone a given graph such that each node's values and it's neighbors must be same, but the node should have
+  a different color i.e, it should be a new node.
+- So, just Traverse the given Graph (BFS or DFS) and have a copy of each node and connect the copy of nodes with the copy 
+  of neighbors.
+- Each node has a different color to show that all the nodes are different.
+- Initialize a map 'copies' which actually stores the copy from original node to a copied node, which will actually help us
+  know if the copy of the original node is already made or not 
+*/
