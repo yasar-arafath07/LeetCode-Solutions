@@ -1,0 +1,30 @@
+class Solution{
+public:
+    int longestSubarray(vector<int>& nums, int limit){
+        // Approach: SLIDING WINDOW + TWO POINTERS + MULTISET 
+        // TC : O(N * logN), where O(N) is to traverse the I/p Array 'nums' and O(logN) is the time required for multiset 
+        // to perform insert and erase operations.
+        // SC : O(N), for the multiset
+        // C++ CODE:
+        int i = 0; // window start (pointer 1)
+        int j = 0; // window end (pointer 2)
+        multiset<int> m; // multiset stores all the elements of 'nums' including the duplicate elements in a sorted order
+        // All the operations in the multiset is done in 'logN' time. 
+        int ans = 0; // to store the size of the longest non-empty subarray
+
+        // Traverse the I/p Array 'nums' and insert the element of 'nums' into the multiset
+        for(int j=0; j<nums.size(); j++){
+            m.insert(nums[j]);
+            // Check if the difference between largest and smallest element in the multiset is greater than 'limit' or not.
+            // If the difference is greater than limit, then remove the 'i'th element from the multiset
+            if(*m.rbegin() - *m.begin() > limit){
+                // remove the 'i' th element form the multiset and slide the window
+                m.erase(m.find(nums[i]));
+                i++; // slide the window
+            }
+            ans = max(ans, j-i+1); // record the maximum length of the subarray
+        }
+        // return the answer which is the maximum length of the subarray
+        return ans;
+    }
+};
