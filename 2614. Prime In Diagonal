@@ -1,0 +1,120 @@
+class Solution{
+public:
+    // Create a function to check if a number is Prime or not
+    
+    /*
+    // METHOD 1: BRUTE FORCE (Traverse till 'n')
+    // Throws TLE
+    bool isPrime(int n){
+        int count = 0; 
+        
+        // Traverse from 1 till n and check if 'n' is divisible by any integer 'i'. If YES, increment 'count'
+        for(int i=1; i<=n; i++){
+            if(n % i == 0){
+                count++;
+            }
+        }
+        // If 'count' is 2, then the given integer 'n' is divisible by only 2 integers which is 1 and the integer itself. 
+        // So it is a Prime. So, we return true if(count == 2)
+        if(count == 2){
+            return true;
+        }
+        // else, the given integer 'n' is divisible by more than 2 integers. So, we return false.
+        return false;
+    }
+    */
+
+    
+    /*
+    // METHOD 2: BETTER (Traverse till n/2)
+    // Throws TLE
+    bool isPrime(int n){
+        bool flag = true;
+        
+        // If 'n' is 0 or 1, set flag to flase since 0 and 1 are not primes.
+        if(n == 0 || n == 1){
+            flag = false;
+        }
+        // Now, Traverse from 2 till n/2 and check if 'n' is divisible by any integer between 2 to n/2. If YES, set flag=false.
+        for(int i=2; i<=n/2; i++){
+            if(n % i == 0){
+                flag = false;
+            }
+        }
+        // In the end, if flag = ture, return true.
+        if(flag) return true;
+        // else, we return false
+        return false;
+    }
+    */
+
+    
+    // METHOD 3: OPTIMIZED Code to check if a Number is PRIME No or Not.
+    bool isPrime(int n){
+        // EDGE CASE: If 'n' is 0 or 1 or negative, return flase directly since 0 and 1 are not PRIME Numbers
+        if(n < 2) return false; // if(n == 0 || n == 1) return false;
+
+        // Traverse from 2 till the nearest Perfect Square (Square Number) which is lesser than or equal to 'n'.
+        // So, if 'n' is divisible by any integer b/w 2 and nearest perfect square to 'n' lesser than or equal to 'n', then
+        // return false directly.
+        for(int i=2; i*i<=n; i++){
+            if(n % i == 0){
+                return false;
+            }
+        }
+        // else, if 'n' is not divisible by any integer, then return true.
+        return true;
+    }
+
+    
+    int diagonalPrime(vector<vector<int>>& nums){
+        // Approach 2: MATH
+        // TC : Lesser than O(n * m)
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+        int m = nums[0].size();
+        int ans = 0; // to store the largest prime number which lies on atleast one of the diagonals
+
+        // Traverse the I/p Matrix 'nums'
+        for(int i=0; i<nums.size(); i++){
+            // Check the given condiitons given in the Question
+            // If the element present at one of the diagonal is a Prime No, update the answer (nums[i][i] is a diagonal cell)
+            if(isPrime(nums[i][i])){
+                ans = max(ans, nums[i][i]);
+            }
+            // Similarly, if the element present at the other diagonal is Prime No, update the answer
+            // nums[i][n-i-1] is also a diagonal cell
+            if(isPrime(nums[i][n-i-1])){
+                ans = max(ans, nums[i][n-i-1]);
+            }
+        }
+        // return the answer
+        return ans;
+
+
+
+        /*
+        // Approach 1: MATH
+        // TC : O(n * m * log(nums[i][j])), where log(nums[i][j]) is the TC for checking if the integer nums[i][j] is Prime
+        // SC : O(1)
+        // C++ CODE:
+        int n = nums.size();
+        int m = nums[0].size();
+        int maxi = 0; // to store the largest prime number which lies on atleast one of the diagonals
+        
+        // Traverse the row
+        for(int i=0; i<nums.size(); i++){
+            // For each row, Traverse the column
+            for(int j=0; j<nums[0].size(); j++){
+                // If the current cell is a diagonal cell and if the number in that cell is a Prime No, then update the 'ans'
+                // Below Conditions (i == j || i + j + 1 == n) is the condiiton to check if a cell is a Diagonal cell or not.
+                if((i == j || i + j + 1 == n) && isPrime(nums[i][j])){
+                    maxi = max(maxi, nums[i][j]); // Record the maximum
+                }
+            }
+        }
+        return maxi;
+        */
+    }
+};
