@@ -1,32 +1,58 @@
-class Solution {
+class Solution{
 public:
-    bool isValid(string s) {
-        
-        /************** APPROACH 1 *****************/
-        
-        stack<char> st;
+    bool isValid(string s){
+        // Approach 1: STACK
+        // TC : O(N)
+        // SC : O(N), for creating and storing the paranthesis in the stack
+        // C++ CODE:
+        stack<char> st; // Initialize a stack to keep track of the order of paranthesis
+
+        // Now, Traverse each element of the I/p string 's'
         for(char c : s){
+            // If we encounter any open Paranthesis, just push it in the stack 's'
             if(c == '(' || c == '{' || c == '['){
                 st.push(c);
-            }else{
-                if(st.empty())
+            }
+            // If the control comes to the else statement, which means the current element is a closed paranthesis
+            else{
+                // If the current element is a closed paranthesis and the stack is empty, which means the stack doesnt has
+                // a open paranthesis. So, we can return false.
+                if(st.empty()){
                     return false;
-                else if(c == ')' && st.top() != '(')
+                }
+                // else if the current closing paranthesis is ')' and if we don't have the corresponding open brackt '(' in
+                // the stack, then we can return false.
+                else if(c == ')' && st.top() != '('){
                     return false;
-                else if(c == '}' && st.top() != '{')
+                }
+                // else if the current closing paranthesis is '}' and if we don't have the corresponding open brackt '{' in
+                // the stack, then we can return false.
+                else if(c == '}' && st.top() != '{'){
                     return false;
-                else if(c == ']' && st.top() != '[')
+                }
+                // else if the current closing paranthesis is ']' and if we don't have the corresponding open brackt '[' in
+                // the stack, then we can return false.
+                else if(c == ']' && st.top() != '['){
                     return false;
-                else
+                }
+                // else, if the control comes to this else statement, which means we have got the right pair of brackets.
+                // so pop the opening bracket pushed into the stack
+                else{
                     st.pop();
-                
+                }
             }
         }
+        // If the stack is emptyu in the end, which means all the paranthesis have matched. So, we return true, else we 
+        // return false.
         return st.empty();
         
         
-        /************* APPROACH 2: ITERATIVE APPROACH **************/
+
         /*
+        // Approach 2:
+        // TC : 
+        // SC : 
+        // C++ CODE:
         stack<char> st;
         
         for(int i=0; i<s.length(); i++){
@@ -49,9 +75,12 @@ public:
         
         
         
-        /***************** APPROACH 3 *******************/
         /*
-        stack<char> st;   //taking a stack to keep track of the order of brackets.
+        // Approach 3: STACK
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        stack<char> st;   // Initialize a stack to keep track of the order of brackets.
         for(auto i : s){ //iterate over each and every elements.
             if(i == '(' || i == '{' || i == '[')
                 st.push(i);
@@ -68,7 +97,12 @@ public:
     }
 };
 
-// st.push(i), i.e if the current element of the string is any of the given opening brackets, then we will justy simply push into the stack.
-//i.e if control comes to else part, it means that current element is a closing bracket, so check two conditions  current element matches with top of the stack and the stack must not be empty...
-// st.pop(), i.eif control reaches to that line, it means we have got the right pair of brackets, so just pop it.
-// return st.empty(), i.e at last, it may possible that we left something into the stack unpair so return checking stack is empty or not..
+
+/*
+// EXPLANATION:
+// s.push(i), i.e if the current element of the string is any of the given opening brackets, then we will just simply push into the stack.
+// And if the control comes to else part, it means that current element is a closing bracket, so check two conditions: current element matches with top of the stack and the stack must not be empty...
+// s.pop(), i.e if control reaches to that line, it means we have got the right pair of brackets, so just pop it.
+// return s.empty(), i.e at last, it may possible that we left something into the stack unpair so if the stack is empty, we
+// return true and if there is something left in the stack which is not matched, then we return false.
+*/
