@@ -1,0 +1,28 @@
+class Solution{
+public:
+    bool winnerOfGame(string colors){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int alice = 0; // to store the count of how many times alice can remove pieces
+        int bob = 0; // to store the count of how many times bob can remove pieces
+
+        // Traverse the I/p string 's'
+        for(int i=1; i<colors.size()-1; i++){
+            // Now, check the condition if both of the neighbors of current piece is of same color or not.
+            if(colors[i] == colors[i-1] && colors[i] == colors[i+1]){
+                // If the current piece is of color 'A' and both of it's neighbors are also colored 'A', then alice can remove.
+                if(colors[i] == 'A'){
+                    alice++;
+                }
+                // else, bob can remove if the current piece and it's neighbors are colored 'B'
+                else{
+                    bob++;
+                }
+            }
+        }
+        // In the end, if alice has more count than bob, return true. else, return false.
+        return alice > bob;
+    }
+};
