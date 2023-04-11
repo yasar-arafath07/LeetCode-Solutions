@@ -1,7 +1,7 @@
 class Solution{
 public:
     string removeStars(string s){
-        // Approach 2: TWO POINTERS (CwA)
+        // Approach 3: TWO POINTERS (CwA)
         // TC : O(N)
         // SC : O(1)
         // Explanation: Whenever we see a normal character, we move both 'i' & 'j' forward i.e, i++ & j++.
@@ -13,31 +13,32 @@ public:
 
         // Iterate on the string
         for(int i=0; i<s.length(); i++){
-            // if the character is a '*', we move pointer j backward
+            // If the current character is a '*', we move pointer 'j' backward
             if(s[i] == '*'){
                 j--;
             }
             else{
-                // replace the values at index i and index j before moving
-                s[j] = s[i];
-                j++;
-                // i will anyway get incremented in the main for loop. So, no need to increment again here
+                // replace the character at index 'j' with the character at index 'j' before moving 
+                s[j] = s[i]; 
+                j++; // increment the 'j' pointer
+                // 'i' will anyway get incremented in the main for loop. So, no need to increment again here
             }
         }
-        return s.substr(0, j); // return the substring of string s from index 0 till the index j
+        return s.substr(0, j); // return the substring of string s from index 0 till the next 'j' no.of elements
+    
 
 
 
         /*
-        // Approach 1: Using STACK DS (Not Optimal)
+        // Approach 2: Using STRING (Not Optimal)
         // TC : O(N)
-        // SC : O(N)
+        // SC : O(1), excluding the space required for creating the 'ans' string 's'
         // CODE:
         string ans ="";  // to store the resultant string
         
-        // iterate through the string
+        // Iterate through the string 's'
         for(int i=0; i<s.length(); i++){
-            // if the string character is '*', we remove the last element from the resultant string
+            // If the string character is '*', we remove the last element from the resultant string
             if(s[i] == '*'){
                 ans.pop_back();
             }
@@ -47,6 +48,51 @@ public:
             }
         }
         return ans;  // return the resultant string
+        */
+
+
+
+        
+        /*
+        // Approach 1: Using STACK
+        // TC : O(N)
+        // SC : O(N), for creating and storing the characters in the stack
+        // C++ CODE:
+        stack<char> st; // Initialize a stack to store the characters of the I/p string 's'
+        string ans = ""; // to store the final answer string
+        
+        // Now, traverse the I/p string 's' 
+        for(int i=0; i<s.size(); i++){
+            // If the current character is any non-star character, then directly push it inside the stack
+            if(s[i] != '*'){
+                st.push(s[i]);
+            }
+            else{
+                // else, what we do is we remove the non-star characters from the top of the stack till we encounter a '*' in
+                // the I/p string 's'
+                while(s[i] == '*'){
+                    st.pop();
+                    // increment the pointer accordingly
+                    // If the next character is also a '*', then only increment the pointer
+                    if(s[i+1] == '*'){
+                        i++;
+                    }
+                    else{
+                        break; // else we break and the pointer will be incremented in the main 'for' loop
+                    }
+                }
+            }
+        }
+        // Now, add the remaining elements pushed into the stack in the 'ans' string 
+        while(!st.empty()){
+            ans += st.top();
+            st.pop();
+        }
+        // since we are pushing the elements into the 'ans' string from the top of the stack, the 'ans' string should be 
+        // reversed to get the original final answer. and then return the 'ans' string
+        reverse(ans.begin(), ans.end());
+
+        return ans;
         */
     }
 };
