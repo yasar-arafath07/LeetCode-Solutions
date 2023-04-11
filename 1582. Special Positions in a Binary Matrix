@@ -1,0 +1,39 @@
+class Solution{
+public:
+    int numSpecial(vector<vector<int>>& mat){
+        // Approach: BRUTE FORCE
+        // TC : O(n * m)
+        // SC : O(n + m), for creating 2 vectors 'rows' and 'cols' of size 'n' and 'm' respectively.
+        // C++ CODE:
+        int n = mat.size();
+        int m = mat[0].size();
+        vector<int> rows(n); // 'rows' tells the no. of 1's present in each row of 'mat'
+        vector<int> cols(m); // 'cols' tells the no. of 1's present in each column of 'mat'
+        int ans = 0; // to store the no. of special posiitons in the input matrix
+
+        // Traverse the I/p matrix 'mat' and store the no. of 1's present in each row and each column in the vector 'rows' 
+        // and 'cols' respectively
+        for(int i=0; i<mat.size(); i++){
+            for(int j=0; j<mat[0].size(); j++){
+                // If the currrent cell has a value 1 in it, then update the no. of 1's in 'rows' and 'cols'
+                if(mat[i][j] == 1){
+                    rows[i] += 1;
+                    cols[j] += 1;
+                }
+            }
+        }
+
+        // Now, traverse the I/p matrix again and count the no. of special positions present
+        for(int i=0; i<mat.size(); i++){
+            for(int j=0; j<mat[0].size(); j++){
+                // Check if the current cell (i,j) has value 1 and also if that row 'i' has exactly one 1's and rest all are 0
+                // and also if that column 'j' has exactly one 1's and rest all elements are 0, then we can say that (i,j) is
+                // a special posiiton. So, we increment 'ans'
+                if(mat[i][j] == 1 && rows[i] == 1 && cols[j] == 1){
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+};
