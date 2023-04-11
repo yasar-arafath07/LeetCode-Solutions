@@ -1,0 +1,43 @@
+class Solution{
+public:
+    vector<vector<int>> onesMinusZeros(vector<vector<int>>& grid){
+        // Aoproach: BRUTE FORCE
+        // TC : O(n * m)
+        // SC : O(n + n + m + m) = O(2n + 2m) = O(n + m), for creating the 4 vectors
+        // C++ CODE:
+        int n = grid.size();
+        int m = grid[0].size();
+        vector<vector<int>> diff(n, vector<int> (m,0)); // 'diff' vector to store the diff[i][j]
+
+        vector<int> onesRowi(n); // 'onesRowi' tells the no.of one's present in each row 'i'
+        vector<int> onesColj(m); // 'onesColj' tells the no. of one's present at each column 'j' 
+        vector<int> zerosRowi(n); // 'zerosRowi' tells the no. of zeros present in each row 'i'
+        vector<int> zerosColj(m); // 'zerosColj' tells the no. of zeros present in each column 'j' 
+
+        // Traverse the I/p matrix 'grid'
+        for(int i=0; i<grid.size(); i++){
+            for(int j=0; j<grid[0].size(); j++){
+                // If the current cell has value 1 in it, then update the no. of ones present in 'i'th row and no. of ones 
+                // present in the 'j'th column
+                if(grid[i][j] == 1){
+                    onesRowi[i] += 1;
+                    onesColj[j] += 1;
+                }
+                // else, of the current cell has value 0 in it, then update the no. of zeros present in 'i'th row and no. of
+                // zeros present in 'j'th column
+                else{
+                    zerosRowi[i] += 1;
+                    zerosColj[j] += 1;
+                }
+            }
+        }
+
+        // Construct the 'diff' matrix from the formula: diff[i][j] = onesRowi[i] + onesColj[j] - zerosRowi[i] - zerosColj[j]
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                diff[i][j] = onesRowi[i] + onesColj[j] - zerosRowi[i] - zerosColj[j];
+            }
+        }
+        return diff; 
+    }
+};
