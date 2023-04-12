@@ -1,0 +1,65 @@
+class Solution{
+public:
+    string simplifyPath(string path){
+        // Approach: STACK
+        // TC : O(N)
+        // SC : O(N), for the stack
+        // C++ CODE:
+        string ans = ""; // to store the 'ans' string after converting the given I/p string to canonical path.
+        stack<string> st; // to store the names of the directory 
+
+        // Traverse the I/p string 'path'
+        for(int i=0; i<path.size(); i++){
+            // If the current character is a '/', do nothing. So, move to next iteration
+            // '/' is used to separate two different directories names
+            if(path[i] == '/'){
+                continue;
+            }
+            // else, we create a string 'dir' to store the name of the directory or to store the period or double period
+            string dir = "";
+
+            // Traverse till we find our next directory name (each directory name starts with '/')
+            while(i < path.size() && path[i] != '/'){
+                dir += path[i];
+                i++; // move the pointer
+            }
+
+            // Now, check the 'dir' string
+            // If it is a period, i.e, '.', then we don't need to anything since '.' refers to current directory itself
+            if(dir == "."){
+                continue;
+            }
+            // else if the 'dir' string has double period, i., '..', then we need to go back to the previous directory. So, we
+            // will pop the topmost directory name from the stack
+            else if(dir == ".."){
+                if(!st.empty()){
+                    st.pop();
+                }
+            }
+            // else, the 'dir' string will be a name of the directory. So, we will simply push the directory file name into 
+            // the stack
+            else{
+                st.push(dir);
+            }
+        }
+
+        // Now, form the simplified canonical path string and store it in the answer
+        while(!st.empty()){
+            ans = '/' + st.top() + ans;
+            st.pop();
+        }
+        // If the 'ans' string is empty, i.e, if no directory or file is present, then we return "/"
+        if(ans == ""){
+            return "/";
+        }
+
+        // In the end, return the 'ans' string
+        return ans;
+    }
+};
+
+/*
+--> '/' means nothing
+--> '.' means current directory. So, do nothing
+--> '..' means go to previous directory
+*/
