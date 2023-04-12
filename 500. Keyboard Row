@@ -1,0 +1,60 @@
+class Solution{
+public:
+    vector<string> findWords(vector<string>& words){
+        // Approach: 
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        vector<string> res; // to store the words that can be typed on only one row
+
+        // create 3 sets, one for each row and store the characters (lower and upper case) of each row in that particular set
+        unordered_set<char> dict1 = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I',
+        'O', 'P'};
+        unordered_set<char> dict2 = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'};
+        unordered_set<char> dict3 = {'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Z', 'X', 'C', 'V', 'B', 'N', 'M'};
+
+        // Now Traverse the I/p string 'words'
+        for(auto& word : words){
+            // set 3 boolean flags for each of the 3 sets
+            bool f1 = true;
+            bool f2 = true;
+            bool f3 = true;
+
+            // then traverse each character of a single word
+            for(auto& c : word){
+                // If the flag for dict1 is true, then keep checking if the current character of the word is present in that
+                // set 'dict1'. If the character is not present, set the flag to 'false'
+                if(f1){
+                    auto it = dict1.find(c);
+                    if(it == dict1.end()){
+                        f1 = false;
+                    }
+                }
+                
+                // Similarly, if the flag for 'dict2' is true, then keep checking if the current character of the word is 
+                // present in that set 'dict2'. If the character is not present, set the flag to 'false'
+                if(f2){
+                    auto it = dict2.find(c);
+                    if(it == dict2.end()){
+                        f2 = false;
+                    }
+                }
+
+                // Similary for set3, if the flag for 'dict3' is true, then keep checking if the curent character of the word
+                // is present in that set 'dict2'. If the character is not present, set the flag to 'false'
+                if(f3){
+                    auto it = dict3.find(c);
+                    if(it == dict3.end()){
+                        f3 = false;
+                    }
+                }
+            }
+            // If we can form the word using any one of the row, save that word in the 'res' vector
+            if(f1 || f2 || f3){
+                res.push_back(word);
+            }
+        }
+        // return the 'res' string
+        return res; 
+    }
+};
