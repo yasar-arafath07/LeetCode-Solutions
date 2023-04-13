@@ -1,0 +1,38 @@
+class Solution{
+public:
+    int minSetSize(vector<int>& arr){
+        // Approach: PRIORITY QUEUE (MAX HEAP) 
+        // TC : O(N)
+        // SC : O(N)
+        // C++ CODE:
+        int n = arr.size();
+        int ans = 0; 
+        unordered_map<int,int> mpp; // Initialize a map to store the frequency of the Array elements
+        priority_queue<int> pq; // MAX HEAP to store the frequency of the Array elements so that the Maximum frequency appears
+        // on top of the queue
+        
+        // Traverse the I/p Array 'arr' and store the frequency of the elements in the map
+        for(auto& ele : arr){
+            mpp[ele]++;
+        }
+
+        // Now, traverse the map and store the frequencies in the MAX HEAP
+        for(auto it : mpp){
+            pq.push(it.second);
+        }
+        
+        int ele = 0; // to count how many elements we have removed including duplicates
+        // Now, in the Priority Queue
+        while(!pq.empty()){
+            ele += pq.top();
+            pq.pop();
+            ans++; // since we are removing an element which has frequency pq.top(), we increment 'ans'
+            // Now, check if no.of elements removed is greater than the half size of the Array, then return the count of 
+            // elements we have removed
+            if(ele >= n/2){
+                return ans;
+            }
+        }
+        return 0;
+    }
+};
