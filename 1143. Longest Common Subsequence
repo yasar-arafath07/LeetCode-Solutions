@@ -1,0 +1,38 @@
+class Solution{
+public:
+    // Create a 'helper()' function which will return the longest length of the longestcommon subsequence recursively
+    int helper(string& text1, string& text2, int i, int j, vector<vector<int>> &dp){
+        // BASE CASE: If any of the 2 pointer goes below zero in any of the string, then there will be no matching common 
+        // characters anymore since one of the string has completed comparing all the characters. So, return 0.
+        if(i < 0 || j < 0) return 0;
+
+        // If we already visited the state, then return the value present in it
+        if(dp[i][j] != -1) return dp[i][j];
+
+        // If the characters match, then there is a subsequence of length 1 since the characters in both strings matched. So, we
+        // will add 1 and call the same 'helper()' function recursively for the next remaining characters
+        if(text1[i] == text2[j]){
+            return dp[i][j] = 1 + helper(text1, text2, i-1, j-1, dp);
+        }
+        // else if the characters in both strings doesn't match, then we explore the 2 possiblities and return the maximum 
+        // Length of Longest Common Subsequence of both of the Possiblities
+        return dp[i][j] = max(helper(text1, text2, i, j-1, dp), helper(text1, text2, i-1, j, dp)); 
+    }
+
+    int longestCommonSubsequence(string text1, string text2){
+        // Approach: DYNAMIC PROGRAMMING
+        // TC : O(n * m)
+        // SC : O(n * m) + O(n + m), i.e, the space required for dp + auxilliary stack space
+        // C++ CODE:
+        int n = text1.size(); // size of string 1
+        int m = text2.size(); // size of string 2
+        vector<vector<int>> dp(n, vector<int>(m, -1)); 
+        
+        // Support Variables to traverse the string 's' and 't'
+        int i = n - 1; // for string 'text1'
+        int j = m - 1; // for string 'text2'
+        
+        // call the recursive helper() function which will return the length of the longest commom subsequence
+        return helper(text1, text2, i, j, dp); 
+    }
+};
