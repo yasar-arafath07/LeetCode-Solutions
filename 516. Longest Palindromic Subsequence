@@ -1,0 +1,50 @@
+class Solution{
+public:
+    // Create a 'helper()' function which will return the longest length of the longestcommon subsequence recursively
+    int helper(string &s, string &t, int i, int j, vector<vector<int>> &dp){
+        // BASE CASE: If any of the 2 pointer goes below zero in any of the string, then there will be no matching common
+        // characters anymore since one of the string has completed comparing all the characters. So, return 0.
+        if(i < 0 || j < 0) return 0;
+        
+        // If we already visited the state, then return the value present in it
+        if(dp[i][j] != -1) return dp[i][j];
+        
+        // If the characters match, then there is a subsequence of length 1 OR we can say there is a Plaindrome of length 1
+        // since the characters in both strings matched. So, we will add 1 and call the same 'helper()' function recursively
+        // for the next remaining characters
+        if(s[i] == t[j]){
+            return dp[i][j] = 1 + helper(s, t, i-1, j-1, dp);
+        }
+        // else if the characters in both strings doesn't match, then we explore the 2 possiblities and return the maximum 
+        // Length of Longest Palindromic/Common Subsequence of both of the Possiblities
+        return dp[i][j] = max(helper(s, t, i, j-1, dp), helper(s, t, i-1, j, dp));
+    }
+    
+    int longestPalindromeSubseq(string s){
+        // Approach: DYNAMIC PROGRAMMING
+        // EXPLANATION: This Problem is just an extension of the Problem: Longest Common Subsequence. So, here since we need to
+        // find the Longest Palindromic Subsequence, what we do is we will initialize a new string 't' which will be same as 
+        // I/p string 's' and then reverse the string 't'. Now, pass these 2 strings 's' and 't' on the 'helper()' function
+        // which will return the length of the Longest Commom Subsequence.
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        string t = s; // Initialize a string 't' and assign 's' to it
+        reverse(t.begin(), t.end()); // Since we need to find the Longest Palindromic Subsequence, the characters from the back
+        // should match the characters at the beginning. So, we reverse the string 't' and then find the Length of Longest
+        // Common Subsequence in it which inturn is equal to the Length of Longest Palindromic Subsequence
+
+        int n = s.size();
+        vector<vector<int>> dp(n, vector<int> (n, -1)); 
+        
+        // Support Variables to traverse the string 's' and 't'
+        int i = n - 1; // for the original string 's'
+        int j = n - 1; // for the reversed string 't'
+        
+        // call the recursive helper() function which will return the length of the longest commom subsequence and store the 
+        // length in 'ans'
+        int ans = helper(s, t, i, j, dp);
+
+        return ans;
+    }
+};
