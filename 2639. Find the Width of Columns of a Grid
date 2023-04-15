@@ -1,0 +1,63 @@
+class Solution{
+public:
+    vector<int> findColumnWidth(vector<vector<int>>& grid){
+        // Approach 2: 
+        // TC : O(m * n)
+        // SC : O(m)
+        // C++ CODE:
+        int m = grid[0].size();
+        vector<int> ans(m, 0); // to store the width of each column which is the maximum length of all the integers
+
+        // Traverse each column
+        for(int i=0; i<grid[0].size(); i++){
+            // Traverse each row
+            for(int j=0; j<grid.size(); j++){
+                string s = to_string(grid[j][i]); // convert the current element to a string
+                int len = s.size(); // calculate the length of the current element
+                ans[i] = max(ans[i], len); // store the maximum length of current column 'i' in the 'ans' vector
+            }
+        }
+        return ans;
+
+
+
+        
+        /*
+        // Approach 1: BRUTE FORCE
+        // TC : O(n * m), where 'n' is the size of the grid and 'm' is the no. of columns
+        // SC : O(m), space required to create the 'ans' vector
+        // C++ CODE:
+        vector<int> ans; // to store the width of each column which is the maximum length of integers
+        int maxi = 0; // to store the maximum length of integers in the current column
+        int len = 0; // to store the length of each integer
+        
+        // Traverse each column
+        for(int i=0; i<grid[0].size(); i++){
+            // Since we are now at new column, set 'maxi' and 'len' to 0
+            maxi = 0;
+            len = 0;
+            // Then traverse each row
+            for(int j=0; j<grid.size(); j++){
+                int num = grid[j][i]; // pick the current cell/number
+                // If the current element is negative, then make it positive by multiplying with -1.
+                if(num < 0){
+                    num = -1 * num; // make the current element positive
+                    string s = to_string(num); // convert the current element to a string
+                    len = s.size(); // store the length of the string in 'len'
+                    len += 1; // add 1 to the length which is the length of the '-' i.e, minus symbol since the element is -ve.
+                    maxi = max(maxi, len); // Record the maximum length of the element in the current column
+                }
+                // Similary, If the current element is positive, convert it directly to string and store its length in 'len'
+                // and then record the maximum length till now
+                else{
+                    string s = to_string(num);
+                    len = s.size();
+                    maxi = max(maxi, len);
+                }
+            }
+            ans.push_back(maxi); // Save the maximum length in the 'ans' vector
+        }
+        return ans;
+        */
+    }
+};
