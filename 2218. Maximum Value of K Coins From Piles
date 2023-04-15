@@ -1,0 +1,42 @@
+class Solution{
+public:
+    // Create a 'helper()' function which will recursively find and return the maximum total value of coins we can have if we 
+    // choose exactly 'k' coins
+    int helper(vector<vector<int>> &piles, int k, int i, vector<vector<int>> &dp){
+        // BASE CASE: If we reach to the end of the pile or if 'k' is 0, then we don't have any coin to select. So, we return 0
+        if(i == piles.size() || k == 0) return 0;
+
+        if(dp[i][k] != -1) return dp[i][k];
+        int curr = 0; // to store the total value of selected coins
+        int res = 0; // to store the maximum answer
+
+        // Now, we explore all the possibilities of selecting the coins using INCLUDE / NOT INCLUDE Recursively
+        // CASE1: Don't Include a coin from the 'i'th pile. So, we go to the 'i+1' th pile recursively and explore there
+        res = helper(piles, k, i+1, dp); // since we didnt select a coin, 'k' will remain same
+
+        // CASE2: Include coins from the 'i'th pile
+        // So, we traverse the 'i' pile and include only the first 'k' coins since we need only the 'k' coins
+        for(int j=0; j<k && j<piles[i].size(); j++){
+            curr += piles[i][j];
+            res = max(res, helper(piles, k - j - 1, i + 1, dp) + curr); // since we selected k-(j+1) coins, i.e, (k-j-1) coins, 
+            // we passs only (k-j-1) for the next set of piles
+        }
+
+        dp[i][k] = res;
+        return res;
+    }
+
+    int maxValueOfCoins(vector<vector<int>>& piles, int k){
+        // Approach: DYNAMIC PROGRAMMING
+        // TC : O(m * k), since we traverse each pile of size 'm' for 'k' no.of coins
+        // SC : O(n * k), for the 'dp' Array
+        // C++ CODE:
+        int n = piles.size(); // totoal no. of piles
+        vector<vector<int>> dp(n+1, vector<int> (k+1, -1));
+        
+        int i = 0; // to traverse the 'piles' vector
+
+        // call the helper() function which will return the maximum total value of coins we can have if we choose exactly k coins
+        return helper(piles, k, i, dp);
+    }
+};
