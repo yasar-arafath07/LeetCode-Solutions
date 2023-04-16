@@ -1,0 +1,34 @@
+class Solution{
+public:
+    int numWays(vector<string>& words, string target){
+        // Approach: DYNAMIC PROGRAMMING
+        // TC : 
+        // SC : O(n + m), where 'n' is words[0].size() and 'm' is target.size()
+        // C++ CODE:
+        int n = words[0].size();
+        int m = target.size();
+        int MOD = 1e9 + 7;
+        vector<vector<int>> freq(n, vector<int> (26, 0)); // frequency map to store the frequency of the characters 
+        vector<int> dp(m+1);
+
+        dp[0] = 1;
+
+        // Traverse the I/p vector of string and store the frequency in the 'freq' map
+        for(string word : words){
+            // Traverse till 'n'
+            for(int i=0; i<n; i++){
+                freq[i][word[i] - 'a']++;
+            }
+        }
+        
+        // Now, Traverse each row 
+        for(int i=0; i<n; i++){
+            // Traverse the 'target' string from the back
+            for(int j=m-1; j>=0; j--){
+                dp[j+1] += ((long long)dp[j] * freq[i][target[j] - 'a'] % MOD);
+                dp[j+1] %= MOD;
+            }
+        }
+        return dp[m];
+    }
+};
