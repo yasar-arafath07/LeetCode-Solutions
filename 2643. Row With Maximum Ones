@@ -1,0 +1,49 @@
+class Solution{
+public:
+    vector<int> rowAndMaximumOnes(vector<vector<int>>& mat){
+        // Approach: BRUTE FORCE 
+        // TC : O(n * m), where 'n' is the no.of rows and 'm' is the no.of columns
+        // SC : O(1), excluding the space required to create the 'ans' vector
+        // C++ CODE:
+        int n = mat.size();
+        vector<int> ans(2); // to store the index of row which has maximum count of ones along with the no. of ones in that row
+        // vector<int> rows(n);
+        
+        // support variables
+        int ones = 0; // to store the count of ones in each row
+        int maxi = 0; // to store the maximum count of one in all the rows
+        
+        // Traverse each row of the I/p matrix 'mat'
+        for(int i=0; i<mat.size(); i++){
+            // Now, since we are in a new row, set the count of ones to 0,
+            ones = 0;
+            // Traverse each column of the row
+            for(int j=0; j<mat[0].size(); j++){
+                // If the current cell has value 1 in it, update the count of ones
+                if(mat[i][j] == 1){
+                    ones++;
+                }
+            }
+            // If the count of ones in the 'i'th row is the maximum till now, then update the maxi. and update the 
+            if(ones > maxi){
+                maxi = ones;
+                ans[0] = i; // store the row no. which has maximum no.of ones in the 'ans' vector
+                ans[1] = ones; // also store the count of ones in that row in the 'ans' vector
+            }
+            //rows[i] = ones; 
+        }
+        
+        /*
+        for(int i=0; i<n; i++){
+            if(rows[i] > maxi){
+                maxi = rows[i];
+                ans[0] = i;
+                ans[1] = rows[i];
+            }
+        }
+        */
+        
+        // return the 'ans' vector in the end
+        return ans;
+    }
+};
