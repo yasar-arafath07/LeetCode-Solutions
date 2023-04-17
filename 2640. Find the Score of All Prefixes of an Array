@@ -1,0 +1,28 @@
+class Solution{
+public:
+    vector<long long> findPrefixScore(vector<int>& nums){
+        // Approach: BRUTE FORCE
+        // TC : O(N)
+        // SC : O(1), excluding the space required to create the 'ans' vector
+        // C++ CODE:
+        vector<long long> ans; // to store the score of the prefix nums[0...i]
+        long long conver = 0; // to store the value of conver[i] where conver[i] = arr[i] + max(arr[0...i])
+        long long maxi = 0; // to store the maximum element till now
+        long long score = 0; // to calculate the score till now
+        
+        // Traverse the I/p Array 'nums'
+        for(int i=0; i<nums.size(); i++){
+            // Since, we are at a new element, set the 'conver' to 0.
+            conver = 0;
+            // maxi = *(max_element(nums.begin(), nums.begin() + i + 1)); // Gives TLE if we use this to find the 'maxi'
+            // Record the maximum element till now
+            if(nums[i] > maxi){
+                maxi = nums[i];
+            }
+            conver = nums[i] + maxi; // calculate the conver[i] and store the value in 'conver'
+            score += conver; // record the score of array till now 
+            ans.push_back(score); // save the score till now in the 'ans' vector
+        }
+        return ans;
+    }
+};
