@@ -1,0 +1,47 @@
+class Solution{
+public:
+    int maxDivScore(vector<int>& nums, vector<int>& divisors){
+        // Approach: PAIRS + SORTING 
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        int ans = 0; // to store the Integer from 'divisors' with maximum divisibility score
+        int count = 0; // to store the no.of elements in 'nums' which are divisible by divisors[i]
+        vector<pair<int,int>> p; // to store the element of 'divisors' along with it's divisibility score as a pair i.e {ele,cnt}
+        int maxi = 0; // to store the maximum count 
+        
+        // Traverse the I/p Array 'divisors' and for each element of divisors, count the number of elements in 'nums' which are
+        // divisible by divisors[i] and then push the current element 'divisors[i]' along with it's count in the pair
+        for(int i=0; i<divisors.size(); i++){
+            count = 0; // since now we are at a new element, set count to 0.
+            int ele = divisors[i];
+            // Now, traverse each element of'nums' and if the current element nums[j] is divisible by 'divisors[i]', count++
+            for(int j=0; j<nums.size(); j++){
+                if(nums[j] % ele == 0){
+                    count++;
+                }
+            }
+            p.push_back({ele,count}); // Insert the current element of 'divisors' along with it's count into the pair
+        }
+        
+        sort(p.begin(), p.end()); // sort the vector of pairs
+        
+        // Now, traverse the vector of pairs since we need that element with the maximum count of divisibility score
+        for(int i=0; i<p.size()-1; i++){
+            // If the divisibility score of any element is greater than previous maimum divisibility score, then update the
+            // new maximum 'maxi' and save the element in the 'ans' which has highest divisibility score
+            if(p[i].second > maxi){
+                maxi = p[i].second;
+                ans = p[i].first;
+            }
+        }
+        
+        // EDGE CASE: If there is no element which has divisibility score, then we simply return the smallest element from 
+        // 'divisors' 
+        if(ans == 0){
+            return p[0].first; // since the vector of pairs is sorted, p[0].first will be the smallest element
+        }
+        // Finally, return the answer
+        return ans;
+    }
+};
