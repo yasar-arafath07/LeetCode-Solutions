@@ -1,0 +1,52 @@
+class Solution{
+public:
+    string mergeAlternately(string word1, string word2){
+        // Approach: TWO POINTERS
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int i = 0; // Pointer 1 to traverse the 'word1' string
+        int j = 0; // Pointer 2 to traverse the 'word2' string
+        string ans = ""; // 'ans' string to store the merged string
+        
+        // Traverse both the I/p strings
+        while(i < word1.size() || j < word2.size()){
+            // If the 'i' pointer is less than the size of 'word1', then we can add the 'i'th charatcer to the 'ans' string
+            if(i < word1.size()){
+                ans += word1[i];
+                i++;
+            }
+            // Similarly, if the 'j' pointer is less than size of 'word2', then we can add 'j'th character to the 'ans' string
+            if(j < word2.size()){
+                ans += word2[j];
+                j++;
+            }
+        }
+        return ans;
+
+
+
+        /*
+        // Approach 1: BRUTE FORCE 
+        // TC : O(n), where 'n' is the length of the longest string 
+        // SC : O(1), excluding the space required for the 'ans' string
+        // C++ CODE:
+        string ans = ""; // to store the merged string
+        int n = max(word1.size(), word2.size()); 
+
+        // Traverse the I/p strings and add the characters of 'word1' and 'word2' to the 'ans' string alternatively till both 
+        // i/p strings becomes empty
+        for(int i=0; i<n; i++){
+            // If the 'word1' string has characters in it, add it to 'ans' string
+            if(i < word1.size()){
+                ans += word1[i];
+            }
+            // Similarly, if 'word2' string has characters in it, add it to the 'ans' string
+            if(i < word2.size()){
+                ans += word2[i];
+            }
+        }
+        return ans;
+        */
+    }
+};
