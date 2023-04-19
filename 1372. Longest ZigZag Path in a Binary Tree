@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution{
+public:
+    // Global support variables
+    int maxLength = 0; // to record the maximum length of the zig-zag path
+    int currLength = 0; // current Length of the zig-zag path till now
+
+    // Create a solve() function which will calculate the longest zig-zag path length in both left and right subtree of the 
+    // given root node
+    void solve(TreeNode* root, int currLength, bool goLeft){
+        // BASE CASE:
+        if(!root) return; // if(root == nullptr) return;
+
+        maxLength = max(maxLength, currLength); // keep recording the maximum length
+        
+        if(goLeft == true){
+            // If we are asked to go to left subrtree and we are actually going to left subtree which means we are following a 
+            // zig-zag path, so the current length will increase by 1 and now we need to go to the right subtree to maximize the 
+            // zig-zag path length. So, we set the bool variable to false.
+            solve(root->left, currLength+1, false);
+            // Similarly, if we are asked to go to the left subtree and we are going on to the right subtree, then we are 
+            // starting/creating a new zig-zag path. So, the current length will be set to 1 and now we need to go to the left
+            // subtree. so, we set the bool variable to true.
+            solve(root->right, 1, true);
+        }
+        else{
+            // if(goLeft == false), means we need to go to the right subtree 
+            // So, if we are asked to go to the right subtree and we are foloowing the right subtree, then we are following a 
+            // zig-zag path. So, we increase the current length by 1 and now we will explore the left subtree. So, we set the 
+            // 'goLeft' bool variable to ture.
+            solve(root->right, currLength+1, true);
+            // Sililarly, if we are asked to go to the right subtree and we are going to the left subtree, then we are simply 
+            // creating/starting a new zig-zag path. So, the current length will be set to 1 and then we need to go to the 
+            // right subrtree. So, we set the 'goLeft' bool variable to flase which means we want to go to the right subtree
+            solve(root->left, 1, false);
+        }
+    }
+
+    int longestZigZag(TreeNode* root){
+        // Approach: RECURSION
+        // TC : O(N), since we are visiting all the nodes once and each nodes once
+        // SC : 
+        // C++ CODE:
+        // int maxLength = 0; 
+        // bool goLeft = true; 
+
+        solve(root, 0, true); // call to the left subtree and record the maximum zig-zag length in the left subtree
+        solve(root, 0, false); // call to the right subtree and record the maximum zig-zag length in the right subtree
+
+        return maxLength; // return the maximum zig-zag path length
+    }
+};
