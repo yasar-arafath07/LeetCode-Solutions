@@ -1,0 +1,24 @@
+class Solution{
+public:
+    int minFlips(string target){
+        // Approach: GREEDY
+        // TC : O(N)
+        // SC : O(1)
+        // C++ CODE:
+        int flips = 0; // to store the no. of flips required to make string 's' equal to 'target' string
+        char curr = '0'; // Initial string
+
+        // Traverse the I/p string 'target'
+        for(int i=0; i<target.size(); i++){
+            // If the current character of the 'target' string is not equal to the current character in the string 's', then 
+            // we need to make a flip
+            if(target[i] != curr){
+                flips++;
+                // Now, since the current charatcer in the target string is not equal to current charatcer in the string 's',
+                // and since we flipped all the characters from 'i' in string 's', now update the current character
+                curr = (curr == '0') ? '1' : '0'; // all the characters to the right of index 'i' will be flipped
+            }
+        }
+        return flips;
+    }
+};
