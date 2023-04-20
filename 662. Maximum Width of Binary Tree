@@ -13,8 +13,6 @@ class Solution{
 public:
     int widthOfBinaryTree(TreeNode* root){
         // Approach: QUEUE + PAIRS + INDEXING 
-        // REFERENCE 1: https://www.youtube.com/watch?v=le-ZZSQRebw
-        // REFERENCE 2: https://www.youtube.com/watch?v=Y2CKCnQfHJQ 
         // TC : O(N), since each node is visited once
         // SC : O(N)
         // C++ CODE:
