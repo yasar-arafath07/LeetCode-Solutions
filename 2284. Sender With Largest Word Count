@@ -1,0 +1,36 @@
+class Solution{
+public:
+    string largestWordCount(vector<string>& messages, vector<string>& senders){
+        // Approach: HASHTABLE
+        // TC : O(N)
+        // SC : O(N), for creating and storing the messages in the map
+        // C++ CODE:
+        string ans; // to store the name of that person who has sent maximum no.of messages
+        int maxi = 0; // to store the maximum words sent by a person
+        map<string,int> mpp; // to store the senders name along with the no.of words they sent as frequency 
+        // unordered_map will not work here
+
+        // Traverse the I/p string 'messages' and store the name of the person along with the total no. of words sent by him 
+        // in the map
+        for(int i=0; i<messages.size(); i++){
+            // count the no.of words present in the current message
+            int cnt = count(messages[i].begin(), messages[i].end(), ' ') + 1; // since the total no.of words in a message is the 
+            // total no.of empty spaces + 1. For Eg: if message = "Have a good day", then total spaces = 3. and 3+1 gives total 
+            // words
+
+            // Now, w.k.t this message is sent by the person senders[i]. So, we store the name of the person along with the 
+            // words count 'cnt' in the map
+            mpp[senders[i]] += cnt;
+        }
+
+        // Now, traverse the map and find the person who has sent highest no.of messages
+        for(auto& it : mpp){
+            // If the current no.of words sent by a person is greater than the maximum, update the maximum
+            if(it.second >= maxi){
+                maxi = it.second; // update the maximum
+                ans = it.first; // update the senders name
+            }
+        }
+        return ans;
+    }
+};
