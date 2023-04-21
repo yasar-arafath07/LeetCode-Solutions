@@ -1,0 +1,58 @@
+class Solution{
+public:
+    int dp[102][102][102];
+    int MOD = 1e9 + 7;
+    
+    // create a 'solve()' function which will return the total number of valid schemes that can be chosen
+    int solve(int n, int minProfit, vector<int> &group, vector<int> &profit, int k, int i, int j){
+        // BASE CASE: If we are at the last crime, then check the minimum prfits we have. If the minimum profits we have is 
+        // greater than the required 'minProfit' and no.of people 'i' is less than 'n', then we have a scheme. So, return 1.
+        if(k == profit.size()){
+            if(j >= minProfit && i <= n) return 1;
+            else{
+                return 0;
+            }
+        }
+        // else if already have more than 'n' peoples involved in the crime, then it is not a good scheme. So, return 0.
+        else if(i > n) return 0;
+         
+        // If the state is already encountered before, return the value from there itself.
+        if(dp[k][i][j] != -1) return dp[k][i][j];
+
+        // else, we have 2 choices. Exclude the current crime and go to next crime OR to Include the current crime 
+        int notInclude = 0;
+        int Include = 0;
+
+        // CASE 1: We don't include the current crime and we go to the next crime. Since we are going to next crime, we will
+        // pass 'k' as 'k+1' and the no.of peoples and the profits we made will remain same since we did'nt commit any crime.
+        notInclude = solve(n, minProfit, group, profit, k+1, i, j);
+
+        // CASE 2: We inlcude the current crime and calculate the profits we made and the no. of peoples involved
+        Include = solve(n, minProfit, group, profit, k+1, i + group[k], min(j + profit[k], minProfit)); // 'k' is passed as 'k+1'
+        // since after this current crime we will be going to the next crime. 'i' is passed as the no.of peoples in previous
+        // crime + no.of peoples required for the current crime. 'j' is passed as the no.of profits made till previous crime + 
+        // the profit made in current crime
+
+        dp[k][i][j] = ((notInclude % MOD) + (Include % MOD)) % MOD;
+
+        return dp[k][i][j];
+    }
+
+    int profitableSchemes(int n, int minProfit, vector<int>& group, vector<int>& profit){
+        // Approach: DYNAMIC PROGRAMMING
+        // TC : O(k * i * j)
+        // SC : O(k * i * j)
+        // C++ CODE: 
+        memset(dp, -1, sizeof(dp)); // set the values in each field of the 'dp' to -1.
+
+        // support variables
+        int k = 0; // denotes the no. of crimes
+        int i = 0; // denotes the no. of peoples involved in the crime
+        int j = 0; // denotes the no. of profits earned by commiting the crime
+
+        // call the 'solve() function
+        int ans = solve(n, minProfit, group, profit, k, i, j);
+
+        return ans;
+    }
+};
