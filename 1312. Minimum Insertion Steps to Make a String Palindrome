@@ -1,0 +1,26 @@
+class Solution{
+public:
+    int minInsertions(string s){
+        // Approach: DYNAMIC PROGRAMMING
+        // TC : O(N^2)
+        // SC : O(N^2)
+        // C++ CODE:
+        int n = s.size();
+        vector<vector<int>> dp(n+1, vector<int> (n+1)); // Initialize a 'dp[n+1][n+1]'
+        // dp[i][j] represents the length of the longest common subsequence between first 'i' letters in s1 and first 'j' letters
+        // in s2 where s1 = s and s2 = reverse(s)
+        
+        for(int i=0; i<s.size(); i++){
+            for(int j=0; j<s.size(); j++){
+                // compare the elements at 'i'th and 'j'th position
+                if(s[i] == s[n-j-1]){
+                    dp[i+1][j+1] = dp[i][j] + 1; 
+                }
+                else{
+                    dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j]);
+                }
+            }
+        }
+        return n - dp[n][n];
+    }
+};
