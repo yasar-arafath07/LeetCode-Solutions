@@ -1,0 +1,36 @@
+class Solution{
+public:
+    int countServers(vector<vector<int>>& grid){
+        // Approach: GREEDY
+        // TC : O(n * m)
+        // SC : O(n + m), for the 'rows' and 'cols' vector
+        // C++ CODE:
+        int n = grid.size();
+        int m = grid[0].size();
+        int res = 0; // to store the total no.of servers that can communicate with any other server
+        vector<int> rows(n); // to store the count of 1's present in each row
+        vector<int> cols(m); // to store the count of 1's present in each column
+
+        // Traverse the I/p matrix and store the count of 1's present in each row and column in the respective above vectors
+        for(int i=0; i<grid.size(); i++){
+            for(int j=0; j<grid[0].size(); j++){
+                if(grid[i][j] == 1){
+                    rows[i]++;
+                    cols[j]++;
+                }
+            }
+        }
+
+        // Now, traverse the I/p matrix again and count the total no.of servers that can communicate with any other server
+        for(int i=0; i<grid.size(); i++){
+            for(int j=0; j<grid[0].size(); j++){
+                // So, if the current cell has a server, then check if that particular row or column has any other server. If 
+                // YES, then they can communicate. So, we increment 'res by 1
+                if(grid[i][j] == 1 && (rows[i] > 1 || cols[j] > 1)){
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+};
