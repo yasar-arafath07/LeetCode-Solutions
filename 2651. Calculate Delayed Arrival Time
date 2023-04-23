@@ -1,0 +1,29 @@
+class Solution{
+public:
+    int findDelayedArrivalTime(int arrivalTime, int delayedTime){
+        // Approach 2: ONE-LINER
+        // TC : O(1)
+        // SC : O(1)
+        // C++ CODE:
+        int ans = arrivalTime + delayedTime;
+        return (ans % 24); 
+        
+
+        
+        /*
+        // Approach 1: BRUTE FORCE
+        // TC : O(1)
+        // SC : O(1);
+        // C++ CODE:
+        int ans = arrivalTime + delayedTime; // calculate the total time
+        
+        // if(ans == 24) return 0;
+        
+        // If total time is greater than or equal to 24, return total time - 24.
+        if(ans >= 24){
+            ans = ans - 24;
+        }
+        return ans;
+        */
+    }
+};
