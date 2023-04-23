@@ -1,0 +1,42 @@
+class Solution{
+public:
+    const int MOD = 1e9 + 7;
+
+    // create a 'solve()' function which will return the total number of possible arrays that can be printed as 's'
+    int solve(string &s, long long k, int i, vector<int> &dp){
+        // BASE CASE:
+        if(i == s.size()) return 1;
+        if(s[i] == '0') return 0;
+        
+        // If we have already come across the same subproblem, just return the 'answer' from the 'dp'
+        if(dp[i] != -1) return dp[i];
+
+        long long ans = 0;
+        long long num = 0;
+
+        for(int j=i; j<s.size(); j++){
+            num = num * 10 + s[j] - '0';
+            if(num > k){
+                break;
+            }
+            ans = (ans + solve(s, k, j+1, dp)) % MOD;
+        }
+
+        return dp[i] = ans;
+    }
+    
+    int numberOfArrays(string s, int k){
+        // Approach: DYNAMIC PROGRAMMING
+        // TC : 
+        // SC : 
+        // C++ CODE:
+        int n = s.size();
+        vector<int> dp(n, -1); // 'dp' of size 'n+1'
+
+        int i = 0; // to traverse the string 's'
+
+        int res = solve(s, k, i, dp);
+
+        return res;
+    }
+};
